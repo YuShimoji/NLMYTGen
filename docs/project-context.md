@@ -1,24 +1,31 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-23 JST・remote同期済み）
+## 現在の別端末再開ハンドオフ（2026-07-23 JST・current terminal development ready）
 
-この節だけが現在の別端末再開地点である。製品状態は変えず、2026-07-22の
-regression integrity支援slice、same-machine evidence監査、監修ロードマップを丸ごと継承する。
+この節だけが現在の別端末再開地点である。製品達成履歴は変えず、current terminalの
+toolchain、private artifact availability、exact next actionを実測へ合わせた。
 
-- **取得先**: `origin/codex/nlmytgen-regression-integrity-v1`。今回のhandoff更新元は
-  tracked-clean commit `0bb331050b52455402021cf9ed159a4d207dfe6e`。最終handoff commitは
+- **取得先**: `origin/codex/nlmytgen-regression-integrity-v1`。既存linked worktreeを
+  `6f12bbc`からtracked-clean remote tip `2f558499efc66810314d823627bce23ea6400883`へ
+  fast-forward-onlyで同期した。最終handoff commitは
   remote branch tipから解決し、固定SHAを次の作業baseとみなさない。
 - **同期確認**: `git fetch --prune origin`後、更新元ではupstream差分`0/0`、
-  `origin/master`に28 ahead / 0 behind、incoming remote commitなしを確認した。
+  `origin/master`に29 ahead / 0 behind、tracked cleanを確認した。
   今回のtracked documentation commitをpushした後もupstream `0/0`を必須とする。
+- **current terminal readiness**: Python 3.11 / uv / pytest、Node 22 / npm、Electron 35.7.5、
+  ffmpeg/ffprobe 8.1.1をreadbackした。.NET 9ではdriver buildが`NETSDK1045`だったため、既存の
+  `net10.0-windows`契約に合わせSDK 10.0.302を追加し、Release build warning 0 / error 0を確認した。
+  focused 46 tests、state sync、対象module compileはpassした。
+- **dependency caveat**: `uv.lock`と`gui/package-lock.json`はignored local artifactであり、Gitだけの
+  clean checkoutはlocked dependencyを単独再現できない。Electron 35.7.5は`npm audit`でdirect high 1件、
+  automatic fixは43.2.0へのsemver-majorなので無断更新していない。
 - **可搬な正本**: code、tests、manifest、sanitized receipt、`docs/runtime-state.md`、
   `docs/PROJECT_COCKPIT.md`、本decision/handoff history、verification reportsだけをpublic Gitで渡す。
-  詳細な現状、same-machine/clean-room差、残存リスク、長期goalは
-  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-22.md`に保持済み。
-- **保持して送らないもの**: ignored source `.local.ymmp`、generated project、MP4、frames、
-  force-run archive、browser profile、およびpre-existing untracked `.playwright-mcp/`、
-  `artifacts/`、`phase-e-01-contact-acquired-inspect.png`、
-  `phase-e-01-contact-acquired.png`は削除・上書き・stageしない。別端末へはGitで移動しない。
+  詳細な現状、current端末と過去same-machine evidenceの差、残存リスク、長期goalは
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`に保持する。
+- **private evidence availability**: current端末の全4 linked worktreeにはmanifest source
+  `.local.ymmp`、generated project、review MP4がない。過去receiptは成功証跡だがcurrent availabilityを
+  証明しない。private artifactを空fileや異なるprojectで代替せず、public Gitへ追加しない。
 - **別端末コマンド**: `git fetch --prune origin`後、local branchがなければ
   `git switch --track -c codex/nlmytgen-regression-integrity-v1 origin/codex/nlmytgen-regression-integrity-v1`、
   既にあれば`git switch codex/nlmytgen-regression-integrity-v1`と`git pull --ff-only`を使う。
@@ -27,11 +34,12 @@ regression integrity支援slice、same-machine evidence監査、監修ロード�
 - **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
   `docs/runtime-state.md`。判断根拠が必要なときだけ本節、回帰gateを変更するときだけ
   `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md`を追加で読む。
-- **exact next / next owner**: same-machine MP4がある端末のhuman reviewerが、音声再生可能な時に
-  発音、リズム、cue切替、字幕comfort、proxy compositionを通し視聴し、`accept` / `repair` /
-  `reject`をcue idと観察付きで返す。返答後はassistantがcue-specific repairまたは受入記録へ進む。
-  別端末にMP4がないだけなら製品gateを下げず、manifest exact path/hashを満たすsourceと
-  compatible YMM4/Chrome/ffmpeg/uv/.NETが揃うまで再renderを開始しない。
+- **exact next / next owner**: 第一選択は、別の許可済み端末に残るvalidated MP4をexpected ignored pathへ
+  復元しSHA-256 `f2444f...421f7`を照合すること。無ければmanifest exact path/hashのsourceを復元し、
+  YMM4 discoveryとsilent `--dry-run`をpassしてから承認済み再renderへ進む。exact MP4が戻った後に
+  human reviewerが通し視聴し、`accept` / `repair` / `reject`をcue idと観察付きで返す。
+  根拠: `docs/INVARIANTS.md` §Production Value North Star +
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`。
 - **変えていない判断**: `Product-Gate`は`human-internal-review`。draft PR #2はreview-only。
   rights、production asset replacement、master merge、external upload、publicationは未承認である。
 

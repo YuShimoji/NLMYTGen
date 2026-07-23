@@ -1,11 +1,11 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-23.1
+State-Revision: 2026-07-23.2
 Updated: 2026-07-23 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
-Recommended-Next: review-local-internal-review-mp4
+Recommended-Next: restore-local-review-carrier
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-regression-integrity-v1
@@ -18,6 +18,13 @@ Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts r
 
 ## Current Slice
 
+- The current terminal fast-forwarded the linked handoff worktree from `6f12bbc`
+  to `2f55849`: upstream `0/0`, master ahead/behind `29/0`, tracked clean.
+- Python 3.11, the locked uv environment, Electron 35.7.5, ffmpeg/ffprobe 8.1.1,
+  and .NET SDK 10.0.302 are available here. The current 46 focused tests and
+  project-state sync pass; the render driver builds with 0 warnings / 0 errors.
+  Electron has one direct high-severity audit finding whose fix is semver-major;
+  both Python/npm lockfiles remain ignored debt.
 - The support slice repaired the broad regression gate in its independent
   clean-room without changing the product state, approved content, receipts,
   manifests, visual artifacts, or tracked production pilots.
@@ -31,10 +38,11 @@ Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts r
   errors, and 4 skips. A tracked-only linked worktree reached 156 passed and 9
   expected skips but failed one absolute-path `git check-ignore` assertion.
   Both runs preserved Git status, worktree diff, and cached diff.
-- This checkout has the manifest-locked source YMM4 project, generated project,
-  and internal-review MP4 at the expected ignored paths with exact receipt
-  hashes. .NET 10.0.204 builds the render driver, the silent dry-run passes all
-  18 protected inputs, and a fresh full-file MP4 decode exits successfully.
+- The tracked receipt preserves the prior same-machine source/project/media
+  hashes, but this terminal's four linked worktrees do not contain the ignored
+  source YMM4 project, generated project, or internal-review MP4. The silent
+  dry-run therefore fails closed with `source_ymmp_missing`; human review and
+  re-render are not currently executable on this terminal.
 - The approved new-banknote pilot now has a concrete one-command path from its
   manifest and same-machine YMM4 source project through visual materialization,
   generated YMM4 project, actual YMM4 render, MP4 normalization, validation,
@@ -69,12 +77,16 @@ master integration.
 
 ## Exact Next Action
 
-The human internal reviewer should open the local file
-`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_internal_review_v1/internal_review.mp4`
-when audio playback is acceptable. Review pronunciation, rhythm, cue changes,
-subtitle comfort, and proxy composition. Return `accept`, `repair`, or `reject`
-with a cue id and observation for every requested change. Do not treat acceptance
-as rights, production, or publication approval.
+Restore the review carrier without publishing private media. Prefer the existing
+validated `internal_review.mp4` if it remains on another authorized local device:
+place it at the manifest's expected ignored path and require SHA-256
+`f2444f9657a569e9a374582765c41a28e414040a018f029b0180f256657421f7`
+before review. If that carrier no longer exists, restore the source YMM4 project
+at its exact manifest path/hash, confirm YMM4 discovery, and pass the silent
+`--dry-run` before an approved re-render. Once the exact MP4 is available, the
+human reviewer should return `accept`, `repair`, or `reject` with cue ids and
+observations. 根拠: `docs/INVARIANTS.md` §Production Value North Star +
+`docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`.
 
 ## Evidence and Access
 
@@ -89,7 +101,7 @@ as rights, production, or publication approval.
 - Full failure classification and handoff:
   `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md`.
 - Latest sync, same-machine readiness, caveats, and long-range goals:
-  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-22.md`.
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`.
 - Local ignored outputs: `auto_video_runs/new_banknote_internal_review_v1/`.
 - Main local outputs: `generated_project.local.ymmp`, `internal_review.mp4`,
   `media_validation.json`, `pipeline_run_receipt.json`, and
@@ -97,11 +109,11 @@ as rights, production, or publication approval.
 
 ## Cross-Terminal Re-entry
 
-- The cross-device handoff was refreshed from tracked-clean commit
-  `0bb331050b52455402021cf9ed159a4d207dfe6e` on 2026-07-23 after
-  `git fetch --prune origin`; at that anchor the branch and upstream were `0/0`
-  and the branch was 28 commits ahead of and 0 behind `origin/master`. Resolve
-  the final documentation commit from the current remote branch tip.
+- The current terminal refreshed the linked worktree from tracked-clean commit
+  `2f558499efc66810314d823627bce23ea6400883` after `git fetch --prune origin`;
+  at that anchor the branch and upstream were `0/0` and the branch was 29 commits
+  ahead of and 0 behind `origin/master`. Resolve the final documentation commit
+  from the current remote branch tip.
 - Fetch `origin/codex/nlmytgen-regression-integrity-v1`, check out that branch,
   and use fast-forward-only synchronization. Confirm `HEAD...@{u}` is `0/0`
   and the tracked worktree is clean before continuing.
@@ -119,6 +131,8 @@ as rights, production, or publication approval.
   validated receipt are portable through Git. The ignored source `.local.ymmp`,
   rendered MP4, extracted frames, and force-run archives are same-machine local
   evidence and are not uploaded to the public repository.
+- This terminal has none of the source `.local.ymmp`, generated project, or review
+  MP4 in its four worktrees; historical receipts do not prove current availability.
 - To regenerate on another machine, provide the source project at the manifest's
   exact repo-relative path and SHA-256, then supply compatible YMM4, Chrome,
   ffmpeg/ffprobe, `uv`, and .NET. Run the documented `--dry-run` before render.
@@ -131,7 +145,7 @@ as rights, production, or publication approval.
 
 ## Active Boundaries
 
-- Human creative acceptance is pending.
+- Human creative acceptance is pending; current-terminal carrier restoration must precede review.
 - Rights clearance and production asset replacement are unresolved.
 - The output is not authorized for public or external upload.
 - The handoff draft PR is review-only. No master update, merge, publication,

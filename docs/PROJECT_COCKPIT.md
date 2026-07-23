@@ -1,11 +1,11 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-23.1
+State-Revision: 2026-07-23.2
 Updated: 2026-07-23 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
-Recommended-Next: review-local-internal-review-mp4
+Recommended-Next: restore-local-review-carrier
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-regression-integrity-v1
@@ -15,7 +15,7 @@ Regression-Integrity-Implementation-Commit: f34f79f93fcc2db1cbc779e960bf1ed318f3
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 after handoff push
 Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts retained
-Handoff-Anchor: 0bb331050b52455402021cf9ed159a4d207dfe6e
+Handoff-Anchor: 2f558499efc66810314d823627bce23ea6400883
 Handoff-Verified: 2026-07-23 JST
 
 このページはpublic repositoryで現在地だけを読む追跡済みMarkdownです。短期正本は
@@ -25,8 +25,9 @@ Handoff-Verified: 2026-07-23 JST
 
 ## いまの一文
 
-承認済み新紙幣pilotを、manifestから実YMM4 project、実YMM4 render、検証済み内部レビュー
-MP4まで一コマンドで到達できる状態にしました。次はローカルMP4の人間レビューです。
+承認済み新紙幣pilotは、過去のsame-machine evidenceでmanifestから実YMM4 render、検証済み
+内部レビューMP4まで一コマンド到達済みです。現在端末ではprivate carrierが欠けているため、
+次はexact MP4またはsource projectを復元し、人間レビューへ再接続します。
 
 ## 判断に使える現在地
 
@@ -34,14 +35,14 @@ MP4まで一コマンドで到達できる状態にしました。次はロー�
 | --- | --- | --- |
 | Pipeline | manifest → PNG → YMMP → YMM4 render → MP4 validation | implementation commit `e7ee831` |
 | Content | 18 locked inputs、9 cues、2/4/3 scenes、3/6 speakers exact | 9 VoiceItems object-identical |
-| Generated project | 1920×1080 / 60 fps / 4415 frames | SHA-256 `f0361f4704adda2d87c342a9d281170ab3250fa9d9ea622a52bb3c8850019853` |
-| Review MP4 | H.264/AAC / 73.583008 sec / 93,375,804 bytes | SHA-256 `f2444f9657a569e9a374582765c41a28e414040a018f029b0180f256657421f7` |
-| Validation | full decode、12 unique frames、9 cue visual inspection | focused 46 passed。独立clean-room回帰は157 passed / 9 skips、same-machine/worktree caveatあり |
+| Generated project | historical receiptは1920×1080 / 60 fps / 4415 frames | current端末では不在。期待SHA-256 `f0361f...9853` |
+| Review MP4 | historical receiptはH.264/AAC / 73.583008 sec | current端末では不在。期待SHA-256 `f2444f...21f7` |
+| Validation | focused 46、state sync、.NET 10 driver build | current端末でpass。独立clean-room回帰は157 passed / 9 skips、same-machine/worktree caveatあり |
 | Silent policy | `NLMYTGEN_AUDIO_POLICY=silent` | speaker/preview playbackなし、owned process cleanup済み |
 | Rights | tracked proxy geometryのみ | production asset/rights未確定 |
 | Downstream | human creative review、rights、production、publication false | machine proofだけでgateを開かない |
 
-Primary review surface（ignored local artifact）:
+Primary review surface（ignored local artifact、現在端末では復元待ち）:
 `production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_internal_review_v1/internal_review.mp4`
 
 ## 次の入口
@@ -50,13 +51,14 @@ Primary review surface（ignored local artifact）:
 fast-forward限定で同期します。`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
 `docs/runtime-state.md`を読み、必要時だけ`docs/project-context.md`最上部を参照します。
 handoff commitは固定文字列ではなくremote branch tipから解決し、`HEAD...@{u}=0/0`を
-確認してください。2026-07-23のhandoff anchorは`0bb3310`で、この時点では
-`origin/master`に28 ahead / 0 behindでした。
+確認してください。今回のsync anchorは`2f55849`で、この時点では
+`origin/master`に29 ahead / 0 behindでした。
 
-MP4が同端末にある場合は再生成せず、発音、リズム、cue切替、字幕の読み心地、proxy構成を
-確認し、`accept` / `repair` / `reject`をcue id付きで返します。MP4やsource `.local.ymmp`は
-public Gitへ載せないsame-machine evidenceなので、別マシンで必要ならmanifest記載のexact path/hashを
-満たすsource projectとYMM4/Chrome/ffmpeg/uv/.NET環境を用意し、先に`--dry-run`を通します。
+現在端末の全4 worktreeにはMP4とsource `.local.ymmp`がありません。既存MP4が別の許可済み端末に
+残っていれば再生成せずexpected path/hashへ復元し、発音、リズム、cue切替、字幕の読み心地、proxy構成を
+`accept` / `repair` / `reject`へ決定します。MP4が失われていればmanifestのexact source path/hash、
+YMM4 discovery、silent `--dry-run`を満たしてから承認済み再renderへ進みます。詳細と長期goalは
+`docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`を参照します。
 
 ## 公開・実行境界
 
