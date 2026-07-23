@@ -6,16 +6,19 @@
 private artifactをlive再検証し、直近gateを実測へ合わせた。
 
 - **取得先**: `origin/codex/nlmytgen-regression-integrity-v1`。受信worktree
-  `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen`を`2f55849`から
-  remote tip `58feb851e8fdd35c0f205e77b86d45d0fe9c78a0`へfast-forward-onlyで同期した。
+  `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen`で`git fetch --prune origin`と
+  fast-forward-only pullを行い、再監査anchor
+  `eb883979479fd9a0cdace1d82fdb1295e6c80950`がalready up to dateであることを確認した。
   最終handoff commitはremote branch tipから解決し、固定SHAを次の作業baseとみなさない。
-- **同期確認**: `git fetch --prune origin`後、upstream差分`0/0`、`origin/master`に
-  30 ahead / 0 behind、tracked cleanを確認した。pre-existing untracked
+- **同期確認**: この文書更新前のupstream差分は`0/0`、`origin/master`に
+  31 ahead / 0 behind、tracked cleanだった。pre-existing untracked
   `.playwright-mcp/`、`artifacts/`、`phase-e-01-contact-acquired*.png`とignored evidenceは保持した。
 - **受信端末の開発基盤**: Python 3.13.3 / uv 0.10.7 / pytest 8.4.2、Node 24.13.0 /
   npm 11.6.2 / Electron 35.7.5、ffmpeg/ffprobe 8.0.1、.NET SDK 10.0.204、
   YMM4 4.54.0.1をreadbackした。locked uv sync、npm dependency tree、focused 46 tests、
   state sync、対象module compile、driver Release build、silent dry-run、MP4 full decodeがpassした。
+  今回の再監査でもfocused 46、state sync、npm dependency tree、driver build、
+  18 protected inputのdry-run、3 artifact hash、fresh full decodeを再passした。
 - **private artifact availability**: manifest source `.local.ymmp`、generated project、
   `internal_review.mp4`がexact ignored pathに存在し、SHA-256はそれぞれ
   `beee7eab...eaa54`、`f0361f...19853`、`f2444f...421f7`でmanifest / receiptと一致した。

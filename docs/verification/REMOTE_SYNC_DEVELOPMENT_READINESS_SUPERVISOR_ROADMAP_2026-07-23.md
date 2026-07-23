@@ -3,7 +3,9 @@
 Scope: NLMYTGen
 
 この文書は、公開リモートの最新後継開発線を受信端末へ取り込み、宣言済み依存、focused contract、
-render driver、private artifactの可用性を再測定した時点証跡である。2026-07-23の送信端末と受信端末では
+render driver、private artifactの可用性を再測定した時点証跡である。follow-up auditでは
+`eb883979479fd9a0cdace1d82fdb1295e6c80950`を再監査anchorとしてfetchとFF-only pullを行い、
+already up to dateを確認した。2026-07-23の送信端末と受信端末では
 private artifactの可用性が異なるため、端末固有の観測を製品状態やGit可搬性へ読み替えない。製品状態と直近gateの
 正本は[`runtime-state.md`](../runtime-state.md)、機能statusの正本は
 [`FEATURE_REGISTRY.md`](../FEATURE_REGISTRY.md)とする。ここで提案する長期goalは監修判断の材料であり、
@@ -13,9 +15,9 @@ private artifactの可用性が異なるため、端末固有の観測を製品�
 ## 監修判断に必要な結論
 
 受信worktree `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen` の
-`codex/nlmytgen-regression-integrity-v1`は、`git fetch --prune origin`で新着commit `58feb85`を検出し、
-`2f55849`からfast-forward-onlyで同期した。同期直後のupstream差分は`0/0`、
-`origin/master`より30 commit先行・遅れ0で、tracked worktreeはcleanである。送信端末で記録された
+`codex/nlmytgen-regression-integrity-v1`は、`git fetch --prune origin`とFF-only pull後も
+再監査anchor `eb88397`のままalready up to dateだった。この文書更新前のupstream差分は`0/0`、
+`origin/master`より31 commit先行・遅れ0で、tracked worktreeはcleanである。送信端末で記録された
 「review carrier不在」はその端末だけの観測であり、受信端末では次の3 artifactがexact pathに存在する。
 
 - source `.local.ymmp`: SHA-256 `beee7eab...eaa54`
@@ -32,10 +34,10 @@ moveはcarrier復元ではなく、exact MP4を人間が通し視聴して内部
 
 | 確認対象 | 実測 | 現在状態 | 監修上の意味 |
 | --- | --- | --- | --- |
-| remote fetch | `git fetch --prune origin` | current branchに1 commitの新着を取得 | 別端末の開発基盤監査とroadmapを回収 |
-| current branch | FF-only pull | `2f55849` → `58feb85` | Regression Integrityを含むcurrent handoff線へ同期 |
+| remote fetch | `git fetch --prune origin` | 再監査時の新着なし | public remote refsをcurrentに更新 |
+| current branch | FF-only pull | `eb88397`でalready up to date | Regression Integrityを含むcurrent handoff線を維持 |
 | upstream parity | `HEAD...origin/codex/nlmytgen-regression-integrity-v1` | `0/0` | 受信時点でlocal/remoteのcommit差なし |
-| default branchとの関係 | ancestry / rev-list | 30 ahead / 0 behind | master内容を欠かさずfeature成果を保持するが、未merge |
+| default branchとの関係 | ancestry / rev-list | 文書更新前に31 ahead / 0 behind | master内容を欠かさずfeature成果を保持するが、未merge |
 | worktree | status / diff / cached diff | tracked clean、upstream `0/0` | user成果物を退避・削除・一括stageしていない |
 | publication state | runtime / PR readback | draft PR #2はreview-only | merge、release、公開承認を意味しない |
 
@@ -66,7 +68,7 @@ Electronのmajor upgradeはGUI runtime/API差分を伴いうるため、開発�
 
 | 検証 | 結果 | 保証すること | 保証しないこと |
 | --- | --- | --- | --- |
-| episode video / media validation / silent runtime / project-state tests | **46 passed in 8.46s** | current manifest、synthetic pipeline、media判定、silent境界、state mirror | human quality |
+| episode video / media validation / silent runtime / project-state tests | **46 passed** | current manifest、synthetic pipeline、media判定、silent境界、state mirror | human quality |
 | `scripts/check_project_state_sync.py` | **PASS** | runtime / cockpitのstate整合 | 過去reportの端末固有artifact可用性 |
 | current CLI / pipeline / validation / state / integrity runner compile | **PASS** | 対象Python moduleの構文・import前段 | 外部tool操作 |
 | render-driver Release build | **PASS: warning 0 / error 0** | .NET 10でcurrent UIA driverをcompile可能 | 実YMM4 UIとversion compatibility |
@@ -111,7 +113,7 @@ exact review carrierもある。次の価値は、新機能を増やすことよ
 | **3. Regression Integrityを3実行形態で閉じる** | clean-roomだけgreenでsame-machine/worktreeがred | ignored media/profileをcopy対象外へし、private evidenceをauthorityから分離、locatorをrepo-relative化。disk spikeなし・Git差分不変で分類一致 | product artifactを変えない限定slice | 次実装のfalse red低減、CI gate設計 |
 | **4. 依存再現性とGUI securityを閉じる** | ignored lockとElectron 35の既知脆弱性でclean machine再現と安全更新が未確定 | uv/npm lockの正本化方針を決定し、Electron supported majorへのupgradeをbranch内でAPI/UI smoke、package audit、rollback可能性付きで検証 | major updateの監修承認が必要 | 別端末のdeterministic setup、GUI保守基盤 |
 | **5. Render/review portabilityを製品化** | private artifact/toolchain有無でhandoff判定が端末ごとに揺れる | tool version、YMM4/.NET discovery、artifact hash ingest、review-only transfer、fail-closed reasonを1 operator surfaceへ統合 | 今回の端末差とgoal 4の知見 | 別端末でreview/re-render可否を即判定 |
-| **6. Technical milestoneをdefault branchへ統合** | feature branchだけがone-command能力を持つ | human decision、合意したregression gate、PR差分、privacy/path/state auditを満たし、監修承認後にnormal-history merge | 現在はmasterより30 commit先行、未merge | default branchから次sliceを開始 |
+| **6. Technical milestoneをdefault branchへ統合** | feature branchだけがone-command能力を持つ | human decision、合意したregression gate、PR差分、privacy/path/state auditを満たし、監修承認後にnormal-history merge | 再監査anchorではmasterより31 commit先行、未merge | default branchから次sliceを開始 |
 | **7. Proxyをrights-cleared production visualへ置換** | proxyは公開品質・rightsを満たさない | cue/sceneごとに`accepted / replace / cut / defer`を決め、source、permission、attribution、safe areaをledger化 | human aestheticとrights owner判断 | production master候補の制作 |
 | **8. Production master candidateを閉じる** | internal-reviewと公開候補の品質差 | final audio、字幕、構図、motion、bitrate、decode、frame sample、source不変、rights ledgerとhuman acceptanceを満たす | goals 2・7 | packaging / release candidate判断 |
 | **9. GUIで標準制作loopを完結** | current pathとreview decisionがCLI/docs中心 | ingest、dry-run、blocked reason、render progress、receipt、cue decisionがGUI primary surfaceで完結 | GUI security/portabilityを先に安定 | 人間をcreative判断へ寄せた日常運用 |

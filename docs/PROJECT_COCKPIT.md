@@ -1,7 +1,7 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-23.3
+State-Revision: 2026-07-23.4
 Updated: 2026-07-23 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
@@ -15,7 +15,7 @@ Regression-Integrity-Implementation-Commit: f34f79f93fcc2db1cbc779e960bf1ed318f3
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 after handoff push
 Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts retained
-Handoff-Anchor: 58feb851e8fdd35c0f205e77b86d45d0fe9c78a0
+Handoff-Anchor: eb883979479fd9a0cdace1d82fdb1295e6c80950
 Handoff-Verified: 2026-07-23 JST
 
 このページはpublic repositoryで現在地だけを読む追跡済みMarkdownです。短期正本は
@@ -51,8 +51,8 @@ Primary review surface（ignored local artifact、現在端末で利用可能）
 fast-forward限定で同期します。`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
 `docs/runtime-state.md`を読み、必要時だけ`docs/project-context.md`最上部を参照します。
 handoff commitは固定文字列ではなくremote branch tipから解決し、`HEAD...@{u}=0/0`を
-確認してください。今回のsync anchorは`58feb85`で、この時点では
-`origin/master`に30 ahead / 0 behindでした。
+確認してください。今回の再監査anchorは`eb88397`で、FF-only pullはalready up to date、
+この文書更新前には`origin/master`に31 ahead / 0 behindでした。
 
 送信端末ではMP4とsource `.local.ymmp`が不在でしたが、この受信端末には3つのexact private artifactが
 あり、hash照合、silent `--dry-run`、fresh full decodeまでpassしています。再生成せず、発音、リズム、

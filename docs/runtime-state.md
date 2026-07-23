@@ -1,7 +1,7 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-23.3
+State-Revision: 2026-07-23.4
 Updated: 2026-07-23 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
@@ -18,8 +18,9 @@ Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts r
 
 ## Current Slice
 
-- The receiving terminal fast-forwarded the handoff worktree from `2f55849`
-  to `58feb85`: upstream `0/0`, master ahead/behind `30/0`, tracked clean.
+- A follow-up live audit fetched and pulled the handoff branch at
+  `eb883979479fd9a0cdace1d82fdb1295e6c80950`; it was already current, upstream
+  was `0/0`, `origin/master` ahead/behind was `31/0`, and tracked files were clean.
 - Python 3.13.3, uv 0.10.7, Electron 35.7.5, ffmpeg/ffprobe 8.0.1,
   YMM4 4.54.0.1, and .NET SDK 10.0.204 are available here. The current
   46 focused tests, project-state sync, silent dry-run, and MP4 full decode pass;
@@ -106,11 +107,12 @@ repair is approved. 根拠: `docs/INVARIANTS.md` §Production Value North Star +
 
 ## Cross-Terminal Re-entry
 
-- The receiving terminal refreshed the worktree from tracked-clean commit
-  `58feb851e8fdd35c0f205e77b86d45d0fe9c78a0` after `git fetch --prune origin`;
-  at that anchor the branch and upstream were `0/0` and the branch was 30 commits
-  ahead of and 0 behind `origin/master`. Resolve the final documentation commit
-  from the current remote branch tip.
+- The receiving terminal re-audited tracked-clean commit
+  `eb883979479fd9a0cdace1d82fdb1295e6c80950` after `git fetch --prune origin`
+  and an FF-only pull; the pull was already current. At that pre-handoff anchor,
+  branch/upstream was `0/0` and the branch was 31 commits ahead of and 0 behind
+  `origin/master`. Resolve the final documentation commit from the current
+  remote branch tip.
 - Fetch `origin/codex/nlmytgen-regression-integrity-v1`, check out that branch,
   and use fast-forward-only synchronization. Confirm `HEAD...@{u}` is `0/0`
   and the tracked worktree is clean before continuing.
