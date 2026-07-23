@@ -4,7 +4,6 @@ import hashlib
 import json
 import os
 import re
-import shutil
 import subprocess
 import sys
 from collections import Counter
@@ -12,6 +11,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pytest
+
+from tests.regression_workspace import copy_tracked_tree, repo_relative_path
 
 from src.pipeline.new_banknote_yymm4_import_operator_batch import (
     ACCEPTED_SCRIPT_COMMIT,
@@ -57,10 +58,10 @@ def _load(path: Path) -> dict:
 @pytest.fixture
 def isolated_pilot(tmp_path: Path) -> Path:
     target = tmp_path / "new_banknote_pilot"
-    shutil.copytree(
+    copy_tracked_tree(
         DEFAULT_PILOT_DIR,
         target,
-        ignore=shutil.ignore_patterns(LOCAL_OUTPUT_DIRNAME),
+        repo_root=REPO_ROOT,
     )
     return target
 
@@ -122,21 +123,23 @@ def _write_import_project(
     return project_path
 
 
-def test_tracked_operator_batch_is_byte_deterministic_and_preflight_passes() -> None:
-    first = render_new_banknote_yymm4_operator_artifacts(DEFAULT_PILOT_DIR)
-    second = render_new_banknote_yymm4_operator_artifacts(DEFAULT_PILOT_DIR)
+def test_tracked_operator_batch_is_byte_deterministic_and_preflight_passes(
+    isolated_pilot: Path,
+) -> None:
+    first = render_new_banknote_yymm4_operator_artifacts(isolated_pilot)
+    second = render_new_banknote_yymm4_operator_artifacts(isolated_pilot)
     assert first == second
     for relative, expected_bytes in first.items():
         assert (DEFAULT_PILOT_DIR / relative).read_bytes() == expected_bytes
 
     preflight = preflight_new_banknote_yymm4_operator_batch(
-        DEFAULT_PILOT_DIR
+        isolated_pilot
     )
     assert preflight["status"] == "passed"
     assert preflight["failed_checks"] == []
     assert all(preflight["checks"].values())
 
-    receipt = _load(DEFAULT_PILOT_DIR / APPROVAL_RECEIPT_FILENAME)
+    receipt = _load(isolated_pilot / APPROVAL_RECEIPT_FILENAME)
     assert receipt["approval_class"] == "explicit_user_option_a"
     assert receipt["approved_commit"] == ACCEPTED_SCRIPT_COMMIT
     assert receipt["status"] == "valid"
@@ -449,17 +452,23 @@ def test_local_operator_targets_are_ignored_and_untracked() -> None:
         LOCAL_OBSERVATION_FILENAME,
     ):
         candidate = DEFAULT_PILOT_DIR / LOCAL_OUTPUT_DIRNAME / name
+        relative_candidate = repo_relative_path(REPO_ROOT, candidate)
         ignored = subprocess.run(
-            ["git", "check-ignore", "-q", str(candidate)],
+            ["git", "check-ignore", "-q", "--", relative_candidate],
             cwd=REPO_ROOT,
             check=False,
         )
         assert ignored.returncode == 0, name
+    relative_local = repo_relative_path(
+        REPO_ROOT,
+        DEFAULT_PILOT_DIR / LOCAL_OUTPUT_DIRNAME,
+    )
     tracked = subprocess.run(
         [
             "git",
             "ls-files",
-            str(DEFAULT_PILOT_DIR / LOCAL_OUTPUT_DIRNAME),
+            "--",
+            relative_local,
         ],
         cwd=REPO_ROOT,
         check=False,
@@ -473,13 +482,14 @@ def test_local_operator_targets_are_ignored_and_untracked() -> None:
 def test_cli_preflight_writes_explicit_utf8_json(
     tmp_path: Path,
     capsys: pytest.CaptureFixture[str],
+    isolated_pilot: Path,
 ) -> None:
     result_json = tmp_path / "日本語-preflight.json"
     code = operator_main(
         [
             "preflight",
             "--pilot",
-            str(DEFAULT_PILOT_DIR),
+            str(isolated_pilot),
             "--result-json",
             str(result_json),
         ]

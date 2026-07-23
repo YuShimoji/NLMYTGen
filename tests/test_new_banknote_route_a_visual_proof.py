@@ -3,13 +3,14 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-import shutil
 import subprocess
 from html.parser import HTMLParser
 from pathlib import Path
 from xml.etree import ElementTree
 
 import pytest
+
+from tests.regression_workspace import copy_tracked_tree, repo_relative_path
 
 from src.pipeline.new_banknote_route_a_visual_proof import (
     APPROVED_SUBTITLE_LINES_BY_CUE,
@@ -420,8 +421,9 @@ def test_ignored_yymm4_evidence_matches_historical_integration_receipt() -> None
         path = ROOT / row["path"]
         assert path.stat().st_size == row["before"]["size"]
         assert _sha(path) == row["before"]["sha256"]
+        relative_path = repo_relative_path(ROOT, path)
         assert subprocess.run(
-            ["git", "check-ignore", "--quiet", "--", str(path)],
+            ["git", "check-ignore", "--quiet", "--", relative_path],
             cwd=ROOT,
             check=False,
         ).returncode == 0
@@ -432,10 +434,10 @@ def test_generation_is_deterministic_and_state_is_review_ready(
 ) -> None:
     isolated_root = tmp_path / "repo"
     isolated_pilot = isolated_root / PILOT.relative_to(ROOT)
-    shutil.copytree(
+    copy_tracked_tree(
         PILOT,
         isolated_pilot,
-        ignore=shutil.ignore_patterns("local_outputs"),
+        repo_root=ROOT,
     )
     isolated_proof = isolated_root / PROOF.relative_to(ROOT)
     first = build_route_a_visual_proof(root=isolated_root)

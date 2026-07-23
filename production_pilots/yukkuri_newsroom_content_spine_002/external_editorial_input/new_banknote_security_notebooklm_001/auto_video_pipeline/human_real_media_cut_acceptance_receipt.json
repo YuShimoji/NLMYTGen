@@ -1,0 +1,33 @@
+{
+  "schema": "nlmytgen.human_real_media_cut_acceptance.v1",
+  "status": "stable_internal_cut",
+  "reviewed_artifact": {
+    "run_id": "new_banknote_real_media_review_v1",
+    "filename": "internal_review_real_media.mp4",
+    "sha256": "423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476",
+    "generated_project_sha256": "244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611"
+  },
+  "decision": {
+    "speech": "accepted",
+    "wording_order": "accepted",
+    "cue_timing": "accepted",
+    "subtitle_timing": "accepted",
+    "subtitle_line_breaks": "accepted",
+    "real_media_visual_treatment": "accepted",
+    "rerender_required": false
+  },
+  "successor_decision": {
+    "supersedes_visual_decision_for_new_artifact": true,
+    "predecessor_receipt": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/human_review_visual_rejection_receipt.json",
+    "predecessor_artifact_sha256": "f2444f9657a569e9a374582765c41a28e414040a018f029b0180f256657421f7"
+  },
+  "boundary": {
+    "internal_review_only": true,
+    "rights_clearance": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "release": false,
+    "master_merge": false
+  }
+}

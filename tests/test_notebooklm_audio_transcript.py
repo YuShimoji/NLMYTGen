@@ -7,6 +7,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.regression_workspace import repo_relative_path
+
 from src.cli.main import main as cli_main
 from src.pipeline.notebooklm_audio_transcript import (
     ANONYMOUS_IDENTITIES,
@@ -200,14 +202,15 @@ def test_repo_ignore_authorities_keep_raw_and_local_outputs_untracked() -> None:
     )
     local_line_map = package / "local_outputs/raw_line_map.json"
     for path in (RAW, MANIFEST, local_line_map):
+        relative_path = repo_relative_path(REPO_ROOT, path)
         ignored = subprocess.run(
-            ["git", "check-ignore", "-q", str(path)],
+            ["git", "check-ignore", "-q", "--", relative_path],
             cwd=REPO_ROOT,
             check=False,
         )
         assert ignored.returncode == 0
         tracked = subprocess.run(
-            ["git", "ls-files", "--error-unmatch", str(path)],
+            ["git", "ls-files", "--error-unmatch", "--", relative_path],
             cwd=REPO_ROOT,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,

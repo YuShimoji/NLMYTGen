@@ -1,120 +1,105 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: new-banknote-real-media-internal-review-video-ready-v1
-State-Revision: 2026-07-24.1
+Project-State-ID: new-banknote-stable-internal-cut-regression-integrity-green-v1
+State-Revision: 2026-07-24.2
 Updated: 2026-07-24 JST
-Product-State: real-media-internal-review-video-generated
-Product-Gate: human-creative-review-and-rights-pending
-Recommended-Next: review-local-real-media-mp4
+Product-State: accepted-real-media-internal-cut-with-evidence-safe-regression-gate
+Product-Gate: dependency-portability-and-gui-security
+Recommended-Next: make-dependency-locks-portable-and-validate-electron-upgrade
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
-Handoff-Branch: codex/nlmytgen-real-media-visual-replacement-v1
+Handoff-Branch: codex/nlmytgen-accepted-cut-regression-integrity-v1
 Handoff-PR: none
-Required-Base: 321cce8a3adc7fa85623f8b417afeb4b8557bfd5
-Real-Media-Implementation-Commit: resolved-by-current-branch-tip
-Remote-Parity: 0/0 after handoff push
-Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts retained
+Required-Base: c77a89b8db15d5c0b286afc322dd6842a016a606
+Outcome-Commit: resolved-by-current-branch-tip
+Remote-Parity: 0/0 required after outcome push
+Tracked-Worktree: clean required after outcome commit; preserved untracked artifacts remain
 
 ## Current Slice
 
-- The rejected SVG/proxy visual stage has been replaced for the new-banknote
-  pilot without changing the accepted speech, wording, order, cue timing, or
-  subtitle line fragments.
-- `build-episode-video` remains backward compatible with the old SVG manifest
-  and now accepts fail-closed `image` / `video` cues with repo-relative local
-  media, source provenance, optional normalized crop/time range, fit mode,
-  accepted subtitle fragments, and internal-review-only status.
-- The real-media manifest binds nine cues to nine provenance records and nine
-  ignored local source assets. It rejects SVG input and keeps rights,
-  production, publication, and upload false.
-- The source YMM4 project remains SHA-256
-  `beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54`.
-  Its nine VoiceItems remain object-identical, with the accepted 3/6 speaker
-  split, exact text/order, cue boundaries, and 4415-frame timeline.
-- Generated project:
-  `auto_video_runs/new_banknote_real_media_review_v1/generated_project.local.ymmp`,
-  SHA-256 `244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611`.
-  It has nine cue-timed PNG ImageItems and zero SVG references.
-- Review carrier:
-  `auto_video_runs/new_banknote_real_media_review_v1/internal_review_real_media.mp4`,
-  SHA-256 `423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476`.
-  It is H.264/AAC, 1920×1080, 60 fps, 73.583008 seconds, and 93,375,529 bytes.
-- ISO-BMFF structure, ffprobe, two streams, bitrate/size limits, full-file
-  decode, source-unchanged binding, and 12/12 representative-frame variation
-  pass.
-- All nine cue frames were opened as images. Each contains recognizable source
-  media, the accepted speaker label and subtitle fragments are readable and
-  unclipped, and no abstract proxy is present.
-- Eight assets are `official_reuse_candidate`; the FNN opening still is
-  `internal_review_only`. All nine remain rights-unresolved and untracked.
-- Silent execution remained enforced: no speaker/preview playback, no system
-  volume change, and project-owned process cleanup passed.
-
-## Autonomous Repairs
-
-- The first real-media render exposed that the accepted subtitles had been
-  baked into the rejected SVGs rather than supplied by VoiceItems. The repair
-  records the already-accepted fragments in the real-media manifest and
-  composites only the conventional subtitle band onto raster output.
-- One bounded YMM4 attempt hit `ElementNotAvailableException` while opening the
-  output UI. Owned-process cleanup and the source hash were verified, then the
-  same command was retried successfully.
+- The accepted real-media review carrier is now the stable internal cut.
+  `human_real_media_cut_acceptance_receipt.json` binds run
+  `new_banknote_real_media_review_v1` to MP4 SHA-256
+  `423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476`
+  and generated-project SHA-256
+  `244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611`.
+- Speech, wording/order, cue timing, subtitle timing, subtitle line breaks, and
+  real-media visual treatment are accepted. Status is `stable_internal_cut`;
+  rerender is not required.
+- The predecessor visual-rejection receipt remains unchanged and is referenced
+  only as the decision for the rejected proxy artifact.
+- Rights clearance, production, publication, upload, release, PR merge, and
+  master integration remain false. The MP4 and generated project remain ignored
+  same-machine evidence and are not remotely portable.
+- The canonical Regression Integrity selection remains 16 modules / 170 tests.
+  Independent clean-room passed 161 with 9 declared-locator skips;
+  evidence-rich same-machine passed 166 with 4 declared-locator skips;
+  tracked-only linked worktree passed 161 with 9 declared-locator skips.
+  Every mode had 0 failures / 0 errors.
+- In every mode, `git status --porcelain`, `git diff --no-ext-diff`, and
+  `git diff --cached --no-ext-diff` were byte-exact before/after. JUnit and
+  project-owned temporary workspaces were removed after successful inspection.
+- Regression fixtures materialize only committed Git-object subtrees. Ignored
+  media, browser profiles, local outputs, and unrelated evidence are never
+  recursively copied into a temporary workspace.
+- Local/private evidence tests require exact repo-relative locators. Missing
+  locators produce documented `requires_local_evidence` skips; historical
+  receipts alone never count as live availability.
+- Repo-relative ignore probes work when `.git` is a directory or a linked-
+  worktree file. No Thank-terminal path is encoded in the contract.
+- No YMM4, render, media playback, system-volume, dependency-upgrade, or
+  creative-mutation path was executed in this slice.
 
 ## Product Position
 
-The visual-only repair is technically complete and the new local MP4 is ready
-for human internal review. This does not grant creative acceptance, rights
-clearance, production use, publication, upload, PR merge, or master integration.
-Cue 005 uses the exact official deep-intaglio crop, but its source resolution is
-low and remains the clearest known visual limitation.
+The new-banknote vertical slice now has both an accepted stable internal cut and
+an evidence-safe three-mode regression gate. Accepted creative dimensions are
+closed unless a later explicit successor decision reopens them. This checkpoint
+does not authorize rights, production, publication, upload, release, merge, or
+master integration.
 
 ## Exact Next Action
 
-When explicit audio review is acceptable, the human reviewer should watch
-`internal_review_real_media.mp4` once and return `accept`, or `repair` with cue
-IDs. Do not publish or treat this carrier as rights-cleared.
+Start a separate dependency-portability and GUI-security lane. Decide how
+`uv.lock` and `gui/package-lock.json` become reproducible tracked authority, then
+validate the required Electron major upgrade without changing the accepted cut.
+Do not rerender or reopen creative review as part of that lane.
 
 ## Evidence and Access
 
-- Operator command:
-  `auto_video_pipeline/README_AUTO_VIDEO_PIPELINE.md`
-- Real-media authority:
-  `auto_video_pipeline/new_banknote_real_media_episode_manifest.json`
-- Sanitized source/rights evidence:
-  `auto_video_pipeline/new_banknote_real_media_provenance.json`
-- Human review decision:
-  `auto_video_pipeline/human_review_visual_rejection_receipt.json`
-- Sanitized validated evidence:
+- Accepted-cut decision:
+  `auto_video_pipeline/human_real_media_cut_acceptance_receipt.json`
+- Validated media identity:
   `auto_video_pipeline/validated_real_media_run_receipt.json`
+- Three-mode machine result:
+  `docs/verification/REGRESSION_INTEGRITY_2026-07-24.json`
+- Three-mode explanatory report:
+  `docs/verification/REGRESSION_INTEGRITY_2026-07-24.md`
+- Canonical runner:
+  `scripts/check_regression_integrity.py`
 - Focused contracts:
-  `tests/test_episode_video_pipeline.py`
-- Ignored local evidence:
-  `auto_video_runs/new_banknote_real_media_review_v1/`
+  `tests/test_regression_integrity_runner.py`
 
 ## Cross-Terminal Re-entry
 
 - Fetch and fast-forward
-  `origin/codex/nlmytgen-real-media-visual-replacement-v1`; verify
+  `origin/codex/nlmytgen-accepted-cut-regression-integrity-v1`; verify
   `HEAD...@{upstream}=0/0` and a clean tracked worktree.
 - Read `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → this file.
-- Source media, source `.local.ymmp`, generated project, MP4, frames, and force
-  archives are ignored same-machine evidence. Their absence in another checkout
-  is an availability boundary, not a failed tracked contract.
-- To regenerate, restore every local asset at the manifest path/hash, provide
-  compatible YMM4/ffmpeg/ffprobe/uv/.NET, run `--dry-run`, then use the exact
-  README command under `NLMYTGEN_AUDIO_POLICY=silent`.
-- Pre-existing `.playwright-mcp/`, `artifacts/`, and
-  `phase-e-01-contact-acquired*.png` were retained and are unrelated.
+- Source media, `.local.ymmp`, MP4, frames, profiles, and run archives stay
+  ignored. Their absence is an availability boundary, not a regression failure.
+- Preserve `.playwright-mcp/`, `artifacts/`, and
+  `phase-e-01-contact-acquired*.png`; they are unrelated user evidence.
 
 ## Active Boundaries
 
-- Human creative acceptance: pending.
+- Human creative acceptance: complete for the exact stable internal cut.
+- Rerender: not required.
 - Rights clearance and production asset approval: pending.
-- Publication, upload, release, merge, and master integration: not performed.
-- No public media artifact was committed or uploaded.
+- Publication, upload, release, PR, merge, and master integration: not performed.
+- Dependency portability and Electron security validation: next planned lane.
 
 ## Maintenance Note
 
-Keep this capsule within 160 lines. Resolve the implementation commit from the
-current remote branch tip. Exact hashes and cue inspection results are in the
-sanitized validated receipt.
+Keep this capsule within 160 lines. Resolve the outcome commit from the current
+remote branch tip. Exact results are in the two 2026-07-24 regression artifacts.

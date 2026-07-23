@@ -1,40 +1,48 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-23 JST・receiving terminal review ready）
+## 現在の別端末再開ハンドオフ（2026-07-24 JST・accepted cut / regression green）
 
-この節だけが現在の別端末再開地点である。送信端末の開発基盤監査を継承しつつ、受信端末にだけ存在する
-private artifactをlive再検証し、直近gateを実測へ合わせた。
+この節だけが現在の別端末再開地点である。real-media cutの人間受理と、
+canonical Regression Integrityの三モード収束を同じcheckpointへ固定した。
 
-- **取得先**: `origin/codex/nlmytgen-regression-integrity-v1`。受信worktree
-  `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen`で`git fetch --prune origin`と
-  fast-forward-only pullを行い、再監査anchor
-  `eb883979479fd9a0cdace1d82fdb1295e6c80950`がalready up to dateであることを確認した。
-  最終handoff commitはremote branch tipから解決し、固定SHAを次の作業baseとみなさない。
-- **同期確認**: この文書更新前のupstream差分は`0/0`、`origin/master`に
-  31 ahead / 0 behind、tracked cleanだった。pre-existing untracked
-  `.playwright-mcp/`、`artifacts/`、`phase-e-01-contact-acquired*.png`とignored evidenceは保持した。
-- **受信端末の開発基盤**: Python 3.13.3 / uv 0.10.7 / pytest 8.4.2、Node 24.13.0 /
-  npm 11.6.2 / Electron 35.7.5、ffmpeg/ffprobe 8.0.1、.NET SDK 10.0.204、
-  YMM4 4.54.0.1をreadbackした。locked uv sync、npm dependency tree、focused 46 tests、
-  state sync、対象module compile、driver Release build、silent dry-run、MP4 full decodeがpassした。
-  今回の再監査でもfocused 46、state sync、npm dependency tree、driver build、
-  18 protected inputのdry-run、3 artifact hash、fresh full decodeを再passした。
-- **private artifact availability**: manifest source `.local.ymmp`、generated project、
-  `internal_review.mp4`がexact ignored pathに存在し、SHA-256はそれぞれ
-  `beee7eab...eaa54`、`f0361f...19853`、`f2444f...421f7`でmanifest / receiptと一致した。
-  送信端末の「不在」はその端末だけの観測であり、Git可搬性や製品状態へ一般化しない。
-- **残存基盤負債**: `uv.lock`と`gui/package-lock.json`はignoredで、Git-only clean checkoutの
-  deterministic dependency syncは未成立。Electron 35.7.5はdirect high 1件で、自動fixは43.2.0への
-  semver-major。`dotnet --info`のworkload installer例外も残るがcurrent driver buildは0 warning /
-  0 errorである。いずれも今回無断upgrade・workload修復していない。
-- **exact next / next owner**: human reviewerがexact local MP4を音声再生可能な時に通し視聴し、
-  発音、rhythm、cue切替、字幕comfort、proxy compositionを`accept` / `repair` / `reject`へ
-  cue idと観察付きで決定する。assistantは返答後だけcue-specific repairまたはacceptance freezeへ進む。
-- **変えていない判断**: `Product-Gate`は`human-internal-review`。draft PR #2はreview-only。
-  rights、production asset replacement、master merge、external upload、publicationは未承認である。
+- **取得先**:
+  `origin/codex/nlmytgen-accepted-cut-regression-integrity-v1`。required baseは
+  `c77a89b8db15d5c0b286afc322dd6842a016a606`、outcome commitはremote branch
+  tipから解決する。merge、rebase、master更新、PR作成は行っていない。
+- **accepted cut**: run `new_banknote_real_media_review_v1`の
+  `internal_review_real_media.mp4`、SHA-256
+  `423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476`
+  を`stable_internal_cut`として受理した。generated project SHA-256は
+  `244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611`。
+  speech、wording/order、cue/subtitle timing、subtitle line breaks、
+  real-media visual treatmentはclosedで、再renderは不要である。
+- **successor decision**:
+  `auto_video_pipeline/human_real_media_cut_acceptance_receipt.json`がexact artifactへ
+  人間判断を結合する。以前のvisual-rejection receiptは旧proxy artifactの判断として
+  byte不変で保持した。
+- **Regression Integrity**: canonical 16 modules / 170 testsはclean-room
+  `161 pass / 9 skip`、evidence-rich same-machine `166 pass / 4 skip`、
+  tracked-only linked worktree `161 pass / 9 skip`。全modeでfailure 0 / error 0、
+  skipは欠けたexact private locatorだけ、Git status/diff/cached diffは前後不変。
+- **causal repair**: test fixtureはevidence-rich treeの`copytree`をやめ、
+  exact Git object subtreeをarchive展開する。private evidenceはlocator宣言した
+  read-only testだけが参照し、ignored media/profile/local outputをtempへmaterializeしない。
+  ignore検査はactual worktree rootからのrepo-relative sentinel pathを使うため、
+  `.git` fileのlinked worktreeでも同じ意味になる。
+- **cleanup / preservation**: project-owned clean-room、linked worktree、patch、
+  JUnit tempを回収した。pre-existing `.playwright-mcp/`、`artifacts/`、
+  `phase-e-01-contact-acquired*.png`、ignored media/YMMP/frames/run archivesは
+  stage・削除・変更していない。
+- **exact next / next owner**: dependency reproducibilityとGUI securityを別laneで扱う。
+  ignoredの`uv.lock`／`gui/package-lock.json`をportable authorityにする方針を決め、
+  Electron major upgradeを互換検証する。accepted cutのcreative dimension、
+  rights、production、publicationをこのlaneで再開しない。
+- **変えていない判断**: rights clearance、production、publication、upload、
+  release、PR、merge、master integrationはfalse。local MP4はremote portableではない。
 - **詳細正本**:
-  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`。
-  通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md`だけを読む。
+  `docs/verification/REGRESSION_INTEGRITY_2026-07-24.md`と同名JSON。
+  通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md`だけを読む。
 
 ## 直前の別端末再開ハンドオフ（2026-07-23 JST・sending terminal development ready）
 

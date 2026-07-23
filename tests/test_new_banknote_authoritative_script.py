@@ -14,6 +14,8 @@ from urllib.parse import urlparse
 
 import pytest
 
+from tests.regression_workspace import repo_relative_path
+
 from src.pipeline.new_banknote_authoritative_script import (
     build_new_banknote_authoritative_script_package,
     validate_new_banknote_authoritative_script_package,
@@ -1177,14 +1179,16 @@ def test_package_ignore_rules_keep_local_evidence_private_and_csvs_trackable() -
 
     for dirname in ("local_outputs", "source_cache", "source_extracts", "source_probe"):
         candidate = PACKAGE / dirname / "privacy-probe.bin"
+        relative_candidate = repo_relative_path(REPO_ROOT, candidate)
         ignored = subprocess.run(
-            ["git", "check-ignore", "-q", str(candidate)],
+            ["git", "check-ignore", "-q", "--", relative_candidate],
             cwd=REPO_ROOT,
             check=False,
         )
         assert ignored.returncode == 0, dirname
+        relative_directory = repo_relative_path(REPO_ROOT, PACKAGE / dirname)
         tracked = subprocess.run(
-            ["git", "ls-files", str(PACKAGE / dirname)],
+            ["git", "ls-files", "--", relative_directory],
             cwd=REPO_ROOT,
             check=False,
             capture_output=True,
@@ -1194,8 +1198,9 @@ def test_package_ignore_rules_keep_local_evidence_private_and_csvs_trackable() -
         assert not tracked.stdout.strip()
 
     for name in ("canonical_yymm4.csv", "derived_yymm4_import.csv"):
+        relative_file = repo_relative_path(REPO_ROOT, PACKAGE / name)
         ignored = subprocess.run(
-            ["git", "check-ignore", "-q", str(PACKAGE / name)],
+            ["git", "check-ignore", "-q", "--", relative_file],
             cwd=REPO_ROOT,
             check=False,
         )

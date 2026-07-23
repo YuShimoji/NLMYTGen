@@ -4,13 +4,14 @@ import csv
 import hashlib
 import json
 import re
-import shutil
 import subprocess
 from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 
 import pytest
+
+from tests.regression_workspace import copy_tracked_tree
 
 from src.pipeline.new_banknote_yymm4_import_intake_visual_decision import (
     ALLOWED_SOURCE_IDS,
@@ -81,10 +82,11 @@ class _BoardParser(HTMLParser):
 @pytest.fixture
 def isolated_pilot(tmp_path: Path) -> Path:
     target = tmp_path / "new_banknote_pilot"
-    shutil.copytree(
+    copy_tracked_tree(
         DEFAULT_PILOT_DIR,
         target,
-        ignore=shutil.ignore_patterns(
+        repo_root=REPO_ROOT,
+        exclude_names=(
             LOCAL_OUTPUT_DIRNAME,
             "README_YMM4_IMPORT_OBSERVATION.md",
             "yymm4_import_*",
@@ -268,8 +270,16 @@ def test_fixture_build_is_deterministic_and_byte_preserving(
     assert preflight["failed_checks"] == []
 
 
-def test_tracked_outputs_match_pure_renderer_and_freeze_script_hashes() -> None:
-    snapshot = load_tracked_evidence_snapshot(DEFAULT_PILOT_DIR)
+def test_tracked_outputs_match_pure_renderer_and_freeze_script_hashes(
+    tmp_path: Path,
+) -> None:
+    tracked_pilot = tmp_path / "tracked-pilot"
+    copy_tracked_tree(
+        DEFAULT_PILOT_DIR,
+        tracked_pilot,
+        repo_root=REPO_ROOT,
+    )
+    snapshot = load_tracked_evidence_snapshot(tracked_pilot)
     first = render_new_banknote_import_visual_decision_artifacts(snapshot)
     second = render_new_banknote_import_visual_decision_artifacts(snapshot)
     assert first == second
@@ -281,7 +291,7 @@ def test_tracked_outputs_match_pure_renderer_and_freeze_script_hashes() -> None:
         for name in APPROVED_FILES
     } == EXPECTED_APPROVED_HASHES
     authoritative = validate_new_banknote_authoritative_script_package(
-        DEFAULT_PILOT_DIR
+        tracked_pilot
     )
     assert authoritative["status"] == "passed"
     assert authoritative["checks"]["no_source_bodies"] is True

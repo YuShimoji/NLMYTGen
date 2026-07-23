@@ -11,6 +11,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.regression_workspace import repo_relative_path
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PILOT = (
@@ -263,8 +265,12 @@ def test_integrated_json_html_privacy_and_local_binary_boundaries() -> None:
         assert not href.startswith(("http://", "https://", "file://", "/"))
         target = posixpath.normpath(f"{posixpath.dirname(board)}/{href}")
         assert _git_blob_at(HISTORICAL_INTEGRATION_REVISION, target) is not None
+    relative_local_outputs = repo_relative_path(
+        REPO_ROOT,
+        PILOT / "local_outputs",
+    )
     tracked = subprocess.check_output(
-        ["git", "ls-files", "--", str(PILOT / "local_outputs")],
+        ["git", "ls-files", "--", relative_local_outputs],
         cwd=REPO_ROOT,
         text=True,
     ).splitlines()
@@ -286,8 +292,9 @@ def test_ignored_local_evidence_matches_historical_integration_receipt() -> None
         path = REPO_ROOT / row["path"]
         assert path.stat().st_size == row["before"]["size"]
         assert hashlib.sha256(path.read_bytes()).hexdigest() == row["before"]["sha256"]
+        relative_path = repo_relative_path(REPO_ROOT, path)
         assert subprocess.run(
-            ["git", "check-ignore", "--quiet", "--", str(path)],
+            ["git", "check-ignore", "--quiet", "--", relative_path],
             cwd=REPO_ROOT,
             check=False,
         ).returncode == 0

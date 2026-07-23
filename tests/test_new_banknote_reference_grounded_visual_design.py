@@ -3,12 +3,13 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-import shutil
 import subprocess
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
 from xml.etree import ElementTree
+
+from tests.regression_workspace import copy_tracked_tree, repo_relative_path
 
 from src.pipeline.new_banknote_reference_grounded_visual_design import (
     BASE_REVISION,
@@ -341,15 +342,21 @@ def test_local_research_media_are_ignored_and_absent_from_tracked_proof() -> Non
         if path.is_file() and "local_" not in path.relative_to(OUTPUT).as_posix()
     ]
     assert all(path.suffix.lower() not in forbidden_suffixes for path in tracked_surface)
-    for relative in (
-        "local_reference_cache",
-        "local_reference_captures",
-        "local_in_video_observations",
-        "local_render_inspection",
-        "reference_contact_sheet.local.html",
+    for relative, is_directory in (
+        ("local_reference_cache", True),
+        ("local_reference_captures", True),
+        ("local_in_video_observations", True),
+        ("local_render_inspection", True),
+        ("reference_contact_sheet.local.html", False),
     ):
+        candidate = OUTPUT / relative
+        if is_directory:
+            candidate /= ".ignore-contract-probe"
+        relative_path = repo_relative_path(ROOT, candidate)
         result = subprocess.run(
-            ["git", "check-ignore", "-q", str(OUTPUT / relative)], cwd=ROOT, check=False
+            ["git", "check-ignore", "-q", "--", relative_path],
+            cwd=ROOT,
+            check=False,
         )
         assert result.returncode == 0
 
@@ -378,16 +385,10 @@ def test_machine_outputs_parse_readback_passes_and_generation_is_deterministic(
     assert readback["output_inspection"]["repair_cycles"] == 1
     isolated_root = tmp_path / "repo"
     isolated_pilot = isolated_root / PILOT.relative_to(ROOT)
-    shutil.copytree(
+    copy_tracked_tree(
         PILOT,
         isolated_pilot,
-        ignore=shutil.ignore_patterns(
-            "local_outputs",
-            "local_reference_cache",
-            "local_reference_captures",
-            "local_in_video_observations",
-            "local_render_inspection",
-        ),
+        repo_root=ROOT,
     )
     isolated_output = isolated_root / OUTPUT.relative_to(ROOT)
     first = build_reference_grounded_visual_design(root=isolated_root)

@@ -3,11 +3,12 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-import shutil
 from html.parser import HTMLParser
 from pathlib import Path
 
 import pytest
+
+from tests.regression_workspace import copy_tracked_tree
 
 from src.pipeline.editorial_provenance import (
     ATTRIBUTION_CLASSES,
@@ -29,6 +30,8 @@ from src.pipeline.editorial_provenance import (
     render_editorial_provenance_artifacts,
     validate_editorial_provenance_package,
 )
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 _PRIVATE_PATH_RE = re.compile(
@@ -393,15 +396,10 @@ def test_tracked_package_validates_with_historical_local_evidence() -> None:
 
 def test_render_and_second_build_are_byte_deterministic(tmp_path: Path) -> None:
     pilot = tmp_path / "pilot"
-    shutil.copytree(
+    copy_tracked_tree(
         DEFAULT_PILOT_DIR,
         pilot,
-        ignore=shutil.ignore_patterns(
-            "local_outputs",
-            "source_cache",
-            "source_extracts",
-            "source_probe",
-        ),
+        repo_root=REPO_ROOT,
     )
     first_build = build_editorial_provenance_package(pilot)
     portable_lock = _load(pilot / PROVENANCE_DIRNAME / "content_lock_receipt.json")

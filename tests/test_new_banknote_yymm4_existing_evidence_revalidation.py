@@ -4,7 +4,6 @@ import hashlib
 import json
 import os
 import re
-import shutil
 import subprocess
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -12,6 +11,7 @@ from pathlib import Path
 import pytest
 
 import src.pipeline.new_banknote_yymm4_existing_evidence_revalidation as revalidation
+from tests.regression_workspace import copy_tracked_tree, repo_relative_path
 from src.pipeline.new_banknote_yymm4_existing_evidence_revalidation import (
     ARTIFACT_FILENAMES,
     LIMITATIONS_FILENAME,
@@ -64,10 +64,10 @@ def _snapshot(paths: list[Path]) -> dict[str, tuple[int, int, str]]:
 @pytest.fixture
 def isolated_pilot(tmp_path: Path) -> Path:
     target = tmp_path / "new_banknote_pilot"
-    shutil.copytree(
+    copy_tracked_tree(
         DEFAULT_PILOT_DIR,
         target,
-        ignore=shutil.ignore_patterns(LOCAL_OUTPUT_DIRNAME),
+        repo_root=REPO_ROOT,
     )
     return target
 
@@ -440,14 +440,16 @@ def test_local_operator_evidence_remains_ignored_and_untracked() -> None:
         LOCAL_RESULT_FILENAME,
         LOCAL_BATCH_STATE_FILENAME,
     ):
+        relative = repo_relative_path(REPO_ROOT, local / name)
         ignored = subprocess.run(
-            ["git", "check-ignore", "-q", str(local / name)],
+            ["git", "check-ignore", "-q", "--", relative],
             cwd=REPO_ROOT,
             check=False,
         )
         assert ignored.returncode == 0, name
+    relative_local = repo_relative_path(REPO_ROOT, local)
     tracked = subprocess.run(
-        ["git", "ls-files", str(local)],
+        ["git", "ls-files", "--", relative_local],
         cwd=REPO_ROOT,
         check=False,
         capture_output=True,

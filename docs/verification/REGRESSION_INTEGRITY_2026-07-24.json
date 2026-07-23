@@ -1,0 +1,82 @@
+{
+  "schema": "nlmytgen.regression_integrity_result.v1",
+  "status": "passed",
+  "observed_date_jst": "2026-07-24",
+  "source_commit": "c77a89b8db15d5c0b286afc322dd6842a016a606",
+  "implementation_revision": "resolved-by-current-branch-tip",
+  "canonical_module_count": 16,
+  "canonical_test_total": 170,
+  "modes": [
+    {
+      "mode": "independent_clean_room",
+      "passed": 161,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 9,
+      "skip_classes": {
+        "requires_local_evidence:historical_yymm4_import_evidence": 3,
+        "requires_local_evidence:notebooklm_audio_raw_packet": 1,
+        "requires_local_evidence:notebooklm_lexical_topic_line_map": 3,
+        "requires_local_evidence:reference_layout_review_surfaces": 1,
+        "requires_local_evidence:reference_layout_trace_captures": 1
+      },
+      "workspace_integrity": "passed",
+      "temporary_workspace_removed": true
+    },
+    {
+      "mode": "evidence_rich_same_machine",
+      "passed": 166,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 4,
+      "skip_classes": {
+        "requires_local_evidence:notebooklm_audio_raw_packet": 1,
+        "requires_local_evidence:notebooklm_lexical_topic_line_map": 3
+      },
+      "workspace_integrity": "passed",
+      "temporary_workspace_removed": true
+    },
+    {
+      "mode": "tracked_only_linked_worktree",
+      "passed": 161,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 9,
+      "skip_classes": {
+        "requires_local_evidence:historical_yymm4_import_evidence": 3,
+        "requires_local_evidence:notebooklm_audio_raw_packet": 1,
+        "requires_local_evidence:notebooklm_lexical_topic_line_map": 3,
+        "requires_local_evidence:reference_layout_review_surfaces": 1,
+        "requires_local_evidence:reference_layout_trace_captures": 1
+      },
+      "workspace_integrity": "passed",
+      "temporary_workspace_removed": true
+    }
+  ],
+  "classification_contract": {
+    "no_failures": true,
+    "no_errors": true,
+    "all_skips_are_absent_declared_private_locators": true,
+    "historical_receipts_do_not_count_as_live_availability": true
+  },
+  "workspace_construction": {
+    "method": "git_archive_exact_revision_subtree",
+    "source_worktree_recursively_copied": false,
+    "ignored_media_copied": false,
+    "browser_profiles_copied": false,
+    "linked_worktree_git_file_supported": true,
+    "git_ignore_paths_are_repo_relative": true,
+    "windows_clean_room_autocrlf": false
+  },
+  "protected_boundaries": {
+    "yymm4_launched": false,
+    "render_executed": false,
+    "audio_played": false,
+    "accepted_media_modified": false,
+    "rights_clearance": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "master_merge": false
+  }
+}

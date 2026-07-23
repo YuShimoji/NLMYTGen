@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import hashlib
 import json
-import shutil
 import subprocess
 from collections import Counter
 from pathlib import Path
 
 import pytest
+
+from tests.regression_workspace import copy_tracked_tree, repo_relative_path
 
 from src.pipeline.content_transformation_lineage import (
     APPROVAL_RECEIPT_ID,
@@ -46,10 +47,10 @@ def _dump(path: Path, value: dict) -> None:
 
 def _copy_pilot(tmp_path: Path, name: str) -> Path:
     target = tmp_path / name
-    shutil.copytree(
+    copy_tracked_tree(
         DEFAULT_PILOT_DIR,
         target,
-        ignore=shutil.ignore_patterns("local_outputs"),
+        repo_root=REPO_ROOT,
     )
     return target
 
@@ -175,13 +176,16 @@ def test_cue_lineage_covers_claims_units_edges_sources_and_editorial_origin() ->
     assert [row["claim_id"] for row in cue_008["omitted_verified_claims_retained_nearby"]] == ["claim_158"]
 
 
-def test_mechanical_speaker_projection_preserves_text_and_approval() -> None:
-    canonical = read_headerless_yymm4_csv(DEFAULT_PILOT_DIR / "canonical_yymm4.csv")["rows"]
-    derived = read_headerless_yymm4_csv(DEFAULT_PILOT_DIR / "derived_yymm4_import.csv")["rows"]
+def test_mechanical_speaker_projection_preserves_text_and_approval(
+    tmp_path: Path,
+) -> None:
+    pilot = _copy_pilot(tmp_path, "mechanical-speaker-projection")
+    canonical = read_headerless_yymm4_csv(pilot / "canonical_yymm4.csv")["rows"]
+    derived = read_headerless_yymm4_csv(pilot / "derived_yymm4_import.csv")["rows"]
     assert [row["text"] for row in canonical] == [row["text"] for row in derived]
     assert dict(Counter(row["speaker"] for row in canonical)) == {"れいむ": 3, "まりさ": 6}
     assert dict(Counter(row["speaker"] for row in derived)) == {"ゆっくり霊夢": 3, "ゆっくり魔理沙": 6}
-    assert validate_content_lineage_package(DEFAULT_PILOT_DIR)["approval_valid"] is True
+    assert validate_content_lineage_package(pilot)["approval_valid"] is True
 
 
 def test_lineage_build_is_byte_deterministic(tmp_path: Path) -> None:
@@ -259,14 +263,19 @@ def test_lineage_surfaces_preserve_privacy_and_ignored_evidence_boundaries() -> 
 
     for directory in ("local_outputs", "source_cache", "source_extracts", "source_probe"):
         candidate = DEFAULT_PILOT_DIR / directory / "lineage-privacy-probe.bin"
+        relative_candidate = repo_relative_path(REPO_ROOT, candidate)
         ignored = subprocess.run(
-            ["git", "check-ignore", "-q", str(candidate)],
+            ["git", "check-ignore", "-q", "--", relative_candidate],
             cwd=REPO_ROOT,
             check=False,
         )
         assert ignored.returncode == 0, directory
+        relative_directory = repo_relative_path(
+            REPO_ROOT,
+            DEFAULT_PILOT_DIR / directory,
+        )
         tracked = subprocess.run(
-            ["git", "ls-files", str(DEFAULT_PILOT_DIR / directory)],
+            ["git", "ls-files", "--", relative_directory],
             cwd=REPO_ROOT,
             check=False,
             capture_output=True,
