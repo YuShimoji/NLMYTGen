@@ -1,8 +1,8 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-22.2
-Updated: 2026-07-22 JST
+State-Revision: 2026-07-23.1
+Updated: 2026-07-23 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
 Recommended-Next: review-local-internal-review-mp4
@@ -15,6 +15,8 @@ Regression-Integrity-Implementation-Commit: f34f79f93fcc2db1cbc779e960bf1ed318f3
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 after handoff push
 Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts retained
+Handoff-Anchor: 0bb331050b52455402021cf9ed159a4d207dfe6e
+Handoff-Verified: 2026-07-23 JST
 
 このページはpublic repositoryで現在地だけを読む追跡済みMarkdownです。短期正本は
 [runtime-state.md](runtime-state.md)、開発時の静音契約は
@@ -47,6 +49,9 @@ Primary review surface（ignored local artifact）:
 別端末では`origin/codex/nlmytgen-regression-integrity-v1`をfetchし、同branchへ
 fast-forward限定で同期します。`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
 `docs/runtime-state.md`を読み、必要時だけ`docs/project-context.md`最上部を参照します。
+handoff commitは固定文字列ではなくremote branch tipから解決し、`HEAD...@{u}=0/0`を
+確認してください。2026-07-23のhandoff anchorは`0bb3310`で、この時点では
+`origin/master`に28 ahead / 0 behindでした。
 
 MP4が同端末にある場合は再生成せず、発音、リズム、cue切替、字幕の読み心地、proxy構成を
 確認し、`accept` / `repair` / `reject`をcue id付きで返します。MP4やsource `.local.ymmp`は

@@ -1,8 +1,8 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-22.2
-Updated: 2026-07-22 JST
+State-Revision: 2026-07-23.1
+Updated: 2026-07-23 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
 Recommended-Next: review-local-internal-review-mp4
@@ -97,6 +97,11 @@ as rights, production, or publication approval.
 
 ## Cross-Terminal Re-entry
 
+- The cross-device handoff was refreshed from tracked-clean commit
+  `0bb331050b52455402021cf9ed159a4d207dfe6e` on 2026-07-23 after
+  `git fetch --prune origin`; at that anchor the branch and upstream were `0/0`
+  and the branch was 28 commits ahead of and 0 behind `origin/master`. Resolve
+  the final documentation commit from the current remote branch tip.
 - Fetch `origin/codex/nlmytgen-regression-integrity-v1`, check out that branch,
   and use fast-forward-only synchronization. Confirm `HEAD...@{u}` is `0/0`
   and the tracked worktree is clean before continuing.
@@ -120,6 +125,9 @@ as rights, production, or publication approval.
 - If the local MP4 is available, do not regenerate merely for handoff. Human
   review remains the first move; regeneration is for missing media or an approved
   cue-specific repair.
+- Pre-existing untracked `.playwright-mcp/`, `artifacts/`, and the two
+  `phase-e-01-contact-acquired*.png` files were intentionally retained. They are
+  not part of the portable authority and must not be bulk-added during restart.
 
 ## Active Boundaries
 

@@ -1,8 +1,43 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-22 JST・regression integrity clean-room）
+## 現在の別端末再開ハンドオフ（2026-07-23 JST・remote同期済み）
 
-この節だけが現在の回帰整合性支援sliceの再開地点である。製品判断は下の
+この節だけが現在の別端末再開地点である。製品状態は変えず、2026-07-22の
+regression integrity支援slice、same-machine evidence監査、監修ロードマップを丸ごと継承する。
+
+- **取得先**: `origin/codex/nlmytgen-regression-integrity-v1`。今回のhandoff更新元は
+  tracked-clean commit `0bb331050b52455402021cf9ed159a4d207dfe6e`。最終handoff commitは
+  remote branch tipから解決し、固定SHAを次の作業baseとみなさない。
+- **同期確認**: `git fetch --prune origin`後、更新元ではupstream差分`0/0`、
+  `origin/master`に28 ahead / 0 behind、incoming remote commitなしを確認した。
+  今回のtracked documentation commitをpushした後もupstream `0/0`を必須とする。
+- **可搬な正本**: code、tests、manifest、sanitized receipt、`docs/runtime-state.md`、
+  `docs/PROJECT_COCKPIT.md`、本decision/handoff history、verification reportsだけをpublic Gitで渡す。
+  詳細な現状、same-machine/clean-room差、残存リスク、長期goalは
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-22.md`に保持済み。
+- **保持して送らないもの**: ignored source `.local.ymmp`、generated project、MP4、frames、
+  force-run archive、browser profile、およびpre-existing untracked `.playwright-mcp/`、
+  `artifacts/`、`phase-e-01-contact-acquired-inspect.png`、
+  `phase-e-01-contact-acquired.png`は削除・上書き・stageしない。別端末へはGitで移動しない。
+- **別端末コマンド**: `git fetch --prune origin`後、local branchがなければ
+  `git switch --track -c codex/nlmytgen-regression-integrity-v1 origin/codex/nlmytgen-regression-integrity-v1`、
+  既にあれば`git switch codex/nlmytgen-regression-integrity-v1`と`git pull --ff-only`を使う。
+  続けて`git status --short --branch`と
+  `git rev-list --left-right --count 'HEAD...@{u}'`を実行し、tracked clean / `0 0`を確認する。
+- **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md`。判断根拠が必要なときだけ本節、回帰gateを変更するときだけ
+  `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md`を追加で読む。
+- **exact next / next owner**: same-machine MP4がある端末のhuman reviewerが、音声再生可能な時に
+  発音、リズム、cue切替、字幕comfort、proxy compositionを通し視聴し、`accept` / `repair` /
+  `reject`をcue idと観察付きで返す。返答後はassistantがcue-specific repairまたは受入記録へ進む。
+  別端末にMP4がないだけなら製品gateを下げず、manifest exact path/hashを満たすsourceと
+  compatible YMM4/Chrome/ffmpeg/uv/.NETが揃うまで再renderを開始しない。
+- **変えていない判断**: `Product-Gate`は`human-internal-review`。draft PR #2はreview-only。
+  rights、production asset replacement、master merge、external upload、publicationは未承認である。
+
+## 直前の別端末再開ハンドオフ（2026-07-22 JST・regression integrity clean-room・履歴）
+
+以下は判断履歴であり、現在の指示として読まない。製品判断は下の
 one-command internal-review video handoffを継承し、`Product-Gate` は
 `human-internal-review` のまま変えていない。
 
