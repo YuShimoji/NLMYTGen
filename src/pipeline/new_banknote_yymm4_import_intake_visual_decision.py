@@ -87,6 +87,11 @@ REQUIRED_RESULT_CHECKS = {
     "voice_lengths_positive",
     "VoiceItem_only_timeline",
 }
+ALLOWED_ADDITIONAL_RESULT_CHECKS = {
+    "approval_and_content_lineage_lock_valid",
+    "pronunciation_or_clipping_notes_valid",
+    "explicit_observation_json_when_cli_used",
+}
 
 ALLOWED_SOURCE_IDS = {"V02", "V06", "V07", "V13"}
 EXCLUDED_VISUAL_CLAIM_IDS = {"claim_158"}
@@ -249,8 +254,11 @@ def audit_new_banknote_yymm4_import_observation(
     _require(result.get("failed_checks") == [], "OPERATOR_RESULT_HAS_FAILURES")
     result_checks = result.get("checks")
     _require(isinstance(result_checks, dict), "RESULT_CHECKS_MISSING")
+    result_check_names = set(result_checks)
     _require(
-        set(result_checks) == REQUIRED_RESULT_CHECKS,
+        REQUIRED_RESULT_CHECKS <= result_check_names
+        and result_check_names
+        <= REQUIRED_RESULT_CHECKS | ALLOWED_ADDITIONAL_RESULT_CHECKS,
         "RESULT_CHECK_SET_DRIFT",
     )
     _require(all(value is True for value in result_checks.values()), "RESULT_CHECK_FAILED")

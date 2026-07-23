@@ -1,5 +1,133 @@
 # Project Context — NLMYTGen
 
+## 現在の別端末再開ハンドオフ（2026-07-23 JST・receiving terminal review ready）
+
+この節だけが現在の別端末再開地点である。送信端末の開発基盤監査を継承しつつ、受信端末にだけ存在する
+private artifactをlive再検証し、直近gateを実測へ合わせた。
+
+- **取得先**: `origin/codex/nlmytgen-regression-integrity-v1`。受信worktree
+  `C:\Users\thank\Storage\Media Contents Projects\NLMYTGen`で`git fetch --prune origin`と
+  fast-forward-only pullを行い、再監査anchor
+  `eb883979479fd9a0cdace1d82fdb1295e6c80950`がalready up to dateであることを確認した。
+  最終handoff commitはremote branch tipから解決し、固定SHAを次の作業baseとみなさない。
+- **同期確認**: この文書更新前のupstream差分は`0/0`、`origin/master`に
+  31 ahead / 0 behind、tracked cleanだった。pre-existing untracked
+  `.playwright-mcp/`、`artifacts/`、`phase-e-01-contact-acquired*.png`とignored evidenceは保持した。
+- **受信端末の開発基盤**: Python 3.13.3 / uv 0.10.7 / pytest 8.4.2、Node 24.13.0 /
+  npm 11.6.2 / Electron 35.7.5、ffmpeg/ffprobe 8.0.1、.NET SDK 10.0.204、
+  YMM4 4.54.0.1をreadbackした。locked uv sync、npm dependency tree、focused 46 tests、
+  state sync、対象module compile、driver Release build、silent dry-run、MP4 full decodeがpassした。
+  今回の再監査でもfocused 46、state sync、npm dependency tree、driver build、
+  18 protected inputのdry-run、3 artifact hash、fresh full decodeを再passした。
+- **private artifact availability**: manifest source `.local.ymmp`、generated project、
+  `internal_review.mp4`がexact ignored pathに存在し、SHA-256はそれぞれ
+  `beee7eab...eaa54`、`f0361f...19853`、`f2444f...421f7`でmanifest / receiptと一致した。
+  送信端末の「不在」はその端末だけの観測であり、Git可搬性や製品状態へ一般化しない。
+- **残存基盤負債**: `uv.lock`と`gui/package-lock.json`はignoredで、Git-only clean checkoutの
+  deterministic dependency syncは未成立。Electron 35.7.5はdirect high 1件で、自動fixは43.2.0への
+  semver-major。`dotnet --info`のworkload installer例外も残るがcurrent driver buildは0 warning /
+  0 errorである。いずれも今回無断upgrade・workload修復していない。
+- **exact next / next owner**: human reviewerがexact local MP4を音声再生可能な時に通し視聴し、
+  発音、rhythm、cue切替、字幕comfort、proxy compositionを`accept` / `repair` / `reject`へ
+  cue idと観察付きで決定する。assistantは返答後だけcue-specific repairまたはacceptance freezeへ進む。
+- **変えていない判断**: `Product-Gate`は`human-internal-review`。draft PR #2はreview-only。
+  rights、production asset replacement、master merge、external upload、publicationは未承認である。
+- **詳細正本**:
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`。
+  通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md`だけを読む。
+
+## 直前の別端末再開ハンドオフ（2026-07-23 JST・sending terminal development ready）
+
+以下は送信端末固有の観測履歴であり、現在の再開地点として読まない。製品達成履歴は変えず、
+送信端末のtoolchain、private artifact availability、exact next actionを当時の実測へ合わせた。
+
+- **取得先**: `origin/codex/nlmytgen-regression-integrity-v1`。既存linked worktreeを
+  `6f12bbc`からtracked-clean remote tip `2f558499efc66810314d823627bce23ea6400883`へ
+  fast-forward-onlyで同期した。最終handoff commitは
+  remote branch tipから解決し、固定SHAを次の作業baseとみなさない。
+- **同期確認**: `git fetch --prune origin`後、更新元ではupstream差分`0/0`、
+  `origin/master`に29 ahead / 0 behind、tracked cleanを確認した。
+  今回のtracked documentation commitをpushした後もupstream `0/0`を必須とする。
+- **current terminal readiness**: Python 3.11 / uv / pytest、Node 22 / npm、Electron 35.7.5、
+  ffmpeg/ffprobe 8.1.1をreadbackした。.NET 9ではdriver buildが`NETSDK1045`だったため、既存の
+  `net10.0-windows`契約に合わせSDK 10.0.302を追加し、Release build warning 0 / error 0を確認した。
+  focused 46 tests、state sync、対象module compileはpassした。
+- **dependency caveat**: `uv.lock`と`gui/package-lock.json`はignored local artifactであり、Gitだけの
+  clean checkoutはlocked dependencyを単独再現できない。Electron 35.7.5は`npm audit`でdirect high 1件、
+  automatic fixは43.2.0へのsemver-majorなので無断更新していない。
+- **可搬な正本**: code、tests、manifest、sanitized receipt、`docs/runtime-state.md`、
+  `docs/PROJECT_COCKPIT.md`、本decision/handoff history、verification reportsだけをpublic Gitで渡す。
+  詳細な現状、current端末と過去same-machine evidenceの差、残存リスク、長期goalは
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`に保持する。
+- **private evidence availability**: current端末の全4 linked worktreeにはmanifest source
+  `.local.ymmp`、generated project、review MP4がない。過去receiptは成功証跡だがcurrent availabilityを
+  証明しない。private artifactを空fileや異なるprojectで代替せず、public Gitへ追加しない。
+- **別端末コマンド**: `git fetch --prune origin`後、local branchがなければ
+  `git switch --track -c codex/nlmytgen-regression-integrity-v1 origin/codex/nlmytgen-regression-integrity-v1`、
+  既にあれば`git switch codex/nlmytgen-regression-integrity-v1`と`git pull --ff-only`を使う。
+  続けて`git status --short --branch`と
+  `git rev-list --left-right --count 'HEAD...@{u}'`を実行し、tracked clean / `0 0`を確認する。
+- **最小読取順**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md`。判断根拠が必要なときだけ本節、回帰gateを変更するときだけ
+  `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md`を追加で読む。
+- **exact next / next owner**: 第一選択は、別の許可済み端末に残るvalidated MP4をexpected ignored pathへ
+  復元しSHA-256 `f2444f...421f7`を照合すること。無ければmanifest exact path/hashのsourceを復元し、
+  YMM4 discoveryとsilent `--dry-run`をpassしてから承認済み再renderへ進む。exact MP4が戻った後に
+  human reviewerが通し視聴し、`accept` / `repair` / `reject`をcue idと観察付きで返す。
+  根拠: `docs/INVARIANTS.md` §Production Value North Star +
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`。
+- **変えていない判断**: `Product-Gate`は`human-internal-review`。draft PR #2はreview-only。
+  rights、production asset replacement、master merge、external upload、publicationは未承認である。
+
+## 直前の別端末再開ハンドオフ（2026-07-22 JST・regression integrity clean-room・履歴）
+
+以下は判断履歴であり、現在の指示として読まない。製品判断は下の
+one-command internal-review video handoffを継承し、`Product-Gate` は
+`human-internal-review` のまま変えていない。
+
+- 取得先は `origin/codex/nlmytgen-regression-integrity-v1`。exact base は
+  `9ed7cdf676cc0f9a9745350635bd29686639a963`、回帰整合性実装commitは
+  `f34f79f93fcc2db1cbc779e960bf1ed318f38048`。draft PRは
+  `https://github.com/YuShimoji/NLMYTGen/pull/2`、baseは
+  `codex/nlmytgen-end-to-end-auto-video-v1`。handoff commitはremote branch tipから解決する。
+- 監修ログ指定の16モジュールはbaselineで `160 collected / 121 passed /
+  4 skipped / 35 failed`。修正後は `166 collected / 157 passed /
+  9 skipped / 0 failed / 0 errors`。連続二回とcommit後clean checkoutで同じ分類になり、
+  status、worktree diff、cached diffは全て実行前後不変だった。
+- 修正は、生成済みreview HTMLとsource bodyの分離、YMM4 resultの既知追加check互換、
+  generatorのtemp-copy隔離、historical receiptのrevision固定、ignored/private evidenceの
+  exact-locator marker化、canonical runner追加に限定した。
+- protectedな`production_pilots`全体、承認済みcontent、receipt、manifest、visual artifact、
+  `runtime-state`以外の主要状態文書は回帰実装baseから変更していない。今回のhandoff更新は
+  再開導線と判断履歴だけで、製品artifactを変更しない。
+- 詳細な35 node分類、9 skipの全locator、lock portability、検証commandと次の選択肢は
+  `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md` を正本とする。
+- 別端末ではfetch後にこのbranchをcheckoutしてfast-forward-onlyで同期し、
+  `HEAD...@{u}=0/0`とclean statusを確認する。通常は`AGENTS.md`、
+  `docs/REPO_LOCAL_RULES.md`、`docs/runtime-state.md`の順に読み、回帰gateを触る場合だけ
+  上記verification reportを追加で読む。
+- ignored/private evidenceとlocal MP4はpublic remoteへ含めない。証跡なしclean-roomの
+  9 skipは期待値であり、人間の代表MP4内部視聴を機械検証で代替しない。
+- exact next actionは人間がsame-machine local MP4を通し視聴し、`accept`、`repair`、
+  `reject`をcue idと観察付きで返すこと。回帰支援sliceの監修判断はdraft PRで行い、
+  master merge、production、rights、publicationは別gateとする。
+- 2026-07-22 21:54 JSTの再開監査では、旧handoff branchを`7eaaef1`から`9ed7cdf`へ
+  fast-forwardした後、そこから4 commit直線的に進んだ本branch `6f12bbc`へ切り替えた。
+  upstream差分は`0/0`、`origin/master`に対して27 ahead / 0 behindである。
+- この端末ではPython 3.13.3 / uv 0.10.7 / pytest 8.4.2、Node 24.13.0 /
+  npm 11.6.2 / Electron 35.7.5、.NET 10.0.204、ffmpeg/ffprobe 8.0.1をreadbackした。
+  source YMM4、generated project、review MP4はexpected ignored pathに存在し、manifest/
+  receiptのSHA-256と一致する。focused 46 tests、state sync、compile、driver build、silent
+  dry-run、MP4 full decodeはpassした。音声再生と再renderは行っていない。
+- canonical regression runnerをevidence-rich checkoutで実行すると`135 passed / 11 failed /
+  16 errors / 4 skipped`になった。11 failuresはprivate HTML等のauthority混入、16 errorsは
+  ignored MP4/browser profileまでtemp copyしてdiskを枯渇させた結果で、runnerのGit差分保護は
+  passした。tracked-only linked worktreeでは`156 passed / 1 failed / 9 skipped`で、残る1件は
+  absolute pathを使う`git check-ignore`のlinked-worktree非互換だった。検証tempは回収済みで
+  C drive free spaceは38.62 GBへ戻り、main checkoutのtracked/untracked/cached diffは不変。
+- 最新の監修判断、同端末とclean-roomの差、長期goal案は
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-22.md`を読む。
+
 ## 現在の別端末再開ハンドオフ（2026-07-21 JST・one-command internal-review video ready）
 
 この節だけが現在の再開地点である。下にある日付付きhandoffは判断履歴であり、

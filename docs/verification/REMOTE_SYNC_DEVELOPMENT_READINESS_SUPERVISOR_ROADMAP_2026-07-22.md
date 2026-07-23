@@ -2,67 +2,70 @@
 
 Scope: NLMYTGen
 
-この文書は、2026-07-22 13:25 JST時点で公開リモートを再取得し、repoが指定する
-後継開発線をローカルへ同期した結果、実際に整えた開発環境、再検証した契約、実動画工程に
-残る外部条件をまとめた時点証跡です。製品の現在位置と直近gateの正本は
+この文書は、2026-07-22 21:54 JSTから公開リモートを再取得し、repoが指定する
+最新の後継開発線をローカルへ同期した結果、実際に整えた開発環境、再検証した契約、
+evidence-rich checkoutとclean-roomの差をまとめた時点証跡です。製品の現在位置と直近gateの正本は
 [`runtime-state.md`](../runtime-state.md)、機能statusの正本は
 [`FEATURE_REGISTRY.md`](../FEATURE_REGISTRY.md)です。本書の長期目標は監修用の提案であり、
 未承認feature、rights、production、publication、PR、master integrationを自動的に許可しません。
 
 ## 監修判断に必要な結論
 
-repo-local handoffが取得先に指定する
-`origin/codex/nlmytgen-end-to-end-auto-video-v1`をfetch/prune後に確認し、
-fast-forward-only pullを実施しました。同期対象HEADとupstreamはともに
-`47d301b09503c82c169567e0a56e346b530006be`で差分`0/0`、pull結果は
-`Already up to date`でした。取得時点でこのbranchはcommitter dateが最も新しいremote branchで、
-`origin/master`をancestorとして22 commit先行・遅れ0です。本報告の追加commitは同期baselineを
-書き換えず、handoff commitはpush後の同branch tipから解決します。
+開始branch `codex/nlmytgen-end-to-end-auto-video-v1`はfetch後に2 commit遅れていたため、
+`7eaaef1`から`9ed7cdf`へfast-forward-onlyで同期しました。同じfetchで、そこから4 commit
+直線的に進み、repo-local runtimeが取得先に指定する
+`origin/codex/nlmytgen-regression-integrity-v1`を確認したため、local tracking branchへ
+非破壊で切り替えました。同期baselineは`6f12bbc45f380b766ba74f54ec70b5c8dd1a9239`、
+upstream差分`0/0`、`origin/master`より27 commit先行・遅れ0です。draft PR #2は
+`codex/nlmytgen-end-to-end-auto-video-v1`向けのreview-onlyで、mergeやproduct gate前進ではありません。
 
-Python/Electronの通常開発は開始できます。`uv sync --extra dev --locked`と
-`npm ci --no-audit --no-fund`を完了し、Python 3.11.0、pytest 8.4.2、Node 22.19.0、
-Electron 35.7.5をreadbackしました。ロックファイルやtracked sourceへの差分はありません。
-current one-command video sliceに直結する46 tests、project-state sync、current CLI/pipelineの
-Python compileはpassしています。
+Python/Electronの通常開発とcurrent video sliceの診断・再render準備は開始できます。
+`uv sync --extra dev --locked`、`npm ls --depth=0`、focused 46 tests、state sync、compile、
+.NET 10 driver build、silent `--dry-run`、既存MP4のfresh full decodeがpassしました。
+Python 3.13.3、uv 0.10.7、pytest 8.4.2、Node 24.13.0、npm 11.6.2、Electron 35.7.5、
+.NET SDK 10.0.204、ffmpeg/ffprobe 8.0.1をreadbackしています。
 
-ただし、この端末だけで実YMM4 renderまたはhuman reviewを完結できる状態ではありません。
-render driverは`net10.0-windows`を要求しますが、local SDKは9.0.304だけで、buildは
-`NETSDK1045`で停止します。manifestがhash固定するsource YMM4 projectと、human review対象の
-`internal_review.mp4`もこの端末にはありません。非書き込み`--dry-run`は期待どおり
-`source_ymmp_missing`でfail closedし、YMM4起動・render・output writeへ進みませんでした。
+manifest exact pathのsource YMM4、generated project、human review対象の`internal_review.mp4`は
+この端末のignored領域に実在し、SHA-256はmanifest/receiptと一致します。YMM4 executableも
+探索可能です。今回は音声再生と再renderを行わず、existing validated mediaを保全しました。
+したがって最短のproduct moveは、ローカルMP4を人間が通し視聴して`accept / repair / reject`を
+cue IDと観測付きで返すことです。
 
-したがって現在地は、**portableなコード開発とfocused検証は再開可能、one-command内部レビュー
-動画の成立はtracked receiptで確認可能、実視聴と再renderはprivate artifactおよびtoolchain待ち**です。
-最短のproduct moveは新機能追加ではなく、検証済みMP4をprivateに渡してhuman reviewを閉じるか、
-MP4が残るsource端末でreviewすることです。.NET 10導入はdependency追加に当たるため、明示判断なしに
-実行していません。
+一方、後継branchのRegression Integrityは**独立clean-roomではgreenだが、全再開形態でgreenでは
+ありません**。このevidence-rich checkoutではprivate evidence混入と巨大temp copyにより
+`135 passed / 11 failed / 16 errors / 4 skipped`、tracked-only linked worktreeでは
+`156 passed / 1 failed / 9 skipped`でした。いずれもGit status/diff/cached diffは不変です。
+このため、focused product developmentは再開可能ですが、canonical回帰runnerをsame-machineまたは
+Codex worktreeでrelease gateとして使う前に追加修復が必要です。
 
 ## リモート同期と履歴の位置
 
 | 確認対象 | 今回のreadback | 現在状態 | 監修上の意味 |
 | --- | --- | --- | --- |
-| 指定開発線 | `fetch --prune`、incoming/outgoing確認、FF-only pull | baseline `47d301b`、upstream `0/0` | 取り残した同branch commitやlocal-only commitなし |
-| remote全体 | committer date順にbranch tipを確認 | current branchが最新remote tip | 日付だけで別branchへ乗り換える必要なし |
-| default branch | ancestryと`HEAD...origin/master`を確認 | masterはancestor、ahead 22 / behind 0 | default内容を欠かさずfeature成果を保持 |
-| worktree | 同期前後、依存同期後、診断後に確認 | tracked / untrackedともclean | user作業を退避・上書きしていない |
+| 旧handoff線 | `fetch --prune`、incoming確認、FF-only pull | `7eaaef1`から`9ed7cdf`へ2 commit取得 | 監修roadmapとsync報告を欠落なく回収 |
+| 最新handoff線 | ancestry、runtime取得先、4 commit差を確認してtracking switch | baseline `6f12bbc`、upstream `0/0` | Regression Integrity支援とdraft PR handoffを含む先端から再開 |
+| default branch | ancestryと`HEAD...origin/master`を確認 | masterはancestor、ahead 27 / behind 0 | default内容を欠かさずfeature成果を保持 |
+| worktree | 同期前後、検証後に確認 | tracked/cached clean、pre-existing untracked保持 | user証拠を退避・上書き・追跡化していない |
 | current authority | `runtime-state`と`project-context`先頭handoffを再読 | `human-internal-review` gateを維持 | sync/reportだけで製品gateを進めていない |
 
-開始時点から作業ツリーは空で、既存のuntracked residueもこのcheckoutにはありませんでした。
-fetch/pull、dependency sync、tests、dry-run、build診断のいずれもtracked差分を生んでいません。
+開始時点から`.playwright-mcp/`、`artifacts/supervision/AGENT_REPORT_H2_SOURCE_V1.md`、
+`phase-e-01-contact-acquired*.png`がpre-existing untrackedでした。ignoredのsource/output/media/
+browser evidenceも保持しています。fetch/pull、dependency sync、tests、dry-run、build診断、
+full decodeはそれらを削除・移動・追跡化していません。今回の文書更新だけを意図したtracked差分とします。
 
 ## この端末で整えた開発基盤
 
 | 基盤 | 実測値・実施内容 | 判定 | 残る条件または注意 |
 | --- | --- | --- | --- |
-| Python | Python 3.11.0、uv 0.10.0、pytest 8.4.2、locked sync完了 | 開発可能 | project entry pointはpackage設定warningがあるため、現行READMEどおり`uv run python -m src.cli.main`を使う |
-| Electron GUI | Node 22.19.0、npm 10.9.3、Electron 35.7.5、70 packagesをlockから再導入 | 開発可能 | transitive `boolean@3.2.0`のdeprecated warningは将来の保守対象 |
+| Python | Python 3.13.3、uv 0.10.7、pytest 8.4.2、locked sync完了 | 開発可能 | entry point warningがあるため現行READMEどおり`uv run python -m src.cli.main`を使う |
+| Electron GUI | Node 24.13.0、npm 11.6.2、Electron 35.7.5、`npm ls --depth=0` pass | 開発可能 | 今回はhealthy treeのため`npm ci`を重複実行していない |
 | Browser | Chrome 150.0.7871.129、Edge 150.0.4078.83 | SVG materialization用候補あり | 実行時はsilent policyとisolated profileを維持 |
-| Media tools | ffmpeg / ffprobe 8.1.1 | validation実行環境あり | local MP4がないため今回のfull decode再実行対象なし |
-| Render driver | .NET SDK 9.0.304、target `net10.0-windows` | **build block** | .NET 10 SDKが必要。target downgradeは契約変更なので行わない |
-| .NET CLI健全性 | SDK/runtime列挙は可能だが`dotnet --info`のworkload情報取得でinstaller例外 | **要再確認** | .NET 10導入時にCLI healthも再readbackし、例外が残るならSDK/workload修復を別診断 |
-| YMM4 executable | common install locationsに実行ファイルなし | **未確認 / block候補** | source不足でpipelineのYMM4探索段階へ未到達。不存在と断定せず、再render選択時にexact discoveryを行う |
-| Source YMM4 | manifest exact pathに不存在、pilot配下の`.ymmp`候補0 | **dry-run block** | exact SHA-256 `beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54`のprivate artifactが必要 |
-| Review MP4 | expected ignored pathに不存在、pilot配下の`.mp4`候補0 | **human review block** | validated MP4のprivate transfer、またはsource端末でのreviewが必要 |
+| Media tools | ffmpeg / ffprobe 8.0.1 | validation可能 | existing MP4の全stream decodeをfresh実行しexit 0 |
+| Render driver | .NET SDK 10.0.204、target `net10.0-windows` | **build pass** | Release build warning 0 / error 0 |
+| .NET CLI健全性 | SDK/runtime列挙とbuildは可能、`dotnet --info` workload情報だけinstaller例外 | **部分的要修復** | render driverは利用可能。workload操作前にCLI installer診断が必要 |
+| YMM4 executable | pipeline discoveryが`YukkuriMovieMaker.exe`を解決 | **再render候補あり** | 今回はlaunchしていない。再renderはapproved repair時だけ |
+| Source YMM4 | manifest exact pathに存在 | **hash一致** | SHA-256 `beee7eab...eaa54`、dry-run preflight pass |
+| Review MP4 | expected ignored pathに存在 | **human review可能** | SHA-256 `f2444f...421f7`、93,375,804 bytes。音声再生はhuman判断待ち |
 
 Python projectは`requires-python >=3.11`を満たします。`uv sync`のentry-point warningは
 `[project.scripts]`がある一方でbuild-system / `tool.uv.package`が未定義なためですが、current CLIは
@@ -73,26 +76,29 @@ module実行で動作し、今回のfocused testsでも問題を起こしてい�
 
 | 検証 | 結果 | 保証すること | 保証しないこと |
 | --- | --- | --- | --- |
-| `test_episode_video_pipeline`、media validation、silent runtime、project-state sync | **46 passed / 4.36 sec** | manifest/preflight、synthetic pipeline、media判定、silent境界、状態同期のcurrent contract | 実YMM4、local MP4の画質・音質、human acceptance |
+| `test_episode_video_pipeline`、media validation、silent runtime、project-state sync | **46 passed** | manifest/preflight、synthetic pipeline、media判定、silent境界、状態同期のcurrent contract | human acceptance |
 | `scripts/check_project_state_sync.py` | **PASS** | runtime / cockpit /関連state mirrorが同じProject-State-IDを参照 | 過去verification文書の全記述がcurrentであること |
-| current CLI / episode pipeline / state checkerの`py_compile` | **PASS** | 対象Python modulesがcompile可能 | subprocess、外部tool、GUIの実動作 |
-| render driver build | **FAIL: NETSDK1045** | source code判定前にSDK major不足で止まることを再現 | .NET 10環境でdriverが失敗すること |
-| pipeline `--dry-run` | **FAIL CLOSED: `source_ymmp_missing`** | missing private inputをoutput write前に拒否 | source供給後のYMM4 discovery、version compatibility、render成功 |
-| dependency sync後のGit readback | **clean** | lock定義の再導入でtracked driftなし | remote CIやclean-room別端末の再現性 |
+| current CLI / pipeline / state / regression runnerの`py_compile` | **PASS** | 対象Python modulesがcompile可能 | GUIと外部toolの操作品質 |
+| render driver Release build | **PASS: warning 0 / error 0** | current .NET 10でdriverをcompile可能 | 実YMM4 GUI renderの再実行 |
+| pipeline `--dry-run` | **PASS** | source hash、18 protected inputs、9 cue、2/4/3 scenes、3/6 speakers、silent policy | render結果やhuman quality |
+| existing MP4 hash + full decode | **PASS** | expected binaryがreceipt hashと一致し、current ffmpegで全stream decode可能 | 音声、テンポ、字幕comfort、構図のcreative acceptance |
+| independent clean-room regression（remote evidence） | **157 pass / 9 skip / 0 fail / 0 error** | tracked-only独立checkoutでcanonical 16 modulesがgreen | same-machine evidence-rich checkout、linked worktree |
+| evidence-rich current checkout | **135 pass / 11 fail / 16 error / 4 skip** | Git差分保護はpass | private evidence分類とcopy fixtureの安全性。release gateには不可 |
+| tracked-only linked worktree | **156 pass / 1 fail / 9 skip** | product testsはほぼportable | absolute-path `git check-ignore`のworktree互換性 |
 
-最初のcompile診断では、実装pathを`src/pipelines/episode_video.py`と誤指定したため
-path not foundになりました。current実装は`src/pipeline/episode_video.py`です。sourceを検索して
-current importと一致する3 moduleへ修正後、compileはpassしました。これはruntime code defectではなく、
-時点報告に残った検証コマンドのpath driftです。今後のreportでは実装pathを固定文字列で再利用せず、
-current importまたは`rg`で解決します。
+same-machine runnerの11 failuresは、ignored/privateなHTMLやNotebookLM識別情報が存在すると
+authoritative package validatorが`no_private_or_notebook_identifiers`でfailする同一contract群です。
+16 errorsはfixtureがpilot全体を`tmp_path`へcopyし、ignoredの複数MP4とChrome profile/cacheまで
+複製してC driveを一時的に枯渇させた`WinError 112`です。runner終了後と一時worktree回収後、
+空き容量は38.62 GBへ戻りました。Git status、worktree diff、cached diffはrun前後不変でした。
 
-full `uv run pytest`は実行していません。repo-local ruleが、generated artifact/path driftと
-tracked-fixture side effectを修復する明示的Integrity sliceまでfull suiteを通常closeout gateから
-外しています。直前の2026-07-21 reportは広めの131 testsで98 passed / 33 failedを記録し、
-local-only fixture、historical Project-State-ID、generator/補正文書driftへ分類しています。
-今回のremote差分はそのreport 1 commitだけで実装変更を含まないため、side effectを再発させて
-同じ広域runを繰り返していません。したがって監修上は、**focused current contractはgreenだが、
-repository-wide regression gateはgreenと主張できない**状態を維持します。
+linked worktreeの1 failureは
+`test_local_research_media_are_ignored_and_absent_from_tracked_proof`です。テストはnested tracked
+`.gitignore`で正しくignoreされるpathを、`git check-ignore`へlinked-worktree内のabsolute pathとして渡し、
+return code 1になりました。main checkoutのrepo-relative pathでは同じruleがreturn code 0です。
+したがって監修上は、**focused current contractと独立checkout clean-roomはgreenだが、same-machine
+evidence-rich実行とCodex linked worktreeはcanonical回帰gateとして未完成**です。repo-local ruleどおり
+full suiteを通常gateへ昇格せず、次のIntegrity修復を限定sliceとして扱います。
 
 ## tracked authorityとprivate evidenceの境界
 
@@ -100,16 +106,15 @@ repository-wide regression gateはgreenと主張できない**状態を維持し
 | --- | --- | --- | --- |
 | episode manifest | 9 cue、scene/speaker mapping、18 protected hashes、tool/output contract | 存在 | input authorityとして利用可能 |
 | pipeline / CLI / UIA driver | source、tests、operator README | 存在 | code変更・focused検証を開始可能 |
-| validated receipt | project/media hash、73.583008秒、H.264/AAC、full decode、9 cue frame inspection | 存在 | source端末の成功証跡として利用。local再実行と混同しない |
-| source `.local.ymmp` | public Gitへ載せない | 不存在 | exact path/hashのprivate供給が必要 |
-| generated `.local.ymmp` | public Gitへ載せない | 不存在 | 再renderまたはprivate transferなしには復元不可 |
-| `internal_review.mp4` / frames | public Gitへ載せない | 不存在 | human reviewのprimary surfaceを別経路で用意する |
+| validated receipt | project/media hash、73.583008秒、H.264/AAC、full decode、9 cue frame inspection | 存在 | tracked success authorityとして利用 |
+| source `.local.ymmp` | public Gitへ載せない | exact path/hashで存在 | dry-runとapproved repair時の再render入力。無断変更しない |
+| generated `.local.ymmp` | public Gitへ載せない | SHA-256 `f0361f...9853`で存在 | current MP4 bindingを維持 |
+| `internal_review.mp4` / frames | public Gitへ載せない | SHA-256 `f2444f...21f7`で存在 | human reviewのprimary surface。再生成不要 |
 
 source project、generated project、MP4はいずれもrepoのignore ruleで保護されています。
-今回それらをGitへ追加、外部upload、探索目的のpublic access、空ファイルで代替する操作はしていません。
-tracked receiptのMP4 SHA-256は
-`f2444f9657a569e9a374582765c41a28e414040a018f029b0180f256657421f7`です。private transferを
-選ぶ場合はexpected ignored pathへ置いた後、このhashを照合してからreview対象にします。
+今回それらをGitへ追加、外部upload、再render、音声再生、空ファイルで代替する操作はしていません。
+MP4はexpected ignored pathでSHA-256
+`f2444f9657a569e9a374582765c41a28e414040a018f029b0180f256657421f7`と照合済みです。
 
 ## 製品の現在地と残る判断
 
@@ -117,16 +122,17 @@ tracked receiptのMP4 SHA-256は
 | --- | --- | --- | --- |
 | Source / claim / approved script | 完了・hash lock維持 | 18 protected inputs、9 cue text/order、2/4/3 scenes、3/6 speakers | content変更時だけsuccessor approval |
 | Reference-grounded proxy visual | 実装済み・内部レビュー用 | reference reconstruction、cue-bound SVG、tracked readback | final aesthetic、production asset、rights判断 |
-| One-command internal-review video | remote evidence上で成立 | validated receipt、46 current contract tests | local再現にはprivate sourceとrender toolchain |
-| Human audio/creative review | **未完了** | runtimeの`human-internal-review` gate | validated MP4をreviewerへ届け、cue別decisionを返す |
-| Broad regression integrity | **未完了** | 直前広域runに33 known failures | clean checkoutでも意味のあるfixture/state分離 |
+| One-command internal-review video | same-machine evidenceで成立 | source/project/media hash、46 tests、driver build、dry-run、full decode | approved repair以外では再render不要 |
+| Human audio/creative review | **未完了・即時実行可能** | exact MP4がlocalに存在 | reviewerが通し視聴しcue別decisionを返す |
+| Broad regression integrity | **独立checkout green・実行形態互換は未完了** | remote 157/9/0、same-machine 135/11/16、linked worktree 156/1/0 | private evidenceとlinked-worktree対応 |
 | Production asset / rights | **未承認** | proxy geometryのみ | asset identity、license/permission、attribution、replacement decision |
 | Production master / publication | **未承認** | current outputはinternal review only | creative、rights、packaging、publicationの独立gate |
 
 North Starに対する推定現在地は、「source-backed contentからYMM4実MP4までの縦経路を1本で
-実証したが、review mediaの可搬性、human acceptance、rights-cleared asset、clean-room再現、GUI標準運用、
-複数topic反復は未完了」です。ここからは機能数を増やすより、**1本を人間判断まで閉じること**と、
-**その成功を別端末・別topicでも再現できるfactory contractへ昇格すること**が価値になります。
+実証し、この端末でreview carrierも到達済みだが、human acceptance、rights-cleared asset、全checkout形態での
+回帰再現、GUI標準運用、複数topic反復は未完了」です。ここからは機能数を増やすより、
+**1本を人間判断まで閉じること**と、**その成功を別端末・別topicでも再現できるfactory contractへ
+昇格すること**が価値になります。
 
 ## 先まで見通した目標設定案
 
@@ -136,11 +142,11 @@ North Starに対する推定現在地は、「source-backed contentからYMM4実
 
 | 段階 | 解くbottleneck | 完了条件 | 前提・現在状態 | 完了すると開く工程 |
 | --- | --- | --- | --- | --- |
-| **1. Human review carrierを到達させる（直近推奨）** | review MP4がこの端末にない | hash一致したMP4をprivate transferして再生、またはsource端末でreviewし、`accept / repair / reject`をcue ID・観測付きで返す | tracked receiptはpassed、media binaryだけlocal欠落 | repair scope確定またはinternal creative acceptance |
+| **1. Human reviewを閉じる（直近推奨）** | machine pass後のcreative/audio判断が未完了 | local exact MP4を通し視聴し、`accept / repair / reject`をcue ID・観測付きで返す | carrier/hash/full decodeは確認済み。音声再生だけhuman許可待ち | repair scope確定またはinternal creative acceptance |
 | **2. Cue限定repairとacceptance freeze** | human NGがコード・content・assetのどこに属するか曖昧 | 指摘cueだけを分類・修正し、content lockを守って再render、receipt/hash/frame reviewを更新。acceptなら変更なしでdecisionを固定 | goal 1のhuman signalが必要。repairが無ければskip | production asset/rights判断へ進めるstable internal cut |
-| **3. Regression Integrityをclean-room化** | 広域testsの33 false/stale failuresとtracked side effect | local-only fixtureをskip/explicit profile化、historical stateをcurrent assertionから分離、generatorをnon-mutatingにし、clean checkoutの定義済みsuiteがside effectなしでgreen | current focused 46はgreen。human review待ちと並行可能 | 次の実装をfalse redなしで評価、CI gate設計 |
-| **4. Render/review portabilityを製品化** | source端末に依存し、別端末handoffがmedia missingになる | tool versions/preflightを機械可読化し、.NET 10/YMM4 discovery、private artifact hash ingest、review-only transfer手順、fail-closed診断を1つのoperator surfaceへ統合 | .NET 10追加は明示承認が必要。public Gitへraw mediaを置かない | 再renderまたはreviewを別端末で再現可能 |
-| **5. Technical milestoneをdefault branchへ統合** | feature branchだけがone-command能力を持つ | goal 1のdecision、goal 3の合意したgate、commit/path/privacy audit、state一意化を満たし、監修承認後にnormal-history PR/merge | 現在はmasterより22 commit先行、PR/master未承認 | 次の開発者がdefault branchから再開可能 |
+| **3. Regression Integrityを全実行形態で閉じる** | independent checkoutだけgreenで、same-machineとlinked worktreeがred | copy fixtureからignored media/profileを除外し、private evidenceをauthority入力から分離、`git check-ignore`をrepo-relative化。独立checkout・evidence-rich checkout・linked worktreeで同じ分類、disk spikeなし、Git diff不変 | focused 46はgreen。draft PR #2はreview-onlyで未受理 | 次の実装をfalse red/容量枯渇なしで評価、CI gate設計 |
+| **4. Render/review portabilityを製品化** | toolchainとprivate mediaの有無でhandoff判定が揺れる | tool versions/preflightを機械可読化し、YMM4/.NET discovery、private artifact hash ingest、review-only transfer、fail-closed診断を1つのoperator surfaceへ統合 | この端末はrender-ready。raw mediaはpublic Gitへ置かない | 別端末でもreview/re-render可否を即判定 |
+| **5. Technical milestoneをdefault branchへ統合** | feature branchだけがone-command能力を持つ | goal 1のdecision、goal 3の合意したgate、draft PR監査、commit/path/privacy audit、state一意化を満たし、監修承認後にnormal-history merge | 現在はmasterより27 commit先行、draft PR #2、merge未承認 | 次の開発者がdefault branchから再開可能 |
 | **6. Proxyをrights-cleared production visualへ置換** | machine-pass proxyが公開品質・rightsを満たさない | 各cue/sceneを`accepted asset / replace / cut / defer`へ分類し、source/permission/attributionをledger化、誤解リスクとsubtitle safe areaを再review | visual aesthetic・asset・rights判断は未完了 | production master candidateの制作 |
 | **7. Production master candidateを閉じる** | internal-review品質と公開候補品質の差 | final audio/pronunciation、字幕、構図、motion、bitrate、full decode、frame sampling、source不変、rights ledgerを満たすmaster候補とhuman creative acceptance | goals 2・6が必要。internal banner/proxyの扱いを明示 | packaging / release candidate判断 |
 | **8. GUIで標準制作loopを完結** | current one-command pathとreview decisionがCLI/docs中心 | ingest、dry-run、blocked reason、render progress、receipt、cue review decisionがGUI primary surfaceで完結し、CLIは診断/automation経路に限定 | production contractはGUIをprimaryと規定、current episode pathは未統合 | 人間をcreative判断へ寄せた日常運用 |
@@ -167,25 +173,25 @@ North Starに対する推定現在地は、「source-backed contentからYMM4実
 
 | 入口 | 先に減る摩擦 | 必要条件 | 選ぶと次に可能になること |
 | --- | --- | --- | --- |
-| **Advance — validated MP4をprivate transferしてreview（推奨）** | この端末にprimary review surfaceがない | expected ignored pathへMP4を置きSHA-256 `f2444f...21f7`を照合 | 発音、rhythm、cue切替、字幕comfort、proxy構図を最短でdecision化 |
-| **Verify — source端末でhuman review** | media移送とtoolchain追加を避ける | validated MP4が残る端末へreviewerがアクセス | 同じ`accept / repair / reject`を返し、この端末はcode-readyのまま維持 |
-| **Audit — Regression Integrity slice** | 広域testsのfalse redとside effect | current product stateを変えないscope固定 | clean-room CI、default integration、次実装の信頼性を高める |
-| **Enable — この端末で再render可能にする** | .NET/source/YMM4の再現block | .NET 10追加の明示承認、exact source `.ymmp`、compatible YMM4 | build → dry-run → bounded silent render → media validationを再実行 |
+| **Advance — local MP4をhuman review（推奨）** | North Star最大の未判定 | 音声再生可能な環境でexact local MP4を通し視聴 | 発音、rhythm、cue切替、字幕comfort、proxy構図を`accept / repair / reject`へdecision化 |
+| **Verify — draft PR #2を監修差分監査** | Regression Integrity修正自体の受理が未完了 | product gateと切り離してreview | 既存支援差分を受理・修正要求・保留に分類 |
+| **Audit — same-machine/worktree Integrity修復** | private evidence混入、disk spike、linked-worktree 1 failure | current product/artifactを変えないscope固定 | canonical gateを3実行形態で同じ分類へ収束 |
+| **Repair — cue限定再render** | human reviewで具体的NGが出た場合 | cue ID、観測、変更class、content lock維持 | build済みdriverとdry-run済みsourceからbounded再生成 |
 
-推奨defaultはAdvanceです。reviewのためだけにtoolchainを再構築すると、.NET導入、CLI health、
-YMM4 discovery、private source供給という複数の新しいfailure pointが増えます。既存MP4はtracked receiptで
-hashとfull decodeが固定されているため、private transferまたはsource端末reviewの方がhuman gateへ
-直接届きます。Auditはその待ち時間に並行でき、EnableはMP4を取得できないか、承認済みrepairを
-この端末で回す必要が生じた場合に選びます。
+推奨defaultはAdvanceです。carrier、hash、full decode、driver build、dry-runは成立しており、
+新しいtoolchain作業なしにhuman gateへ直接届きます。Auditはhuman review待ちと並行可能ですが、
+same-machineで現runnerを再実行すると再び大容量temp copyを起こすため、先にfixture設計を修正します。
+Repairはhumanからcue-specific指示が出るまで開始しません。
 
 ## 維持すべき停止条件
 
-- .NET 10不足を隠すため、render driverを`net9.0-windows`へ下げない。
+- current buildがpassしているため、render driverの`net10.0-windows` targetを理由なく下げない。
 - source `.ymmp`、generated project、MP4、framesをpublic Gitへ追加しない。
-- tracked receiptを「この端末で再生・再decode済み」の証拠に読み替えない。
+- fresh full decodeをhuman視聴・音声・画面品質acceptanceへ読み替えない。
 - human review前にproxy visualをfinal aesthetic、production asset、rights approvedへ昇格させない。
-- broad testのknown failuresをcurrent pipeline defectへ一括分類しない一方、repository-wide greenとも
-  報告しない。
+- independent clean-room greenをsame-machine/worktree greenへ読み替えず、今回の11 failures、16 errors、
+  1 worktree failureをcurrent pipeline defectへ一括分類もしない。
+- evidence-rich checkoutで現canonical runnerを再実行し、ignored media/profileをtempへ再複製しない。
 - user/supervisor判断なしにPR、master integration、publication、外部upload、OAuth接続へ進まない。
 - long-range goalを承認済みfeature IDとして`FEATURE_REGISTRY`へ追加せず、実際に選ばれたsliceだけを
   狭い契約として起票する。

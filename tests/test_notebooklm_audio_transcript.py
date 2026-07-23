@@ -57,7 +57,11 @@ def _write_packet(root: Path, text: str) -> tuple[Path, Path]:
     return raw, manifest
 
 
-@pytest.mark.skipif(not RAW.exists() or not MANIFEST.exists(), reason="local raw packet is intentionally ignored")
+@pytest.mark.requires_local_evidence(
+    "notebooklm_audio_raw_packet",
+    RAW.relative_to(REPO_ROOT).as_posix(),
+    MANIFEST.relative_to(REPO_ROOT).as_posix(),
+)
 def test_real_packet_identity_coverage_and_sanitized_layers(tmp_path: Path) -> None:
     before = RAW.read_bytes()
     tracked = tmp_path / "tracked"

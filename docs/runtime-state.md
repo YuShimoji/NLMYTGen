@@ -1,21 +1,49 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-end-to-end-internal-review-video-ready-v1
-State-Revision: 2026-07-21.2
-Updated: 2026-07-21 JST
+State-Revision: 2026-07-23.4
+Updated: 2026-07-23 JST
 Product-State: new-banknote-one-command-internal-review-video-ready
 Product-Gate: human-internal-review
 Recommended-Next: review-local-internal-review-mp4
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
-Handoff-Branch: codex/nlmytgen-end-to-end-auto-video-v1
+Handoff-Branch: codex/nlmytgen-regression-integrity-v1
+Handoff-PR: https://github.com/YuShimoji/NLMYTGen/pull/2
 Pipeline-Implementation-Commit: e7ee831abe5fb4e51d39b1e4a7beda186ba2a8fa
+Regression-Integrity-Implementation-Commit: f34f79f93fcc2db1cbc779e960bf1ed318f38048
 Handoff-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 after handoff push
 Tracked-Worktree: clean after handoff commit; pre-existing untracked artifacts retained
 
 ## Current Slice
 
+- A follow-up live audit fetched and pulled the handoff branch at
+  `eb883979479fd9a0cdace1d82fdb1295e6c80950`; it was already current, upstream
+  was `0/0`, `origin/master` ahead/behind was `31/0`, and tracked files were clean.
+- Python 3.13.3, uv 0.10.7, Electron 35.7.5, ffmpeg/ffprobe 8.0.1,
+  YMM4 4.54.0.1, and .NET SDK 10.0.204 are available here. The current
+  46 focused tests, project-state sync, silent dry-run, and MP4 full decode pass;
+  the render driver builds with 0 warnings / 0 errors.
+  Electron has one direct high-severity audit finding whose fix is semver-major;
+  both Python/npm lockfiles remain ignored debt.
+- The support slice repaired the broad regression gate in its independent
+  clean-room without changing the product state, approved content, receipts,
+  manifests, visual artifacts, or tracked production pilots.
+- `scripts/check_regression_integrity.py` fixes the canonical 16-module
+  selection and fails if Git status, worktree diff, or cached diff changes.
+- The independent-checkout result is 166 collected, 157 passed, 9 exact-locator
+  local-evidence skips, 0 failures, and 0 errors. Consecutive runs were
+  classification-equivalent and workspace-integrity clean.
+- A same-machine audit with retained private evidence found that the runner is
+  not yet evidence-safe: 135 passed, 11 contract failures, 16 temp-copy disk
+  errors, and 4 skips. A tracked-only linked worktree reached 156 passed and 9
+  expected skips but failed one absolute-path `git check-ignore` assertion.
+  Both runs preserved Git status, worktree diff, and cached diff.
+- The source YMM4 project, generated project, and internal-review MP4 are present
+  at their exact ignored paths on this receiving terminal. Their SHA-256 values
+  match the manifest and tracked validated receipt. The MP4 is 93,375,804 bytes;
+  a fresh full-file decode exits successfully. Human review is executable now.
 - The approved new-banknote pilot now has a concrete one-command path from its
   manifest and same-machine YMM4 source project through visual materialization,
   generated YMM4 project, actual YMM4 render, MP4 normalization, validation,
@@ -50,12 +78,13 @@ master integration.
 
 ## Exact Next Action
 
-The human internal reviewer should open the local file
-`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_internal_review_v1/internal_review.mp4`
-when audio playback is acceptable. Review pronunciation, rhythm, cue changes,
-subtitle comfort, and proxy composition. Return `accept`, `repair`, or `reject`
-with a cue id and observation for every requested change. Do not treat acceptance
-as rights, production, or publication approval.
+The human internal reviewer should open the exact local
+`internal_review.mp4` at the expected ignored path when audio playback is
+acceptable. Review pronunciation, rhythm, cue changes, subtitle comfort, and
+proxy composition. Return `accept`, `repair`, or `reject` with a cue id and
+observation for every requested change. Do not re-render before a cue-specific
+repair is approved. 根拠: `docs/INVARIANTS.md` §Production Value North Star +
+`docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`.
 
 ## Evidence and Access
 
@@ -66,6 +95,11 @@ as rights, production, or publication approval.
 - Sanitized tracked evidence:
   `auto_video_pipeline/validated_run_receipt.json`.
 - Focused contract tests: `tests/test_episode_video_pipeline.py`.
+- Regression integrity runner: `scripts/check_regression_integrity.py`.
+- Full failure classification and handoff:
+  `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md`.
+- Latest sync, same-machine readiness, caveats, and long-range goals:
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-23.md`.
 - Local ignored outputs: `auto_video_runs/new_banknote_internal_review_v1/`.
 - Main local outputs: `generated_project.local.ymmp`, `internal_review.mp4`,
   `media_validation.json`, `pipeline_run_receipt.json`, and
@@ -73,30 +107,49 @@ as rights, production, or publication approval.
 
 ## Cross-Terminal Re-entry
 
-- Fetch `origin/codex/nlmytgen-end-to-end-auto-video-v1`, check out that branch,
+- The receiving terminal re-audited tracked-clean commit
+  `eb883979479fd9a0cdace1d82fdb1295e6c80950` after `git fetch --prune origin`
+  and an FF-only pull; the pull was already current. At that pre-handoff anchor,
+  branch/upstream was `0/0` and the branch was 31 commits ahead of and 0 behind
+  `origin/master`. Resolve the final documentation commit from the current
+  remote branch tip.
+- Fetch `origin/codex/nlmytgen-regression-integrity-v1`, check out that branch,
   and use fast-forward-only synchronization. Confirm `HEAD...@{u}` is `0/0`
   and the tracked worktree is clean before continuing.
 - Read only `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → this file for normal
   restart. Read the current top section of `docs/project-context.md` when the
   decision chain or local-artifact portability boundary is needed.
+- Before changing the integrity gate, read
+  `docs/verification/REGRESSION_INTEGRITY_2026-07-22.md`. On a clean room,
+  nine skips are expected when their exact ignored/private locators are absent.
+  The ignored `uv.lock` is not portable through Git and remains bounded debt.
+  Do not run the canonical gate in an evidence-rich checkout until its copy
+  fixtures exclude ignored media/browser profiles; a linked Git worktree also
+  needs the absolute-path `check-ignore` assertion repaired.
 - The tracked manifest, implementation, operator README, tests, and sanitized
   validated receipt are portable through Git. The ignored source `.local.ymmp`,
   rendered MP4, extracted frames, and force-run archives are same-machine local
   evidence and are not uploaded to the public repository.
+- This receiving terminal has the exact source `.local.ymmp`, generated project,
+  and review MP4. A different sending terminal lacked them; artifact availability
+  remains terminal-local and historical receipts alone never prove it.
 - To regenerate on another machine, provide the source project at the manifest's
   exact repo-relative path and SHA-256, then supply compatible YMM4, Chrome,
   ffmpeg/ffprobe, `uv`, and .NET. Run the documented `--dry-run` before render.
 - If the local MP4 is available, do not regenerate merely for handoff. Human
   review remains the first move; regeneration is for missing media or an approved
   cue-specific repair.
+- Pre-existing untracked `.playwright-mcp/`, `artifacts/`, and the two
+  `phase-e-01-contact-acquired*.png` files were intentionally retained. They are
+  not part of the portable authority and must not be bulk-added during restart.
 
 ## Active Boundaries
 
-- Human creative acceptance is pending.
+- Human creative acceptance is pending; the exact local carrier is ready for review.
 - Rights clearance and production asset replacement are unresolved.
 - The output is not authorized for public or external upload.
-- No PR, master update, publication, release, external communication, or remote
-  media access occurred.
+- The handoff draft PR is review-only. No master update, merge, publication,
+  release, remote media access, or product-gate advancement occurred.
 - Superseded local force-run archives are retained as ignored `.replaced-*.local`
   directories and are not authority.
 

@@ -1061,6 +1061,32 @@ def test_build_is_cache_independent_and_byte_deterministic(tmp_path: Path) -> No
     assert validation.get("failed_checks", []) == []
 
 
+def test_validator_separates_generated_review_html_from_source_bodies(
+    generated: tuple[Path, Path],
+    tmp_path: Path,
+) -> None:
+    _, output = generated
+    candidate = tmp_path / "document-boundary"
+    shutil.copytree(output, candidate)
+    review_dir = candidate / "reference_layout_reconstruction"
+    review_dir.mkdir()
+    (review_dir / "review_surface.html").write_text(
+        "<html><body>generated review surface</body></html>\n",
+        encoding="utf-8",
+    )
+    validation = validate_new_banknote_authoritative_script_package(candidate)
+    assert validation["checks"]["no_source_bodies"] is True
+    assert validation["status"] == "passed"
+
+    (candidate / "unexpected_source_document.html").write_text(
+        "<html><body>unscoped source body</body></html>\n",
+        encoding="utf-8",
+    )
+    validation = validate_new_banknote_authoritative_script_package(candidate)
+    assert validation["checks"]["no_source_bodies"] is False
+    assert "no_source_bodies" in validation["failed_checks"]
+
+
 def test_validator_rejects_coordinated_integrity_tampering(
     generated: tuple[Path, Path],
     tmp_path: Path,

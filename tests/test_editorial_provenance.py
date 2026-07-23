@@ -7,6 +7,8 @@ import shutil
 from html.parser import HTMLParser
 from pathlib import Path
 
+import pytest
+
 from src.pipeline.editorial_provenance import (
     ATTRIBUTION_CLASSES,
     AUTHORITY_CLASSES,
@@ -44,6 +46,18 @@ _BANNED_BODY_KEYS = {
     "verbatim_excerpt",
     "source_quote_text",
 }
+_LOCAL_EVIDENCE_LOCATORS = tuple(
+    (
+        DEFAULT_PILOT_DIR
+        / "local_outputs"
+        / name
+    ).relative_to(Path(__file__).resolve().parents[1]).as_posix()
+    for name in (
+        "new_banknote_yymm4_import_observation.local.ymmp",
+        "operator_batch.local.json",
+        "operator_result.json",
+    )
+)
 
 
 def _load(path: Path) -> dict:
@@ -364,7 +378,11 @@ def test_content_lock_covers_current_script_yymm4_and_visual_identities() -> Non
     assert all(row["local_sha256_matches"] is True for row in local_yymm4["evidence"])
 
 
-def test_render_and_second_build_are_byte_deterministic(tmp_path: Path) -> None:
+@pytest.mark.requires_local_evidence(
+    "historical_yymm4_import_evidence",
+    *_LOCAL_EVIDENCE_LOCATORS,
+)
+def test_tracked_package_validates_with_historical_local_evidence() -> None:
     first = render_editorial_provenance_artifacts(DEFAULT_PILOT_DIR)
     second = render_editorial_provenance_artifacts(DEFAULT_PILOT_DIR)
     assert first == second
@@ -372,6 +390,8 @@ def test_render_and_second_build_are_byte_deterministic(tmp_path: Path) -> None:
     assert validation["status"] == "passed"
     assert all(validation["checks"].values())
 
+
+def test_render_and_second_build_are_byte_deterministic(tmp_path: Path) -> None:
     pilot = tmp_path / "pilot"
     shutil.copytree(
         DEFAULT_PILOT_DIR,

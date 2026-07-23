@@ -224,6 +224,18 @@ def test_audit_fails_closed_on_result_failure(isolated_pilot: Path) -> None:
         audit_new_banknote_yymm4_import_observation(isolated_pilot)
 
 
+def test_audit_rejects_unrecognized_result_checks(isolated_pilot: Path) -> None:
+    _, result_path, _ = _write_success_evidence(isolated_pilot)
+    result = _load(result_path)
+    result["checks"]["unrecognized_future_check"] = True
+    result_path.write_text(
+        json.dumps(result, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="RESULT_CHECK_SET_DRIFT"):
+        audit_new_banknote_yymm4_import_observation(isolated_pilot)
+
+
 def test_audit_fails_closed_on_project_text_drift(
     isolated_pilot: Path,
 ) -> None:
