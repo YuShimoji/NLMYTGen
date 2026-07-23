@@ -1,0 +1,213 @@
+{
+  "schema": "nlmytgen.real_media_provenance.v1",
+  "episode_id": "new_banknote_security_notebooklm_001",
+  "purpose": "local internal-review visual replacement only",
+  "sources": [
+    {
+      "source_id": "J05",
+      "exact_title": "【独自】新紙幣に謎の文字「あれ？ちょっと違う！」「“F”だけ丸い」財務省国庫課トップに理由を直撃…隠された仕掛けは他にも",
+      "publisher": "FNNプライムオンライン／イット！",
+      "canonical_url": "https://www.fnn.jp/articles/-/879612",
+      "registry_record": "reference_grounded_visual_design/reference_registry.json#J05"
+    },
+    {
+      "source_id": "O02",
+      "exact_title": "新しい日本銀行券の特徴",
+      "publisher": "日本銀行",
+      "canonical_url": "https://www.boj.or.jp/note_tfjgs/note/n_note/security.htm",
+      "registry_record": "reference_grounded_visual_design/reference_registry.json#O02"
+    },
+    {
+      "source_id": "O01",
+      "exact_title": "新しい日本銀行券特設サイト｜新しい一万円札について",
+      "publisher": "独立行政法人 国立印刷局",
+      "canonical_url": "https://www.npb.go.jp/ja/n_banknote/design10/index.html",
+      "registry_record": "reference_grounded_visual_design/reference_registry.json#O01"
+    },
+    {
+      "source_id": "O01-LINEUP",
+      "exact_title": "新しい日本銀行券特設サイト",
+      "publisher": "独立行政法人 国立印刷局",
+      "canonical_url": "https://www.npb.go.jp/ja/n_banknote/",
+      "component_pages": [
+        "https://www.npb.go.jp/ja/n_banknote/design10/index.html",
+        "https://www.npb.go.jp/ja/n_banknote/design05/index.html",
+        "https://www.npb.go.jp/ja/n_banknote/design01/index.html"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "real_cue_001_banknote_overview",
+      "cue_ids": [
+        "cue_001"
+      ],
+      "source_id": "J05",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/J05_fnn.png",
+      "sha256": "e69537ee8b0ab8b3c8b0aa7a93da5b7351af19be1043ab50dd5ff795bf390195",
+      "media_type": "image",
+      "retrieval_or_capture": "existing ignored research capture; registry retrieval 2026-07-20T05:21:35+09:00",
+      "crop_or_segment": "normalized crop [0.09, 0.112, 0.598, 0.44] selecting the three-banknote broadcast still",
+      "usage_classification": "internal_review_only",
+      "rights_state": "public visibility is recorded; reproduction and production reuse permission remain unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "real_cue_002_features_overview",
+      "cue_ids": [
+        "cue_002"
+      ],
+      "source_id": "O02",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O02_boj_annotated_note.png",
+      "sha256": "fb9182baf74de56a5b3765df6304c6c0bfe624a904a0d632a3db531682165ee7",
+      "media_type": "image",
+      "retrieval_or_capture": "existing ignored research capture; registry retrieval 2026-07-20T05:21:35+09:00",
+      "crop_or_segment": "full annotated front-and-back overview",
+      "usage_classification": "official_reuse_candidate",
+      "rights_state": "official source; public visibility is recorded but reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "real_cue_003_high_definition_watermark",
+      "cue_ids": [
+        "cue_003"
+      ],
+      "source_id": "O01",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_hyper_sukiire10.jpg",
+      "sha256": "987efb5f461f4f605aefea77c1524b935d335619a20a82282495ca107a91e6e8",
+      "media_type": "image",
+      "asset_source_url": "https://www.npb.go.jp/ja/n_banknote/images/hyper_sukiire10.jpg",
+      "retrieval_or_capture": "bounded no-login direct retrieval 2026-07-23T16:41:30Z",
+      "crop_or_segment": "full official high-definition watermark close-up",
+      "usage_classification": "official_reuse_candidate",
+      "rights_state": "official source; page copyright notice applies and reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "real_cue_004_3d_hologram",
+      "cue_ids": [
+        "cue_004"
+      ],
+      "source_id": "O01",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_hologram.jpg",
+      "sha256": "39a81c76d56cf6cc555844c909603aa1a3bb239c3797de82ed37d1d0db68082c",
+      "media_type": "image",
+      "retrieval_or_capture": "existing ignored research capture; registry retrieval 2026-07-20T05:21:35+09:00",
+      "crop_or_segment": "full official multi-state hologram sheet",
+      "usage_classification": "official_reuse_candidate",
+      "rights_state": "official source; page copyright notice applies and reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "real_cue_005_deep_intaglio",
+      "cue_ids": [
+        "cue_005"
+      ],
+      "source_id": "O01",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_fuka10.jpg",
+      "sha256": "8120da0426b9dc09bedc77d3225c0a2a9e94862b6bb2a33c991fe2e7d2a20ec1",
+      "media_type": "image",
+      "asset_source_url": "https://www.npb.go.jp/ja/n_banknote/images/fuka10.jpg",
+      "retrieval_or_capture": "bounded no-login direct retrieval 2026-07-23T16:41:30Z",
+      "crop_or_segment": "full official deep-intaglio close-up",
+      "usage_classification": "official_reuse_candidate",
+      "rights_state": "official source; page copyright notice applies and reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "real_cue_006_microtext",
+      "cue_ids": [
+        "cue_006"
+      ],
+      "source_id": "O01",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_micro10_02.jpg",
+      "sha256": "6860688c55568c2cd10b15ba37d74686ac86a5872ec1084d0923db8e9d4e5f31",
+      "media_type": "image",
+      "asset_source_url": "https://www.npb.go.jp/ja/n_banknote/images/micro10_02.jpg",
+      "retrieval_or_capture": "bounded no-login direct retrieval 2026-07-23T16:41:30Z",
+      "crop_or_segment": "full official NIPPONGINKO microtext close-up",
+      "usage_classification": "official_reuse_candidate",
+      "rights_state": "official source; page copyright notice applies and reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "real_cue_007_identification_mark",
+      "cue_ids": [
+        "cue_007"
+      ],
+      "source_id": "O01",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_universal10_01_yoko.jpg",
+      "sha256": "fbce48d296551f9f02ddd1c10bc7c19587b04f9a340bca6e00931d6b9f7e64c9",
+      "media_type": "image",
+      "asset_source_url": "https://www.npb.go.jp/ja/n_banknote/images/universal10_01_yoko.jpg",
+      "retrieval_or_capture": "bounded no-login direct retrieval 2026-07-23T16:41:31Z",
+      "crop_or_segment": "full official before-and-after identification-mark comparison",
+      "usage_classification": "official_reuse_candidate",
+      "rights_state": "official source; page copyright notice applies and reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "real_cue_008_denomination_comparison",
+      "cue_ids": [
+        "cue_008"
+      ],
+      "source_id": "O01-LINEUP",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_denomination_comparison.local.png",
+      "sha256": "66dcfe1f932e6279198c8ac945b657ad9304ca4db4ad0f37829370719b1bf6c6",
+      "media_type": "image",
+      "retrieval_or_capture": "offline 1920x1080 montage materialized 2026-07-23T16:41:53Z from three exact official front images",
+      "crop_or_segment": "full montage of the official 10000, 5000, and 1000 yen front images",
+      "component_asset_urls": [
+        "https://www.npb.go.jp/ja/n_banknote/images/thousand10.png",
+        "https://www.npb.go.jp/ja/n_banknote/images/thousand05.png",
+        "https://www.npb.go.jp/ja/n_banknote/images/thousand01.png"
+      ],
+      "component_sha256": [
+        "4ca0b64e4318cfe91c47c893b110149c6f4c6bae07d39e2a578cf8d943950ed7",
+        "d6e6bae5a0ef316fc193072457d215ddebf03708c840f41259addd25f529f9d6",
+        "93410f6c8ab23058d46b0a7960378e1b363e3f38faf5beaea55d50cfcd074514"
+      ],
+      "usage_classification": "official_reuse_candidate",
+      "rights_state": "official source montage; component rights remain unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "real_cue_009_four_checks",
+      "cue_ids": [
+        "cue_009"
+      ],
+      "source_id": "O01",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_four_checks_montage.local.png",
+      "sha256": "f960a035eb0b20c0e98db425daf0f000d9d4cf84e8917a24f801b40d56b1a558",
+      "media_type": "image",
+      "retrieval_or_capture": "offline 1920x1080 montage materialized 2026-07-23T16:41:53Z from four exact official feature images",
+      "crop_or_segment": "full 2x2 montage: watermark, hologram, deep intaglio, microtext",
+      "component_asset_ids": [
+        "real_cue_003_high_definition_watermark",
+        "real_cue_004_3d_hologram",
+        "real_cue_005_deep_intaglio",
+        "real_cue_006_microtext"
+      ],
+      "usage_classification": "official_reuse_candidate",
+      "rights_state": "official source montage; component rights remain unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    }
+  ],
+  "boundary": {
+    "internal_review_only": true,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "source_media_tracked": false
+  }
+}

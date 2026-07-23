@@ -1,0 +1,35 @@
+{
+  "schema": "nlmytgen.human_review_decision.v1",
+  "reviewed_artifact": {
+    "run_id": "new_banknote_internal_review_v1",
+    "filename": "internal_review.mp4",
+    "sha256": "f2444f9657a569e9a374582765c41a28e414040a018f029b0180f256657421f7"
+  },
+  "decision": {
+    "speech": "accepted",
+    "subtitle_timing": "accepted",
+    "cue_timing": "accepted",
+    "subtitle_line_breaks": "accepted",
+    "visual_treatment": "rejected",
+    "rejection_reason": "SVG proxies are unusable as actual video imagery and incomprehensible as blueprints"
+  },
+  "repair_scope": {
+    "allowed": [
+      "visual assets",
+      "visual composition"
+    ],
+    "prohibited": [
+      "voice",
+      "wording",
+      "timing",
+      "line breaks"
+    ]
+  },
+  "boundary": {
+    "previous_mp4_is_stable_cut": false,
+    "internal_review_only": true,
+    "production": false,
+    "publication": false,
+    "external_upload": false
+  }
+}

@@ -164,6 +164,70 @@ def _synthetic_episode(tmp_path: Path) -> tuple[Path, Path]:
     return repo, manifest_path
 
 
+def _real_media_episode(tmp_path: Path) -> tuple[Path, Path]:
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    repo, manifest_path = _synthetic_episode(tmp_path)
+    media = repo / "media"
+    media.mkdir()
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    sources = []
+    assets = []
+    for index, cue in enumerate(manifest["cue_mapping"], start=1):
+        source_id = f"official-source-{index:03d}"
+        asset_id = f"real-media-{index:03d}"
+        asset = media / f"{asset_id}.png"
+        asset.write_bytes(f"real-media-{index}".encode())
+        cue.update(
+            {
+                "visual_id": asset_id,
+                "asset_type": "image",
+                "local_asset_path": f"media/{asset.name}",
+                "source_provenance_id": source_id,
+                "fit_mode": "contain",
+                "internal_review_only": True,
+                "subtitle_lines": [f"approved line {index}"],
+                "speaker_label": (
+                    "れいむ" if cue["speaker"] == "ゆっくり霊夢" else "まりさ"
+                ),
+            }
+        )
+        sources.append(
+            {
+                "source_id": source_id,
+                "exact_title": f"Official source {index}",
+                "publisher": "Synthetic official publisher",
+                "canonical_url": f"https://example.invalid/source/{index}",
+            }
+        )
+        assets.append(
+            {
+                "asset_id": asset_id,
+                "source_id": source_id,
+                "local_asset_path": f"media/{asset.name}",
+                "sha256": _sha(asset),
+                "media_type": "image",
+                "crop_or_segment": "full frame",
+                "cue_ids": [cue["cue_id"]],
+                "usage_classification": "official_reuse_candidate",
+                "rights_state": "unresolved; internal review only",
+                "production_allowed": False,
+                "publication_allowed": False,
+            }
+        )
+    provenance = repo / "inputs" / "real-media-provenance.json"
+    _write_json(
+        provenance,
+        {
+            "schema": "nlmytgen.real_media_provenance.v1",
+            "sources": sources,
+            "assets": assets,
+        },
+    )
+    manifest["provenance_manifest_path"] = "inputs/real-media-provenance.json"
+    _write_json(manifest_path, manifest)
+    return repo, manifest_path
+
+
 def test_synthetic_preflight_and_project_readback_preserve_voice_items(tmp_path: Path) -> None:
     repo, manifest_path = _synthetic_episode(tmp_path)
     manifest = load_episode_manifest(repo, manifest_path)
@@ -207,6 +271,149 @@ def test_synthetic_preflight_and_project_readback_preserve_voice_items(tmp_path:
     assert all(item["VideoEffects"] == [] for item in images)
     assert all(item["KeyFrames"] == {"Frames": [], "Count": 0} for item in images)
     assert all(item["Zoom"]["AnimationType"] == "なし" for item in images)
+
+
+def test_real_media_manifest_parses_images_and_video_with_provenance(tmp_path: Path) -> None:
+    repo, manifest_path = _real_media_episode(tmp_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    video = repo / "media" / "real-media-009.mp4"
+    (repo / "media" / "real-media-009.png").replace(video)
+    manifest["cue_mapping"][-1].update(
+        {
+            "asset_type": "video",
+            "local_asset_path": "media/real-media-009.mp4",
+            "source_time_range": {"start_seconds": 1.0, "end_seconds": 2.0},
+        }
+    )
+    provenance_path = repo / manifest["provenance_manifest_path"]
+    provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+    provenance["assets"][-1].update(
+        {
+            "local_asset_path": "media/real-media-009.mp4",
+            "sha256": _sha(video),
+            "media_type": "video",
+            "crop_or_segment": "1.0-2.0 seconds",
+        }
+    )
+    _write_json(provenance_path, provenance)
+    _write_json(manifest_path, manifest)
+
+    loaded = load_episode_manifest(repo, manifest_path)
+    preflight, timings = preflight_episode(repo, loaded)
+
+    assert preflight["real_media"]["cue_provenance_coverage"] == "9/9"
+    assert preflight["real_media"]["svg_reference_count"] == 0
+    assert timings[-1].asset_type == "video"
+    assert timings[-1].source_start_seconds == 1.0
+    assert timings[-1].source_end_seconds == 2.0
+    assert all(timing.internal_review_only for timing in timings)
+
+
+def test_real_media_manifest_rejects_missing_provenance_svg_and_open_rights(
+    tmp_path: Path,
+) -> None:
+    repo, manifest_path = _real_media_episode(tmp_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    del manifest["cue_mapping"][0]["source_provenance_id"]
+    _write_json(manifest_path, manifest)
+    with pytest.raises(EpisodeVideoError) as missing:
+        load_episode_manifest(repo, manifest_path)
+    assert missing.value.code == "real_media_provenance_missing"
+
+    repo, manifest_path = _real_media_episode(tmp_path / "svg")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["cue_mapping"][0]["local_asset_path"] = "media/forbidden.svg"
+    _write_json(manifest_path, manifest)
+    with pytest.raises(EpisodeVideoError) as svg:
+        load_episode_manifest(repo, manifest_path)
+    assert svg.value.code == "real_media_svg_forbidden"
+
+    repo, manifest_path = _real_media_episode(tmp_path / "rights")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    provenance_path = repo / manifest["provenance_manifest_path"]
+    provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+    provenance["assets"][0]["production_allowed"] = True
+    _write_json(provenance_path, provenance)
+    loaded = load_episode_manifest(repo, manifest_path)
+    with pytest.raises(EpisodeVideoError) as rights:
+        preflight_episode(repo, loaded)
+    assert rights.value.code == "real_media_provenance_records_invalid"
+
+
+def test_real_media_project_preserves_voice_timing_line_breaks_and_uses_run_pngs(
+    tmp_path: Path,
+) -> None:
+    repo, manifest_path = _real_media_episode(tmp_path)
+    project_path = repo / "inputs" / "source.local.ymmp"
+    project = json.loads(project_path.read_text(encoding="utf-8"))
+    project["Timelines"][0]["Items"][0]["Serif"] = "approved line 1\nlocked fragment"
+    _write_json(project_path, project)
+    with (repo / "inputs" / "derived.csv").open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerows(
+            zip(
+                SPEAKERS,
+                ["approved line 1\nlocked fragment"]
+                + [f"approved line {index}" for index in range(2, 10)],
+                strict=True,
+            )
+        )
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["yymm4"]["source_project_sha256"] = _sha(project_path)
+    manifest["cue_mapping"][0]["subtitle_lines"] = [
+        "approved line 1",
+        "\nlocked fragment",
+    ]
+    _write_json(manifest_path, manifest)
+    loaded = load_episode_manifest(repo, manifest_path)
+    _, timings = preflight_episode(repo, loaded)
+    paths = build_pipeline_paths(repo, loaded)
+    paths.generated_assets.mkdir(parents=True)
+    visual_outputs = {}
+    for timing in timings:
+        output = paths.generated_assets / f"{timing.asset_id}.png"
+        output.write_bytes(b"normalized")
+        visual_outputs[timing.asset_id] = output
+
+    readback = build_yymm4_project(
+        repo, loaded, timings, visual_outputs, paths, resume=False
+    )
+    generated = json.loads(paths.generated_project.read_text(encoding="utf-8"))
+    voices = [
+        item
+        for item in generated["Timelines"][0]["Items"]
+        if item.get("$type") == VOICE_ITEM_TYPE
+    ]
+    images = [
+        item
+        for item in generated["Timelines"][0]["Items"]
+        if item.get("$type") == IMAGE_ITEM_TYPE
+    ]
+
+    assert readback["voice_items_unchanged"] is True
+    assert voices[0]["Serif"] == "approved line 1\nlocked fragment"
+    assert [(row["Frame"], row["Length"]) for row in voices] == [
+        (timing.frame, timing.length_frames) for timing in timings
+    ]
+    assert len(images) == 9
+    assert all(Path(row["FilePath"]).parent == paths.generated_assets.resolve() for row in images)
+    assert all(Path(row["FilePath"]).suffix.lower() == ".png" for row in images)
+    assert all(row["Remark"].startswith("internal-review-real-media:") for row in images)
+    assert ".svg" not in paths.generated_project.read_text(encoding="utf-8").lower()
+
+    with (repo / "inputs" / "derived.csv").open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerows(
+            zip(
+                SPEAKERS,
+                ["approved line 1 locked fragment"]
+                + [f"approved line {index}" for index in range(2, 10)],
+                strict=True,
+            )
+        )
+    with pytest.raises(EpisodeVideoError) as line_break:
+        preflight_episode(repo, loaded)
+    assert line_break.value.code == "voice_text_drift"
 
 
 def test_preflight_rejects_visual_with_wrong_approved_text(tmp_path: Path) -> None:
@@ -311,6 +518,35 @@ def test_tracked_manifest_keeps_required_base_mapping_and_receipt_is_sanitized()
     assert "C:\\Users\\" not in tracked_text
     assert "D:\\" not in tracked_text
     assert "http://" not in tracked_text and "https://" not in tracked_text
+
+
+def test_tracked_real_media_contract_and_validated_receipt_are_sanitized() -> None:
+    manifest_path = PILOT_PIPELINE / "new_banknote_real_media_episode_manifest.json"
+    provenance_path = PILOT_PIPELINE / "new_banknote_real_media_provenance.json"
+    receipt_path = PILOT_PIPELINE / "validated_real_media_run_receipt.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    source_ids = {row["source_id"] for row in provenance["sources"]}
+
+    assert len(manifest["cue_mapping"]) == 9
+    assert all(row["asset_type"] in {"image", "video"} for row in manifest["cue_mapping"])
+    assert all(row["source_provenance_id"] in source_ids for row in manifest["cue_mapping"])
+    assert all(row["internal_review_only"] is True for row in manifest["cue_mapping"])
+    assert all(1 <= len(row["subtitle_lines"]) <= 3 for row in manifest["cue_mapping"])
+    assert ".svg" not in manifest_path.read_text(encoding="utf-8").lower()
+    assert receipt["status"] == "passed"
+    assert receipt["protected_identity"]["voice_items_unchanged"] is True
+    assert receipt["protected_identity"]["subtitle_line_fragments_unchanged"] is True
+    assert receipt["real_media"]["cue_coverage"] == "9/9"
+    assert receipt["real_media"]["svg_reference_count_manifest"] == 0
+    assert receipt["cue_frame_inspection"]["cue_count"] == 9
+    assert receipt["silent_execution"]["speaker_playback_used"] is False
+    assert receipt["silent_execution"]["preview_playback_used"] is False
+    tracked_receipt = receipt_path.read_text(encoding="utf-8")
+    assert "C:\\Users\\" not in tracked_receipt
+    assert "D:\\" not in tracked_receipt
+    assert "http://" not in tracked_receipt and "https://" not in tracked_receipt
 
 
 def test_render_driver_command_is_bounded_and_carries_requested_rates(tmp_path: Path) -> None:

@@ -44,10 +44,20 @@ RUN_RECEIPT_SCHEMA = "nlmytgen.episode_video_run_receipt.v1"
 PROJECT_READBACK_SCHEMA = "nlmytgen.episode_video_project_readback.v1"
 VISUAL_READBACK_SCHEMA = "nlmytgen.cue_visual_readback.v1"
 MEDIA_VALIDATION_SCHEMA = "nlmytgen.episode_media_validation.v1"
+REAL_MEDIA_PROVENANCE_SCHEMA = "nlmytgen.real_media_provenance.v1"
 VOICE_ITEM_TYPE = "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker"
 IMAGE_ITEM_TYPE = "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker"
 ABSOLUTE_WINDOWS_PATH = re.compile(r"^[A-Za-z]:[\\/]")
 URL_PREFIXES = ("http://", "https://", "file://")
+REAL_MEDIA_ASSET_TYPES = {"image", "video"}
+REAL_MEDIA_FIT_MODES = {"contain", "cover"}
+REAL_MEDIA_USAGE_CLASSIFICATIONS = {
+    "official_reuse_candidate",
+    "internal_review_only",
+    "user_owned",
+}
+IMAGE_EXTENSIONS = {".bmp", ".jpeg", ".jpg", ".png", ".webp"}
+VIDEO_EXTENSIONS = {".m4v", ".mkv", ".mov", ".mp4", ".webm"}
 
 
 class EpisodeVideoError(RuntimeError):
@@ -70,6 +80,15 @@ class CueTiming:
     visual_id: str
     asset_id: str
     visual_source: Path
+    asset_type: str = "svg"
+    source_provenance_id: str | None = None
+    fit_mode: str = "contain"
+    crop: tuple[float, float, float, float] | None = None
+    source_start_seconds: float | None = None
+    source_end_seconds: float | None = None
+    internal_review_only: bool = False
+    subtitle_lines: tuple[str, ...] = ()
+    speaker_label: str | None = None
 
 
 @dataclass(frozen=True)
@@ -81,6 +100,7 @@ class PipelinePaths:
     review_mp4: Path
     extracted_frames: Path
     resolved_manifest: Path
+    real_media_asset_manifest: Path
     run_receipt: Path
     media_validation: Path
     cue_visual_readback: Path
@@ -97,6 +117,113 @@ def sha256_file(path: Path) -> str:
 
 def canonical_json_bytes(payload: Any) -> bytes:
     return (json.dumps(payload, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+
+
+def _validate_real_media_cue_contract(cue: Mapping[str, Any]) -> None:
+    cue_id = str(cue.get("cue_id") or "<unknown>")
+    asset_type = str(cue.get("asset_type") or "")
+    if asset_type not in REAL_MEDIA_ASSET_TYPES:
+        raise EpisodeVideoError(
+            f"real-media asset_type is invalid for {cue_id}",
+            code="real_media_asset_type_invalid",
+        )
+    local_asset_path = cue.get("local_asset_path")
+    provenance_id = cue.get("source_provenance_id")
+    fit_mode = str(cue.get("fit_mode") or "")
+    if not isinstance(local_asset_path, str) or not local_asset_path.strip():
+        raise EpisodeVideoError(
+            f"real-media local_asset_path is missing for {cue_id}",
+            code="real_media_asset_path_missing",
+        )
+    if Path(local_asset_path).suffix.lower() == ".svg":
+        raise EpisodeVideoError(
+            f"SVG is forbidden in a real-media cue: {cue_id}",
+            code="real_media_svg_forbidden",
+        )
+    allowed_extensions = IMAGE_EXTENSIONS if asset_type == "image" else VIDEO_EXTENSIONS
+    if Path(local_asset_path).suffix.lower() not in allowed_extensions:
+        raise EpisodeVideoError(
+            f"real-media file extension is invalid for {cue_id}",
+            code="real_media_extension_invalid",
+        )
+    if not isinstance(provenance_id, str) or not provenance_id.strip():
+        raise EpisodeVideoError(
+            f"source_provenance_id is missing for {cue_id}",
+            code="real_media_provenance_missing",
+        )
+    if fit_mode not in REAL_MEDIA_FIT_MODES:
+        raise EpisodeVideoError(
+            f"fit_mode is invalid for {cue_id}",
+            code="real_media_fit_mode_invalid",
+        )
+    if cue.get("internal_review_only") is not True:
+        raise EpisodeVideoError(
+            f"real-media cue is not fail-closed for {cue_id}",
+            code="real_media_rights_boundary_invalid",
+        )
+    subtitle_lines = cue.get("subtitle_lines")
+    speaker_label = cue.get("speaker_label")
+    if (
+        not isinstance(subtitle_lines, list)
+        or not 1 <= len(subtitle_lines) <= 3
+        or any(not isinstance(line, str) or not line for line in subtitle_lines)
+    ):
+        raise EpisodeVideoError(
+            f"subtitle_lines are missing or invalid for {cue_id}",
+            code="real_media_subtitle_lines_invalid",
+        )
+    if speaker_label not in {"れいむ", "まりさ"}:
+        raise EpisodeVideoError(
+            f"speaker_label is missing or invalid for {cue_id}",
+            code="real_media_speaker_label_invalid",
+        )
+
+    crop = cue.get("crop")
+    if crop is not None:
+        if (
+            not isinstance(crop, list)
+            or len(crop) != 4
+            or any(isinstance(value, bool) or not isinstance(value, (int, float)) for value in crop)
+        ):
+            raise EpisodeVideoError(
+                f"crop must be four normalized numbers for {cue_id}",
+                code="real_media_crop_invalid",
+            )
+        x, y, width, height = (float(value) for value in crop)
+        if (
+            x < 0
+            or y < 0
+            or width <= 0
+            or height <= 0
+            or x + width > 1.000001
+            or y + height > 1.000001
+        ):
+            raise EpisodeVideoError(
+                f"crop escapes the source bounds for {cue_id}",
+                code="real_media_crop_invalid",
+            )
+
+    source_time_range = cue.get("source_time_range")
+    if source_time_range is not None:
+        if asset_type != "video" or not isinstance(source_time_range, dict):
+            raise EpisodeVideoError(
+                f"source_time_range is only valid for video cues: {cue_id}",
+                code="real_media_time_range_invalid",
+            )
+        start = source_time_range.get("start_seconds")
+        end = source_time_range.get("end_seconds")
+        if (
+            isinstance(start, bool)
+            or isinstance(end, bool)
+            or not isinstance(start, (int, float))
+            or not isinstance(end, (int, float))
+            or float(start) < 0
+            or float(end) <= float(start)
+        ):
+            raise EpisodeVideoError(
+                f"source_time_range is invalid for {cue_id}",
+                code="real_media_time_range_invalid",
+            )
 
 
 def load_episode_manifest(repo_root: Path, manifest_path: Path) -> dict[str, Any]:
@@ -136,6 +263,21 @@ def load_episode_manifest(repo_root: Path, manifest_path: Path) -> dict[str, Any
     actual_cues = [row.get("cue_id") for row in cue_mapping if isinstance(row, dict)]
     if actual_cues != expected_cues:
         raise EpisodeVideoError("cue ids/order are not cue_001..cue_009", code="cue_order_invalid")
+
+    real_media_rows = [row for row in cue_mapping if isinstance(row, dict) and row.get("asset_type")]
+    if real_media_rows:
+        if len(real_media_rows) != 9:
+            raise EpisodeVideoError(
+                "real-media manifests must declare asset_type for all nine cues",
+                code="real_media_cue_contract_incomplete",
+            )
+        if not payload.get("provenance_manifest_path"):
+            raise EpisodeVideoError(
+                "real-media manifest is missing provenance_manifest_path",
+                code="real_media_provenance_missing",
+            )
+        for row in real_media_rows:
+            _validate_real_media_cue_contract(row)
 
     boundaries = payload.get("boundaries") or {}
     if not (
@@ -195,7 +337,8 @@ def build_pipeline_paths(repo_root: Path, manifest: Mapping[str, Any]) -> Pipeli
         yymm4_render=run / "yymm4_render_intermediate.local.mp4",
         review_mp4=run / str(output["mp4_filename"]),
         extracted_frames=run / "extracted_review_frames",
-        resolved_manifest=run / "episode_manifest.resolved.json",
+        resolved_manifest=run / "resolved_manifest.json",
+        real_media_asset_manifest=run / "real_media_asset_manifest.local.json",
         run_receipt=run / "pipeline_run_receipt.json",
         media_validation=run / "media_validation.json",
         cue_visual_readback=run / "cue_visual_readback.json",
@@ -203,10 +346,107 @@ def build_pipeline_paths(repo_root: Path, manifest: Mapping[str, Any]) -> Pipeli
     )
 
 
+def _load_real_media_provenance(
+    repo_root: Path, manifest: Mapping[str, Any]
+) -> tuple[dict[str, Any], dict[str, Mapping[str, Any]]]:
+    relative = manifest.get("provenance_manifest_path")
+    if not isinstance(relative, str) or not relative:
+        raise EpisodeVideoError(
+            "real-media provenance manifest is missing",
+            code="real_media_provenance_missing",
+        )
+    path = resolve_repo_path(repo_root, relative)
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise EpisodeVideoError(
+            "real-media provenance manifest is unreadable",
+            code="real_media_provenance_unreadable",
+        ) from exc
+    if not isinstance(payload, dict) or payload.get("schema") != REAL_MEDIA_PROVENANCE_SCHEMA:
+        raise EpisodeVideoError(
+            "real-media provenance schema is invalid",
+            code="real_media_provenance_schema_invalid",
+        )
+
+    source_rows = payload.get("sources")
+    asset_rows = payload.get("assets")
+    if not isinstance(source_rows, list) or not isinstance(asset_rows, list):
+        raise EpisodeVideoError(
+            "real-media provenance sources/assets are invalid",
+            code="real_media_provenance_records_invalid",
+        )
+    sources: dict[str, Mapping[str, Any]] = {}
+    for row in source_rows:
+        if not isinstance(row, dict):
+            raise EpisodeVideoError(
+                "real-media provenance source is invalid",
+                code="real_media_provenance_records_invalid",
+            )
+        source_id = row.get("source_id")
+        required = ("exact_title", "publisher", "canonical_url")
+        if (
+            not isinstance(source_id, str)
+            or not source_id
+            or any(not isinstance(row.get(key), str) or not row[key] for key in required)
+            or not str(row["canonical_url"]).lower().startswith(("http://", "https://"))
+        ):
+            raise EpisodeVideoError(
+                "real-media provenance source metadata is incomplete",
+                code="real_media_provenance_records_invalid",
+            )
+        sources[source_id] = row
+
+    assets: dict[str, Mapping[str, Any]] = {}
+    for row in asset_rows:
+        if not isinstance(row, dict):
+            raise EpisodeVideoError(
+                "real-media provenance asset is invalid",
+                code="real_media_provenance_records_invalid",
+            )
+        asset_id = row.get("asset_id")
+        source_id = row.get("source_id")
+        local_asset_path = row.get("local_asset_path")
+        required_strings = (
+            "sha256",
+            "media_type",
+            "crop_or_segment",
+            "usage_classification",
+            "rights_state",
+        )
+        if (
+            not isinstance(asset_id, str)
+            or not asset_id
+            or source_id not in sources
+            or not isinstance(local_asset_path, str)
+            or not local_asset_path
+            or any(not isinstance(row.get(key), str) or not row[key] for key in required_strings)
+            or not isinstance(row.get("cue_ids"), list)
+            or row.get("usage_classification") not in REAL_MEDIA_USAGE_CLASSIFICATIONS
+            or row.get("production_allowed") is not False
+            or row.get("publication_allowed") is not False
+        ):
+            raise EpisodeVideoError(
+                f"real-media provenance asset metadata is incomplete: {asset_id}",
+                code="real_media_provenance_records_invalid",
+            )
+        resolve_repo_path(repo_root, local_asset_path)
+        assets[asset_id] = row
+    return payload, assets
+
+
 def preflight_episode(
     repo_root: Path, manifest: Mapping[str, Any]
 ) -> tuple[dict[str, Any], list[CueTiming]]:
     policy = resolve_audio_policy()
+    real_media_mode = all(
+        isinstance(row, dict) and row.get("asset_type") in REAL_MEDIA_ASSET_TYPES
+        for row in manifest["cue_mapping"]
+    )
+    provenance_payload: dict[str, Any] | None = None
+    provenance_assets: dict[str, Mapping[str, Any]] = {}
+    if real_media_mode:
+        provenance_payload, provenance_assets = _load_real_media_provenance(repo_root, manifest)
     protected: list[dict[str, Any]] = []
     failed_locks: list[str] = []
     for row in manifest["content_locks"]:
@@ -273,29 +513,91 @@ def preflight_episode(
         speaker = str(voice["CharacterName"])
         if speaker != str(cue["speaker"]):
             raise EpisodeVideoError("manifest speaker mapping differs from project", code="cue_speaker_drift")
-        visual_relative = cue.get("visual_source_path") or (
-            f"{str(manifest['visual_source_path']).rstrip('/')}/{str(cue['visual_id'])}.svg"
+        asset_type = str(cue.get("asset_type") or "svg")
+        visual_relative = (
+            cue.get("local_asset_path")
+            if asset_type in REAL_MEDIA_ASSET_TYPES
+            else cue.get("visual_source_path")
+            or f"{str(manifest['visual_source_path']).rstrip('/')}/{str(cue['visual_id'])}.svg"
         )
         visual_source = resolve_repo_path(repo_root, str(visual_relative))
         if not visual_source.is_file():
             raise EpisodeVideoError(
                 f"visual source is missing for {cue['cue_id']}", code="visual_source_missing"
             )
-        try:
-            svg_root = ET.parse(visual_source).getroot()
-        except (OSError, ET.ParseError) as exc:
-            raise EpisodeVideoError(
-                f"visual source is not valid SVG for {cue['cue_id']}", code="visual_source_invalid"
-            ) from exc
-        if (
-            svg_root.attrib.get("data-cue-id") != str(cue["cue_id"])
-            or svg_root.attrib.get("data-scene-id") != str(cue["scene_id"])
-            or svg_root.attrib.get("data-approved-text") != str(voice["Serif"])
-        ):
-            raise EpisodeVideoError(
-                f"visual source cue/text binding differs for {cue['cue_id']}",
-                code="visual_cue_binding_drift",
-            )
+        source_provenance_id: str | None = None
+        fit_mode = "contain"
+        crop: tuple[float, float, float, float] | None = None
+        source_start_seconds: float | None = None
+        source_end_seconds: float | None = None
+        internal_review_only = False
+        subtitle_lines: tuple[str, ...] = ()
+        speaker_label: str | None = None
+        if asset_type in REAL_MEDIA_ASSET_TYPES:
+            asset_id = str(cue.get("materialized_visual_id") or cue["visual_id"])
+            provenance = provenance_assets.get(asset_id)
+            source_provenance_id = str(cue["source_provenance_id"])
+            if provenance is None:
+                raise EpisodeVideoError(
+                    f"provenance record is missing for {cue['cue_id']}",
+                    code="real_media_provenance_missing",
+                )
+            provenance_path = str(provenance["local_asset_path"])
+            if (
+                provenance_path != str(visual_relative)
+                or provenance.get("source_id") != source_provenance_id
+                or cue["cue_id"] not in provenance["cue_ids"]
+                or str(provenance["sha256"]).lower() != sha256_file(visual_source)
+                or provenance.get("media_type") != asset_type
+            ):
+                raise EpisodeVideoError(
+                    f"provenance binding differs for {cue['cue_id']}",
+                    code="real_media_provenance_binding_invalid",
+                )
+            fit_mode = str(cue["fit_mode"])
+            if cue.get("crop") is not None:
+                crop_values = [float(value) for value in cue["crop"]]
+                crop = (
+                    crop_values[0],
+                    crop_values[1],
+                    crop_values[2],
+                    crop_values[3],
+                )
+            source_range = cue.get("source_time_range")
+            if isinstance(source_range, dict):
+                source_start_seconds = float(source_range["start_seconds"])
+                source_end_seconds = float(source_range["end_seconds"])
+            internal_review_only = True
+            subtitle_lines = tuple(str(line) for line in cue["subtitle_lines"])
+            speaker_label = str(cue["speaker_label"])
+            if "".join(subtitle_lines) != str(voice["Serif"]):
+                raise EpisodeVideoError(
+                    f"accepted subtitle line fragments differ for {cue['cue_id']}",
+                    code="subtitle_line_fragment_drift",
+                )
+            expected_label = "れいむ" if speaker == "ゆっくり霊夢" else "まりさ"
+            if speaker_label != expected_label:
+                raise EpisodeVideoError(
+                    f"speaker label differs for {cue['cue_id']}",
+                    code="subtitle_speaker_label_drift",
+                )
+        else:
+            try:
+                svg_root = ET.parse(visual_source).getroot()
+            except (OSError, ET.ParseError) as exc:
+                raise EpisodeVideoError(
+                    f"visual source is not valid SVG for {cue['cue_id']}",
+                    code="visual_source_invalid",
+                ) from exc
+            if (
+                svg_root.attrib.get("data-cue-id") != str(cue["cue_id"])
+                or svg_root.attrib.get("data-scene-id") != str(cue["scene_id"])
+                or svg_root.attrib.get("data-approved-text") != str(voice["Serif"])
+            ):
+                raise EpisodeVideoError(
+                    f"visual source cue/text binding differs for {cue['cue_id']}",
+                    code="visual_cue_binding_drift",
+                )
         timings.append(
             CueTiming(
                 cue_id=str(cue["cue_id"]),
@@ -308,6 +610,15 @@ def preflight_episode(
                 visual_id=str(cue["visual_id"]),
                 asset_id=str(cue.get("materialized_visual_id") or cue["visual_id"]),
                 visual_source=visual_source,
+                asset_type=asset_type,
+                source_provenance_id=source_provenance_id,
+                fit_mode=fit_mode,
+                crop=crop,
+                source_start_seconds=source_start_seconds,
+                source_end_seconds=source_end_seconds,
+                internal_review_only=internal_review_only,
+                subtitle_lines=subtitle_lines,
+                speaker_label=speaker_label,
             )
         )
         previous_end = end
@@ -340,23 +651,177 @@ def preflight_episode(
             "cue_count": len(timings),
             "scene_counts": scene_counts,
             "exact_text_order": True,
+            "real_media": {
+                "enabled": real_media_mode,
+                "asset_count": len(provenance_assets),
+                "cue_provenance_coverage": f"{len(timings)}/9" if real_media_mode else "legacy-svg",
+                "svg_reference_count": sum(timing.asset_type == "svg" for timing in timings),
+                "internal_review_only": (
+                    all(timing.internal_review_only for timing in timings)
+                    if real_media_mode
+                    else False
+                ),
+                "subtitle_line_fragments_locked": (
+                    all(timing.subtitle_lines for timing in timings)
+                    if real_media_mode
+                    else False
+                ),
+                "provenance_schema": (
+                    provenance_payload.get("schema") if provenance_payload is not None else None
+                ),
+            },
         },
         timings,
     )
 
 
+def _escape_drawtext(value: str) -> str:
+    return (
+        value.replace("\\", "\\\\")
+        .replace("'", "\\'")
+        .replace(":", "\\:")
+    )
+
+
+def _subtitle_overlay_filters(timing: CueTiming) -> list[str]:
+    if not timing.subtitle_lines or timing.speaker_label is None:
+        raise EpisodeVideoError(
+            f"subtitle overlay contract is missing for {timing.cue_id}",
+            code="real_media_subtitle_lines_invalid",
+        )
+    font = Path(os.environ.get("WINDIR", r"C:\Windows")) / "Fonts" / "YuGothB.ttc"
+    if not font.is_file():
+        raise EpisodeVideoError(
+            "required Japanese subtitle font is unavailable",
+            code="subtitle_font_missing",
+        )
+    font_value = str(font).replace("\\", "/").replace(":", r"\:")
+    max_length = max(len(line) for line in timing.subtitle_lines)
+    if len(timing.subtitle_lines) == 3:
+        font_size = 34 if max_length >= 34 else 36
+        line_positions = [806, 864, 922]
+    else:
+        font_size = 36 if max_length >= 40 else 40 if max_length >= 34 else 42
+        line_positions = [815, 883] if len(timing.subtitle_lines) == 2 else [854]
+    label_color = "0xb94a5b" if timing.speaker_label == "れいむ" else "0xc59a34"
+    filters = [
+        "drawbox=x=0:y=780:w=1920:h=300:color=black@0.96:t=fill",
+        f"drawbox=x=56:y=854:w=190:h=74:color={label_color}:t=fill",
+        (
+            f"drawtext=fontfile='{font_value}':"
+            f"text='{_escape_drawtext(timing.speaker_label)}':"
+            "expansion=none:fontcolor=white:fontsize=36:x=95:y=870"
+        ),
+    ]
+    for line, y in zip(timing.subtitle_lines, line_positions, strict=True):
+        filters.append(
+            f"drawtext=fontfile='{font_value}':"
+            f"text='{_escape_drawtext(line)}':"
+            f"expansion=none:fontcolor=white:fontsize={font_size}:x=285:y={y}"
+        )
+    return filters
+
+
+def _materialize_real_media_frame(
+    timing: CueTiming, output: Path
+) -> dict[str, Any]:
+    ffmpeg = shutil.which("ffmpeg")
+    if not ffmpeg:
+        raise EpisodeVideoError("ffmpeg is unavailable", code="ffmpeg_missing")
+    source_hash_before = sha256_file(timing.visual_source)
+    command = [
+        ffmpeg,
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-y",
+    ]
+    selected_seconds: float | None = None
+    if timing.asset_type == "video":
+        start = timing.source_start_seconds or 0.0
+        end = timing.source_end_seconds
+        selected_seconds = start if end is None else start + ((end - start) / 2.0)
+        command.extend(["-ss", f"{selected_seconds:.6f}"])
+    command.extend(["-i", str(timing.visual_source)])
+
+    filters: list[str] = []
+    if timing.crop is not None:
+        x, y, width, height = timing.crop
+        filters.append(
+            "crop="
+            f"iw*{width:.8f}:ih*{height:.8f}:iw*{x:.8f}:ih*{y:.8f}"
+        )
+    if timing.fit_mode == "cover":
+        filters.extend(
+            [
+                "scale=1920:1080:force_original_aspect_ratio=increase",
+                "crop=1920:1080",
+            ]
+        )
+    else:
+        filters.extend(
+            [
+                "scale=1920:1080:force_original_aspect_ratio=decrease",
+                "pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=black",
+            ]
+        )
+    filters.extend(_subtitle_overlay_filters(timing))
+    command.extend(
+        [
+            "-vf",
+            ",".join(filters),
+            "-frames:v",
+            "1",
+            "-an",
+            "-sn",
+            "-dn",
+            "-threads",
+            "1",
+            str(output),
+        ]
+    )
+    assert_command_allowed(command)
+    completed = subprocess.run(command, capture_output=True, check=False, timeout=120)
+    if completed.returncode != 0 or not output.is_file():
+        stderr = completed.stderr.decode("utf-8", errors="replace")[-1000:]
+        raise EpisodeVideoError(
+            f"real-media materialization failed for {timing.cue_id}: {stderr}",
+            code="real_media_materialization_failed",
+        )
+    if sha256_file(timing.visual_source) != source_hash_before:
+        raise EpisodeVideoError(
+            f"real-media source changed during materialization: {timing.cue_id}",
+            code="real_media_source_mutated",
+        )
+    return {
+        "status": "passed",
+        "engine": "ffmpeg",
+        "cleanup_verified": True,
+        "speaker_playback": False,
+        "preview_playback": False,
+        "selected_seconds": selected_seconds,
+        "subtitle_lines_composited": len(timing.subtitle_lines),
+        "speaker_label_composited": timing.speaker_label,
+    }
+
+
 def materialize_visuals(
-    timings: Sequence[CueTiming], paths: PipelinePaths, *, resume: bool
+    timings: Sequence[CueTiming],
+    paths: PipelinePaths,
+    *,
+    resume: bool,
+    repo_root: Path | None = None,
 ) -> tuple[dict[str, Path], dict[str, Any]]:
-    unique_sources: dict[str, Path] = {}
+    unique_sources: dict[str, CueTiming] = {}
     for timing in timings:
-        unique_sources.setdefault(timing.asset_id, timing.visual_source)
+        unique_sources.setdefault(timing.asset_id, timing)
     paths.generated_assets.mkdir(parents=True, exist_ok=True)
-    browser = find_browser()
+    browser = find_browser() if any(timing.asset_type == "svg" for timing in timings) else None
     records: list[dict[str, Any]] = []
     outputs: dict[str, Path] = {}
     for asset_id in sorted(unique_sources):
-        source = unique_sources[asset_id]
+        timing = unique_sources[asset_id]
+        source = timing.visual_source
         output = paths.generated_assets / f"{asset_id}.png"
         if output.exists() and resume:
             width, height = png_dimensions(output)
@@ -364,9 +829,22 @@ def materialize_visuals(
                 raise EpisodeVideoError(
                     f"cached visual has wrong dimensions: {asset_id}", code="cached_visual_invalid"
                 )
-            process_receipt = {"status": "reused", "cleanup_verified": True}
+            process_receipt = {
+                "status": "reused",
+                "cleanup_verified": True,
+                "speaker_playback": False,
+                "preview_playback": False,
+            }
         else:
-            process_receipt = _render_svg_with_silent_chromium(source, output, browser)
+            if timing.asset_type in REAL_MEDIA_ASSET_TYPES:
+                process_receipt = _materialize_real_media_frame(timing, output)
+            else:
+                if browser is None:
+                    raise EpisodeVideoError(
+                        "browser is unavailable for SVG materialization",
+                        code="browser_missing",
+                    )
+                process_receipt = _render_svg_with_silent_chromium(source, output, browser)
             width, height = png_dimensions(output)
             if (width, height) != (1920, 1080):
                 raise EpisodeVideoError(
@@ -376,21 +854,51 @@ def materialize_visuals(
         records.append(
             {
                 "asset_id": asset_id,
+                "asset_type": timing.asset_type,
+                "source_provenance_id": timing.source_provenance_id,
+                "source_path": (
+                    _repo_relative(repo_root, source) if repo_root is not None else source.name
+                ),
                 "source_sha256": sha256_file(source),
                 "png_sha256": sha256_file(output),
                 "width": width,
                 "height": height,
-                "browser_process": process_receipt,
+                "fit_mode": timing.fit_mode,
+                "crop": list(timing.crop) if timing.crop is not None else None,
+                "source_time_range": (
+                    {
+                        "start_seconds": timing.source_start_seconds,
+                        "end_seconds": timing.source_end_seconds,
+                    }
+                    if timing.source_start_seconds is not None
+                    else None
+                ),
+                "internal_review_only": timing.internal_review_only,
+                "subtitle_lines": list(timing.subtitle_lines),
+                "speaker_label": timing.speaker_label,
+                "materialization_process": process_receipt,
             }
         )
         outputs[asset_id] = output
-    return outputs, {
+    receipt = {
         "status": "passed",
         "unique_visual_count": len(outputs),
         "records": records,
-        "external_asset_count": 0,
+        "real_media_asset_count": sum(
+            row["asset_type"] in REAL_MEDIA_ASSET_TYPES for row in records
+        ),
+        "external_asset_count": sum(
+            row["asset_type"] in REAL_MEDIA_ASSET_TYPES for row in records
+        ),
+        "svg_reference_count": sum(row["asset_type"] == "svg" for row in records),
         "source_svg_modified": False,
     }
+    _write_or_verify(
+        paths.real_media_asset_manifest,
+        canonical_json_bytes(receipt),
+        resume=resume,
+    )
+    return outputs, receipt
 
 
 def build_yymm4_project(
@@ -422,6 +930,7 @@ def build_yymm4_project(
             cue_id=timing.cue_id,
             frame=timing.frame,
             length=timing.length_frames,
+            real_media=timing.asset_type in REAL_MEDIA_ASSET_TYPES,
         )
         for timing in timings
     ]
@@ -460,6 +969,8 @@ def readback_generated_project(
         counts[speaker] = counts.get(speaker, 0) + 1
     expected_intervals = [(t.frame, t.length_frames) for t in timings]
     actual_intervals = [(int(item.get("Frame", -1)), int(item.get("Length", -1))) for item in images]
+    real_media_mode = all(timing.asset_type in REAL_MEDIA_ASSET_TYPES for timing in timings)
+    image_paths = [str(item.get("FilePath") or "") for item in images]
 
     path_leaks: list[str] = []
     run_root = run_directory.resolve()
@@ -484,6 +995,21 @@ def readback_generated_project(
         "layout_xml_stripped": project.get("LayoutXml") == "",
         "only_run_directory_absolute_paths": not path_leaks,
         "timeline_frames_4415": int(timeline.get("Length", -1)) == 4415,
+        "real_media_paths_are_raster": (
+            all(Path(path).suffix.lower() in IMAGE_EXTENSIONS for path in image_paths)
+            if real_media_mode
+            else True
+        ),
+        "real_media_has_zero_svg_references": (
+            not any(value.lower().endswith(".svg") for _, value in _walk_strings(project))
+            if real_media_mode
+            else True
+        ),
+        "real_media_remarks_are_not_proxy": (
+            all(str(item.get("Remark", "")).startswith("internal-review-real-media:") for item in images)
+            if real_media_mode
+            else True
+        ),
     }
     failed = [key for key, passed in checks.items() if not passed]
     if failed:
@@ -502,6 +1028,11 @@ def readback_generated_project(
         "timeline_frames": int(timeline["Length"]),
         "fps": int(timeline["VideoInfo"]["FPS"]),
         "absolute_path_leaks": [],
+        "svg_reference_count": (
+            sum(value.lower().endswith(".svg") for _, value in _walk_strings(project))
+            if real_media_mode
+            else None
+        ),
     }
 
 
@@ -521,6 +1052,11 @@ def build_cue_visual_readback(
                 "end_frame": timing.end_frame,
                 "visual_id": timing.visual_id,
                 "materialized_visual_id": timing.asset_id,
+                "asset_type": timing.asset_type,
+                "source_provenance_id": timing.source_provenance_id,
+                "internal_review_only": timing.internal_review_only,
+                "subtitle_lines": list(timing.subtitle_lines),
+                "speaker_label": timing.speaker_label,
                 "asset_path": f"<run-dir>/generated_assets/{asset.name}",
                 "asset_sha256": sha256_file(asset),
             }
@@ -531,7 +1067,13 @@ def build_cue_visual_readback(
         "cue_count": len(rows),
         "visual_item_coverage": f"{len(rows)}/9",
         "rows": rows,
-        "external_asset_count": 0,
+        "real_media_cue_count": sum(
+            row["asset_type"] in REAL_MEDIA_ASSET_TYPES for row in rows
+        ),
+        "svg_reference_count": sum(row["asset_type"] == "svg" for row in rows),
+        "external_asset_count": sum(
+            row["asset_type"] in REAL_MEDIA_ASSET_TYPES for row in rows
+        ),
         "private_path_count": 0,
     }
 
@@ -877,7 +1419,7 @@ def run_episode_video(
         "run_id": manifest["output"]["run_id"],
         "stages": [
             "preflight",
-            "visual_materialization",
+            "media_materialization",
             "yymm4_project_generation",
             "yymm4_render" if render else "render_skipped",
             "mp4_normalization" if render else "normalization_skipped",
@@ -927,7 +1469,9 @@ def run_episode_video(
     }
     _write_or_verify(paths.resolved_manifest, canonical_json_bytes(resolved_manifest), resume=resume)
 
-    visuals, visual_receipt = materialize_visuals(timings, paths, resume=resume)
+    visuals, visual_receipt = materialize_visuals(
+        timings, paths, resume=resume, repo_root=repo_root
+    )
     _append_log(paths.run_log, "visual materialization passed")
     project_readback = build_yymm4_project(
         repo_root, manifest, timings, visuals, paths, resume=resume
@@ -967,7 +1511,8 @@ def run_episode_video(
         "normalization": normalization,
         "media_validation": media,
         "outputs": {
-            "resolved_manifest": "<run-dir>/episode_manifest.resolved.json",
+            "resolved_manifest": "<run-dir>/resolved_manifest.json",
+            "real_media_asset_manifest": "<run-dir>/real_media_asset_manifest.local.json",
             "generated_assets": "<run-dir>/generated_assets",
             "generated_project": f"<run-dir>/{paths.generated_project.name}",
             "internal_review_mp4": f"<run-dir>/{paths.review_mp4.name}" if render else None,
@@ -1104,7 +1649,9 @@ def _voice_items(timeline: Mapping[str, Any]) -> list[dict[str, Any]]:
     return sorted(voices, key=lambda item: int(item.get("Frame", -1)))
 
 
-def _image_item(*, asset_path: Path, cue_id: str, frame: int, length: int) -> dict[str, Any]:
+def _image_item(
+    *, asset_path: Path, cue_id: str, frame: int, length: int, real_media: bool = False
+) -> dict[str, Any]:
     def animation(value: float) -> dict[str, Any]:
         return {
             "Values": [{"Value": value}],
@@ -1153,7 +1700,11 @@ def _image_item(*, asset_path: Path, cue_id: str, frame: int, length: int) -> di
         "IsHidden": False,
         "Frame": frame,
         "Length": length,
-        "Remark": f"internal-review-proxy:{cue_id}",
+        "Remark": (
+            f"internal-review-real-media:{cue_id}"
+            if real_media
+            else f"internal-review-proxy:{cue_id}"
+        ),
     }
 
 
@@ -1198,9 +1749,13 @@ def _manifest_repo_paths(manifest: Mapping[str, Any]) -> Iterable[str]:
     yield str(manifest["visual_source_path"])
     yield str(manifest["yymm4"]["source_project_path"])
     yield str(manifest["output"]["run_root_path"])
+    if manifest.get("provenance_manifest_path"):
+        yield str(manifest["provenance_manifest_path"])
     for cue in manifest["cue_mapping"]:
         if cue.get("visual_source_path"):
             yield str(cue["visual_source_path"])
+        if cue.get("local_asset_path"):
+            yield str(cue["local_asset_path"])
     for row in manifest["content_locks"]:
         yield str(row["path"])
 

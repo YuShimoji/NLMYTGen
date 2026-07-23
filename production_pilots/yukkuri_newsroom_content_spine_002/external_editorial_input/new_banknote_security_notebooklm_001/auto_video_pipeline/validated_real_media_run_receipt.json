@@ -1,0 +1,174 @@
+{
+  "schema": "nlmytgen.validated_real_media_run_receipt.v1",
+  "status": "passed",
+  "validated_at_utc": "2026-07-23T17:02:50.598646+00:00",
+  "run": {
+    "run_id": "new_banknote_real_media_review_v1",
+    "manifest_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_real_media_episode_manifest.json",
+    "manifest_sha256": "25ac9df0a9af1c0170c88b2e92fef34ff7278934f7d5570e87e4007d44ab46f1",
+    "provenance_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_real_media_provenance.json",
+    "provenance_sha256": "b96275a8e5f84494e17284135c1e4231df51930705a18f48f013d51746c2b920",
+    "human_decision_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/human_review_visual_rejection_receipt.json",
+    "output_directory": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_real_media_review_v1"
+  },
+  "protected_identity": {
+    "source_project_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+    "source_project_unchanged": true,
+    "voice_items_unchanged": true,
+    "voice_item_count": 9,
+    "speaker_counts": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "exact_text_order": true,
+    "subtitle_line_fragments_unchanged": true,
+    "cue_timing_unchanged": true,
+    "timeline_frames": 4415,
+    "fps": 60
+  },
+  "real_media": {
+    "asset_count": 9,
+    "cue_coverage": "9/9",
+    "source_provenance_coverage": "9/9",
+    "materially_different_cue_frames": 9,
+    "svg_reference_count_manifest": 0,
+    "svg_reference_count_project": 0,
+    "ai_generated_diagram_count": 0,
+    "abstract_proxy_frame_count": 0,
+    "usage_classifications": {
+      "official_reuse_candidate": 8,
+      "internal_review_only": 1,
+      "user_owned": 0
+    },
+    "rights_approved": false,
+    "production_allowed": false,
+    "publication_allowed": false,
+    "external_upload_allowed": false,
+    "source_media_tracked": false
+  },
+  "generated_project": {
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_real_media_review_v1/generated_project.local.ymmp",
+    "sha256": "244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611",
+    "image_item_count": 9,
+    "all_asset_paths_resolve_inside_run": true,
+    "tool_states_stripped": true,
+    "layout_xml_stripped": true
+  },
+  "media": {
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_real_media_review_v1/internal_review_real_media.mp4",
+    "sha256": "423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476",
+    "size_bytes": 93375529,
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60.0,
+    "duration_seconds": 73.583008,
+    "overall_bitrate_bps": 10151857,
+    "frame_count": 4415,
+    "full_file_decode": "passed",
+    "render_fresh": true
+  },
+  "cue_frame_inspection": {
+    "status": "passed",
+    "inspected_as_actual_images": true,
+    "cue_count": 9,
+    "unique_cue_frame_sha256_count": 9,
+    "subtitles_readable_and_unclipped": true,
+    "source_media_present_in_every_cue": true,
+    "rows": [
+      {
+        "cue_id": "cue_001",
+        "source_id": "J05",
+        "subject": "three new banknotes",
+        "sha256": "d403298c3a014c79727647f7504f2114675c507dfe764a3b8bdba56539d975f0",
+        "result": "passed"
+      },
+      {
+        "cue_id": "cue_002",
+        "source_id": "O02",
+        "subject": "official annotated security and usability overview",
+        "sha256": "da3a460ef83534beed7a92edf36462a69b77f5da8e93e2095eb784c7dfcff65b",
+        "result": "passed"
+      },
+      {
+        "cue_id": "cue_003",
+        "source_id": "O01",
+        "subject": "high-definition watermark close-up",
+        "sha256": "5ae3f5a5a9e3b84ec7b70772cb249d181231d187b9826117affa1f5e294fa000",
+        "result": "passed"
+      },
+      {
+        "cue_id": "cue_004",
+        "source_id": "O01",
+        "subject": "multi-state 3D hologram",
+        "sha256": "285a78e860b5ec7fa1aa64ab574cb804b0225a65b58d97555e24fb176295926f",
+        "result": "passed"
+      },
+      {
+        "cue_id": "cue_005",
+        "source_id": "O01",
+        "subject": "official deep-intaglio close-up",
+        "sha256": "16747fd0645a23bc077c8024967dd332d1fffed4d229541a812267f17d0a8696",
+        "result": "passed_with_low_source_resolution"
+      },
+      {
+        "cue_id": "cue_006",
+        "source_id": "O01",
+        "subject": "NIPPONGINKO microtext macro",
+        "sha256": "512977bda933b47210e6358d321a900a2625720cdd2ca244ea5fd8b44ddadad2",
+        "result": "passed"
+      },
+      {
+        "cue_id": "cue_007",
+        "source_id": "O01",
+        "subject": "identification-mark before and after comparison",
+        "sha256": "286d08045f8572f211cc5eb7f92e193059171c484506a601ff9c56db44301a9a",
+        "result": "passed"
+      },
+      {
+        "cue_id": "cue_008",
+        "source_id": "O01-LINEUP",
+        "subject": "official denomination comparison",
+        "sha256": "7b102fccbe71ace5fbd5fe9284784e37b1f75bfef943ce6f42d632c6e3c6b1ee",
+        "result": "passed"
+      },
+      {
+        "cue_id": "cue_009",
+        "source_id": "O01",
+        "subject": "four-action real-media montage",
+        "sha256": "031affa791415ae863690edcc85e9377b03c3a8f867f302f6a51029c250f5fb2",
+        "result": "passed"
+      }
+    ]
+  },
+  "silent_execution": {
+    "policy": "silent",
+    "speaker_playback_used": false,
+    "preview_playback_used": false,
+    "system_volume_changed": false,
+    "project_owned_process_cleanup": true
+  },
+  "autonomous_repairs": [
+    {
+      "finding": "first real-media render omitted the accepted subtitle band because the prior subtitles were baked into rejected SVG visuals",
+      "repair": "added manifest-locked subtitle fragments and speaker labels to raster materialization without changing VoiceItems or timing",
+      "result": "passed"
+    },
+    {
+      "finding": "one bounded YMM4 retry encountered ElementNotAvailableException at open_video_output",
+      "repair": "verified owned-process cleanup and unchanged source hash, then repeated the same bounded command",
+      "result": "passed"
+    }
+  ],
+  "boundary": {
+    "internal_review_only": true,
+    "human_creative_acceptance": false,
+    "rights_clearance": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "master_merge": false
+  }
+}

@@ -1,0 +1,255 @@
+{
+  "schema": "nlmytgen.episode_manifest.v1",
+  "episode_id": "new_banknote_security_notebooklm_001_real_media_review",
+  "source_package": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_capture_receipts.json",
+  "approved_script": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/human_script_approval_receipt.json",
+  "derived_csv": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/derived_yymm4_import.csv",
+  "provenance_manifest_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_real_media_provenance.json",
+  "cue_mapping": [
+    {
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "speaker": "ゆっくり霊夢",
+      "visual_id": "real_cue_001_banknote_overview",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/J05_fnn.png",
+      "source_provenance_id": "J05",
+      "subtitle_lines": [
+        "2024年に発行された新しいお札って、見た目以外にも変わっ",
+        "たところがあるの？"
+      ],
+      "speaker_label": "れいむ",
+      "crop": [
+        0.09,
+        0.112,
+        0.598,
+        0.44
+      ],
+      "fit_mode": "cover",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "real_cue_002_features_overview",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O02_boj_annotated_note.png",
+      "source_provenance_id": "O02",
+      "subtitle_lines": [
+        "あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど",
+        "複数の技術を組み合わせている。誰にとっても使いやすい",
+        "ユニバーサルデザインも取り入れたんだ。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "real_cue_003_high_definition_watermark",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_hyper_sukiire10.jpg",
+      "source_provenance_id": "O01",
+      "subtitle_lines": [
+        "まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだ",
+        "ぜ。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "real_cue_004_3d_hologram",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_hologram.jpg",
+      "source_provenance_id": "O01",
+      "subtitle_lines": [
+        "次は3Dホログラム。角度を変えると、三次元の肖像が回転して",
+        "見えるぞ。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_005",
+      "scene_id": "S2",
+      "speaker": "ゆっくり霊夢",
+      "visual_id": "real_cue_005_deep_intaglio",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_fuka10.jpg",
+      "source_provenance_id": "O01",
+      "subtitle_lines": [
+        "触るとざらざらするのは、額面数字などのインキを高く盛り上げ",
+        "る深凹版印刷なんだね。"
+      ],
+      "speaker_label": "れいむ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_006",
+      "scene_id": "S2",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "real_cue_006_microtext",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_micro10_02.jpg",
+      "source_provenance_id": "O01",
+      "subtitle_lines": [
+        "マイクロ文字の『NIPPONGINKO』は、ルーペで確かめ",
+        "られる。カラーコピー機では再現が難しいほど小さい文字なんだ。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "cover",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_007",
+      "scene_id": "S3",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "real_cue_007_identification_mark",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_universal10_01_yoko.jpg",
+      "source_provenance_id": "O01",
+      "subtitle_lines": [
+        "見分けやすさの工夫では、識別マークを11本の斜線にそろえ、",
+        "券種ごとに位置を変えているぜ。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_008",
+      "scene_id": "S3",
+      "speaker": "ゆっくり霊夢",
+      "visual_id": "real_cue_008_denomination_comparison",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_denomination_comparison.local.png",
+      "source_provenance_id": "O01-LINEUP",
+      "subtitle_lines": [
+        "額面の数字は前のシリーズのお札より大きい。一万円券と千円券では",
+        "ホログラムの形や位置が違い、千円券の中央には橙色の",
+        "グラデーションもあるんだね。"
+      ],
+      "speaker_label": "れいむ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_009",
+      "scene_id": "S3",
+      "speaker": "ゆっくり魔理沙",
+      "visual_id": "real_cue_009_four_checks",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_four_checks_montage.local.png",
+      "source_provenance_id": "O01",
+      "subtitle_lines": [
+        "確かめ方は、透かす、触る、傾ける、ルーペで見る。この四つを",
+        "覚えておこう。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    }
+  ],
+  "visual_source_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures",
+  "yymm4": {
+    "source_project_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/new_banknote_yymm4_import_observation.local.ymmp",
+    "source_project_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+    "profile_id": "ymm4_4_53_0_9_yukkuri_characters_v1",
+    "profile_version_expected": "4.53.0.9",
+    "observed_product_version": "4.54.0.1",
+    "version_difference_policy": "same_major_minor_or_newer_warning_only",
+    "fps": 60,
+    "timeline_frames": 4415,
+    "duration_seconds": 73.583333
+  },
+  "output": {
+    "run_root_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs",
+    "run_id": "new_banknote_real_media_review_v1",
+    "project_filename": "generated_project.local.ymmp",
+    "mp4_filename": "internal_review_real_media.mp4"
+  },
+  "render_settings": {
+    "container": "mp4",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "video_bitrate_kbps": 10000,
+    "video_maxrate_kbps": 12000,
+    "video_bufsize_kbps": 20000,
+    "audio_bitrate_kbps": 192,
+    "max_duration_delta_seconds": 0.5,
+    "max_size_bytes": 250000000,
+    "timeout_seconds": 1200
+  },
+  "boundaries": {
+    "internal_review_only": true,
+    "real_media": true,
+    "proxy_visual": false,
+    "ai_generated_visuals": false,
+    "custom_illustration": false,
+    "final_aesthetic_acceptance": false,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "speaker_playback": false,
+    "preview_playback": false
+  },
+  "content_locks": [
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_capture_receipts.json",
+      "sha256": "6c4cc1817a3574b7278f2986522c91b05a51c1b8bba3ea4a544a78aee920e205"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/human_script_approval_receipt.json",
+      "sha256": "1ac490cbcd06483082b2d56a97ff758199ef37ab4b6d1229806c24b8698d7e0f"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+      "sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.txt",
+      "sha256": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script_review.md",
+      "sha256": "9816c28e9b0099ef98e2aefb9e70bf22a32fbbd0f931fd8989c6ac19dcd99d3a"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/cue_source_traceability.json",
+      "sha256": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_yymm4.csv",
+      "sha256": "23361565b18d5e8d96768ad2877b1505e0bdeb5aacb5fbd0022a11f5e8dcfb12"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/derived_yymm4_import.csv",
+      "sha256": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_to_script_manifest.json",
+      "sha256": "e13fb57a2681875f577e4d85f13cf41bfc601519892fa4f975bdfcdd24d927b5"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_real_media_provenance.json",
+      "sha256": "b96275a8e5f84494e17284135c1e4231df51930705a18f48f013d51746c2b920"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/human_review_visual_rejection_receipt.json",
+      "sha256": "aae43809b8afe00b3cec27840e7fef099a65c89c4082df4cf3e664fe7ca19fca"
+    }
+  ]
+}
