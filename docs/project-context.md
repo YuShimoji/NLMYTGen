@@ -1,6 +1,61 @@
 # Project Context — NLMYTGen
 
-## 現在の監修AIハンドオフ（2026-07-24 JST・Thank端末再同期 / accepted cut / regression green）
+## 現在の監修AIハンドオフ（2026-07-25 JST・portable dependency lock authority）
+
+この節だけが現在の再開地点である。accepted cutとRegression Integrityを変更せず、
+local-onlyだったPython / npm lockをtracked cross-terminal authorityへ昇格した。
+
+- **取得先 / exact base**:
+  `codex/nlmytgen-accepted-cut-regression-integrity-v1`の
+  `c9c5f4bd50b86edd72cd3dc92254dc7ea02bee7e`。fetch後にsource upstream `0/0`、
+  tracked clean、target branch不存在を確認して
+  `codex/nlmytgen-portable-dependency-lock-authority-v1`を作成した。
+- **before → after**: `uv.lock`と`gui/package-lock.json`はlocked installに使える
+  local ignored fileから、reviewable tracked authorityへ移った。`.gitignore`から削除したのは
+  この2 entryだけで、`.venv/`、`gui/node_modules/`、media、YMM4、browser profile、
+  artifacts、run outputsのignoreは維持した。
+- **lock identity**: `uv.lock` SHA-256は
+  `40e64f793775f0b0181f5ba8972c17842717dbe14bc8c0a6c0cabd14442435d0`、
+  `gui/package-lock.json`は
+  `81b060f37fd2c7c4151fcf6fc402b554476d4ea6785022c8eef01aaaa9ff4a73`。
+  setup前後でbyte-exactだった。
+- **manifest preservation**: `pyproject.toml` SHA-256
+  `7b9ce97035187e00e396c50aa5d79862fce06c0404cc272435f93136b1efd51d`、
+  `gui/package.json` SHA-256
+  `a180ad8bbbba3a28e72576181259510bb42e119dd920f8995056936ffab251a2`。
+  required baseから変更していない。Electron rangeは`^35.0.0`、exact installは35.7.5。
+- **source safety**: Python lockはpublic PyPI、npm lockはpublic
+  `registry.npmjs.org` HTTPSだけを参照する。credential、private registry、
+  machine-local absolute path、file/link/workspace dependencyはない。
+- **clean-checkout proof**: staged candidateのtracked fileだけを短いWindows pathへ展開し、
+  `uv sync --extra dev --locked`、Python import smoke、`npm --prefix gui ci`、
+  `npm --prefix gui ls --depth=0`、Electron 35.7.5 readbackをpassした。
+  source `.venv`、`node_modules`、media、YMM4、browser/private evidenceはコピーしていない。
+- **Windows path note**: 最初の長いTEMP pathはtracked tree展開時にWin32 path-lengthで停止した。
+  部分workspaceを回収し、`C:\nla1`で同じtracked-only proofをpass後に削除した。
+  依存graphのfailureではなく、検証workspaceのpath-length条件である。
+- **regression contract**: `tests/test_dependency_lock_authority.py`の7 testsが、
+  tracking / ignore、manifest hash、public dependency source、Electron pin、
+  locked setup docs、accepted-cut authority hashを固定する。
+- **post-commit gates**: outcome commit後、exact commitからtracked-only setupを再実行し、
+  canonical Regression Integrity、project-state sync、Git integrityをpassしてからpushする。
+  outcome commitはremote branch tipから解決する。
+- **preservation**: accepted MP4 / generated project / receipt、canonical script、
+  visual、timing、subtitle、rights、publication stateは変更していない。
+  `.playwright-mcp/`、`artifacts/`、`phase-e-01-contact-acquired*.png`、
+  ignored/private mediaとYMM4/run archivesはstage・削除・変更していない。
+- **security successor**: Electron 35.7.5のdirect high audit findingは未解決。
+  lock trackingはsecurity fixではない。次missionで43.2.0をisolated evaluationし、
+  startup、IPC、file dialog、Python bridge、capture、audio safety、rollbackを判定する。
+- **unperformed**: Electron upgrade、YMM4、render、window、media playback、
+  public-media access、rights、production、publication、upload、release、PR、merge、
+  master integrationは実施していない。
+- **詳細正本**:
+  `docs/verification/DEPENDENCY_LOCK_AUTHORITY_2026-07-25.md`。
+  通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md`だけを読む。
+
+## 直前の監修AIハンドオフ（2026-07-24 JST・Thank端末再同期 / accepted cut / regression green）
 
 この節だけが現在の再開地点である。real-media cutの人間受理、canonical
 Regression Integrityの三モード収束、今回のThank端末live availabilityを分離して固定した。

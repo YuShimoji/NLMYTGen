@@ -1,69 +1,53 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: new-banknote-stable-internal-cut-regression-integrity-green-v1
-State-Revision: 2026-07-24.5
-Updated: 2026-07-24 JST
-Product-State: accepted-real-media-internal-cut-with-evidence-safe-regression-gate
-Product-Gate: dependency-portability-and-gui-security
-Recommended-Next: restart-dependency-lock-authority-from-current-remote-tip
+Project-State-ID: nlmytgen-portable-dependency-lock-authority-ready-v1
+State-Revision: 2026-07-25.1
+Updated: 2026-07-25 JST
+Product-State: accepted-cut-regression-green-with-portable-python-and-npm-locks
+Product-Gate: electron-major-compatibility-evaluation
+Recommended-Next: evaluate-electron-43-upgrade-in-isolated-branch
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
-Handoff-Branch: codex/nlmytgen-accepted-cut-regression-integrity-v1
+Handoff-Branch: codex/nlmytgen-portable-dependency-lock-authority-v1
 Handoff-PR: none
-Required-Base: c77a89b8db15d5c0b286afc322dd6842a016a606
+Required-Base: c9c5f4bd50b86edd72cd3dc92254dc7ea02bee7e
 Outcome-Commit: resolved-by-current-branch-tip
-Remote-Parity: 0/0 verified after handoff push on 2026-07-24 JST
-Tracked-Worktree: tracked state clean; local ignored development environments preserved
+Remote-Parity: 0/0 verified after handoff push on 2026-07-25 JST
+Tracked-Worktree: tracked state clean; pre-existing ignored/private state preserved
 
 短期正本は [runtime-state.md](runtime-state.md)、判断履歴は
-[project-context.md](project-context.md)、三モードの機械可読結果は
-[REGRESSION_INTEGRITY_2026-07-24.json](verification/REGRESSION_INTEGRITY_2026-07-24.json)
+[project-context.md](project-context.md)、lock authorityの検証詳細は
+[DEPENDENCY_LOCK_AUTHORITY_2026-07-25.md](verification/DEPENDENCY_LOCK_AUTHORITY_2026-07-25.md)
 です。
 
 ## いまの一文
 
-新紙幣pilotは、exact hashで受理されたstable internal cutと、private evidenceを
-tempへ複製しない三モードgreenのcanonical Regression Integrity gateを持つ。
+accepted stable internal cutとcanonical Regression Integrityを維持したまま、
+Python / npmのexact dependency graphをclean Git checkoutへ運べる状態になった。
 
 ## 判断に使える現在地
 
 | 対象 | 現在状態 | 境界 |
 | --- | --- | --- |
-| Accepted MP4 | SHA-256 `423553...a476`、`stable_internal_cut` | ignored local、再render不要 |
-| Generated project | SHA-256 `244c05...2611` | ignored local、byte変更なし |
-| Closed dimensions | speech / wording-order / cue timing / subtitle timing-line breaks / real-media visual | successor decisionなしに再開しない |
-| Clean-room | 161 pass / 9 declared-locator skip | failure 0 / error 0 |
-| Same-machine | 166 pass / 4 declared-locator skip | 存在するprivate evidence 5件を実行 |
-| Linked worktree | 161 pass / 9 declared-locator skip | `.git` file、absolute-path依存なし |
-| Workspace integrity | status / diff / cached diff全mode不変 | temp回収済み |
-| Copy boundary | Git-object tracked subtreeのみ | media/profile/local outputs 0 copy |
-| Rights | 全素材未clearance | production/publication/upload false |
-
-Accepted carrier:
-`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_real_media_review_v1/internal_review_real_media.mp4`
-
-Acceptance receipt:
-`production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/human_real_media_cut_acceptance_receipt.json`
+| `uv.lock` | tracked、SHA-256 `40e64f...35d0` | PyPI public sourceのみ |
+| `gui/package-lock.json` | tracked、SHA-256 `81b060...4a73` | npm public HTTPS sourceのみ |
+| Python manifest | required baseとbyte-exact | dependency range変更なし |
+| GUI manifest | required baseとbyte-exact | Electron range `^35.0.0`不変 |
+| Electron | exact 35.7.5 | high audit findingは未解決 |
+| Tracked-only setup | locked Python + npm clean install pass | private media / YMM4はコピーしない |
+| Focused contract | 7 tests pass | generic doctorへ拡張しない |
+| Accepted cut | exact receipt / manifest hashes不変 | 再render不要 |
 
 ## 次の入口
 
-`origin/codex/nlmytgen-accepted-cut-regression-integrity-v1`へfast-forward限定で
-同期し、`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md`を読む。
-Dependency Lock Authority attempt 1はlaunch base `0b29c5a`と、すでに
-`3869588`へ進んでいたcanonical remoteの不一致により、preflightで無変更停止した。
-次laneはfetch後のcurrent remote tipを新しいexact baseとしてdependency lock authorityを
-再開する。Electron major compatibilityは後続へ分離し、accepted MP4の再render、
-creative再判断、rights判断を混ぜない。
-
-2026-07-24 Thank端末では`e574614`から`739c5a4`へ3 commitをfast-forwardし、
-canonical selectionは`166 passed / 4 declared-locator skips / 0 failed / 0 errors`。
-9/9 real-media、source/generated project、accepted MP4はtracked hashと一致し、
-YMM4 4.54.0.1を検出、silent `--dry-run` preflightもpassした。再render、window、
-playbackは実行していない。依存lockはlocked installに使えるがignoredのため、
-clean checkoutのportable authorityにはまだなっていない。
+`origin/codex/nlmytgen-portable-dependency-lock-authority-v1`へ同期し、
+`uv sync --extra dev --locked`と`npm --prefix gui ci`で依存を復元する。
+次laneはElectron 43.2.0のisolated compatibility evaluationである。
+startup、IPC、file dialog、Python bridge、capture scripts、audio safety、rollbackを
+明示的に検証し、35.7.5をrollback baselineとして保持する。
 
 ## 公開・実行境界
 
-human creative acceptanceはexact internal cutに限って完了した。rights、
-production、publication、upload、release、PR、merge、master integrationは未実施。
-YMM4、render、音声再生、system volume、dependency upgradeは今回動かしていない。
+dependency lockをGit authorityへ昇格しただけで、Electron security findingは解消していない。
+YMM4、render、window、音声・動画再生、rights、production、publication、upload、release、
+PR、merge、master integrationは未実施。private mediaはGit経由でportableにならない。
