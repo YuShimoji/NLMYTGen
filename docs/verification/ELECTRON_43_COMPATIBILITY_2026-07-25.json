@@ -1,0 +1,89 @@
+{
+  "schema": "nlmytgen.electron_compatibility_decision.v1",
+  "date": "2026-07-25",
+  "classification": "upgrade_candidate_ready",
+  "source": {
+    "branch": "codex/nlmytgen-portable-dependency-lock-authority-v1",
+    "commit": "2e11987ff0732d21df4a5da83d1ea557614991ac",
+    "electron": "35.7.5",
+    "package_lock_sha256": "81b060f37fd2c7c4151fcf6fc402b554476d4ea6785022c8eef01aaaa9ff4a73"
+  },
+  "candidate": {
+    "branch": "codex/nlmytgen-electron-43-compatibility-v1",
+    "commit": "resolve_from_remote_branch_tip",
+    "electron": "43.2.0",
+    "manifest_range": "^43.2.0",
+    "package_manifest_sha256": "740e289b228550183d8fe3adda5a68aba8caafbcf0e2d80d0d787d182a7af6b2",
+    "package_lock_sha256": "095706aba72687058863d8bca16c5a9a9f7d4e45cde3397dda3197a528d0f047",
+    "uv_lock_sha256": "40e64f793775f0b0181f5ba8972c17842717dbe14bc8c0a6c0cabd14442435d0"
+  },
+  "audit": {
+    "baseline": {
+      "exit_code": 1,
+      "direct_high": 1,
+      "advisory_entries": 17,
+      "fix_candidate": "43.2.0",
+      "fix_is_semver_major": true
+    },
+    "candidate": {
+      "exit_code": 0,
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "claim": "motivating direct Electron high finding absent; no blanket security claim"
+  },
+  "actual_gui": {
+    "real_main_window": true,
+    "real_renderer": true,
+    "production_preload": true,
+    "bridge_key_count": 25,
+    "renderer_to_main": "passed",
+    "main_to_renderer": "passed",
+    "open_dialog_test_double": "passed",
+    "save_dialog_test_double": "passed",
+    "python_bridge": "passed",
+    "context_isolation": true,
+    "sandbox": true,
+    "node_integration": false,
+    "console_errors": 0,
+    "security_warnings": 0,
+    "preload_errors": 0,
+    "load_failures": 0,
+    "renderer_crashes": 0,
+    "unhandled_renderer_errors": 0
+  },
+  "capture": {
+    "status": "passed",
+    "topics": 3,
+    "png_files": 3,
+    "html_files": 3,
+    "json_files": 25,
+    "accepted_fixture_diff": 0
+  },
+  "execution_boundaries": {
+    "audio_policy": "silent",
+    "mute_audio": true,
+    "window_visible": false,
+    "public_network": false,
+    "media_playback": false,
+    "ymm4": false,
+    "render": false,
+    "project_electron_processes_after": 0
+  },
+  "reproducibility": {
+    "candidate_clean_checkout": "passed",
+    "candidate_lock_byte_exact": true,
+    "rollback_clean_checkout": "passed",
+    "rollback_lock_byte_exact": true
+  },
+  "canonical_regression": {
+    "run_after_outcome_commit": true,
+    "failures": 0,
+    "errors": 0,
+    "declared_locator_skip_contract": "valid"
+  }
+}

@@ -183,6 +183,11 @@ node -p "require('./gui/node_modules/electron/package.json').version"
 uv run python scripts/check_project_state_sync.py
 ```
 
+GUI の現行 lock は Electron 43.2.0 を解決する。35.7.5 rollback identity と
+major compatibility の機械検証結果は
+[`ELECTRON_43_COMPATIBILITY_2026-07-25.md`](docs/verification/ELECTRON_43_COMPATIBILITY_2026-07-25.md)
+を参照する。
+
 状態面を変更したときは上記 checker を明示的に実行すると、runtime と cockpit の
 共有フィールド、更新日、README からの導線を検査できる。自動 Stop hook ではない。
 

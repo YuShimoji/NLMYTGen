@@ -2,30 +2,48 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
+const electronCompatibility = require('./electron_compatibility_probe');
 
 const SETTINGS_PATH = path.join(__dirname, 'project-settings.json');
 const REPO_ROOT = path.resolve(__dirname, '..');
 
 let mainWindow;
 
-function createWindow() {
+if (electronCompatibility.isEnabled()) {
+  app.setPath('userData', electronCompatibility.profilePath());
+}
+
+async function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
     height: 700,
     minWidth: 600,
     minHeight: 500,
+    show: !electronCompatibility.isEnabled(),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
+      offscreen: electronCompatibility.isEnabled(),
     },
     title: 'NLMYTGen',
   });
 
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  const observations = electronCompatibility.observe(mainWindow);
+  await mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  if (electronCompatibility.isEnabled()) {
+    await electronCompatibility.run(mainWindow, observations);
+  }
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(createWindow).catch((err) => {
+  if (electronCompatibility.isEnabled()) {
+    electronCompatibility.fail(err);
+    app.quit();
+    return;
+  }
+  console.error(err);
+});
 app.on('window-all-closed', () => app.quit());
 
 // --- IPC handlers ---
@@ -167,6 +185,14 @@ ipcMain.handle('apply-production', async (_event, opts) => {
 });
 
 ipcMain.handle('select-file', async (_event, opts) => {
+  if (electronCompatibility.isEnabled()) {
+    const result = electronCompatibility.openDialogResult({
+      title: opts.title || 'Select file',
+      filters: opts.filters || [{ name: 'All', extensions: ['*'] }],
+      properties: ['openFile'],
+    });
+    return result.canceled ? null : result.filePaths[0];
+  }
   const result = await dialog.showOpenDialog(mainWindow, {
     title: opts.title || 'Select file',
     filters: opts.filters || [{ name: 'All', extensions: ['*'] }],
@@ -426,11 +452,14 @@ ipcMain.handle('save-script-diagnostics', async (_event, opts) => {
 });
 
 ipcMain.handle('save-ir-paste', async (_event, opts) => {
-  const result = await dialog.showSaveDialog(mainWindow, {
+  const dialogOptions = {
     title: 'IR JSON を保存',
     defaultPath: opts.defaultPath || 'ir.json',
     filters: [{ name: 'JSON', extensions: ['json'] }],
-  });
+  };
+  const result = electronCompatibility.isEnabled()
+    ? electronCompatibility.saveDialogResult(dialogOptions)
+    : await dialog.showSaveDialog(mainWindow, dialogOptions);
   if (result.canceled) return null;
   fs.writeFileSync(result.filePath, opts.content, 'utf8');
   return result.filePath;

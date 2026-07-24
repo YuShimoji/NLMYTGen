@@ -3,8 +3,12 @@ const path = require('path');
 const { app, BrowserWindow } = require('electron');
 
 const repoRoot = path.resolve(__dirname, '..');
-const ROOT = 'samples/_probe/pipeline_smoke';
+const ROOT = process.env.NLMYTGEN_PIPELINE_SMOKE_OUTPUT_ROOT || 'samples/_probe/pipeline_smoke';
 const MANIFEST = `${ROOT}/pipeline_smoke_manifest.json`;
+
+if (process.env.NLMYTGEN_AUDIO_POLICY === 'silent') {
+  app.commandLine.appendSwitch('mute-audio');
+}
 
 const FRAME_CONTRACT = {
   canvas: '16:9 production frame',
@@ -432,7 +436,9 @@ async function capture(htmlPath, pngPath) {
 }
 
 async function main() {
-  app.setPath('userData', path.join(repoRoot, '_tmp', 'electron_pipeline_smoke'));
+  const profileRoot = process.env.NLMYTGEN_PIPELINE_SMOKE_PROFILE
+    || path.join(repoRoot, '_tmp', 'electron_pipeline_smoke');
+  app.setPath('userData', path.resolve(repoRoot, profileRoot));
   await app.whenReady();
   const entries = [];
   try {

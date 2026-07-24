@@ -1,59 +1,57 @@
 # Project Context — NLMYTGen
 
-## 現在の監修AIハンドオフ（2026-07-25 JST・portable dependency lock authority）
+## 現在の監修AIハンドオフ（2026-07-25 JST・Electron 43 compatibility）
 
 この節だけが現在の再開地点である。accepted cutとRegression Integrityを変更せず、
-local-onlyだったPython / npm lockをtracked cross-terminal authorityへ昇格した。
+Electron 43.2.0を実NLMYTGen GUI経路でupgrade-ready candidateへ分類した。
 
 - **取得先 / exact base**:
-  `codex/nlmytgen-accepted-cut-regression-integrity-v1`の
-  `c9c5f4bd50b86edd72cd3dc92254dc7ea02bee7e`。fetch後にsource upstream `0/0`、
-  tracked clean、target branch不存在を確認して
-  `codex/nlmytgen-portable-dependency-lock-authority-v1`を作成した。
-- **before → after**: `uv.lock`と`gui/package-lock.json`はlocked installに使える
-  local ignored fileから、reviewable tracked authorityへ移った。`.gitignore`から削除したのは
-  この2 entryだけで、`.venv/`、`gui/node_modules/`、media、YMM4、browser profile、
-  artifacts、run outputsのignoreは維持した。
-- **lock identity**: `uv.lock` SHA-256は
-  `40e64f793775f0b0181f5ba8972c17842717dbe14bc8c0a6c0cabd14442435d0`、
-  `gui/package-lock.json`は
-  `81b060f37fd2c7c4151fcf6fc402b554476d4ea6785022c8eef01aaaa9ff4a73`。
-  setup前後でbyte-exactだった。
-- **manifest preservation**: `pyproject.toml` SHA-256
-  `7b9ce97035187e00e396c50aa5d79862fce06c0404cc272435f93136b1efd51d`、
-  `gui/package.json` SHA-256
-  `a180ad8bbbba3a28e72576181259510bb42e119dd920f8995056936ffab251a2`。
-  required baseから変更していない。Electron rangeは`^35.0.0`、exact installは35.7.5。
-- **source safety**: Python lockはpublic PyPI、npm lockはpublic
-  `registry.npmjs.org` HTTPSだけを参照する。credential、private registry、
-  machine-local absolute path、file/link/workspace dependencyはない。
-- **clean-checkout proof**: staged candidateのtracked fileだけを短いWindows pathへ展開し、
-  `uv sync --extra dev --locked`、Python import smoke、`npm --prefix gui ci`、
-  `npm --prefix gui ls --depth=0`、Electron 35.7.5 readbackをpassした。
-  source `.venv`、`node_modules`、media、YMM4、browser/private evidenceはコピーしていない。
-- **Windows path note**: 最初の長いTEMP pathはtracked tree展開時にWin32 path-lengthで停止した。
-  部分workspaceを回収し、`C:\nla1`で同じtracked-only proofをpass後に削除した。
-  依存graphのfailureではなく、検証workspaceのpath-length条件である。
-- **regression contract**: `tests/test_dependency_lock_authority.py`の7 testsが、
-  tracking / ignore、manifest hash、public dependency source、Electron pin、
-  locked setup docs、accepted-cut authority hashを固定する。
-- **post-commit gates**: outcome commit後、exact commitからtracked-only setupを再実行し、
-  canonical Regression Integrity、project-state sync、Git integrityをpassしてからpushする。
-  outcome commitはremote branch tipから解決する。
+  `codex/nlmytgen-portable-dependency-lock-authority-v1`の
+  `2e11987ff0732d21df4a5da83d1ea557614991ac`。source upstream `0/0`、
+  tracked clean、target不存在を確認して
+  `codex/nlmytgen-electron-43-compatibility-v1`を作成した。
+- **before → after**: manifest range `^35.0.0` / exact 35.7.5から
+  `^43.2.0` / exact 43.2.0へ更新した。source commitと旧lock SHA-256
+  `81b060f...4a73`はrollback identityとして不変である。`uv.lock` SHA-256
+  `40e64f...35d0`も不変。
+- **security delta**: baselineはElectron direct / dev-only high 1件へ17 advisoryを
+  集約し、43.2.0をsemver-major fixとして提示した。candidate auditは全severity 0。
+  motivating findingの除去を証明するが、製品全体の包括的security保証ではない。
+- **actual integration**: 実`main.js`、実renderer、production preloadをhidden/offscreen
+  windowとproject-owned profileで起動した。25 bridge key、renderer→main invoke、
+  main→renderer、open/save dialog test double、actual `uv run python -m src.cli.main`
+  diagnosticがpassした。context isolation / sandboxは有効、node integrationは無効。
+- **capture / safety**: representative pipeline-smokeはenvironment-selected ignored rootへ
+  3 topic、3 PNG、3 HTML、25 JSONを生成した。silent policyとmute switchを有効にし、
+  window、audio/video playback、public network、YMM4、renderを使わず、project Electron
+  process 0へ終了した。accepted tracked fixture差分は0。
+- **reproducibility / rollback**: candidate staged treeのshort-path checkoutで
+  `npm ci`、43.2.0 readback、actual compatibility smoke、capture、lock byte identityを
+  再現した。別checkoutのexact source commitで`npm ci`、35.7.5 readback、既存hidden
+  DOM smoke、旧lock byte identityを再現した。
+- **closeout gates**: focused contract、全tracked GUI JavaScript syntax、state sync、
+  `git diff --check`、Git three-surface integrityをpassする。outcome commit後にcanonical
+  Regression Integrityを一度だけ実行し、failure / error 0とdeclared-locator skip契約を
+  確認してexact branchだけpushする。
 - **preservation**: accepted MP4 / generated project / receipt、canonical script、
   visual、timing、subtitle、rights、publication stateは変更していない。
   `.playwright-mcp/`、`artifacts/`、`phase-e-01-contact-acquired*.png`、
   ignored/private mediaとYMM4/run archivesはstage・削除・変更していない。
-- **security successor**: Electron 35.7.5のdirect high audit findingは未解決。
-  lock trackingはsecurity fixではない。次missionで43.2.0をisolated evaluationし、
-  startup、IPC、file dialog、Python bridge、capture、audio safety、rollbackを判定する。
-- **unperformed**: Electron upgrade、YMM4、render、window、media playback、
-  public-media access、rights、production、publication、upload、release、PR、merge、
-  master integrationは実施していない。
+- **next owner**: one-command runtime doctorとcross-terminal private-artifact ingest
+  contractを実装する。private artifactを複製せずavailability / lineage / consumer
+  readinessをread-onlyに診断し、YMM4、render、rights、publicationは独立gateに保つ。
+- **unperformed**: creative review、YMM4、render、media playback、public-media access、
+  rights、production、publication、upload、release、PR、merge、master integration。
 - **詳細正本**:
-  `docs/verification/DEPENDENCY_LOCK_AUTHORITY_2026-07-25.md`。
+  `docs/verification/ELECTRON_43_COMPATIBILITY_2026-07-25.md`。
   通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
   `docs/runtime-state.md`だけを読む。
+
+## 直前の監修AIハンドオフ（2026-07-25 JST・portable dependency lock authority）
+
+local-onlyだったPython / npm lockをtracked cross-terminal authorityへ昇格し、
+Electron 35.7.5をrollback baselineとして固定した。詳細は
+`docs/verification/DEPENDENCY_LOCK_AUTHORITY_2026-07-25.md`。
 
 ## 直前の監修AIハンドオフ（2026-07-24 JST・Thank端末再同期 / accepted cut / regression green）
 

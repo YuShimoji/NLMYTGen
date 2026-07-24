@@ -34,3 +34,25 @@ contextBridge.exposeInMainWorld('nlmytgen', {
   loadSettings: () => ipcRenderer.invoke('load-settings'),
   saveSettings: (s) => ipcRenderer.invoke('save-settings', s),
 });
+
+if (process.env.NLMYTGEN_ELECTRON_COMPATIBILITY_SMOKE === '1') {
+  window.addEventListener('error', (event) => {
+    ipcRenderer.send('nlmytgen-electron-compatibility-renderer-error', {
+      kind: 'error',
+      message: String(event.error?.stack || event.message || 'renderer error'),
+    });
+  });
+  window.addEventListener('unhandledrejection', (event) => {
+    ipcRenderer.send('nlmytgen-electron-compatibility-renderer-error', {
+      kind: 'unhandledrejection',
+      message: String(event.reason?.stack || event.reason || 'unhandled rejection'),
+    });
+  });
+  contextBridge.exposeInMainWorld('__nlmytgenCompatibility', {
+    onMainMessage: (callback) => {
+      ipcRenderer.once('nlmytgen-electron-compatibility-main-message', (_event, payload) => {
+        callback(payload);
+      });
+    },
+  });
+}
