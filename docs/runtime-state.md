@@ -1,7 +1,7 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-stable-internal-cut-regression-integrity-green-v1
-State-Revision: 2026-07-24.2
+State-Revision: 2026-07-24.3
 Updated: 2026-07-24 JST
 Product-State: accepted-real-media-internal-cut-with-evidence-safe-regression-gate
 Product-Gate: dependency-portability-and-gui-security
@@ -12,8 +12,8 @@ Handoff-Branch: codex/nlmytgen-accepted-cut-regression-integrity-v1
 Handoff-PR: none
 Required-Base: c77a89b8db15d5c0b286afc322dd6842a016a606
 Outcome-Commit: resolved-by-current-branch-tip
-Remote-Parity: 0/0 required after outcome push
-Tracked-Worktree: clean required after outcome commit; preserved untracked artifacts remain
+Remote-Parity: 0/0 verified after `git fetch --prune origin` on 2026-07-24 JST
+Tracked-Worktree: tracked state clean; preserved untracked artifacts remain
 
 ## Current Slice
 
