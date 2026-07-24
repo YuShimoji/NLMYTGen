@@ -13,8 +13,18 @@ canonical Regression Integrityの三モード収束を同じcheckpointへ固定�
   local `HEAD`とupstreamが一致し、`git rev-list --left-right --count
   'HEAD...@{upstream}'`は`0 0`、tracked worktreeはclean。最終handoff tipは
   remote branch tipから解決する。
-  `.playwright-mcp/`、`artifacts/`、`phase-e-01-contact-acquired*.png`は別端末へGitで
-  渡さないローカル証拠として保全し、stage・削除・変更していない。
+  current terminalの`.venv/`と`gui/node_modules/`はignoredのまま保全した。
+- **Dependency Lock Authority attempt 1**: 添付launch promptはexact base
+  `0b29c5a9adc91b8c002967b19ca052f30d1a7a90`を要求したが、preflight時点のlocal / remote
+  canonical tipはいずれも、直前の監修handoffを含む
+  `38695885604844ea0ccddb813c467ba3bb44259e`だった。promptのSTOP条件に従い、
+  mission branch作成、lock変更、install、test、commit、pushへ進まなかった。
+  `uv.lock`はSHA-256
+  `40e64f793775f0b0181f5ba8972c17842717dbe14bc8c0a6c0cabd14442435d0`、
+  `gui/package-lock.json`は
+  `81b060f37fd2c7c4151fcf6fc402b554476d4ea6785022c8eef01aaaa9ff4a73`で、
+  どちらも未追跡・ignoredのまま保全されている。window、動画・音声再生、render、
+  YMM4、ffmpeg media runは実行していない。
 - **PLANNER007受信端末readiness**: 旧handoff branch `9ed7cdf`から、検証baseでは直線的な15 commit後継である
   current branchへtracking switch済み。今回の再開では検証base
   `0b29c5a9adc91b8c002967b19ca052f30d1a7a90`でfetch / FF-only pullを再実行し、
@@ -53,10 +63,11 @@ canonical Regression Integrityの三モード収束を同じcheckpointへ固定�
   JUnit tempを回収した。pre-existing `.playwright-mcp/`、`artifacts/`、
   `phase-e-01-contact-acquired*.png`、ignored media/YMMP/frames/run archivesは
   stage・削除・変更していない。
-- **exact next / next owner**: dependency reproducibilityとGUI securityを別laneで扱う。
-  ignoredの`uv.lock`／`gui/package-lock.json`をportable authorityにする方針を決め、
-  Electron major upgradeを互換検証する。accepted cutのcreative dimension、
-  rights、production、publicationをこのlaneで再開しない。
+- **exact next / next owner**: fetch後のcurrent remote tipをfresh exact baseとして
+  Dependency Lock Authorityを再開する。ignoredの`uv.lock`／`gui/package-lock.json`を、
+  manifestとElectron 35.7.5を変えずportable authorityへ昇格する。Electron major upgradeは
+  successor missionへ分離し、accepted cutのcreative dimension、rights、production、
+  publicationをこのlaneで再開しない。
 - **変えていない判断**: rights clearance、production、publication、upload、
   release、PR、merge、master integrationはfalse。local MP4はremote portableではない。
 - **詳細正本**:

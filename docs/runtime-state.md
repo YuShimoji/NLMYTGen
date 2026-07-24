@@ -1,19 +1,19 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-stable-internal-cut-regression-integrity-green-v1
-State-Revision: 2026-07-24.3
+State-Revision: 2026-07-24.4
 Updated: 2026-07-24 JST
 Product-State: accepted-real-media-internal-cut-with-evidence-safe-regression-gate
 Product-Gate: dependency-portability-and-gui-security
-Recommended-Next: make-dependency-locks-portable-and-validate-electron-upgrade
+Recommended-Next: restart-dependency-lock-authority-from-current-remote-tip
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-accepted-cut-regression-integrity-v1
 Handoff-PR: none
 Required-Base: c77a89b8db15d5c0b286afc322dd6842a016a606
 Outcome-Commit: resolved-by-current-branch-tip
-Remote-Parity: 0/0 verified after `git fetch --prune origin` on 2026-07-24 JST
-Tracked-Worktree: tracked state clean; preserved untracked artifacts remain
+Remote-Parity: 0/0 verified after handoff push on 2026-07-24 JST
+Tracked-Worktree: tracked state clean; local ignored development environments preserved
 
 ## Current Slice
 
@@ -58,6 +58,11 @@ Tracked-Worktree: tracked state clean; preserved untracked artifacts remain
   terminal. The accepted MP4, generated/source YMM4 projects, nine real-media
   files, and YMM4 executable are not present there, so code development is ready
   but real-media dry-run, render, and local playback are unavailable.
+- Dependency Lock Authority attempt 1 stopped during preflight without mutation:
+  its launch prompt required exact base `0b29c5a`, while the canonical remote had
+  already advanced to `3869588` through the receiving-terminal supervisor
+  handoff. No mission branch, lock edit, install, render, window, playback,
+  commit, or push was created by that attempt.
 
 ## Product Position
 
@@ -69,10 +74,11 @@ master integration.
 
 ## Exact Next Action
 
-Start a separate dependency-portability and GUI-security lane. Decide how
-`uv.lock` and `gui/package-lock.json` become reproducible tracked authority, then
-validate the required Electron major upgrade without changing the accepted cut.
-Do not rerender or reopen creative review as part of that lane.
+Restart Dependency Lock Authority from the current remote branch tip, not the
+stale `0b29c5a` launch base. Make `uv.lock` and `gui/package-lock.json`
+reproducible tracked authority without changing either manifest or Electron
+35.7.5. Electron major compatibility remains the separate successor mission.
+Do not open windows, play media, rerender, or reopen creative review.
 
 ## Evidence and Access
 
@@ -97,10 +103,12 @@ Do not rerender or reopen creative review as part of that lane.
   `origin/codex/nlmytgen-accepted-cut-regression-integrity-v1`; verify
   `HEAD...@{upstream}=0/0` and a clean tracked worktree.
 - Read `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → this file.
+- Resolve a fresh exact launch base from the fetched remote tip. Do not reuse
+  Dependency Lock Authority attempt 1's stale `0b29c5a` base.
 - Source media, `.local.ymmp`, MP4, frames, profiles, and run archives stay
   ignored. Their absence is an availability boundary, not a regression failure.
-- Preserve `.playwright-mcp/`, `artifacts/`, and
-  `phase-e-01-contact-acquired*.png`; they are unrelated user evidence.
+- Preserve `.venv/`, `gui/node_modules/`, and any ignored/private evidence found
+  on the receiving terminal. Do not assume private media is remotely portable.
 
 ## Active Boundaries
 

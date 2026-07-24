@@ -1,19 +1,19 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: new-banknote-stable-internal-cut-regression-integrity-green-v1
-State-Revision: 2026-07-24.3
+State-Revision: 2026-07-24.4
 Updated: 2026-07-24 JST
 Product-State: accepted-real-media-internal-cut-with-evidence-safe-regression-gate
 Product-Gate: dependency-portability-and-gui-security
-Recommended-Next: make-dependency-locks-portable-and-validate-electron-upgrade
+Recommended-Next: restart-dependency-lock-authority-from-current-remote-tip
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-accepted-cut-regression-integrity-v1
 Handoff-PR: none
 Required-Base: c77a89b8db15d5c0b286afc322dd6842a016a606
 Outcome-Commit: resolved-by-current-branch-tip
-Remote-Parity: 0/0 verified after `git fetch --prune origin` on 2026-07-24 JST
-Tracked-Worktree: tracked state clean; preserved untracked artifacts remain
+Remote-Parity: 0/0 verified after handoff push on 2026-07-24 JST
+Tracked-Worktree: tracked state clean; local ignored development environments preserved
 
 短期正本は [runtime-state.md](runtime-state.md)、判断履歴は
 [project-context.md](project-context.md)、三モードの機械可読結果は
@@ -49,8 +49,11 @@ Acceptance receipt:
 
 `origin/codex/nlmytgen-accepted-cut-regression-integrity-v1`へfast-forward限定で
 同期し、`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md`を読む。
-次laneはdependency reproducibilityとElectron GUI securityであり、accepted
-MP4の再render、creative再判断、rights判断を混ぜない。
+Dependency Lock Authority attempt 1はlaunch base `0b29c5a`と、すでに
+`3869588`へ進んでいたcanonical remoteの不一致により、preflightで無変更停止した。
+次laneはfetch後のcurrent remote tipを新しいexact baseとしてdependency lock authorityを
+再開する。Electron major compatibilityは後続へ分離し、accepted MP4の再render、
+creative再判断、rights判断を混ぜない。
 
 ## 公開・実行境界
 
