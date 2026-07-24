@@ -10,7 +10,7 @@ canonical Regression Integrityの三モード収束を同じcheckpointへ固定�
   `c77a89b8db15d5c0b286afc322dd6842a016a606`、outcome commitはremote branch
   tipから解決する。merge、rebase、master更新、PR作成は行っていない。
 - **remote verification**: 2026-07-24 JSTに`git fetch --prune origin`を実行し、
-  local `HEAD`とupstreamはともに`3037b070e9bc3a19cb7a6d512a0b61bfbc5f1647`、
+  local `HEAD`とupstreamはともに`47894f0901e167af7b1cd76938fea65c2b4c5178`、
   `git rev-list --left-right --count 'HEAD...@{upstream}'`は`0 0`、tracked worktreeはclean。
   `.playwright-mcp/`、`artifacts/`、`phase-e-01-contact-acquired*.png`は別端末へGitで
   渡さないローカル証拠として保全し、stage・削除・変更していない。
