@@ -15,9 +15,11 @@ canonical Regression Integrityの三モード収束を同じcheckpointへ固定�
   remote branch tipから解決する。
   `.playwright-mcp/`、`artifacts/`、`phase-e-01-contact-acquired*.png`は別端末へGitで
   渡さないローカル証拠として保全し、stage・削除・変更していない。
-- **PLANNER007受信端末readiness**: 旧handoff branch `9ed7cdf`から、直線的な14 commit後継である
-  current branchへtracking switchし、FF-only pullがalready up to date、upstream `0/0`、
-  文書更新前に`origin/master`より37 ahead / 0 behindを確認した。Python locked sync、Electron locked install、
+- **PLANNER007受信端末readiness**: 旧handoff branch `9ed7cdf`から、検証baseでは直線的な15 commit後継である
+  current branchへtracking switch済み。今回の再開では検証base
+  `0b29c5a9adc91b8c002967b19ca052f30d1a7a90`でfetch / FF-only pullを再実行し、
+  already up to date、upstream `0/0`、文書更新前に`origin/master`より38 ahead / 0 behindを確認した。
+  Python locked sync、Electron locked install、
   project-state sync、tracked JavaScript 12件のsyntax、.NET 10 Release build、
   canonical 170-test selectionはpassし、current terminal resultは`165 passed / 5 declared-locator
   skips / 0 failed / 0 errors`、Git三面不変だった。

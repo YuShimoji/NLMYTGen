@@ -15,13 +15,13 @@ production、publication、PR、merge、master integrationを一括承認する�
 
 ## 監修判断に必要な結論
 
-作業開始時のローカルbranch
-`codex/nlmytgen-end-to-end-auto-video-v1`はtracking先と`0/0`だったが、fetch後に、そのtip
-`9ed7cdf`を直線的に14 commit進めた正式な後継
-`origin/codex/nlmytgen-accepted-cut-regression-integrity-v1`が存在すると判明した。
-後継にはreal-media版、human acceptance、三モード回帰修復が含まれ、旧branchへ逆流mergeする必要が
-ないため、同名のlocal tracking branchを作成してFF系列のtip `e574614`へ移行した。取得直後の
-upstream差分は`0/0`、`origin/master`より37 commit先行・遅れ0で、masterはcurrent branchの祖先である。
+初回受信時には、旧branch
+`codex/nlmytgen-end-to-end-auto-video-v1`のtip `9ed7cdf`を直線的に進めた正式な後継
+`origin/codex/nlmytgen-accepted-cut-regression-integrity-v1`へtracking移行した。今回の再開では
+そのlocal branch上で`git fetch --prune origin`と`git pull --ff-only`を再実行し、検証base
+`0b29c5a9adc91b8c002967b19ca052f30d1a7a90`がremote tipと一致していることを確認した。
+取得直後のupstream差分は`0/0`、`origin/master`より38 commit先行・遅れ0で、masterはcurrent
+branchの祖先である。競合解消、merge、rebase、history rewriteは発生していない。
 
 製品checkpointは、実素材版のexact MP4を`stable_internal_cut`として人間受理し、
 canonical Regression Integrityを三実行形態でfailure 0 / error 0へ閉じた状態である。
@@ -46,7 +46,7 @@ accepted MP4の再生確認は行えない。
 | Regression causal repair | Git-object subtree materialization、repo-relative ignore probe、local evidenceのread-only分離 | clean-room / evidence-rich / linked worktreeでfailure 0 / error 0 | historical receiptをlive artifact availabilityへ読み替えない |
 | Handoff更新 | runtime、project context、cockpit、machine-readable receiptをcurrent tipへ同期 | 別端末はcurrent branchから再開できる | public Gitへprivate mediaやabsolute local pathを載せない |
 
-旧branchからcurrent tipまでの差分は35 tracked files、約3,470 insertions / 381 deletionsである。
+旧branchから検証baseまでの差分は15 commit、36 tracked files、3,671 insertions / 381 deletionsである。
 中心は`src/pipeline/episode_video.py`のreal-media path、回帰fixture/runner、受理receipt、
 manifest/provenance、状態文書であり、branch履歴はmergeなしの直線系列である。
 
@@ -54,10 +54,10 @@ manifest/provenance、状態文書であり、branch履歴はmergeなしの直�
 
 | 確認対象 | 実測 | 判定 | 監修上の意味 |
 | --- | --- | --- | --- |
-| remote refresh | `git fetch --prune origin` | 新branch 2本と既存回帰branch更新を取得 | stale remote-tracking refで判断していない |
-| local branch | current canonical branchをtracking作成、`git pull --ff-only` | already up to date | 競合、rebase、history rewriteなし |
-| upstream parity | 取得・検証開始時の`HEAD...@{u}` | `0/0` | 受信したtracked成果はremote tipと一致 |
-| default branchとの関係 | `HEAD...origin/master`、ancestry | 37 ahead / 0 behind、masterは祖先 | default branch内容を欠かさず後継成果を保持するが、未merge |
+| remote refresh | `git fetch --prune origin` | pruneを含め正常終了、current upstreamに新しいcommitなし | stale remote-tracking refで判断していない |
+| local branch | current canonical tracking branchで`git pull --ff-only` | already up to date | 競合、rebase、history rewriteなし |
+| upstream parity | 取得・検証開始時の`HEAD...@{u}` | `0/0` | 検証base `0b29c5a`はremote tipと一致 |
+| default branchとの関係 | `origin/master...HEAD`、ancestry | 38 ahead / 0 behind、masterは祖先 | default branch内容を欠かさず後継成果を保持するが、未merge |
 | worktree保護 | canonical runner前後のstatus / diff / cached diff | byte-exact不変 | testsやsetupがtracked product artifactを汚していない |
 | ignored setup | `.venv/`、`uv.lock`、`gui/node_modules/`、`gui/package-lock.json` | local development用に保持 | Gitだけの再現authorityではない |
 
@@ -70,7 +70,7 @@ manifest/provenance、状態文書であり、branch履歴はmergeなしの直�
 | Python | Python 3.11.0、uv 0.10.0、`uv sync --extra dev --locked` | 開発可能 | entry point warningがあるため現状はmodule/script実行を使う |
 | Python lock | ignored `uv.lock`、pytest 8.4.2を解決 | locked sync成功 | clean Git checkoutだけではlockが得られない |
 | Electron GUI | Node 22.19.0、npm 10.9.3、`npm ci`、`npm ls --depth=0` | Electron 35.7.5をexact install | ignored `gui/package-lock.json`に依存し、Git可搬ではない |
-| GUI security | `npm audit` | high severity 1件 | fixはElectron 43.2.0へのbreaking major。無監査適用しない |
+| GUI security | latest registryに対する`npm audit --json` | Electron 1 packageをhighとして集約、17 advisory entry | fix候補はElectron 43.2.0へのbreaking major。無監査適用しない |
 | GUI source | tracked JavaScript 12 filesへ`node --check` | 全件pass | UI interaction / screenshot smokeは未実行 |
 | .NET render driver | SDK 10.0.302、Release build | warning 0 / error 0 | YMM4 executable不在のため実UI互換は未検証 |
 | Media tools | ffmpeg / ffprobe 8.1.1 | command利用可能 | accepted MP4不在のためfresh full decodeは未実行 |
@@ -81,12 +81,17 @@ manifest/provenance、状態文書であり、branch履歴はmergeなしの直�
 
 `npm audit fix --force`、package manifestの変更、lockfileのtracked authority化は行っていない。
 前者はbreaking major、後二者は依存契約変更に当たるため、次sliceの監修判断を経て実装する。
+Electron公式は最新3 stable majorだけをsupport対象とし、現在のstableは41 / 42 / 43、
+registry latestは43.2.0である。したがって35.7.5は「advisoryを個別回避すれば保守継続できる
+supported baseline」ではなく、互換性を測りながらsupported majorへ移す対象である。
+根拠は[Electron release policy](https://www.electronjs.org/docs/latest/tutorial/electron-timelines)と
+[Electron 43 release](https://www.electronjs.org/blog/electron-43-0)を参照する。
 
 ## 今回のローカル検証
 
 | 検証 | 結果 | 保証すること | 保証しないこと |
 | --- | --- | --- | --- |
-| canonical Regression Integrity | **165 passed / 5 skipped / 0 failed / 0 errors** | current terminalのtracked + available local evidenceで16 modulesがgreen | 欠けたprivate artifactの内容 |
+| canonical Regression Integrity | **165 passed / 5 skipped / 0 failed / 0 errors**、72.82秒 | current terminalのtracked + available local evidenceで16 modulesがgreen | 欠けたprivate artifactの内容 |
 | skip contract | historical YMM4 3、reference layout review surface 1、trace capture 1 | 5件すべて`requires_local_evidence`として分類済み | private artifactをGitで持つべきこと |
 | workspace integrity | status / diff / cached diff不変、temp除去 | runnerがworktreeを汚さない | unrelated ignored outputのbyte identity |
 | runner focused contracts | **6 passed** | JUnit、skip分類、Git三面、cleanup契約 | product quality |
@@ -112,7 +117,7 @@ workspace integrity passは一致する。端末差を製品regressionや受理�
 | Dependency portability | local locksでこの端末は開発可能 | Python / GUI実装 | lockをtracked authorityにする方針 |
 | GUI security | Electron 35.7.5が動作基準 | source検査とlocal launch準備 | supported majorの互換検証 |
 | Rights / production | internal review only | provenance設計、ledger準備 | asset owner / permission / attribution |
-| Default integration | 取得時点でfeature branchが37 commit先行 | PR差分監査 | mergeを別途明示承認 |
+| Default integration | 検証base時点でfeature branchが38 commit先行 | PR差分監査 | mergeを別途明示承認 |
 
 North Star上、source-backed contentからYMM4実MP4へ至る縦経路、real-media visual acceptance、
 evidence-safe regression gateまでは閉じた。次の価値は同じcutを再生成することではなく、依存とGUIを
@@ -128,10 +133,10 @@ production、GUI標準loop、複数topic factoryへ順序立てて一般化す�
 | --- | --- | --- | --- | --- |
 | **0. Accepted cut / Regression checkpoint** | creative判断と回帰信頼性 | exact cut human acceptance、三モードfailure/error 0 | **完了済み** | 開発基盤とproduction準備をcreative再審なしで進められる |
 | **1. Dependency authorityを固定** | ignored lockでclean checkoutが再現不能 | `uv.lock`と`gui/package-lock.json`のowner、tracking、更新手順、drift checkを決め、fresh checkoutでlocked install成功 | local locksとcurrent manifestsあり | 別端末のdeterministic setup |
-| **2. Electron supported majorへ安全移行** | Electron 35にhigh advisory | isolated branchでtarget majorを固定し、startup、IPC、file dialog、Python bridge、capture scripts、audio-safety、rollbackを検証しaudit結果を更新 | 段階1のlock authority、major変更承認 | GUI security baselineと保守可能なruntime |
+| **2. Electron 43.2.0候補へ安全移行** | Electron 35がsupport外かつhigh advisory | isolated branchで43.2.0を固定し、startup、IPC、file dialog、Python bridge、capture scripts、audio-safety、rollbackを検証しaudit結果を更新。重大非互換時だけ41/42の最新minorを比較 | 段階1のlock authority、major変更承認 | GUI security baselineと保守可能なruntime |
 | **3. Development bootstrapを一コマンド化** | Python / npm / .NET / ffmpeg / YMM4可否の判定が手作業 | non-destructive doctorがversion、lock、tool discovery、private locator availability、blocked reasonを機械可読receiptへ出す | 段階1–2のversion authority | 端末差を数分で分類し、誤ったrender開始を防止 |
 | **4. Review / render portabilityを分離実装** | accepted decisionとlocal media availabilityが端末ごとに混同される | review-only artifact ingestとrender-capable source ingestを別contractにし、hash照合、private storage、fail-closed理由をGUIへ表示 | 段階3、private transfer方針 | 別端末でreviewだけ／rerenderまでの可否を即決 |
-| **5. Current checkpointをdefault branchへ統合** | 37 commitの価値がfeature branchに滞留 | accepted cut、regression、dependency/security方針、privacy/path audit、PR reviewを満たし、normal-history mergeを明示承認 | 段階1–4のどこまでmerge条件にするか監修決定 | default branchから後続topic / production laneを開始 |
+| **5. Current checkpointをdefault branchへ統合** | 後継成果がfeature branchに滞留 | accepted cut、regression、dependency/security方針、privacy/path audit、PR reviewを満たし、normal-history mergeを明示承認 | 段階1–4のどこまでmerge条件にするか監修決定 | default branchから後続topic / production laneを開始 |
 | **6. Rights-cleared visual setを確定** | human-accepted real mediaがinternal-review rightsに留まる | cueごとにkeep / replace / crop / omit、source、license、permission、attribution、territory、expiry、safe-areaをledger化 | accepted visual intentを変更しない | production master候補で使えるasset identity |
 | **7. Production master candidateを閉じる** | internal cutと公開候補の品質・権利差 | rights-cleared asset、final audio/subtitle/motion、codec/bitrate/full decode、frame review、human acceptanceをexact hashへ結合 | 段階6、production authorization | packaging / release candidate判断 |
 | **8. GUI標準制作loopを完結** | current operator pathがCLI/docs中心 | ingest、doctor、dry-run、blocked reason、render progress、receipt、cue decision、acceptance freezeをGUI primary surfaceで完結 | 段階2–4 | 人間をcreative / rights判断へ集中させる日常運用 |
