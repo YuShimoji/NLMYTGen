@@ -1,7 +1,7 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: new-banknote-stable-internal-cut-regression-integrity-green-v1
-State-Revision: 2026-07-24.4
+State-Revision: 2026-07-24.5
 Updated: 2026-07-24 JST
 Product-State: accepted-real-media-internal-cut-with-evidence-safe-regression-gate
 Product-Gate: dependency-portability-and-gui-security
@@ -50,14 +50,32 @@ Tracked-Worktree: tracked state clean; local ignored development environments pr
 - No YMM4, render, media playback, system-volume, dependency-upgrade, or
   creative-mutation path was executed in this slice.
 - A fresh receiving-terminal audit moved from the obsolete end-to-end handoff
-  branch to this canonical successor at remote parity `0/0`. The canonical
+  branch to this canonical successor at remote parity `0/0`. Its canonical
   selection passed 165 with 5 declared-locator skips, 0 failures, and 0 errors;
   workspace status/diff/cached diff remained unchanged.
+- The current Thank-terminal refresh fetched three newer handoff commits and
+  fast-forwarded `e574614` to `739c5a4` without merge, rebase, or history
+  rewrite. The branch was 40 commits ahead of and 0 behind `origin/master`;
+  master remained an ancestor.
+- The current canonical selection passed 166 with 4 declared-locator skips,
+  0 failures, and 0 errors in 95.459 seconds. The skip contract was valid,
+  status/diff/cached diff remained unchanged, and the temporary workspace was
+  removed.
 - Python locked sync, Electron locked install, tracked JavaScript syntax,
-  project-state sync, and the .NET 10 Release build pass on the receiving
-  terminal. The accepted MP4, generated/source YMM4 projects, nine real-media
-  files, and YMM4 executable are not present there, so code development is ready
-  but real-media dry-run, render, and local playback are unavailable.
+  project-state sync, the focused runner contracts, and the .NET 10 Release
+  build pass on the current terminal. The installed baseline is Python 3.13.3 /
+  uv 0.10.7, Node 24.13.0 / npm 11.6.2 / Electron 35.7.5, .NET SDK 10.0.204,
+  and ffmpeg/ffprobe 8.0.1.
+- The accepted MP4, generated/source YMM4 projects, and all nine real-media
+  files are present on the current terminal and match their tracked SHA-256
+  authority. YMM4 4.54.0.1 is discoverable at a bounded candidate path. Silent
+  real-media `--dry-run` preflight passed 18 protected inputs, 9 cues, 2/4/3
+  scenes, 3/6 speakers, 4415 frames, and 9/9 provenance coverage. No window,
+  playback, render, remux, or media validation stage was run.
+- `uv.lock` and `gui/package-lock.json` remain ignored local authority. Locked
+  sync/install succeeded, but a clean Git checkout still cannot reproduce them.
+  `npm audit` reports one direct high-severity Electron aggregate; the offered
+  fix is Electron 43.2.0 and is a semver-major change.
 - Dependency Lock Authority attempt 1 stopped during preflight without mutation:
   its launch prompt required exact base `0b29c5a`, while the canonical remote had
   already advanced to `3869588` through the receiving-terminal supervisor
@@ -117,13 +135,15 @@ Do not open windows, play media, rerender, or reopen creative review.
 - Rights clearance and production asset approval: pending.
 - Publication, upload, release, PR, merge, and master integration: not performed.
 - Dependency portability and Electron security validation: next planned lane.
-- The current receiving terminal is code-development ready but lacks the private
-  render/review carrier and YMM4 runtime; restore them only for an approved
-  portability, review, or render task.
+- The current Thank terminal is code-development and private-artifact preflight
+  ready. The accepted carrier and YMM4 runtime are locally available, but
+  rerender remains unnecessary and was not authorized by this readiness slice.
+- Other receiving terminals may still lack private artifacts or YMM4. Treat that
+  as terminal availability, not as loss of the tracked acceptance decision.
 
 ## Maintenance Note
 
 Keep this capsule within 160 lines. Resolve the outcome commit from the current
 remote branch tip. Exact regression results are in the two 2026-07-24 regression
-artifacts. The current receiving-terminal toolchain and far-goal proposal are in
-the 2026-07-24 supervisor roadmap.
+artifacts. The current-terminal toolchain, private-artifact availability, and
+far-goal proposal are in the 2026-07-24 supervisor roadmap.

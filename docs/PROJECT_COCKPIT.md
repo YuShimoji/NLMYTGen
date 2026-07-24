@@ -1,7 +1,7 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: new-banknote-stable-internal-cut-regression-integrity-green-v1
-State-Revision: 2026-07-24.4
+State-Revision: 2026-07-24.5
 Updated: 2026-07-24 JST
 Product-State: accepted-real-media-internal-cut-with-evidence-safe-regression-gate
 Product-Gate: dependency-portability-and-gui-security
@@ -54,6 +54,13 @@ Dependency Lock Authority attempt 1はlaunch base `0b29c5a`と、すでに
 次laneはfetch後のcurrent remote tipを新しいexact baseとしてdependency lock authorityを
 再開する。Electron major compatibilityは後続へ分離し、accepted MP4の再render、
 creative再判断、rights判断を混ぜない。
+
+2026-07-24 Thank端末では`e574614`から`739c5a4`へ3 commitをfast-forwardし、
+canonical selectionは`166 passed / 4 declared-locator skips / 0 failed / 0 errors`。
+9/9 real-media、source/generated project、accepted MP4はtracked hashと一致し、
+YMM4 4.54.0.1を検出、silent `--dry-run` preflightもpassした。再render、window、
+playbackは実行していない。依存lockはlocked installに使えるがignoredのため、
+clean checkoutのportable authorityにはまだなっていない。
 
 ## 公開・実行境界
 

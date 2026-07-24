@@ -1,19 +1,21 @@
 # Project Context — NLMYTGen
 
-## 現在の別端末再開ハンドオフ（2026-07-24 JST・accepted cut / regression green）
+## 現在の監修AIハンドオフ（2026-07-24 JST・Thank端末再同期 / accepted cut / regression green）
 
-この節だけが現在の別端末再開地点である。real-media cutの人間受理と、
-canonical Regression Integrityの三モード収束を同じcheckpointへ固定した。
+この節だけが現在の再開地点である。real-media cutの人間受理、canonical
+Regression Integrityの三モード収束、今回のThank端末live availabilityを分離して固定した。
 
 - **取得先**:
   `origin/codex/nlmytgen-accepted-cut-regression-integrity-v1`。required baseは
   `c77a89b8db15d5c0b286afc322dd6842a016a606`、outcome commitはremote branch
   tipから解決する。merge、rebase、master更新、PR作成は行っていない。
 - **remote verification**: 2026-07-24 JSTに`git fetch --prune origin`を実行し、
-  local `HEAD`とupstreamが一致し、`git rev-list --left-right --count
-  'HEAD...@{upstream}'`は`0 0`、tracked worktreeはclean。最終handoff tipは
-  remote branch tipから解決する。
-  current terminalの`.venv/`と`gui/node_modules/`はignoredのまま保全した。
+  remoteの3 commit更新を確認後、local branchを`e574614`から`739c5a4`へ
+  `git pull --ff-only`で同期した。merge、rebase、history rewriteはなく、
+  取込直後の`git rev-list --left-right --count 'HEAD...@{upstream}'`は`0 0`。
+  `origin/master`より40 ahead / 0 behindで、masterはcurrent branchの祖先である。
+  最終handoff tipはremote branch tipから解決する。current terminalの`.venv/`、
+  `gui/node_modules/`、private media、pre-existing untracked evidenceは保全した。
 - **Dependency Lock Authority attempt 1**: 添付launch promptはexact base
   `0b29c5a9adc91b8c002967b19ca052f30d1a7a90`を要求したが、preflight時点のlocal / remote
   canonical tipはいずれも、直前の監修handoffを含む
@@ -25,19 +27,29 @@ canonical Regression Integrityの三モード収束を同じcheckpointへ固定�
   `81b060f37fd2c7c4151fcf6fc402b554476d4ea6785022c8eef01aaaa9ff4a73`で、
   どちらも未追跡・ignoredのまま保全されている。window、動画・音声再生、render、
   YMM4、ffmpeg media runは実行していない。
-- **PLANNER007受信端末readiness**: 旧handoff branch `9ed7cdf`から、検証baseでは直線的な15 commit後継である
-  current branchへtracking switch済み。今回の再開では検証base
-  `0b29c5a9adc91b8c002967b19ca052f30d1a7a90`でfetch / FF-only pullを再実行し、
-  already up to date、upstream `0/0`、文書更新前に`origin/master`より38 ahead / 0 behindを確認した。
-  Python locked sync、Electron locked install、
-  project-state sync、tracked JavaScript 12件のsyntax、.NET 10 Release build、
-  canonical 170-test selectionはpassし、current terminal resultは`165 passed / 5 declared-locator
-  skips / 0 failed / 0 errors`、Git三面不変だった。
-- **受信端末のavailability boundary**: accepted MP4、generated/source YMM4 project、real-media
-  9 assets、YMM4 executableはこの端末にない。製品の`stable_internal_cut`判断はtracked receiptに
-  保持するが、この端末でlive playback、real-media dry-run、renderを再検証したとは扱わない。
-  Python / GUI / regression / driver code開発は開始可能。詳細なtoolchain、検証、残存risk、
-  dependency portabilityからpublication governanceまでの段階goalは
+- **PLANNER007受信端末の先行receipt**: 旧handoff branch `9ed7cdf`から当時の
+  canonical branchへtracking switchし、Python / Electron / .NET code developmentと
+  `165 passed / 5 declared-locator skips / 0 failed / 0 errors`を確認した。ただし同端末には
+  accepted MP4、generated/source YMM4 project、real-media 9 assets、YMM4 executableが
+  なかった。この記録は別端末可搬性の証拠であり、現在のThank端末availabilityではない。
+- **Thank端末readiness**: Python 3.13.3 / uv 0.10.7で
+  `uv sync --extra dev --locked`、Node 24.13.0 / npm 11.6.2で`npm ci`と
+  `npm ls --depth=0`を実行し、Electron 35.7.5をexact readbackした。tracked JavaScript
+  12件のsyntax、project-state sync、runner focused contracts 6件、Python compile、
+  .NET SDK 10.0.204でのRelease build（warning 0 / error 0）はpassした。
+  canonical 16 modules / 170 testsは`166 passed / 4 declared-locator skips /
+  0 failed / 0 errors`、95.459秒、valid skip contract、Git三面不変、temp回収済み。
+- **Thank端末private availability**: source project、generated project、accepted MP4、
+  real-media 9 assetsはすべてexact tracked hashと一致した。YMM4 4.54.0.1をbounded
+  candidate pathで検出し、silent real-media `--dry-run`は18 protected inputs、
+  9 cues、S1/S2/S3=`2/4/3`、speaker=`3/6`、4415 frames、9/9 provenanceをpassした。
+  window、playback、render、remux、fresh media validationは実行していない。
+- **dependency / security boundary**: `uv.lock`と`gui/package-lock.json`は既存hashを保ち、
+  ignored local authorityのままである。locked installは成立するがGit-onlyのportable
+  authorityではない。`npm audit`はElectronにdirect high 1件を集約し、fix candidateは
+  semver-majorの43.2.0。`npm audit fix --force`、manifest変更、upgradeは行っていない。
+  詳細なtoolchain、検証、残存risk、dependency portabilityからpublication governanceまでの
+  段階goalは
   `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-24.md`を正本とする。
 - **accepted cut**: run `new_banknote_real_media_review_v1`の
   `internal_review_real_media.mp4`、SHA-256

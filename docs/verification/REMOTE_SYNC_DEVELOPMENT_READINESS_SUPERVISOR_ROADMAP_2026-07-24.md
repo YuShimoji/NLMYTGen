@@ -1,10 +1,10 @@
-# 監修AI向け・最新リモート同期、開発再開判断、長期目標案（2026-07-24 JST）
+# 監修AI向け・最新リモート同期、開発再開判断、長期目標案（2026-07-24 JST・複数端末）
 
 Scope: NLMYTGen
 
-この文書は、`C:\Users\PLANNER007\NLMYTGen` で公開リモートを再取得し、旧handoff線から
-現在の正本であるaccepted-cut / regression-integrity線へ移行した後の、端末固有の開発可用性と
-製品checkpointを分離して記録する。製品状態と直近gateの正本は
+この文書は、公開リモートのaccepted-cut / regression-integrity線を複数端末で再取得した結果を、
+端末固有の開発可用性と製品checkpointに分離して記録する。最上段のThank端末refreshが今回の
+最新handoffであり、後続のPLANNER007節は先行受信端末の履歴として読む。製品状態と直近gateの正本は
 [`runtime-state.md`](../runtime-state.md)、非交渉境界は
 [`INVARIANTS.md`](../INVARIANTS.md)、三モード回帰の機械可読結果は
 [`REGRESSION_INTEGRITY_2026-07-24.json`](REGRESSION_INTEGRITY_2026-07-24.json)である。
@@ -13,7 +13,86 @@ Scope: NLMYTGen
 production、publication、PR、merge、master integrationを一括承認するものではない。選択された
 次sliceだけを狭い契約にし、accepted cutのclosed creative dimensionsを別目的の変更で開き直さない。
 
-## 監修判断に必要な結論
+## Thank端末の最新refresh
+
+### 今回の到達点
+
+`C:\Users\thank\Storage\Media Contents Projects\NLMYTGen`で
+`git fetch --prune origin`を実行したところ、current handoff branchのremoteがlocal
+`e574614`より3 commit進んだ`739c5a4`であることを確認した。差分はruntime、cockpit、
+project context、本監修roadmapの更新だけで、`git pull --ff-only`により競合なしで取り込んだ。
+merge、rebase、history rewrite、master更新、PR作成は行っていない。取込直後はupstream
+`0/0`、`origin/master`より40 ahead / 0 behindで、masterはcurrent branchの祖先だった。
+
+同期前から存在した`.playwright-mcp/`、`artifacts/`、
+`phase-e-01-contact-acquired*.png`はuntrackedのまま保全した。`.venv/`、
+`gui/node_modules/`、private media、YMM4 project、run archiveもignored local stateとして
+保持し、stage、削除、public Gitへの追加を行っていない。この報告のcommit / push後にも
+upstream `0/0`とtracked cleanをhandoff条件とする。
+
+現在の判定は「code development readyかつprivate-artifact preflight ready」である。
+accepted carrierとYMM4 runtimeはローカルに存在するが、accepted cutはrerender不要であり、
+今回のreadiness確認ではwindow、playback、render、remux、fresh full decodeを実行していない。
+技術的にファイルが存在すること、実機renderを今回再実行したこと、人間が再視聴したことを
+同じpassとして扱わない。
+
+### この端末で整えた開発基盤
+
+| 基盤 | 今回の実測 | 判定 | 残るportable条件 |
+| --- | --- | --- | --- |
+| Python | Python 3.13.3、uv 0.10.7、`uv sync --extra dev --locked` | package audit完了、module/script開発可能 | `uv.lock`はignored local |
+| Electron GUI | Node 24.13.0、npm 11.6.2、`npm ci`、`npm ls --depth=0` | Electron 35.7.5 exact、tracked JS 12件syntax pass | `gui/package-lock.json`はignored local |
+| GUI security | live `npm audit --json` | direct high 1件、17 advisory経路 | offered fixは43.2.0 semver-major、互換検証が必要 |
+| Python quality | compile、project-state sync、runner focused contracts | compile pass、state sync pass、6 tests pass | full suiteは通常gateにしない |
+| Canonical regression | 16 modules / 170 tests | 166 pass / 4 declared-locator skip / failure 0 / error 0 | 4 skipはNotebookLM private locator不在 |
+| Workspace integrity | status / diff / cached diff前後比較 | 全面不変、temporary workspace回収 | unrelated untracked evidenceの内容は保証しない |
+| .NET render driver | SDK 10.0.204、Release build | warning 0 / error 0 | actual YMM4 UI automationは今回未実行 |
+| Media tools | ffmpeg / ffprobe 8.0.1 | command readback済み | accepted MP4のfresh decodeは今回未実行 |
+| YMM4 | bounded candidate pathの4.54.0.1 | executable identityをreadback | window、project open、render compatibilityは今回未実行 |
+
+`uv.lock`のSHA-256は
+`40e64f793775f0b0181f5ba8972c17842717dbe14bc8c0a6c0cabd14442435d0`、
+`gui/package-lock.json`は
+`81b060f37fd2c7c4151fcf6fc402b554476d4ea6785022c8eef01aaaa9ff4a73`で、
+先行Dependency Lock Authority attempt 1が保全した値から変わっていない。今回のlocked
+sync / installはlocal readinessを証明するが、clean Git checkoutからlockを得られることは
+証明しない。
+
+### Private evidenceと実素材preflight
+
+| 対象 | live availability | identity判定 | 今回実行していないこと |
+| --- | --- | --- | --- |
+| real-media assets | 9/9 present | provenance記載SHA-256 9/9一致 | rights clearance、production採用 |
+| source project | present、1,337,084 bytes | SHA-256 `beee7eab...aa54`一致 | source変更、YMM4 open |
+| generated project | present、1,521,444 bytes | SHA-256 `244c05ae...12611`一致 | regeneration |
+| accepted MP4 | present、93,375,529 bytes | SHA-256 `423553e0...ca476`一致 | playback、fresh decode、再受理 |
+| YMM4 executable | 4.54.0.1 present | expected observed versionと一致 | render、UI automation |
+
+`NLMYTGEN_AUDIO_POLICY=silent`でreal-media manifestのread-only `--dry-run`を実行し、
+18 protected inputs、9 cues、S1/S2/S3=`2/4/3`、speaker=`3/6`、4415 frames、
+1920×1080/60fps、9/9 cue provenanceがpassした。statusは`dry_run`、render requestedは
+falseで、media materialization以降は計画表示だけである。この結果は、同じsourceとassetから
+pipelineを再開できるpreflight evidenceであり、accepted MP4の再生成や人間再確認ではない。
+
+### 現在の残作業と所有境界
+
+| 残作業 | 目的と効果 | 必要条件 | 現在状態 | owner / 次のmove |
+| --- | --- | --- | --- | --- |
+| Dependency Lock Authority | clean checkoutの依存集合を決定可能にし、Electron検証とCIの基準を作る | `.gitignore`とlock更新契約を狭く変更 | local locksは健全、tracking未実施 | assistant実装。handoff push後のfresh remote tipから再開 |
+| Electron major compatibility | support外35系とhigh advisoryを解消し、保守可能なGUI runtimeへ移す | lock authority、major変更の監修承認、rollback基準 | 43.2.0 fix candidateのみ確認 | 監修AIがgo / revise / hold、assistantがisolated検証 |
+| Private artifact portability | review-only端末とrender-capable端末を誤判定しない | private storage / transfer owner、hash contract | Thank端末は揃うがPLANNER007端末は欠落 | storage owner決定後、assistantがingest/doctorを実装 |
+| Default integration | feature branchに滞留するcheckpointを通常入口へ戻す | PR差分監査と明示merge承認 | masterより40 commit先行、未merge | merge ownerが条件決定、assistantは監査まで |
+| Rights clearance | human-accepted visual intentを公開可能asset identityへ変換 | cue別license / permission / attribution判断 | 9 asset全てproduction false | rights owner判断、assistantがledger整備 |
+| Production / publication | exact production masterとrelease packetを閉じる | rights、production QA、publication authorization | internal stable cutのみ | production / publication ownerの独立gate |
+
+最短の次moveはDependency Lock Authorityである。attempt 1の`0b29c5a`を再利用せず、
+このhandoffをpushした後のcurrent remote tipをfresh exact baseとして取得する。
+`uv.lock`と`gui/package-lock.json`をmanifestおよびElectron 35.7.5を変えずにportable
+authorityへ昇格し、fresh checkoutのlocked installとdrift checkをexit signalにする。
+Electron 43.2.0互換性は別commit / successor missionとし、accepted media、script、timing、
+visual decisionを変更しない。
+
+## PLANNER007先行受信時の監修判断（履歴）
 
 初回受信時には、旧branch
 `codex/nlmytgen-end-to-end-auto-video-v1`のtip `9ed7cdf`を直線的に進めた正式な後継
@@ -50,7 +129,7 @@ accepted MP4の再生確認は行えない。
 中心は`src/pipeline/episode_video.py`のreal-media path、回帰fixture/runner、受理receipt、
 manifest/provenance、状態文書であり、branch履歴はmergeなしの直線系列である。
 
-## リモート同期とGit作業面
+## PLANNER007先行受信時のリモート同期とGit作業面（履歴）
 
 | 確認対象 | 実測 | 判定 | 監修上の意味 |
 | --- | --- | --- | --- |
@@ -63,7 +142,7 @@ manifest/provenance、状態文書であり、branch履歴はmergeなしの直�
 
 この報告をcommit / pushした後も、current branchのupstream差分`0/0`とtracked cleanをhandoff条件とする。
 
-## この端末で整えた開発基盤
+## PLANNER007端末で整えた開発基盤（履歴）
 
 | 基盤 | 実測・実施内容 | この端末の判定 | 可搬性または残存条件 |
 | --- | --- | --- | --- |
@@ -87,7 +166,7 @@ supported baseline」ではなく、互換性を測りながらsupported major�
 根拠は[Electron release policy](https://www.electronjs.org/docs/latest/tutorial/electron-timelines)と
 [Electron 43 release](https://www.electronjs.org/blog/electron-43-0)を参照する。
 
-## 今回のローカル検証
+## PLANNER007端末のローカル検証（履歴）
 
 | 検証 | 結果 | 保証すること | 保証しないこと |
 | --- | --- | --- | --- |
@@ -106,7 +185,7 @@ evidence-rich same-machine `166/4`、tracked-only linked worktree `161/9`であ�
 別端末のlive locator可用性差であり、total 170、failure/error 0、valid skip contract、
 workspace integrity passは一致する。端末差を製品regressionや受理取消しへ読み替えない。
 
-## 製品の現在地
+## PLANNER007 snapshot時点の製品現在地（履歴）
 
 | 能力・gate | 製品checkpoint | この端末で今できること | 次に必要な判断 |
 | --- | --- | --- | --- |
