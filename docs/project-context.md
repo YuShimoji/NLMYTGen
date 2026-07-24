@@ -15,6 +15,18 @@ canonical Regression Integrityの三モード収束を同じcheckpointへ固定�
   remote branch tipから解決する。
   `.playwright-mcp/`、`artifacts/`、`phase-e-01-contact-acquired*.png`は別端末へGitで
   渡さないローカル証拠として保全し、stage・削除・変更していない。
+- **PLANNER007受信端末readiness**: 旧handoff branch `9ed7cdf`から、直線的な14 commit後継である
+  current branchへtracking switchし、FF-only pullがalready up to date、upstream `0/0`、
+  文書更新前に`origin/master`より37 ahead / 0 behindを確認した。Python locked sync、Electron locked install、
+  project-state sync、tracked JavaScript 12件のsyntax、.NET 10 Release build、
+  canonical 170-test selectionはpassし、current terminal resultは`165 passed / 5 declared-locator
+  skips / 0 failed / 0 errors`、Git三面不変だった。
+- **受信端末のavailability boundary**: accepted MP4、generated/source YMM4 project、real-media
+  9 assets、YMM4 executableはこの端末にない。製品の`stable_internal_cut`判断はtracked receiptに
+  保持するが、この端末でlive playback、real-media dry-run、renderを再検証したとは扱わない。
+  Python / GUI / regression / driver code開発は開始可能。詳細なtoolchain、検証、残存risk、
+  dependency portabilityからpublication governanceまでの段階goalは
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-24.md`を正本とする。
 - **accepted cut**: run `new_banknote_real_media_review_v1`の
   `internal_review_real_media.mp4`、SHA-256
   `423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476`

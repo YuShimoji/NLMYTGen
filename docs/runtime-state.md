@@ -49,6 +49,15 @@ Tracked-Worktree: tracked state clean; preserved untracked artifacts remain
   worktree file. No Thank-terminal path is encoded in the contract.
 - No YMM4, render, media playback, system-volume, dependency-upgrade, or
   creative-mutation path was executed in this slice.
+- A fresh receiving-terminal audit moved from the obsolete end-to-end handoff
+  branch to this canonical successor at remote parity `0/0`. The canonical
+  selection passed 165 with 5 declared-locator skips, 0 failures, and 0 errors;
+  workspace status/diff/cached diff remained unchanged.
+- Python locked sync, Electron locked install, tracked JavaScript syntax,
+  project-state sync, and the .NET 10 Release build pass on the receiving
+  terminal. The accepted MP4, generated/source YMM4 projects, nine real-media
+  files, and YMM4 executable are not present there, so code development is ready
+  but real-media dry-run, render, and local playback are unavailable.
 
 ## Product Position
 
@@ -75,6 +84,8 @@ Do not rerender or reopen creative review as part of that lane.
   `docs/verification/REGRESSION_INTEGRITY_2026-07-24.json`
 - Three-mode explanatory report:
   `docs/verification/REGRESSION_INTEGRITY_2026-07-24.md`
+- Receiving-terminal development and supervisor roadmap:
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-24.md`
 - Canonical runner:
   `scripts/check_regression_integrity.py`
 - Focused contracts:
@@ -98,8 +109,13 @@ Do not rerender or reopen creative review as part of that lane.
 - Rights clearance and production asset approval: pending.
 - Publication, upload, release, PR, merge, and master integration: not performed.
 - Dependency portability and Electron security validation: next planned lane.
+- The current receiving terminal is code-development ready but lacks the private
+  render/review carrier and YMM4 runtime; restore them only for an approved
+  portability, review, or render task.
 
 ## Maintenance Note
 
 Keep this capsule within 160 lines. Resolve the outcome commit from the current
-remote branch tip. Exact results are in the two 2026-07-24 regression artifacts.
+remote branch tip. Exact regression results are in the two 2026-07-24 regression
+artifacts. The current receiving-terminal toolchain and far-goal proposal are in
+the 2026-07-24 supervisor roadmap.
