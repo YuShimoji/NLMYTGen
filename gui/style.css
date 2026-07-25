@@ -89,9 +89,14 @@ nav { display: flex; gap: 4px; }
   display: none;
 }
 
-.body-content.review-workbench-active main {
+.body-content.review-workbench-active main,
+.body-content.standard-loop-active main {
   width: 100%;
   padding: 14px 18px 18px;
+}
+
+.body-content.standard-loop-active .wizard-bar {
+  display: none;
 }
 
 .wizard-bar {
@@ -471,6 +476,139 @@ main .hint strong {
 
 .tab-content { display: none; }
 .tab-content.active { display: block; }
+
+/* 標準自動制作ループ: 日常運用の順序をそのまま縦に並べる */
+.standard-loop {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-bottom: 24px;
+}
+
+.standard-loop-heading {
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.standard-loop-heading h2 {
+  font-size: 20px;
+  margin-bottom: 3px;
+}
+
+.standard-loop-heading p,
+.standard-step p {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}
+
+.standard-step {
+  padding: 9px 0 10px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.standard-step h3 {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--color-text);
+}
+
+.standard-step h3 span {
+  color: var(--color-accent);
+}
+
+.standard-control-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.standard-control-row button {
+  padding: 6px 12px;
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border-hover);
+  border-radius: 4px;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.standard-control-row button.primary {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.standard-control-row button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.standard-path {
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+}
+
+.standard-facts {
+  display: block;
+  margin-top: 5px;
+}
+
+.standard-facts div {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.standard-facts dt {
+  flex: 0 0 84px;
+  color: var(--color-text-dim);
+}
+
+.standard-facts dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.standard-status-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 5px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.standard-status-list [data-state="ready"] {
+  color: var(--color-success-text);
+}
+
+.standard-status-list [data-state="unavailable"],
+.standard-status-list [data-state="failed"] {
+  color: var(--color-accent);
+}
+
+.standard-boundary {
+  margin-bottom: 6px;
+}
+
+.standard-log {
+  width: 100%;
+  max-height: 180px;
+  margin-top: 6px;
+  padding: 7px 9px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-family: Consolas, 'Yu Gothic UI', monospace;
+  font-size: 11px;
+  line-height: 1.45;
+}
 
 /* Drop zone */
 .drop-zone {

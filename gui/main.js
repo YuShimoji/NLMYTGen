@@ -3,48 +3,79 @@ const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
 const electronCompatibility = require('./electron_compatibility_probe');
+const standardLoopProbe = require('./standard_production_loop_probe');
+const {
+  ACCEPTED_MANIFEST_RELATIVE_PATH,
+  PipelineJobController,
+  buildDoctorArgs,
+  buildEpisodeArgs,
+  classifyProfiles,
+  resolveRepoRelativePath: resolveStandardLoopPath,
+  summarizeManifest,
+} = require('./standard_production_loop');
 
 const SETTINGS_PATH = path.join(__dirname, 'project-settings.json');
 const REPO_ROOT = path.resolve(__dirname, '..');
+const DEVELOPMENT_AUDIO_POLICY = 'silent';
 
 let mainWindow;
 
-if (electronCompatibility.isEnabled()) {
+const compatibilityMode = electronCompatibility.isEnabled();
+const standardLoopProbeMode = standardLoopProbe.isEnabled();
+
+if (compatibilityMode) {
   app.setPath('userData', electronCompatibility.profilePath());
+} else if (standardLoopProbeMode) {
+  app.setPath('userData', standardLoopProbe.profilePath());
 }
 
 async function createWindow() {
+  const probeWidth = Number.parseInt(process.env.NLMYTGEN_STANDARD_LOOP_WIDTH || '', 10);
+  const probeHeight = Number.parseInt(process.env.NLMYTGEN_STANDARD_LOOP_HEIGHT || '', 10);
   mainWindow = new BrowserWindow({
-    width: 900,
-    height: 700,
+    width: Number.isFinite(probeWidth) ? probeWidth : 900,
+    height: Number.isFinite(probeHeight) ? probeHeight : 700,
     minWidth: 600,
     minHeight: 500,
-    show: !electronCompatibility.isEnabled(),
+    show: !(compatibilityMode || standardLoopProbeMode),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
-      offscreen: electronCompatibility.isEnabled(),
+      offscreen: compatibilityMode || standardLoopProbeMode,
     },
     title: 'NLMYTGen',
   });
 
-  const observations = electronCompatibility.observe(mainWindow);
+  const observations = compatibilityMode
+    ? electronCompatibility.observe(mainWindow)
+    : (standardLoopProbeMode ? standardLoopProbe.observe(mainWindow) : null);
   await mainWindow.loadFile(path.join(__dirname, 'index.html'));
-  if (electronCompatibility.isEnabled()) {
+  if (compatibilityMode) {
     await electronCompatibility.run(mainWindow, observations);
+  } else if (standardLoopProbeMode) {
+    await standardLoopProbe.run(mainWindow, observations);
   }
 }
 
 app.whenReady().then(createWindow).catch((err) => {
-  if (electronCompatibility.isEnabled()) {
+  if (compatibilityMode) {
     electronCompatibility.fail(err);
+    app.quit();
+    return;
+  }
+  if (standardLoopProbeMode) {
+    standardLoopProbe.fail(err);
     app.quit();
     return;
   }
   console.error(err);
 });
-app.on('window-all-closed', () => app.quit());
+app.on('window-all-closed', async () => {
+  const job = standardLoopJobs.snapshot();
+  if (job.active) await standardLoopJobs.cancel(job.id);
+  app.quit();
+});
 
 // --- IPC handlers ---
 
@@ -54,7 +85,11 @@ function runCli(args) {
     const uvPath = process.platform === 'win32' ? 'uv.exe' : 'uv';
     const proc = spawn(uvPath, ['run', 'python', '-m', 'src.cli.main', ...args], {
       cwd: repoRoot,
-      env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
+      env: {
+        ...process.env,
+        PYTHONIOENCODING: 'utf-8',
+        NLMYTGEN_AUDIO_POLICY: DEVELOPMENT_AUDIO_POLICY,
+      },
     });
 
     let stdout = '';
@@ -74,6 +109,9 @@ function runCli(args) {
 }
 
 function parseJsonLine(stdout) {
+  try {
+    return JSON.parse(stdout.trim());
+  } catch { /* mixed or line-delimited stdout; try individual lines */ }
   const lines = stdout.trim().split('\n');
   for (let i = lines.length - 1; i >= 0; i--) {
     try {
@@ -82,6 +120,82 @@ function parseJsonLine(stdout) {
   }
   return null;
 }
+
+function spawnStandardLoopProcess(spec, callbacks) {
+  const uvPath = process.platform === 'win32' ? 'uv.exe' : 'uv';
+  let proc;
+  if (process.env.NLMYTGEN_STANDARD_LOOP_RENDER_TEST_DOUBLE === '1') {
+    const requestedDelay = Number.parseInt(
+      process.env.NLMYTGEN_STANDARD_LOOP_TEST_DOUBLE_DELAY_MS || '0',
+      10,
+    );
+    const delayMs = Number.isFinite(requestedDelay)
+      ? Math.max(0, Math.min(requestedDelay, 5000))
+      : 0;
+    proc = spawn(process.execPath, [
+      '-e',
+      [
+        `console.log(${JSON.stringify(`TEST_DOUBLE_COMMAND=uv run python -m src.cli.main ${spec.args.join(' ')}`)});`,
+        `setTimeout(() => console.log("TEST_DOUBLE_RENDER_NOT_PERFORMED"), ${delayMs});`,
+      ].join(''),
+    ], {
+      cwd: REPO_ROOT,
+      env: {
+        ...process.env,
+        ELECTRON_RUN_AS_NODE: '1',
+        NLMYTGEN_AUDIO_POLICY: DEVELOPMENT_AUDIO_POLICY,
+      },
+    });
+  } else {
+    proc = spawn(uvPath, ['run', 'python', '-m', 'src.cli.main', ...spec.args], {
+      cwd: REPO_ROOT,
+      env: {
+        ...process.env,
+        PYTHONIOENCODING: 'utf-8',
+        NLMYTGEN_AUDIO_POLICY: DEVELOPMENT_AUDIO_POLICY,
+      },
+    });
+  }
+  proc.stdout.on('data', (data) => callbacks.stdout(data.toString('utf8')));
+  proc.stderr.on('data', (data) => callbacks.stderr(data.toString('utf8')));
+  proc.on('error', (err) => callbacks.stderr(`Process error: ${err.message}`));
+  proc.on('close', (code) => callbacks.close({ code, cancelled: proc.__nlmytgenCancelled === true }));
+  return proc;
+}
+
+function cancelOwnedProcessTree(proc) {
+  if (!proc || !Number.isInteger(proc.pid)) {
+    return Promise.reject(new Error('owned child process is unavailable'));
+  }
+  proc.__nlmytgenCancelled = true;
+  if (process.platform !== 'win32') {
+    proc.kill('SIGTERM');
+    return Promise.resolve();
+  }
+  return new Promise((resolve, reject) => {
+    const killer = spawn('taskkill.exe', ['/PID', String(proc.pid), '/T', '/F'], {
+      windowsHide: true,
+      stdio: 'ignore',
+    });
+    killer.once('error', reject);
+    killer.once('close', (code) => {
+      if (code === 0 || proc.exitCode !== null) resolve();
+      else reject(new Error(`taskkill exited with ${code}`));
+    });
+  });
+}
+
+const standardLoopJobs = new PipelineJobController({
+  startProcess: spawnStandardLoopProcess,
+  cancelProcess: cancelOwnedProcessTree,
+  emit: (type, payload) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('standard-loop-job-event', { type, ...payload });
+    }
+  },
+});
+let standardLoopDoctorProfiles = [];
+const standardLoopDryRunPasses = new Map();
 
 function resolveRepoRelativePath(relPath) {
   if (typeof relPath !== 'string' || !relPath.trim()) {
@@ -185,7 +299,7 @@ ipcMain.handle('apply-production', async (_event, opts) => {
 });
 
 ipcMain.handle('select-file', async (_event, opts) => {
-  if (electronCompatibility.isEnabled()) {
+  if (compatibilityMode) {
     const result = electronCompatibility.openDialogResult({
       title: opts.title || 'Select file',
       filters: opts.filters || [{ name: 'All', extensions: ['*'] }],
@@ -199,6 +313,95 @@ ipcMain.handle('select-file', async (_event, opts) => {
     properties: ['openFile'],
   });
   return result.canceled ? null : result.filePaths[0];
+});
+
+// --- Standard automated production loop ---
+
+ipcMain.handle('standard-loop-accepted-manifest', async () => (
+  summarizeManifest(REPO_ROOT, ACCEPTED_MANIFEST_RELATIVE_PATH)
+));
+
+ipcMain.handle('standard-loop-select-manifest', async () => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    title: 'エピソードマニフェストを選択',
+    filters: [{ name: 'Episode manifest', extensions: ['json'] }],
+    properties: ['openFile'],
+  });
+  if (result.canceled) return { ok: false, canceled: true };
+  const relative = path.relative(REPO_ROOT, result.filePaths[0]);
+  if (relative.startsWith('..') || path.isAbsolute(relative)) {
+    return { ok: false, error: 'リポジトリ外のマニフェストは選択できません' };
+  }
+  return summarizeManifest(REPO_ROOT, relative.replace(/\\/g, '/'));
+});
+
+ipcMain.handle('standard-loop-load-manifest', async (_event, relPath) => (
+  summarizeManifest(REPO_ROOT, relPath)
+));
+
+ipcMain.handle('standard-loop-doctor', async () => {
+  const result = await runCli(buildDoctorArgs());
+  const json = parseJsonLine(result.stdout);
+  standardLoopDoctorProfiles = classifyProfiles(json);
+  return {
+    ...result,
+    json,
+    profiles: standardLoopDoctorProfiles,
+  };
+});
+
+ipcMain.handle('standard-loop-dry-run', async (_event, relPath) => {
+  const resolved = resolveStandardLoopPath(REPO_ROOT, relPath);
+  if (!resolved.ok) return { code: -1, stdout: '', stderr: resolved.error, json: null };
+  const result = await runCli(buildEpisodeArgs(resolved.rel, { dryRun: true }));
+  const json = parseJsonLine(result.stdout);
+  if (result.code === 0 && json) {
+    const summary = summarizeManifest(REPO_ROOT, resolved.rel);
+    if (summary.ok) standardLoopDryRunPasses.set(resolved.rel, summary.manifest_sha256);
+  }
+  return { ...result, json };
+});
+
+ipcMain.handle('standard-loop-start', async (_event, opts) => {
+  if (DEVELOPMENT_AUDIO_POLICY !== 'silent') {
+    return { ok: false, error: 'SILENT_POLICY_REQUIRED' };
+  }
+  const resolved = resolveStandardLoopPath(REPO_ROOT, opts?.manifestPath);
+  if (!resolved.ok) return { ok: false, error: resolved.error };
+  const summary = summarizeManifest(REPO_ROOT, resolved.rel);
+  if (!summary.ok) return summary;
+  if (summary.protected_inputs.status !== 'exact') {
+    return { ok: false, error: 'PROTECTED_INPUTS_NOT_EXACT', summary };
+  }
+  if (standardLoopDryRunPasses.get(resolved.rel) !== summary.manifest_sha256) {
+    return { ok: false, error: 'SUCCESSFUL_DRY_RUN_REQUIRED', summary };
+  }
+  const regenerateReady = standardLoopDoctorProfiles.some(
+    (profile) => profile.name === 'regenerate' && profile.state === 'ready',
+  );
+  const renderTestDouble = process.env.NLMYTGEN_STANDARD_LOOP_RENDER_TEST_DOUBLE === '1';
+  if (!regenerateReady && !renderTestDouble) {
+    return { ok: false, error: 'REGENERATE_PROFILE_NOT_READY', summary };
+  }
+  const resume = opts?.resume === true && summary.output.status !== 'absent';
+  const args = buildEpisodeArgs(resolved.rel, { render: true, resume });
+  return standardLoopJobs.start({ args, manifestPath: resolved.rel });
+});
+
+ipcMain.handle('standard-loop-cancel', async (_event, jobId) => (
+  standardLoopJobs.cancel(jobId)
+));
+
+ipcMain.handle('standard-loop-job', async () => standardLoopJobs.snapshot());
+
+ipcMain.handle('standard-loop-open-output', async (_event, relPath) => {
+  const { shell } = require('electron');
+  const resolved = resolveStandardLoopPath(REPO_ROOT, relPath);
+  if (!resolved.ok || !fs.existsSync(resolved.full)) {
+    return { ok: false, error: resolved.error || `not found: ${resolved?.rel || relPath}` };
+  }
+  const error = await shell.openPath(resolved.full);
+  return error ? { ok: false, error } : { ok: true, path: resolved.rel };
 });
 
 // --- Settings persistence ---

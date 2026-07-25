@@ -1,54 +1,51 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: nlmytgen-runtime-doctor-private-ingest-ready-v1
-State-Revision: 2026-07-25.3
+Project-State-ID: nlmytgen-standard-production-loop-gui-ready-v1
+State-Revision: 2026-07-25.4
 Updated: 2026-07-25 JST
-Product-State: electron-43-portable-runtime-with-consumer-profile-doctor-and-private-ingest-contract
-Product-Gate: named-private-artifact-delivery-or-standard-production-loop-gui
-Recommended-Next: use-runtime-doctor-to-select-private-artifact-delivery-or-gui-production-loop
+Product-State: runtime-doctor-backed-end-to-end-episode-operation-gui
+Product-Gate: second-real-topic-factory-validation
+Recommended-Next: run-second-real-topic-through-standard-production-loop
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
-Handoff-Branch: codex/nlmytgen-runtime-doctor-private-ingest-v1
+Handoff-Branch: codex/nlmytgen-standard-production-loop-gui-v1
 Handoff-PR: none
-Required-Base: 21194b60f6824eaedaddacf05bb920e1a324936a
+Required-Base: 55507cb6f8940152f6ffae132186bcbcc0a700b0
 Outcome-Commit: resolved-by-current-branch-tip
-Remote-Parity: 0/0 required and verified after handoff push on 2026-07-25 JST
-Tracked-Worktree: tracked state clean after handoff; pre-existing ignored/private state preserved
+Remote-Parity: 0/0 required after handoff push
+Tracked-Worktree: tracked state clean required after handoff; pre-existing ignored/private state preserved
 
 短期正本は [runtime-state.md](runtime-state.md)、判断履歴は
-[project-context.md](project-context.md)、runtime診断の詳細は
-[RUNTIME_DOCTOR_PRIVATE_INGEST_2026-07-25.md](verification/RUNTIME_DOCTOR_PRIVATE_INGEST_2026-07-25.md)
-です。
+[project-context.md](project-context.md)。
 
 ## いまの一文
 
-accepted stable internal cutとElectron 43.2.0を維持したまま、code/review/render/
-regenerate readinessとprivate artifactのlive availabilityをone-commandで可視化した。
+Electron 43の既定画面からepisode manifest、deep runtime doctor、実dry-run、
+内部レビュー生成dispatch、progress/cancel、accepted output確認までを1本の標準経路にした。
 
 ## 判断に使える現在地
 
 | 対象 | 現在状態 | 境界 |
 | --- | --- | --- |
-| `code` | tracked-only clean checkoutでready | private bytes不要 |
-| `review` | Thank端末のaccepted MP4 exact / ffprobe pass | playbackなし |
-| `render` | YMM4 4.54.0.1、source project、9素材exact | YMM4起動・renderなし |
-| `regenerate` | manifest / provenance / protected inputs agree | pipeline未実行 |
-| Private contract | 12 artifact、hash、lineage、destinationを固定 | validation-only |
-| Empty root | 全12件receipt-only、ingest false | receiptをlive扱いしない |
-| Mismatch root | synthetic MP4をhash mismatch判定 | copy/overwriteなし |
-| Electron | exact 43.2.0 hidden/silent smoke pass | 35.7.5 rollback維持 |
-| Accepted cut | exact receipt / creative locks不変 | 再render不要 |
+| 既定GUI | `自動動画生成`の5工程縦導線 | 旧4タブは維持 |
+| Manifest | accepted実例を直接読込、別manifestもsafe dialog選択 | repo-relative表示 |
+| Runtime | code/review/render/regenerateをdeep doctorで独立判定 | receipt-onlyはreadyにしない |
+| Dry-run | accepted実manifestで実pipeline dry-run pass | write/render/playbackなし |
+| Generation | 実CLI commandへ接続、単一job、bounded log、owned cancel | Missionではtest doubleのみ |
+| Result | project/MP4/receipt/acceptanceをidentity別表示 | autoplay/YMM4 launchなし |
+| Electron | exact 43.2.0、1280x720 / 1920x1080 hidden smoke pass | silent、no focus takeover |
+| Accepted cut | exact media/project SHAとcreative locks不変 | rerender不要 |
+| Taste | skill不在、未使用・未取得 | image/SVG/design direction追加なし |
 
 ## 次の入口
 
-`origin/codex/nlmytgen-runtime-doctor-private-ingest-v1`へ同期し、locked setup後に
-`uv run python -m src.cli.main doctor-runtime --profile all --deep --format json`
-を実行する。named consumerを選び、private deliveryが必要ならrecipientと別transfer
-authorityを確定してstaging rootを検証する。deliveryを選ばない場合はstandard
-production-loop GUIを独立sliceとして開始する。
+`npm --prefix gui start`で第2実トピックのmanifestを選び、4 profile ready、
+protected inputs exact、dry-run passの順に確認する。次の証明対象は同じGUI/pipelineを
+異なる実題材へ再利用できること。rights、creative acceptance、production、
+publicationは別gateである。
 
 ## 公開・実行境界
 
-doctorはprivate artifactのcopy/applyを認可しない。YMM4起動、render、音声・動画
-再生、rights、production、publication、upload、release、PR、merge、master
-integrationは未実施。actual transportはnamed recipientと別transfer authorityを要する。
+accepted cutのscript、voice、timing、subtitle、line break、real-media treatmentは
+closedのまま。YMM4 launch、新render、playback、private transfer、rights、
+production、publication、upload、release、PR、merge、master mutationは未実施。

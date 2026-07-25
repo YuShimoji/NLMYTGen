@@ -16,7 +16,7 @@ GUI_LOCK = REPO_ROOT / "gui/package-lock.json"
 
 EXPECTED_MANIFEST_HASHES = {
     "pyproject.toml": "7b9ce97035187e00e396c50aa5d79862fce06c0404cc272435f93136b1efd51d",
-    "gui/package.json": "a180ad8bbbba3a28e72576181259510bb42e119dd920f8995056936ffab251a2",
+    "gui/package.json": "1c0661a1dddeaa58d0b93f143087f1484f22ec4d5b8c43596a7c20b3c4ecc474",
 }
 EXPECTED_ACCEPTED_AUTHORITY_HASHES = {
     (
@@ -100,15 +100,15 @@ def test_python_lock_has_no_private_or_machine_local_dependency_source() -> None
     assert not re.search(r"https?://[^/\s:@]+:[^/\s@]+@", source)
 
 
-def test_gui_lock_matches_manifest_and_pins_electron_35_7_5() -> None:
+def test_gui_lock_matches_manifest_and_pins_current_electron_43_2_0() -> None:
     manifest = json.loads(GUI_MANIFEST.read_text(encoding="utf-8"))
     lock = json.loads(GUI_LOCK.read_text(encoding="utf-8"))
     packages = lock["packages"]
 
     assert lock["lockfileVersion"] == 3
     assert packages[""]["devDependencies"] == manifest["devDependencies"]
-    assert manifest["devDependencies"]["electron"] == "^35.0.0"
-    assert packages["node_modules/electron"]["version"] == "35.7.5"
+    assert manifest["devDependencies"]["electron"] == "^43.2.0"
+    assert packages["node_modules/electron"]["version"] == "43.2.0"
 
 
 def test_gui_lock_has_only_public_https_dependency_sources() -> None:

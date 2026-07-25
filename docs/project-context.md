@@ -1,63 +1,59 @@
 # Project Context — NLMYTGen
 
-## 現在の監修AIハンドオフ（2026-07-25 JST・runtime doctor / private ingest）
+## 現在の監修AIハンドオフ（2026-07-25 JST・標準自動制作ループGUI）
 
-この節だけが現在の再開地点である。accepted cut、creative locks、Electron 43
-candidate、35.7.5 rollback、canonical Regression Integrityを維持し、別端末の
-consumer readinessをlive evidenceで判定できる状態へ進めた。
+この節だけが現在の再開地点である。accepted cut、creative locks、Electron 43、
+35.7.5 rollback、runtime doctorを維持し、CLI中心だったepisode operationを
+Electronの既定経路へ接続した。
 
-- **取得先 / exact base**:
-  `codex/nlmytgen-electron-43-compatibility-v1`の
-  `21194b60f6824eaedaddacf05bb920e1a324936a`。source upstream `0/0`、
-  tracked clean、target不存在を確認して
-  `codex/nlmytgen-runtime-doctor-private-ingest-v1`を作成した。
-- **before → after**: runtime capability、accepted identity、private artifactのlive
-  availabilityが複数文書と端末前提へ分散していた。現在は
-  `uv run python -m src.cli.main doctor-runtime --profile all --deep --format json`
-  がschema `nlmytgen.runtime_doctor_result.v1`でcode/review/render/regenerateを
-  独立分類する。receiptだけでlive availabilityをpassにしない。
-- **current Thank terminal**: exact Electron 43.2.0、hidden/silent smoke、YMM4
-  4.54.0.1 discovery、ffmpeg/ffprobe、.NET、source/generated YMM4、accepted MP4、
-  real-media 9 assetをlive readbackした。全12 artifactはexpected SHA-256 exact。
-  outcome commit後のtracked-clean状態で4 profileすべてreadyとなる。
-- **tracked-only checkout**: short Windows pathへstaged treeだけをmaterializeし、
-  `uv sync --extra dev --locked`と`npm --prefix gui ci`を実行した。Electron
-  43.2.0をexact readbackし、deep doctorの`code`はready。private artifactは全12件
-  `receipt_only_no_live_file`で、review/render/regenerateだけがunavailableになった。
-- **private ingest contract**: accepted new-banknote setのsource project、generated
-  project、accepted MP4、nine real-media sourcesをartifact ID、hash、bundle-relative
-  source、repo-relative destination、consumer profile、rights、lineageへ結合した。
-  validation-only、copy/apply/overwrite falseで、private absolute pathを含まない。
-- **negative fixtures**: empty staging rootは全12件receipt-only /
-  `ingest_ready=false`。declared MP4 locatorへ置いた空のsynthetic fileは
-  `present_hash_mismatch`で、`--require-profile review`はexit 1。fixtureは回収し、
-  private bytesのcopy、rename、replacement、delete、archive extractionは行っていない。
-- **Electron / media safety**: doctorは既存のreal main/renderer/preload smokeを再利用し、
-  hidden、silent、mute switch、cleanup passを確認した。YMM4はProductVersion読取だけ、
-  accepted MP4はffprobe metadataだけで、window表示、YMM4 launch、render、playback、
-  system-volume変更、public networkはない。
-- **identity preservation**: Electron 43.2.0 npm lock、`uv.lock`、accepted-cut receipt /
-  manifest / provenance / protected inputsは不変。Electron 35.7.5とcommit
-  `2e11987ff0732d21df4a5da83d1ea557614991ac`はexact rollback checkpointのまま。
-  speech、wording/order、cue/subtitle timing、line breaks、visual treatmentはclosed。
-- **verification**: doctor/ingest tests 17件とElectron contract 6件はpass。
-  dependency authorityの現行適用可能な5件もpass。state sync、JSON/Markdown parse、
-  `git diff --check`、Git three-surface integrityをcloseoutし、outcome commit後に
-  canonical Regression Integrityを一度だけ実行してfailure/error 0を確認する。
-- **next decision**: destination terminalでdoctorを実行しconsumerを選ぶ。private
-  deliveryを選ぶ場合はnamed recipientと別transfer authorityを確定してからstaging
-  rootをvalidation-onlyで検査する。選ばない場合はstandard production-loop GUIを
-  独立feature sliceとして開始する。
-- **unperformed / debt**: actual cross-terminal transport、rights clearance、
-  production、publication、upload、release、YMM4 launch、render、media playback、
-  PR、merge、master integrationは未実施。これらはdoctor readinessと独立gateである。
+- **取得先 / exact base**: source
+  `codex/nlmytgen-runtime-doctor-private-ingest-v1`の
+  `55507cb6f8940152f6ffae132186bcbcc0a700b0`、upstream `0/0`、tracked cleanを
+  確認して`codex/nlmytgen-standard-production-loop-gui-v1`を作成した。
+- **before → after**: operatorはmanifest、doctor、dry-run、render command、output
+  receiptのCLIとpathを個別に知る必要があった。現在の既定`自動動画生成`surfaceは
+  episode → runtime → content → run → resultの順で実bridgeへ接続する。旧CSV /
+  production / review / scoring tabsは変更せず副次道具として残る。
+- **manifest / readiness**: accepted real manifestを直接読込でき、repo内JSONをsafe
+  dialogから選べる。11 content locksとsource projectの計12点をhash検証する。
+  actual deep doctorがcode/review/render/regenerateを独立分類し、private-absentや
+  mismatchをreceiptからreadyへ昇格しない。
+- **execution**: accepted manifestの実`build-episode-video --dry-run`はpass。
+  最終生成はactual `--render --resume` command構築とIPC dispatchをdeterministic
+  child-process test doubleで確認し、YMM4とrendererは起動していない。one-active-job、
+  240-line log、success/failure/cancel、exact child PID tree取消を実装した。
+- **result / identity**: missing、unverified、unaccepted、stale/mismatch、
+  accepted-exactを区別する。現accepted MP4 `423553...a476`とgenerated project
+  `244c05...2611`はhuman acceptanceへexact。autoplayもpreviewも無い。
+- **actual Electron inspection**: Electron 43.2.0のreal main/renderer/preloadを
+  hidden/offscreen、silentで1280x720と1920x1080に実行した。first viewportに
+  selected episode、readiness、primary actionがあり、横overflowなし。実dry-run、
+  render test double、active/cancelled、accepted output、console/preload/security/
+  uncaught errorなしを確認した。
+- **functional states**: manifest summary testsでexact/missing/mismatchとstale
+  acceptanceを区別した。runtime doctor testsはtracked-only/private-absentとhash
+  mismatchを維持する。long Windows pathと長い日本語errorはsanitize/boundし、
+  project-owned child以外はcancel APIへ渡さない。
+- **visual boundary**: Taste / `redesign-existing-projects` skillは不在で、取得せず、
+  auditにも使用していない。SVG、generated image、hero、three-card/card-grid、
+  pill collection、gradient、新font、marketing copy、別design directionは無い。
+- **verification before outcome commit**: JS contract 6 pass。GUI/IPC、Electron 43、
+  doctor/private ingest、dependency authorityのPython 37 pass。既存actual Electron
+  compatibility smoke pass。standard-loop smokeは実manifest/protected inputs
+  12/12 exact、実dry-run、2解像度、render test double、owned cancellationをpass。
+  outcome commit後にcanonical Regression Integrityを一度だけ実行する。
+- **next product proof**: 第2の実トピックにapproved inputsとmanifestを用意し、
+  同じGUIでdoctor → dry-run → internal review run → receiptまで通す。GUI polishや
+  accepted new-banknoteの再reviewは次gateではない。
+- **unperformed**: YMM4 launch、新render、playback、system volume変更、private
+  transfer、rights、production、publication、upload、release、PR、merge、master
+  integrationは未実施。
 - **preservation**: `.playwright-mcp/`、`artifacts/`、
-  `phase-e-01-contact-acquired*.png`、`.venv/`、`gui/node_modules/`、private media、
-  YMM4 projects、browser profiles、frames、run archivesをstage・削除・変更していない。
-- **詳細正本**:
-  `docs/verification/RUNTIME_DOCTOR_PRIVATE_INGEST_2026-07-25.md`。
-  通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
-  `docs/runtime-state.md`だけを読む。
+  `phase-e-01-contact-acquired*.png`、`.venv/`、`gui/node_modules/`、accepted
+  MP4、source/generated YMM4、private media、frames、run archivesをstage・変更・
+  削除していない。
+- **通常再開**: `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md`。GUI起動は`npm --prefix gui start`。
 
 ## 直前の監修AIハンドオフ（2026-07-25 JST・portable dependency lock authority）
 

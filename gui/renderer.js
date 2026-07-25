@@ -16,9 +16,12 @@ function switchMainTab(tabName, { alignWizard = true } = {}) {
     s.classList.toggle('active', s.id === `tab-${tabName}`);
   });
   const reviewWorkbenchOn = tabName === 'review';
+  const standardLoopOn = tabName === 'standard';
   document.body.classList.toggle('review-workbench-active', reviewWorkbenchOn);
+  document.body.classList.toggle('standard-loop-active', standardLoopOn);
   document.querySelector('.body-content')?.classList.toggle('review-workbench-active', reviewWorkbenchOn);
-  if (tabName === 'scoring' || tabName === 'review') {
+  document.querySelector('.body-content')?.classList.toggle('standard-loop-active', standardLoopOn);
+  if (tabName === 'scoring' || tabName === 'review' || tabName === 'standard') {
     clearWizardMainFocus();
   }
   if (alignWizard) {
@@ -33,6 +36,295 @@ function switchMainTab(tabName, { alignWizard = true } = {}) {
 document.querySelectorAll('.tab').forEach((btn) => {
   btn.addEventListener('click', () => switchMainTab(btn.dataset.tab));
 });
+
+// --- 標準自動制作ループ ---
+const STANDARD_LOOP_LOG_LIMIT = 240;
+const standardLoopState = {
+  summary: null,
+  profiles: [],
+  dryRunPassed: false,
+  activeJobId: null,
+  active: false,
+  startedAt: null,
+  currentStage: '',
+  elapsedTimer: null,
+  logLines: [],
+};
+
+function standardSafeText(value) {
+  return String(value || '')
+    .replace(/[A-Za-z]:\\Users\\[^\\\s]+/g, '<user-home>')
+    .slice(0, 12000);
+}
+
+function standardOutputLabel(status) {
+  const labels = {
+    absent: '出力なし',
+    present_unverified: '出力あり・未検証',
+    generated_unaccepted: '生成済み・人の採用判断前',
+    stale_or_mismatch: '出力と採用記録が不一致',
+    accepted_exact: '採用済み出力と完全一致',
+    invalid: '出力設定エラー',
+  };
+  return labels[status] || status || '未確認';
+}
+
+function renderStandardManifest(summary) {
+  standardLoopState.summary = summary?.ok ? summary : null;
+  standardLoopState.dryRunPassed = false;
+  const pathEl = document.getElementById('standard-manifest-path');
+  const facts = document.getElementById('standard-episode-summary');
+  const protectedSummary = document.getElementById('standard-protected-summary');
+  const protectedDetails = document.getElementById('standard-protected-details');
+  const resultSummary = document.getElementById('standard-result-summary');
+  const resultDetails = document.getElementById('standard-result-details');
+  if (!summary?.ok) {
+    pathEl.textContent = summary?.canceled ? '選択を取り消しました' : standardSafeText(summary?.error || '読込失敗');
+    facts.innerHTML = '<div><dt>エピソード</dt><dd>読込失敗</dd></div>';
+    protectedSummary.textContent = '保護入力を確認できません。';
+    protectedDetails.textContent = standardSafeText(summary?.error || '—');
+    resultSummary.textContent = '生成結果を確認できません。';
+    resultDetails.textContent = '—';
+    refreshStandardActions();
+    return;
+  }
+  pathEl.textContent = summary.path;
+  facts.innerHTML = '';
+  const factRows = [
+    ['エピソード', summary.episode.id],
+    ['構成', `${summary.episode.cue_count} cues / ${summary.episode.scene_count} scenes / ${summary.episode.speaker_count} speakers`],
+    ['出力', `${summary.episode.render.width}×${summary.episode.render.height} / ${summary.episode.render.fps} fps / 内部レビュー`],
+  ];
+  for (const [term, value] of factRows) {
+    const row = document.createElement('div');
+    const dt = document.createElement('dt');
+    const dd = document.createElement('dd');
+    dt.textContent = term;
+    dd.textContent = value;
+    row.append(dt, dd);
+    facts.append(row);
+  }
+  const protectedInputs = summary.protected_inputs;
+  protectedSummary.textContent = protectedInputs.status === 'exact'
+    ? `保護入力 ${protectedInputs.exact_count}/${protectedInputs.total_count} 件が完全一致しています。`
+    : `保護入力に不足または不一致があります（完全一致 ${protectedInputs.exact_count}/${protectedInputs.total_count} 件）。`;
+  protectedDetails.textContent = protectedInputs.items.map((item) => (
+    `${item.status.toUpperCase()}  ${item.path}`
+  )).join('\n');
+  resultSummary.textContent = standardOutputLabel(summary.output.status);
+  resultDetails.textContent = [
+    `run: ${summary.output.run_id || '—'}`,
+    `output: ${summary.output.run_path || '—'}`,
+    `generated project: ${summary.output.project_exists ? '存在' : 'なし'} / ${summary.output.project_path || '—'}`,
+    `MP4: ${summary.output.media_exists ? '存在' : 'なし'} / ${summary.output.media_path || '—'}`,
+    `validation receipt: ${summary.output.pipeline_receipt_exists ? (summary.output.pipeline_status || '存在') : 'なし'} / ${summary.output.pipeline_receipt_path || '—'}`,
+    `boundary: internal review only / rights・publication・upload は未承認`,
+  ].join('\n');
+  document.getElementById('btn-standard-open-output').disabled = !summary.output.run_path;
+  document.getElementById('btn-standard-open-receipt').disabled = !summary.output.pipeline_receipt_exists;
+  refreshStandardActions();
+}
+
+function renderStandardProfiles(result) {
+  standardLoopState.profiles = result?.profiles || [];
+  const list = document.getElementById('standard-profile-list');
+  list.innerHTML = '';
+  for (const profile of standardLoopState.profiles) {
+    const item = document.createElement('li');
+    item.dataset.state = profile.state;
+    const state = profile.state === 'ready' ? '準備完了'
+      : (profile.state === 'unavailable' ? `利用不可: ${profile.next_action}` : '未確認');
+    item.textContent = `${profile.name}: ${state}`;
+    list.append(item);
+  }
+  const readyCount = standardLoopState.profiles.filter((profile) => profile.state === 'ready').length;
+  const summary = document.getElementById('standard-readiness-summary');
+  if (result?.code === 0 && readyCount === 4) {
+    summary.textContent = '4/4 プロファイル準備完了';
+    summary.dataset.state = 'ready';
+  } else {
+    summary.textContent = result?.code == null
+      ? '確認失敗'
+      : `${readyCount}/4 プロファイル準備完了`;
+    summary.dataset.state = 'failed';
+  }
+  refreshStandardActions();
+}
+
+function appendStandardLog(lines) {
+  for (const line of lines || []) standardLoopState.logLines.push(standardSafeText(line));
+  if (standardLoopState.logLines.length > STANDARD_LOOP_LOG_LIMIT) {
+    standardLoopState.logLines.splice(0, standardLoopState.logLines.length - STANDARD_LOOP_LOG_LIMIT);
+  }
+  document.getElementById('standard-job-log').textContent = standardLoopState.logLines.join('\n') || 'ログはまだありません。';
+}
+
+function renderStandardElapsedStatus() {
+  if (!standardLoopState.active || !standardLoopState.startedAt) return;
+  const elapsed = Math.max(0, Math.floor((Date.now() - standardLoopState.startedAt) / 1000));
+  const minutes = String(Math.floor(elapsed / 60)).padStart(2, '0');
+  const seconds = String(elapsed % 60).padStart(2, '0');
+  const stage = standardLoopState.currentStage ? ` · ${standardLoopState.currentStage}` : '';
+  document.getElementById('standard-job-status').textContent = `実行中 ${minutes}:${seconds}${stage}`;
+}
+
+function startStandardElapsedTimer(startedAt) {
+  if (standardLoopState.elapsedTimer) clearInterval(standardLoopState.elapsedTimer);
+  standardLoopState.startedAt = Number.isFinite(Date.parse(startedAt))
+    ? Date.parse(startedAt)
+    : Date.now();
+  renderStandardElapsedStatus();
+  standardLoopState.elapsedTimer = setInterval(renderStandardElapsedStatus, 1000);
+}
+
+function stopStandardElapsedTimer() {
+  if (standardLoopState.elapsedTimer) clearInterval(standardLoopState.elapsedTimer);
+  standardLoopState.elapsedTimer = null;
+  standardLoopState.startedAt = null;
+  standardLoopState.currentStage = '';
+}
+
+function standardRegenerateReady() {
+  return standardLoopState.profiles.some((profile) => profile.name === 'regenerate' && profile.state === 'ready');
+}
+
+function refreshStandardActions() {
+  const hasExactInputs = standardLoopState.summary?.protected_inputs?.status === 'exact';
+  const dryRunButton = document.getElementById('btn-standard-dry-run');
+  const startButton = document.getElementById('btn-standard-start');
+  const cancelButton = document.getElementById('btn-standard-cancel');
+  if (!dryRunButton || !startButton || !cancelButton) return;
+  dryRunButton.disabled = !hasExactInputs || standardLoopState.active;
+  startButton.disabled = !(
+    hasExactInputs
+    && standardRegenerateReady()
+    && standardLoopState.dryRunPassed
+    && !standardLoopState.active
+  );
+  cancelButton.disabled = !standardLoopState.active;
+  startButton.textContent = standardLoopState.summary?.output?.status === 'accepted_exact'
+    ? '採用済み出力を検証・再開'
+    : '内部レビュー動画を生成';
+}
+
+async function standardLoadAcceptedManifest() {
+  document.getElementById('standard-manifest-path').textContent = '採用済みエピソードを確認中…';
+  renderStandardManifest(await window.nlmytgen.standardLoopAcceptedManifest());
+}
+
+async function standardRunDoctor() {
+  const status = document.getElementById('standard-readiness-summary');
+  status.textContent = '確認中…';
+  const result = await window.nlmytgen.standardLoopDoctor();
+  renderStandardProfiles(result);
+  if (!result.json) appendStandardLog([`実行環境確認エラー: ${result.stderr || result.stdout || 'JSON output missing'}`]);
+}
+
+async function standardDryRun() {
+  if (!standardLoopState.summary) return;
+  const status = document.getElementById('standard-dry-run-status');
+  status.textContent = '工程を確認中…';
+  document.getElementById('btn-standard-dry-run').disabled = true;
+  const result = await window.nlmytgen.standardLoopDryRun(standardLoopState.summary.path);
+  standardLoopState.dryRunPassed = result.code === 0 && Boolean(result.json);
+  status.textContent = standardLoopState.dryRunPassed
+    ? '書き込みなしの工程確認に成功'
+    : '工程確認に失敗';
+  const dryRunText = result.json
+    ? JSON.stringify({
+      status: result.json.status,
+      stages: result.json.stages,
+      output: result.json.output,
+      boundaries: result.json.boundaries,
+    }, null, 2)
+    : (result.stderr || result.stdout || 'dry-run failed');
+  appendStandardLog([`[dry-run] ${standardSafeText(dryRunText)}`]);
+  refreshStandardActions();
+}
+
+async function standardStart() {
+  if (!standardLoopState.summary) return;
+  standardLoopState.logLines = [];
+  appendStandardLog(['内部レビュー用の生成コマンドを開始します。']);
+  const result = await window.nlmytgen.standardLoopStart({
+    manifestPath: standardLoopState.summary.path,
+    resume: standardLoopState.summary.output.status !== 'absent',
+  });
+  if (!result.ok) {
+    appendStandardLog([`開始失敗: ${result.error || 'unknown error'}`]);
+    document.getElementById('standard-job-status').textContent = '開始失敗';
+    standardLoopState.active = false;
+    refreshStandardActions();
+    return;
+  }
+  standardLoopState.activeJobId = result.job.id;
+  standardLoopState.active = true;
+  standardLoopState.currentStage = '生成コマンド';
+  startStandardElapsedTimer(result.job.started_at);
+  refreshStandardActions();
+}
+
+async function standardCancel() {
+  if (!standardLoopState.activeJobId) return;
+  document.getElementById('standard-job-status').textContent = '取消中';
+  const result = await window.nlmytgen.standardLoopCancel(standardLoopState.activeJobId);
+  if (!result.ok) appendStandardLog([`取消失敗: ${result.error}`]);
+}
+
+async function standardRefreshAfterJob() {
+  if (!standardLoopState.summary?.path) return;
+  renderStandardManifest(await window.nlmytgen.standardLoopLoadManifest(standardLoopState.summary.path));
+}
+
+function initStandardProductionLoop() {
+  document.getElementById('btn-standard-accepted-manifest').addEventListener('click', standardLoadAcceptedManifest);
+  document.getElementById('btn-standard-select-manifest').addEventListener('click', async () => {
+    renderStandardManifest(await window.nlmytgen.standardLoopSelectManifest());
+  });
+  document.getElementById('btn-standard-doctor').addEventListener('click', standardRunDoctor);
+  document.getElementById('btn-standard-dry-run').addEventListener('click', standardDryRun);
+  document.getElementById('btn-standard-start').addEventListener('click', standardStart);
+  document.getElementById('btn-standard-cancel').addEventListener('click', standardCancel);
+  document.getElementById('btn-standard-open-output').addEventListener('click', () => {
+    const rel = standardLoopState.summary?.output?.run_path;
+    if (rel) window.nlmytgen.standardLoopOpenOutput(rel);
+  });
+  document.getElementById('btn-standard-open-receipt').addEventListener('click', () => {
+    const rel = standardLoopState.summary?.output?.pipeline_receipt_path;
+    if (rel) window.nlmytgen.standardLoopOpenOutput(rel);
+  });
+  window.nlmytgen.onStandardLoopJobEvent(async (event) => {
+    if (event.type === 'started') {
+      standardLoopState.active = true;
+      standardLoopState.activeJobId = event.id;
+      standardLoopState.currentStage = '生成コマンド';
+      startStandardElapsedTimer(event.started_at);
+      refreshStandardActions();
+    }
+    if (event.type === 'log') {
+      appendStandardLog(event.lines);
+      standardLoopState.currentStage = standardSafeText(event.lines?.at(-1) || '生成コマンド').slice(0, 54);
+      renderStandardElapsedStatus();
+    }
+    if (event.type === 'cancelling') document.getElementById('standard-job-status').textContent = '取消中';
+    if (event.type === 'finished') {
+      standardLoopState.active = false;
+      standardLoopState.activeJobId = null;
+      stopStandardElapsedTimer();
+      appendStandardLog(event.log_lines || []);
+      const labels = { completed: '完了', failed: '失敗', cancelled: '取り消し済み' };
+      document.getElementById('standard-job-status').textContent = labels[event.state] || event.state;
+      await standardRefreshAfterJob();
+      refreshStandardActions();
+    }
+  });
+  switchMainTab('standard', { alignWizard: false });
+  const mode = window.nlmytgen.runtimeMode || {};
+  if (!mode.electronCompatibility && !mode.standardLoopProbe) {
+    standardLoadAcceptedManifest();
+    standardRunDoctor();
+  }
+}
 
 // --- 制作ウィザード (1 本の動画向け導線) ---
 const WIZARD_HINTS = {
@@ -62,7 +354,8 @@ function refreshWizardMainContextStrip() {
   if (!strip || !body || !stepEl) return;
   const scoringOn = document.getElementById('tab-scoring')?.classList.contains('active');
   const reviewOn = document.getElementById('tab-review')?.classList.contains('active');
-  if (scoringOn || reviewOn) {
+  const standardOn = document.getElementById('tab-standard')?.classList.contains('active');
+  if (scoringOn || reviewOn || standardOn) {
     strip.classList.add('hidden');
     body.textContent = '';
     stepEl.textContent = '';
@@ -2895,6 +3188,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const settings = await window.nlmytgen.loadSettings();
   applySettings(settings);
   setWizardStep(currentWizardStep, { persist: false });
+  initStandardProductionLoop();
   document.getElementById('btn-wizard-scoring').addEventListener('click', () => {
     switchMainTab('scoring');
     document.getElementById('status').textContent = '品質診断: Packaging Brief を選んでスコア実行';

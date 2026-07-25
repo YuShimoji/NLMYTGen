@@ -204,7 +204,7 @@ async function run(win, observations) {
     electron_version_43_2_0: process.versions.electron === '43.2.0',
     registration_completed: registration === 'registered',
     renderer_document_complete: renderer.document_ready_state === 'complete',
-    renderer_content_present: renderer.body_text_length > 1000 && renderer.button_count > 0,
+    renderer_content_present: renderer.body_text_length > 300 && renderer.button_count > 0,
     preload_bridge_complete: renderer.missing_bridge_methods.length === 0,
     main_to_renderer_message_received: renderer.main_message?.token === token,
     open_dialog_request_shape_valid: (

@@ -10,7 +10,8 @@
   <header>
     <h1>NLMYTGen</h1>
     <nav>
-      <button class="tab active" data-tab="csv">CSV 変換</button>
+      <button class="tab active" data-tab="standard">自動動画生成</button>
+      <button class="tab" data-tab="csv">CSV 変換</button>
       <button class="tab" data-tab="production">演出適用</button>
       <button class="tab" data-tab="review">デザインレビュー</button>
       <button class="tab" data-tab="scoring">品質診断</button>
@@ -59,8 +60,80 @@
       <p id="wizard-main-context-body" class="wizard-main-context-body"></p>
     </div>
     <div class="main-tab-scroll">
+    <!-- 標準自動制作ループ -->
+    <section id="tab-standard" class="tab-content active" aria-labelledby="standard-loop-title">
+      <div class="standard-loop">
+        <div class="standard-loop-heading">
+          <h2 id="standard-loop-title">自動動画生成</h2>
+          <p>エピソードを選び、実行環境と保護入力を確認して、内部レビュー用の生成工程を進めます。</p>
+        </div>
+
+        <section class="standard-step" id="standard-step-episode">
+          <h3><span aria-hidden="true">1.</span> エピソード</h3>
+          <div class="standard-control-row">
+            <button type="button" id="btn-standard-accepted-manifest">採用済みエピソードを読み込む</button>
+            <button type="button" id="btn-standard-select-manifest">別のマニフェストを選択</button>
+          </div>
+          <p id="standard-manifest-path" class="standard-path">未選択</p>
+          <dl id="standard-episode-summary" class="standard-facts">
+            <div><dt>エピソード</dt><dd>未読込</dd></div>
+            <div><dt>構成</dt><dd>—</dd></div>
+            <div><dt>出力</dt><dd>—</dd></div>
+          </dl>
+        </section>
+
+        <section class="standard-step" id="standard-step-runtime">
+          <h3><span aria-hidden="true">2.</span> 実行環境</h3>
+          <div class="standard-control-row">
+            <button type="button" id="btn-standard-doctor">実行環境を確認</button>
+            <span id="standard-readiness-summary" role="status">未確認</span>
+          </div>
+          <ul id="standard-profile-list" class="standard-status-list" aria-label="実行環境プロファイル">
+            <li>code: 未確認</li>
+            <li>review: 未確認</li>
+            <li>render: 未確認</li>
+            <li>regenerate: 未確認</li>
+          </ul>
+        </section>
+
+        <section class="standard-step" id="standard-step-content">
+          <h3><span aria-hidden="true">3.</span> 生成内容</h3>
+          <p id="standard-protected-summary">保護入力は未確認です。</p>
+          <details>
+            <summary>保護入力と境界を表示</summary>
+            <pre id="standard-protected-details" class="standard-log">—</pre>
+          </details>
+          <div class="standard-control-row">
+            <button type="button" id="btn-standard-dry-run" disabled>書き込みなしで工程を確認</button>
+            <span id="standard-dry-run-status">未実行</span>
+          </div>
+        </section>
+
+        <section class="standard-step" id="standard-step-run">
+          <h3><span aria-hidden="true">4.</span> 実行</h3>
+          <p class="standard-boundary">実行対象は内部レビュー用です。公開・外部アップロード・権利承認は別の判断です。</p>
+          <div class="standard-control-row">
+            <button type="button" id="btn-standard-start" class="primary" disabled>内部レビュー動画を生成</button>
+            <button type="button" id="btn-standard-cancel" disabled>実行を取り消す</button>
+            <span id="standard-job-status" role="status">待機中</span>
+          </div>
+          <pre id="standard-job-log" class="standard-log" aria-label="生成ログ">ログはまだありません。</pre>
+        </section>
+
+        <section class="standard-step" id="standard-step-result">
+          <h3><span aria-hidden="true">5.</span> 結果</h3>
+          <p id="standard-result-summary">生成結果は未確認です。</p>
+          <div class="standard-control-row">
+            <button type="button" id="btn-standard-open-output" disabled>出力フォルダを開く</button>
+            <button type="button" id="btn-standard-open-receipt" disabled>検証結果を開く</button>
+          </div>
+          <pre id="standard-result-details" class="standard-log">—</pre>
+        </section>
+      </div>
+    </section>
+
     <!-- CSV 変換タブ -->
-    <section id="tab-csv" class="tab-content active">
+    <section id="tab-csv" class="tab-content">
       <div id="wizard-anchor-csv-input" class="wizard-step-anchor">
       <div id="drop-zone" class="drop-zone">
         <p>台本 .txt をここにドラッグ&ドロップ</p>
