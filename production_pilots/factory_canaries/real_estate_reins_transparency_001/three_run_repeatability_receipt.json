@@ -1,0 +1,383 @@
+{
+  "schema": "nlmytgen.three_run_operator_repeatability_receipt.v1",
+  "schema_version": "1.0",
+  "status": "passed",
+  "validated_at": "2026-07-26 JST",
+  "project_state_id": "nlmytgen-three-run-operator-repeatability-validated-v1",
+  "implementation": {
+    "source_base_commit": "da88ad52d9157da9be3d40a56567d80a1b9f025b",
+    "timeout_and_resume_checkpoint_commit": "547ae7f8a94a47a69960e5a6251e19e2e7a3157c",
+    "decisive_checkpoint_commit": "2d5c4f34c8b88070075a2678a08d9a72fafa9f31",
+    "final_outcome_commit": {
+      "value": null,
+      "resolution_policy": "resolve as the Git commit containing this receipt"
+    },
+    "tracked_worktree_clean_at_each_decisive_dispatch": true,
+    "electron_version": "43.2.0",
+    "yymm4_version": "4.54.0.1",
+    "development_audio_policy": "silent_by_default"
+  },
+  "causal_repair": {
+    "attempt_1_timeout": {
+      "run_id": "real_estate_reins_repeatability_02",
+      "last_completed_pipeline_stage": "YMM4 project generation/readback",
+      "classification": "outer GUI observer expired before the inner pipeline and render-driver timeout ownership was observable",
+      "repair": "derive render, cleanup, pipeline, and observer deadlines from the manifest timeout and contain the owned process tree in a Windows Job Object"
+    },
+    "v2_save_dialog_failure": {
+      "run_id": "real_estate_reins_repeatability_v2_01",
+      "source_commit": "547ae7f8a94a47a69960e5a6251e19e2e7a3157c",
+      "failed_stage": "yymm4_render",
+      "driver_stage": "wait_render_file",
+      "classification": "the native Save dialog name search selected the tree item named 保存したゲーム instead of the enabled 保存 button",
+      "repair": "target the filename edit and Save button by AutomationId plus control type",
+      "failure_receipt_sha256": "4df3d2341a48372448ed3adeced857fe9dcf1f64f9a5b51192f26098cce69850",
+      "job_object_assigned": true,
+      "cleanup_verified": true,
+      "residual_count": 0,
+      "cleanup_seconds": 0.252606
+    },
+    "timeout_contract": {
+      "schema": "nlmytgen.render_timeout_contract.v1",
+      "authority": "manifest.render_settings.timeout_seconds",
+      "render_timeout_seconds": 1200,
+      "cleanup_grace_seconds": 60,
+      "pipeline_timeout_seconds": 1260,
+      "observer_grace_seconds": 30,
+      "observer_timeout_seconds": 1290
+    },
+    "synthetic_containment": {
+      "status": "passed",
+      "fixture": "project-owned child and grandchild process tree",
+      "owned_tree_terminated": true,
+      "residual_count": 0,
+      "unrelated_process_preserved": true
+    }
+  },
+  "preserved_diagnostic_series": [
+    {
+      "namespace": "attempt-1",
+      "run_ids": [
+        "real_estate_reins_repeatability_01",
+        "real_estate_reins_repeatability_02"
+      ],
+      "result": "one successful run plus one incomplete timed-out run",
+      "artifacts_preserved": true
+    },
+    {
+      "namespace": "v2",
+      "run_ids": [
+        "real_estate_reins_repeatability_v2_01"
+      ],
+      "result": "failed diagnostic run exposing ambiguous Save-dialog targeting",
+      "artifacts_preserved": true
+    }
+  ],
+  "final_successful_series": {
+    "namespace": "v3",
+    "uninterrupted": true,
+    "checkpoint_commit": "2d5c4f34c8b88070075a2678a08d9a72fafa9f31",
+    "run_count": 3,
+    "common_contract": {
+      "normal_electron_gui_path": true,
+      "runtime_doctor_profiles": {
+        "code": "ready",
+        "review": "ready",
+        "render": "ready",
+        "regenerate": "ready"
+      },
+      "protected_inputs": "9/9 exact",
+      "write_free_dry_run": "passed",
+      "readiness_bypass": false,
+      "render_test_double": false,
+      "manual_intervention_count": 0,
+      "computer_use_count": 0,
+      "sendkeys_count": 0,
+      "keyboard_mouse_injection_count": 0,
+      "system_volume_operation_count": 0,
+      "preview_playback_count": 0,
+      "warning_count": 0,
+      "error_count": 0
+    },
+    "runs": [
+      {
+        "run_id": "real_estate_reins_repeatability_v3_01",
+        "pipeline_status": "passed",
+        "gui_status": "passed",
+        "render_status": "passed",
+        "media_validation_status": "passed",
+        "source_commit": "2d5c4f34c8b88070075a2678a08d9a72fafa9f31",
+        "content_identity_sha256": "15375b3a9265269776e0c35e5f3104025fa5857155f4888ab75e9e43b3d45c06",
+        "generated_project_raw_sha256": "ac50673d4aacc08f50df7aa9e72ee56457648bb9f8d8c2f11039fd2069afdfcc",
+        "generated_project_normalized_structural_sha256": "6211ca91e0db06d54ef15d1f40cc53a18722aafd457385c253483d2a790dd3cf",
+        "internal_review_mp4_sha256": "4c99feed4e487743e5243074c3eca6aad51a7b16392f7f405ce158f038cb5c75",
+        "internal_review_mp4_size_bytes": 57508191,
+        "render_intermediate_sha256": "6790e3f29279e64dd266f776956d278d5d65b8f090eb923252bc73767fe7ccf6",
+        "real_media_manifest_semantic_sha256": "c5165a0f615189a1a870a667a768560fc691d6a740ef0e87744f4f522386a8f9",
+        "cue_readback_semantic_sha256": "bb5fa4b7c5c408965b92794ee88e80fdc43fb85dfab1926c2f6290eccd92a196",
+        "pipeline_receipt_sha256": "cf7dd29c1c5b5e3f28812ba594fac2c1420fea18df7954581b7262681ecd1968",
+        "gui_receipt_sha256": "6988c92df511890cc01c5190cddfb9750d2d36205f4388f080729c5828a340c8",
+        "stage_timings_seconds": {
+          "preflight": 0.132827,
+          "content_identity": 0.03274,
+          "media_materialization": 2.043761,
+          "yymm4_project": 0.289505,
+          "cue_readback": 0.029146,
+          "yymm4_render": 212.934911,
+          "cleanup": 0.013341,
+          "normalization": 0.705392,
+          "media_validation": 9.178687,
+          "receipt_generation": 0.000827,
+          "total": 226.260147
+        },
+        "gui_timings_seconds": {
+          "doctor": 10.7255,
+          "dry_run": 0.9942,
+          "render_job": 226.7703,
+          "workflow_total": 239.1471
+        },
+        "owned_process_counts_before": 0,
+        "owned_process_counts_after": 0,
+        "cleanup_verified": true
+      },
+      {
+        "run_id": "real_estate_reins_repeatability_v3_02",
+        "pipeline_status": "passed",
+        "gui_status": "passed",
+        "render_status": "passed",
+        "media_validation_status": "passed",
+        "source_commit": "2d5c4f34c8b88070075a2678a08d9a72fafa9f31",
+        "content_identity_sha256": "15375b3a9265269776e0c35e5f3104025fa5857155f4888ab75e9e43b3d45c06",
+        "generated_project_raw_sha256": "fab4d0efc76ef8978c83dc4d996295cf7f767c8242eb195e95ce1d75179aa6b7",
+        "generated_project_normalized_structural_sha256": "6211ca91e0db06d54ef15d1f40cc53a18722aafd457385c253483d2a790dd3cf",
+        "internal_review_mp4_sha256": "4c99feed4e487743e5243074c3eca6aad51a7b16392f7f405ce158f038cb5c75",
+        "internal_review_mp4_size_bytes": 57508191,
+        "render_intermediate_sha256": "6790e3f29279e64dd266f776956d278d5d65b8f090eb923252bc73767fe7ccf6",
+        "real_media_manifest_semantic_sha256": "c5165a0f615189a1a870a667a768560fc691d6a740ef0e87744f4f522386a8f9",
+        "cue_readback_semantic_sha256": "bb5fa4b7c5c408965b92794ee88e80fdc43fb85dfab1926c2f6290eccd92a196",
+        "pipeline_receipt_sha256": "d9238e56164ed4bd24067407bbc202d9b1c62907b5ca37055bf747f978beeacd",
+        "gui_receipt_sha256": "718f5397a7458c79d7d4a40349a9942b4812358772f19c45eb5aa502c2be2794",
+        "stage_timings_seconds": {
+          "preflight": 0.065295,
+          "content_identity": 0.021861,
+          "media_materialization": 1.159186,
+          "yymm4_project": 0.233171,
+          "cue_readback": 0.019497,
+          "yymm4_render": 127.642074,
+          "cleanup": 0.014905,
+          "normalization": 0.538451,
+          "media_validation": 7.30205,
+          "receipt_generation": 0.000606,
+          "total": 137.568453
+        },
+        "gui_timings_seconds": {
+          "doctor": 6.0429,
+          "dry_run": 0.5532,
+          "render_job": 137.9744,
+          "workflow_total": 145.1584
+        },
+        "owned_process_counts_before": 0,
+        "owned_process_counts_after": 0,
+        "cleanup_verified": true
+      },
+      {
+        "run_id": "real_estate_reins_repeatability_v3_03",
+        "pipeline_status": "passed",
+        "gui_status": "passed",
+        "render_status": "passed",
+        "media_validation_status": "passed",
+        "source_commit": "2d5c4f34c8b88070075a2678a08d9a72fafa9f31",
+        "content_identity_sha256": "15375b3a9265269776e0c35e5f3104025fa5857155f4888ab75e9e43b3d45c06",
+        "generated_project_raw_sha256": "f4df9497c6bd727014ef5a9088da4e59d9fce2ff4ad31629853f3a3f80598eed",
+        "generated_project_normalized_structural_sha256": "6211ca91e0db06d54ef15d1f40cc53a18722aafd457385c253483d2a790dd3cf",
+        "internal_review_mp4_sha256": "4c99feed4e487743e5243074c3eca6aad51a7b16392f7f405ce158f038cb5c75",
+        "internal_review_mp4_size_bytes": 57508191,
+        "render_intermediate_sha256": "6790e3f29279e64dd266f776956d278d5d65b8f090eb923252bc73767fe7ccf6",
+        "real_media_manifest_semantic_sha256": "c5165a0f615189a1a870a667a768560fc691d6a740ef0e87744f4f522386a8f9",
+        "cue_readback_semantic_sha256": "bb5fa4b7c5c408965b92794ee88e80fdc43fb85dfab1926c2f6290eccd92a196",
+        "pipeline_receipt_sha256": "aa208d1c3471ed6a5b54e95234b10dcc10860ba8abc8bfbf5bb822ef7de60957",
+        "gui_receipt_sha256": "8a2633fcd4fb77df5df03664561afccd8444655692fb2b45d938af8c0a97b2fc",
+        "stage_timings_seconds": {
+          "preflight": 0.052061,
+          "content_identity": 0.021038,
+          "media_materialization": 1.172306,
+          "yymm4_project": 0.209933,
+          "cue_readback": 0.018197,
+          "yymm4_render": 153.711543,
+          "cleanup": 0.011336,
+          "normalization": 0.719824,
+          "media_validation": 7.474887,
+          "receipt_generation": 0.000639,
+          "total": 163.91662
+        },
+        "gui_timings_seconds": {
+          "doctor": 5.3326,
+          "dry_run": 0.475,
+          "render_job": 164.2416,
+          "workflow_total": 170.685
+        },
+        "owned_process_counts_before": 0,
+        "owned_process_counts_after": 0,
+        "cleanup_verified": true
+      }
+    ],
+    "project_shape": {
+      "voice_item_count": 7,
+      "image_item_count": 7,
+      "cue_count": 7,
+      "scene_count": 4,
+      "speaker_counts": {
+        "ゆっくり霊夢赤縁": 4,
+        "ゆっくり魔理沙黄縁": 3
+      },
+      "timeline_frames": 2725,
+      "fps": 60,
+      "exact_text_order": true,
+      "subtitle_and_source_identities_exact": true
+    },
+    "timing_summary_seconds": {
+      "preflight": {
+        "min": 0.052061,
+        "median": 0.065295,
+        "max": 0.132827
+      },
+      "content_identity": {
+        "min": 0.021038,
+        "median": 0.021861,
+        "max": 0.03274
+      },
+      "media_materialization": {
+        "min": 1.159186,
+        "median": 1.172306,
+        "max": 2.043761
+      },
+      "yymm4_project": {
+        "min": 0.209933,
+        "median": 0.233171,
+        "max": 0.289505
+      },
+      "cue_readback": {
+        "min": 0.018197,
+        "median": 0.019497,
+        "max": 0.029146
+      },
+      "yymm4_render": {
+        "min": 127.642074,
+        "median": 153.711543,
+        "max": 212.934911
+      },
+      "cleanup": {
+        "min": 0.011336,
+        "median": 0.013341,
+        "max": 0.014905
+      },
+      "normalization": {
+        "min": 0.538451,
+        "median": 0.705392,
+        "max": 0.719824
+      },
+      "media_validation": {
+        "min": 7.30205,
+        "median": 7.474887,
+        "max": 9.178687
+      },
+      "receipt_generation": {
+        "min": 0.000606,
+        "median": 0.000639,
+        "max": 0.000827
+      },
+      "total": {
+        "min": 137.568453,
+        "median": 163.91662,
+        "max": 226.260147
+      }
+    },
+    "semantic_determinism": {
+      "status": "passed",
+      "content_identity_sha256_identical": true,
+      "normalized_project_structural_sha256_identical": true,
+      "internal_review_mp4_sha256_identical": true,
+      "real_media_manifest_semantic_sha256_identical": true,
+      "cue_readback_semantic_sha256_identical": true,
+      "project_shape_identical": true,
+      "raw_project_sha256_identical": false,
+      "raw_project_difference": {
+        "classification": "run-local path only",
+        "run_id_occurrences_per_project": 8,
+        "replacement_normalized_text_sha256": "d7aeee07b07f06b797b618c9b2b0e18981533f58ef7963cf51cd788f3dad10cf",
+        "non_run_local_difference_count": 0
+      }
+    },
+    "residue": {
+      "electron": 0,
+      "python": 0,
+      "yymm4": 0,
+      "win32_service": 0,
+      "render_driver": 0,
+      "ffmpeg": 0,
+      "profile_process_locks": 0,
+      "profile_evidence_directories_retained": true
+    }
+  },
+  "completed_run_resume": {
+    "run_id": "real_estate_reins_repeatability_v3_03",
+    "normal_gui_path_status": "passed",
+    "gui_render_job_seconds": 1.4881,
+    "cli_observation_status": "verified_noop",
+    "cli_observation_seconds": 1.067912,
+    "validation_only": true,
+    "outputs_rewritten": false,
+    "yymm4_launched": false,
+    "render_driver_launched": false,
+    "artifact_identities_exact": true,
+    "canonical_file_count": 26,
+    "hash_size_mtime_mismatch_count": 0,
+    "prior_pipeline_receipt_sha256": "aa208d1c3471ed6a5b54e95234b10dcc10860ba8abc8bfbf5bb822ef7de60957",
+    "owned_process_counts_before": 0,
+    "owned_process_counts_after": 0,
+    "observation_storage": "append-only in this aggregate receipt; canonical run outputs were not rewritten"
+  },
+  "negative_validation": {
+    "status": "passed",
+    "fixture": "isolated temporary manifest and run directory",
+    "semantic_change": "render_settings.video_bitrate_kbps",
+    "expected_error_code": "resume_artifact_drift",
+    "observed_error_code": "resume_artifact_drift",
+    "real_or_private_output_mutated": false
+  },
+  "identity_preservation": {
+    "new_banknote": {
+      "source_project_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+      "generated_project_sha256": "244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611",
+      "accepted_mp4_sha256": "423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476",
+      "human_acceptance_receipt_sha256": "cd0b4f02fb54cb0b0dbf8625a5baed6db3952b0a7342257c5456d1426e23f4b8",
+      "all_live_exact": true
+    },
+    "prior_reins": {
+      "source_project_sha256": "ed2773ce87a41936dd82d16d666d253f8bdba8763fc11bfa829d4818cb1b3ec9",
+      "generated_project_sha256": "ea4bc001068cf0f398d428072b2b94a6b3b1f4beed5ba0efb2b04f0d040e4da8",
+      "internal_review_mp4_sha256": "4c99feed4e487743e5243074c3eca6aad51a7b16392f7f405ce158f038cb5c75",
+      "gui_receipt_sha256": "da9b0b0341c2cbed2865f8944cb564f4f44bf2c138f4e14d67e07a24f21fdee7",
+      "all_live_exact": true
+    }
+  },
+  "boundaries": {
+    "content_authority": "internal_factory_canary_not_human_accepted",
+    "human_creative_acceptance": false,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "release": false,
+    "pull_request": false,
+    "master_integration": false,
+    "third_topic_started": false
+  },
+  "overall": {
+    "operator_repeatability_and_resume_identity_proven": true,
+    "named_blocker_closed": "OPERATOR_REPEATABILITY_AND_RESUME_IDENTITY_UNPROVEN",
+    "product_gate": "third-topic-variation-validation",
+    "recommended_next": "run-third-real-topic-with-new-cue-scene-speaker-time-shape",
+    "status": "passed"
+  }
+}

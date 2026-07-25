@@ -1,116 +1,133 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: nlmytgen-second-real-topic-gui-render-validated-v1
-State-Revision: 2026-07-25.5
-Updated: 2026-07-25 JST
-Product-State: two-distinct-real-topics-through-one-gui-and-video-pipeline
-Product-Gate: third-topic-variation-or-three-run-operator-repeatability
-Recommended-Next: run-third-topic-with-new-input-shape-or-measure-three-consecutive-operator-runs
+Project-State-ID: nlmytgen-three-run-operator-repeatability-validated-v1
+State-Revision: 2026-07-26.1
+Updated: 2026-07-26 JST
+Product-State: two-topic-factory-with-clean-gui-zero-intervention-repeatability
+Product-Gate: third-topic-variation-validation
+Recommended-Next: run-third-real-topic-with-new-cue-scene-speaker-time-shape
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
-Handoff-Branch: codex/nlmytgen-second-real-topic-factory-v1
+Handoff-Branch: codex/nlmytgen-three-run-operator-repeatability-v1
 Handoff-PR: none
-Required-Base: 02e5464c0f7d0ce90a198e788a336cb201682e9b
+Required-Base: da88ad52d9157da9be3d40a56567d80a1b9f025b
+Implementation-Checkpoint: 2d5c4f34c8b88070075a2678a08d9a72fafa9f31
 Outcome-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 required after handoff push
 Tracked-Worktree: tracked clean required after handoff; ignored/private runs preserved
 
 ## Current Slice
 
-- 第2実トピック`REINSと不動産情報流通の仕組み`を、7 cues / 4 scenes /
-  Reimu 4・Marisa 3 / 2725 frames / 45.416秒のfactory canaryとして固定した。
-  new-banknoteの9 cues / 3 scenes / 3・6分布 / 4415 framesとは入力形状が異なる。
-- raw scriptとG-27 packetは発見・変換入力に限定した。発話事実は東日本
-  レインズ3 surfaceと国土交通省1 PDFの計4 official sourcesへ結合し、
-  factual cue 6件はすべてclaim/source edgeを持つ。unsupported spoken
-  factual unitは0。
-- tracked canary packageはcanonical script、canonical/derived CSV、source
-  claim registry、support edges、transformation ledger、real-media provenance、
-  episode manifest、technical receiptを持つ。source media、source YMMP、
-  render run、GUI probeは`auto_video_runs/`配下のignored local evidenceである。
-- YMM4 source projectは実YMM4のGUI行追加で生成した7 VoiceItemsを保持する。
-  bounded Windows UI Automation driverはspeaker combo、row add、output settings、
-  character-settings dialogをUIA patternだけで操作し、keyboard/mouse injectionを
-  使用しない。端末の現在キャラクター設定を保持する分岐を選び、rooted Tachie
-  pathだけをportable basenameへ変換する。
-- Electron 43.2.0の実main/renderer/preloadでaccepted manifest読込、deep doctor、
-  write-free dry-run、real YMM4 render、result readbackまで完走した。実装中の
-  tracked dirty状態ではdoctorはreviewのみready、codeは`git_tracked_worktree`、
-  render/regenerateはdependency chainでunavailableだったため、probe専用の狭い
-  real-render bridgeを使った。通常GUIのfail-closed条件は変えていない。
-- final local runはgenerated project SHA-256
-  `ea4bc001068cf0f398d428072b2b94a6b3b1f4beed5ba0efb2b04f0d040e4da8`、
-  review MP4 SHA-256
-  `4c99feed4e487743e5243074c3eca6aad51a7b16392f7f405ce158f038cb5c75`。
-  MP4はH.264/AAC、1920x1080、60fps、45.416秒、57,508,191 bytesで、
-  ISO-BMFF、ffprobe、full decode、project/media bindingがpassした。
-- project readbackはVoiceItem 7、ImageItem 7、speaker 4/3、2725 frames、
-  exact text/order、absolute path leak 0、SVG 0。7 cue frameはすべて別SHAで、
-  目視でも公式surface、字幕、話者labelを確認した。
-- fresh real runを2回実施し、generated project、final MP4、local media manifest、
-  cue readbackが全て同一SHAになった。既存runの無断上書き拒否とresume drift検出も
-  観測した。3連続operator-runの証明はまだ行っていない。
-- accepted new-banknote source、generated project、MP4、human receiptはそれぞれ
-  `beee7e...aa54`、`244c05...2611`、`423553...a476`、
-  `cd0b4f...f4b8`のままexactであり、既存の人間受理identityを変更していない。
-- packageとrenderは`internal_factory_canary_not_human_accepted`である。visual
-  readback上の既存keyword emphasisを含め、人のcreative acceptance、rights、
-  production、publication、external uploadは未承認。
+- REINS factory canaryを同一clean checkpointから通常Electron 43 GUI経路で
+  3回連続実行した。3回ともdoctor code/review/render/regenerate 4/4 ready、
+  protected inputs 9/9 exact、write-free dry-run、実YMM4 render、media validation、
+  result readbackをpassした。
+- final seriesは`real_estate_reins_repeatability_v3_01`、`v3_02`、`v3_03`。
+  `readiness_bypass=false`、`render_test_double=false`、tracked clean dispatch、
+  manual intervention / Computer Use / SendKeys / keyboard-mouse injectionは各0。
+- post-runのElectron、Python、YMM4、Win32Service、render driver、ffmpeg residueは
+  各run 0。playbackとsystem-volume operationも0。
+- content identity
+  `15375b3a9265269776e0c35e5f3104025fa5857155f4888ab75e9e43b3d45c06`、
+  normalized project
+  `6211ca91e0db06d54ef15d1f40cc53a18722aafd457385c253483d2a790dd3cf`、
+  MP4
+  `4c99feed4e487743e5243074c3eca6aad51a7b16392f7f405ce158f038cb5c75`、
+  asset semantic
+  `c5165a0f615189a1a870a667a768560fc691d6a740ef0e87744f4f522386a8f9`、
+  cue semantic
+  `bb5fa4b7c5c408965b92794ee88e80fdc43fb85dfab1926c2f6290eccd92a196`
+  は3回一致した。
+- raw project SHAはrun-local pathで異なる。各run-id 8か所を同一placeholderへ
+  置換した全文SHAは3本とも
+  `d7aeee07b07f06b797b618c9b2b0e18981533f58ef7963cf51cd788f3dad10cf`。
+  item content、timing、effects、asset、structure差は0。
+- stage totalは137.568453 / 163.916620 / 226.260147秒、
+  median 163.916620秒。差分は主にYMM4 render時間で、artifact identityへ影響なし。
+- final run 03のcompleted-run resumeを実GUIとCLIで実行した。GUI job 1.4881秒、
+  CLI observation 1.067912秒、`verified_noop`、`validation_only=true`、
+  `outputs_rewritten=false`、`yymm4_launched=false`。26 canonical filesの
+  SHA / size / mtime mismatchは0。
+- isolated fixtureでrender settingを変更し、`resume_artifact_drift`を確認した。
+  completed output破損もfocused testでfail-closed。real/private outputは未変更。
+- timeout authorityはmanifestの1200秒へ統合した。pipeline 1260秒、GUI observer
+  1290秒をcleanup / observer grace付きで導出し、Windows Job Objectでowned
+  descendantをcontainする。synthetic child/grandchild timeout testはresidue 0、
+  unrelated process不変。
+- ユーザー観測の「filename欄にaddressを入れて停止」は、Save dialog内
+  `保存したゲーム`TreeItemをSave buttonと誤認したことが原因だった。filename editと
+  Save buttonをAutomationId + ControlTypeで特定する修正をcheckpointへ含めた。
+- attempt 1の`repeatability_01` / `02`とv2 failureを全てignored evidenceとして保持。
+  failed seriesとfinal v3 seriesはaggregate receiptで分離した。
+- accepted new-banknote source/project/MP4/human receiptとprior REINS
+  source/project/MP4/GUI receiptは作業後のlive hashがauthorityと一致した。
+- REINS packageは`internal_factory_canary_not_human_accepted`。creative acceptance、
+  rights、production、publication、external uploadはfalse。
 
 ## Product Position
 
-new-banknoteとREINSという異なる2トピックが、同じmanifest/preflight/project
-generation/YMM4 render/media validation/Electron result契約を通過した。これにより
-標準制作ループは単一デモ専用ではなく、少なくとも2つの実入力形状を処理できる。
-残る主要な製品証明は、第三の入力形状へ広げるvariation proofか、同一operator
-手順を3回連続で成功させるrepeatability proofである。
+new-banknoteとREINSという異なる2実トピックを一つのfactory contractで処理でき、
+REINSではclean GUIからの3回連続zero-intervention operationとcompleted-run no-op
+resumeまで実証した。single success、operator repeatability、recovery identityを
+機械的に区別できる状態である。
+
+現在の主要な未証明は第3の入力形状である。次sliceは新しいcue / scene / speaker /
+time shapeを通し、topic-specific hard-codeの残存を検出する。
 
 ## Exact Next Action
 
-既定は、現行2本を変更せず第三トピックを選び、source package、claim registry、
-canonical script、derived CSV、real-media provenance、source YMMP、episode manifestを
-新しいrun IDで用意する。成功条件は、現在と異なるcue/scene/speaker/time shapeで
-GUI doctor → dry-run → real render → receiptがpassし、既存2本のidentityが不変であること。
+第3実トピックを選び、official source、claim registry、canonical script、derived CSV、
+real-media provenance、source YMMP、episode manifestを新しいidentityで用意する。
 
-operator安定性が先に必要なら、同じREINS packageを毎回新しいrun IDへ3回連続実行し、
-手動介入0、project-owned process残留0、artifact SHA一致、各GUI receipt passを測る。
-どちらの経路もhuman creative acceptanceとrightsを自動昇格しない。
+成功条件:
+
+- 7/9 cues、3/4 scenes、4/3・3/6 speaker、45/73秒と異なるshape
+- normal GUI doctor 4/4 → dry-run → real render → receipt
+- manual intervention 0、owned process residue 0、silent policy維持
+- existing new-banknote / REINS / v3 repeatability identity exact
+- private media非追跡
+- creative / rights / production / publication gate維持
 
 ## Evidence and Access
 
-- Factory package:
-  `production_pilots/factory_canaries/real_estate_reins_transparency_001/`
-- Machine receipt:
-  `production_pilots/factory_canaries/real_estate_reins_transparency_001/technical_validation_receipt.json`
+- Aggregate machine receipt:
+  `production_pilots/factory_canaries/real_estate_reins_transparency_001/three_run_repeatability_receipt.json`
 - Detailed supervisor report:
-  `docs/verification/SECOND_REAL_TOPIC_FACTORY_VALIDATION_2026-07-25.md`
-- GUI probe:
-  `gui/second_real_topic_production_loop_smoke.js`
+  `docs/verification/THREE_RUN_OPERATOR_REPEATABILITY_2026-07-26.md`
+- Final ignored run receipts:
+  `production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/real_estate_reins_repeatability_v3_0{1,2,3}/`
+- GUI probes:
+  corresponding `_gui_probe/receipt.json` sibling directories
+- Resume GUI observation:
+  `real_estate_reins_repeatability_v3_03_resume_gui_probe/receipt.json`
 - Pipeline:
   `src/pipeline/episode_video.py`
 - UIA driver:
   `tools/Ymm4RenderAutomation/Program.cs`
+- GUI smoke:
+  `gui/three_run_operator_repeatability_smoke.js`
 
 ## Cross-Terminal Re-entry
 
-- Fetch and track `origin/codex/nlmytgen-second-real-topic-factory-v1`; require
-  `HEAD...@{upstream}=0/0` and a clean tracked worktree.
+- Fetch and track
+  `origin/codex/nlmytgen-three-run-operator-repeatability-v1`; require
+  `HEAD...@{upstream}=0/0` and tracked clean.
 - Read `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → this file.
-- Run `uv sync --extra dev --locked`, `npm --prefix gui ci`, then
-  `npm --prefix gui ls --depth=0`; require Electron 43.2.0.
-- Private local source media/YMMP/MP4 are intentionally absent from Git. Restore only
-  through declared local paths and verify hashes before a real run.
-- Focused portable checks are
-  `uv run pytest -q tests/test_second_real_topic_factory_canary.py tests/test_episode_video_pipeline.py tests/test_standard_production_loop_gui.py`,
-  `npm --prefix gui run test:standard-production-loop`, and the Release .NET build.
+- Restore dependencies with `uv sync --extra dev --locked` and
+  `npm --prefix gui ci`; require Electron 43.2.0.
+- Private source media/YMMP/MP4 remain outside Git. Use declared locators and
+  hash verification before real render.
+- Focused portable checks:
+  `uv run pytest -q tests/test_episode_video_pipeline.py tests/test_standard_production_loop_gui.py tests/test_runtime_doctor.py`,
+  `npm --prefix gui run test:standard-production-loop`, and Release .NET build.
 
 ## Active Boundaries
 
-- The new result is technical internal-review evidence, not a human-approved cut.
-- Accepted new-banknote bytes and decision receipt remain immutable.
-- Official-page captures have unresolved reuse rights and remain ignored/local.
-- No PR, merge, master integration, release, deployment, public upload, or access
-  change is authorized by this state.
+- 3-run result is technical internal-review evidence.
+- accepted new-banknote bytes and human decision receipt remain immutable.
+- REINS official captures have unresolved reuse rights.
+- Third topic, human review, rights approval, production, publication, upload,
+  release, PR, merge, master mutation, deployment, access change are unperformed.
 
 ## Maintenance Note
 

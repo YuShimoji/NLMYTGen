@@ -16,7 +16,7 @@ GUI_LOCK = REPO_ROOT / "gui/package-lock.json"
 
 EXPECTED_MANIFEST_HASHES = {
     "pyproject.toml": "7b9ce97035187e00e396c50aa5d79862fce06c0404cc272435f93136b1efd51d",
-    "gui/package.json": "1c0661a1dddeaa58d0b93f143087f1484f22ec4d5b8c43596a7c20b3c4ecc474",
+    "gui/package.json": "60207998cdd3d1e1459351f1a1fd134120e725a5aa5dbbe93458fcb49e0e3261",
 }
 EXPECTED_ACCEPTED_AUTHORITY_HASHES = {
     (
