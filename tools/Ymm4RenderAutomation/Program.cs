@@ -130,7 +130,7 @@ internal static class Program
         SetStage("set_save_path");
         SetSavePath(saveDialog, options.Output);
         SetStage("confirm_save");
-        var save = FindNamedAction(saveDialog, SaveNames)
+        var save = FindSaveDialogButton(saveDialog)
             ?? throw new InvalidOperationException("save button was not found");
         Invoke(save);
 
@@ -505,6 +505,41 @@ internal static class Program
             }
         }
         return null;
+    }
+
+    private static AutomationElement? FindSaveDialogButton(AutomationElement dialog)
+    {
+        var exact = dialog.FindFirst(
+            TreeScope.Descendants,
+            new AndCondition(
+                new PropertyCondition(
+                    AutomationElement.ControlTypeProperty,
+                    ControlType.Button
+                ),
+                new PropertyCondition(AutomationElement.AutomationIdProperty, "1")
+            )
+        );
+        if (exact is not null
+            && exact.Current.IsEnabled
+            && exact.TryGetCurrentPattern(InvokePattern.Pattern, out _))
+        {
+            return exact;
+        }
+
+        return dialog
+            .FindAll(
+                TreeScope.Descendants,
+                new PropertyCondition(
+                    AutomationElement.ControlTypeProperty,
+                    ControlType.Button
+                )
+            )
+            .Cast<AutomationElement>()
+            .FirstOrDefault(element =>
+                element.Current.IsEnabled
+                && ContainsAny(element.Current.Name, SaveNames)
+                && element.TryGetCurrentPattern(InvokePattern.Pattern, out _)
+            );
     }
 
     private static AutomationElement? FindProcessNamedAction(
@@ -1477,7 +1512,13 @@ internal static class Program
     {
         var edit = dialog.FindFirst(
             TreeScope.Descendants,
-            new PropertyCondition(AutomationElement.AutomationIdProperty, "1001")
+            new AndCondition(
+                new PropertyCondition(AutomationElement.AutomationIdProperty, "1001"),
+                new PropertyCondition(
+                    AutomationElement.ControlTypeProperty,
+                    ControlType.Edit
+                )
+            )
         );
         if (edit is null)
         {
