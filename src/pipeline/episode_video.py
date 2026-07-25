@@ -257,18 +257,21 @@ def load_episode_manifest(repo_root: Path, manifest_path: Path) -> dict[str, Any
         )
 
     cue_mapping = payload.get("cue_mapping")
-    if not isinstance(cue_mapping, list) or len(cue_mapping) != 9:
-        raise EpisodeVideoError("manifest must define exactly nine cues", code="cue_mapping_invalid")
-    expected_cues = [f"cue_{index:03d}" for index in range(1, 10)]
+    if not isinstance(cue_mapping, list) or not cue_mapping:
+        raise EpisodeVideoError("manifest must define at least one cue", code="cue_mapping_invalid")
+    expected_cues = [f"cue_{index:03d}" for index in range(1, len(cue_mapping) + 1)]
     actual_cues = [row.get("cue_id") for row in cue_mapping if isinstance(row, dict)]
     if actual_cues != expected_cues:
-        raise EpisodeVideoError("cue ids/order are not cue_001..cue_009", code="cue_order_invalid")
+        raise EpisodeVideoError(
+            "cue ids/order are not a contiguous cue_001..cue_N sequence",
+            code="cue_order_invalid",
+        )
 
     real_media_rows = [row for row in cue_mapping if isinstance(row, dict) and row.get("asset_type")]
     if real_media_rows:
-        if len(real_media_rows) != 9:
+        if len(real_media_rows) != len(cue_mapping):
             raise EpisodeVideoError(
-                "real-media manifests must declare asset_type for all nine cues",
+                "real-media manifests must declare asset_type for every cue",
                 code="real_media_cue_contract_incomplete",
             )
         if not payload.get("provenance_manifest_path"):
@@ -489,8 +492,12 @@ def preflight_episode(
 
     voices = _voice_items(timeline)
     csv_rows = _read_csv(resolve_repo_path(repo_root, str(manifest["derived_csv"])))
-    if len(voices) != 9 or len(csv_rows) != 9:
-        raise EpisodeVideoError("approved voice/csv row count is not nine", code="voice_count_invalid")
+    cue_rows = manifest["cue_mapping"]
+    if len(voices) != len(cue_rows) or len(csv_rows) != len(cue_rows):
+        raise EpisodeVideoError(
+            "voice/csv row counts do not match the manifest cue count",
+            code="voice_count_invalid",
+        )
     expected_pairs = [(row[0], row[1]) for row in csv_rows]
     actual_pairs = [(str(item.get("CharacterName")), str(item.get("Serif"))) for item in voices]
     if actual_pairs != expected_pairs:
@@ -498,10 +505,16 @@ def preflight_episode(
     counts: dict[str, int] = {}
     for speaker, _ in actual_pairs:
         counts[speaker] = counts.get(speaker, 0) + 1
-    if counts != {"ゆっくり霊夢": 3, "ゆっくり魔理沙": 6}:
-        raise EpisodeVideoError("VoiceItem speaker split differs from 3/6", code="speaker_split_drift")
+    expected_counts: dict[str, int] = {}
+    for cue in cue_rows:
+        speaker = str(cue["speaker"])
+        expected_counts[speaker] = expected_counts.get(speaker, 0) + 1
+    if counts != expected_counts:
+        raise EpisodeVideoError(
+            "VoiceItem speaker distribution differs from the manifest",
+            code="speaker_split_drift",
+        )
 
-    cue_rows = manifest["cue_mapping"]
     timings: list[CueTiming] = []
     previous_end = 0
     for cue, voice in zip(cue_rows, voices, strict=True):
@@ -575,10 +588,9 @@ def preflight_episode(
                     f"accepted subtitle line fragments differ for {cue['cue_id']}",
                     code="subtitle_line_fragment_drift",
                 )
-            expected_label = "れいむ" if speaker == "ゆっくり霊夢" else "まりさ"
-            if speaker_label != expected_label:
+            if not speaker_label.strip():
                 raise EpisodeVideoError(
-                    f"speaker label differs for {cue['cue_id']}",
+                    f"speaker label is empty for {cue['cue_id']}",
                     code="subtitle_speaker_label_drift",
                 )
         else:
@@ -622,14 +634,28 @@ def preflight_episode(
             )
         )
         previous_end = end
-    if previous_end != int(timeline.get("Length", -1)) or previous_end != 4415:
-        raise EpisodeVideoError("timeline length differs from 4415", code="timeline_length_drift")
+    expected_timeline_frames = int(manifest["yymm4"]["timeline_frames"])
+    if (
+        previous_end != int(timeline.get("Length", -1))
+        or previous_end != expected_timeline_frames
+    ):
+        raise EpisodeVideoError(
+            "timeline length differs from the manifest",
+            code="timeline_length_drift",
+        )
 
     scene_counts: dict[str, int] = {}
     for timing in timings:
         scene_counts[timing.scene_id] = scene_counts.get(timing.scene_id, 0) + 1
-    if scene_counts != {"S1": 2, "S2": 4, "S3": 3}:
-        raise EpisodeVideoError("scene allocation differs from 2/4/3", code="scene_allocation_drift")
+    expected_scene_counts: dict[str, int] = {}
+    for cue in cue_rows:
+        scene = str(cue["scene_id"])
+        expected_scene_counts[scene] = expected_scene_counts.get(scene, 0) + 1
+    if scene_counts != expected_scene_counts:
+        raise EpisodeVideoError(
+            "scene allocation differs from the manifest",
+            code="scene_allocation_drift",
+        )
 
     return (
         {
@@ -654,7 +680,11 @@ def preflight_episode(
             "real_media": {
                 "enabled": real_media_mode,
                 "asset_count": len(provenance_assets),
-                "cue_provenance_coverage": f"{len(timings)}/9" if real_media_mode else "legacy-svg",
+                "cue_provenance_coverage": (
+                    f"{len(timings)}/{len(cue_rows)}"
+                    if real_media_mode
+                    else "legacy-svg"
+                ),
                 "svg_reference_count": sum(timing.asset_type == "svg" for timing in timings),
                 "internal_review_only": (
                     all(timing.internal_review_only for timing in timings)
@@ -987,14 +1017,19 @@ def readback_generated_project(
 
     checks = {
         "project_parse_pass": True,
-        "voice_item_count_9": len(voices) == 9,
-        "image_item_count_9": len(images) == 9,
-        "speaker_counts_3_6": counts == {"ゆっくり霊夢": 3, "ゆっくり魔理沙": 6},
+        "voice_item_count_matches_manifest": len(voices) == len(timings),
+        "image_item_count_matches_manifest": len(images) == len(timings),
+        "speaker_counts_match_manifest": counts
+        == {
+            speaker: sum(timing.speaker == speaker for timing in timings)
+            for speaker in {timing.speaker for timing in timings}
+        },
         "visual_timing_matches_cues": actual_intervals == expected_intervals,
         "tool_states_stripped": project.get("ToolStates") == {},
         "layout_xml_stripped": project.get("LayoutXml") == "",
         "only_run_directory_absolute_paths": not path_leaks,
-        "timeline_frames_4415": int(timeline.get("Length", -1)) == 4415,
+        "timeline_frames_match_manifest": int(timeline.get("Length", -1))
+        == timings[-1].end_frame,
         "real_media_paths_are_raster": (
             all(Path(path).suffix.lower() in IMAGE_EXTENSIONS for path in image_paths)
             if real_media_mode
@@ -1276,23 +1311,30 @@ def validate_media(
     fps = float(video.get("fps") or 0)
     bitrate = int(fmt.get("bit_rate_bps") or 0)
     size = int(fmt.get("size_bytes") or mp4.stat().st_size)
+    expected_width = int(settings.get("width", 1920))
+    expected_height = int(settings.get("height", 1080))
+    duration_tolerance = float(settings.get("max_duration_delta_seconds", 0.5))
+    max_size_bytes = int(settings.get("max_size_bytes", 250_000_000))
+    min_distinct_frames = int(settings.get("min_distinct_frame_hashes", 4))
     checks = {
         "iso_bmff_ftyp_moov_mdat": iso.get("status") == "passed",
         "ffprobe_parse": probe.get("status") == "passed",
         "h264_video": video.get("codec_name") == "h264",
         "aac_audio": audio.get("codec_name") == "aac",
-        "resolution_1920x1080": (video.get("width"), video.get("height")) == (1920, 1080),
+        "resolution_matches_project": (video.get("width"), video.get("height"))
+        == (expected_width, expected_height),
         "fps_matches_project": abs(fps - float(settings["fps"])) < 0.01,
-        "duration_within_half_second": abs(duration - expected_duration) <= 0.5,
+        "duration_within_manifest_tolerance": abs(duration - expected_duration)
+        <= duration_tolerance,
         "bitrate_internal_review_range": 6_000_000 <= bitrate <= 16_500_000,
-        "size_under_250mb": size < 250_000_000,
+        "size_within_manifest_limit": size < max_size_bytes,
         "audio_and_video_streams_present": bool(video) and bool(audio),
         "full_file_decode": decode.get("status") == "passed",
         "decode_source_unchanged": decode.get("source_unchanged") is True,
     }
     failed = [key for key, passed in checks.items() if not passed]
     frame_readback = extract_review_frames(mp4, timings, paths)
-    if frame_readback["unique_sha256_count"] < 4:
+    if frame_readback["unique_sha256_count"] < min_distinct_frames:
         failed.append("representative_frames_not_varied")
         checks["representative_frames_not_varied"] = False
     else:

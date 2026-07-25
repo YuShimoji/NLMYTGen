@@ -1,0 +1,95 @@
+{
+  "schema": "nlmytgen.second_real_topic_technical_validation.v1",
+  "status": "passed",
+  "validated_at_utc": "2026-07-25T15:33:10Z",
+  "episode_id": "real_estate_reins_transparency_001_internal_review",
+  "topic": "REINSと不動産情報流通の仕組み",
+  "project_state_id": "nlmytgen-second-real-topic-gui-render-validated-v1",
+  "factory_shape": {
+    "cue_count": 7,
+    "scene_count": 4,
+    "speaker_counts": {
+      "ゆっくり霊夢赤縁": 4,
+      "ゆっくり魔理沙黄縁": 3
+    },
+    "timeline_frames": 2725,
+    "fps": 60,
+    "duration_seconds": 45.416016,
+    "official_source_count": 4,
+    "real_media_asset_count": 7,
+    "distinct_cue_frame_count": 7
+  },
+  "gui_validation": {
+    "status": "passed",
+    "electron": "43.2.0",
+    "runtime_doctor_executed": true,
+    "runtime_profiles_ready_during_dirty_implementation": "1/4",
+    "runtime_profile_note": "review ready; code blocked by tracked worktree changes, render/regenerate blocked by dependency chain",
+    "manifest_dry_run": "passed",
+    "real_render_completed": true,
+    "output_state": "generated_unaccepted",
+    "receipt_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/real_estate_reins_internal_review_v1_gui_probe/receipt.json",
+    "receipt_sha256": "da9b0b0341c2cbed2865f8944cb564f4f44bf2c138f4e14d67e07a24f21fdee7"
+  },
+  "artifacts": {
+    "source_project": {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_projects/real_estate_reins_source.local.ymmp",
+      "sha256": "ed2773ce87a41936dd82d16d666d253f8bdba8763fc11bfa829d4818cb1b3ec9",
+      "voice_item_count": 7,
+      "portable_tachie_paths": true
+    },
+    "generated_project": {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/real_estate_reins_internal_review_v1/generated_project.local.ymmp",
+      "sha256": "ea4bc001068cf0f398d428072b2b94a6b3b1f4beed5ba0efb2b04f0d040e4da8",
+      "voice_item_count": 7,
+      "image_item_count": 7,
+      "absolute_path_leaks": 0
+    },
+    "internal_review_mp4": {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/real_estate_reins_internal_review_v1/internal_review_real_estate_reins.mp4",
+      "sha256": "4c99feed4e487743e5243074c3eca6aad51a7b16392f7f405ce158f038cb5c75",
+      "size_bytes": 57508191,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60,
+      "duration_seconds": 45.416016,
+      "full_decode": "passed"
+    },
+    "pipeline_receipt": {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/real_estate_reins_internal_review_v1/pipeline_run_receipt.json",
+      "sha256": "f66eda26d9d054beab5c90a6bc88cfccd37663dcd17bd09a231848386adf2cda"
+    },
+    "media_validation": {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/real_estate_reins_internal_review_v1/media_validation.json",
+      "sha256": "d1e592ced48d4125fbd0e72988e2f54e184d0f6663374b4f0e8cce9a6b3e05ff",
+      "status": "passed"
+    }
+  },
+  "repeatability": {
+    "fresh_run_count": 2,
+    "generated_project_sha256_match": true,
+    "internal_review_mp4_sha256_match": true,
+    "real_media_asset_manifest_sha256_match": true,
+    "cue_visual_readback_sha256_match": true,
+    "resume_drift_detection_observed": true
+  },
+  "new_banknote_identity_protection": {
+    "source_project_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+    "generated_project_sha256": "244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611",
+    "accepted_mp4_sha256": "423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476",
+    "human_acceptance_receipt_sha256": "cd0b4f02fb54cb0b0dbf8625a5baed6db3952b0a7342257c5456d1426e23f4b8",
+    "all_exact": true
+  },
+  "boundaries": {
+    "content_authority": "internal_factory_canary_not_human_accepted",
+    "human_creative_acceptance": false,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "pull_request": false,
+    "master_integration": false
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "nlmytgen.factory_canary_transformation_ledger.v1",
+  "episode_id": "real_estate_reins_transparency_001",
+  "raw_source": "samples/不動産DX_魔法の鍵とキュレーション.txt",
+  "review_packet": "samples/_probe/g24/real_estate_dx_review_packet.json",
+  "selected_review_segments": [
+    "RE-02",
+    "RE-03"
+  ],
+  "transformations": [
+    {
+      "cue_id": "cue_001",
+      "raw_lines": [
+        14
+      ],
+      "operation": "neutralize_question",
+      "result": "kept only the topic question; removed framing about secrets, VIP access, and fees"
+    },
+    {
+      "cue_id": "cue_002",
+      "raw_lines": [
+        15,
+        17
+      ],
+      "operation": "replace_with_primary_source_paraphrase",
+      "result": "replaced VIP-club and all-data claims with the official operator and inter-company sharing definition"
+    },
+    {
+      "cue_id": "cue_003",
+      "raw_lines": [
+        17,
+        18,
+        19
+      ],
+      "operation": "replace_with_primary_source_paraphrase",
+      "result": "retained only the supported register-and-search flow; removed portal subset comparison"
+    },
+    {
+      "cue_id": "cue_004",
+      "raw_lines": [
+        25,
+        27
+      ],
+      "operation": "replace_with_statutory_process_fact",
+      "result": "removed unsupported three-reason theory and stated the official registration and certificate requirement"
+    },
+    {
+      "cue_id": "cue_005",
+      "raw_lines": [
+        25,
+        27
+      ],
+      "operation": "add_primary_source_process_fact",
+      "result": "added seller-only confirmation flow from official operator and MLIT material"
+    },
+    {
+      "cue_id": "cue_006",
+      "raw_lines": [
+        25,
+        27
+      ],
+      "operation": "add_primary_source_enumeration",
+      "result": "used only the three official transaction-status labels"
+    },
+    {
+      "cue_id": "cue_007",
+      "raw_lines": [
+        13,
+        14,
+        24
+      ],
+      "operation": "source_backed_summary",
+      "result": "summarized registration, search, confirmation, and transaction-smoothing without attributing hidden intent"
+    }
+  ],
+  "removed_claims": [
+    {
+      "raw_line_range": "15-24",
+      "reason": "metaphor overreach, unsupported completeness/portal/fee claims"
+    },
+    {
+      "raw_line_range": "25-36",
+      "reason": "unsupported intent and causal claims; the review packet itself marks intent-overstatement risk"
+    }
+  ],
+  "boundary": {
+    "raw_source_is_factual_authority": false,
+    "human_creative_acceptance": false,
+    "content_state": "internal_factory_canary_not_human_accepted"
+  }
+}

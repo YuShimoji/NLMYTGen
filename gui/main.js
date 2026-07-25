@@ -196,6 +196,12 @@ const standardLoopJobs = new PipelineJobController({
 });
 let standardLoopDoctorProfiles = [];
 const standardLoopDryRunPasses = new Map();
+const standardLoopAcceptedManifest = (
+  standardLoopProbeMode
+  && process.env.NLMYTGEN_STANDARD_LOOP_MANIFEST
+)
+  ? process.env.NLMYTGEN_STANDARD_LOOP_MANIFEST.replace(/\\/g, '/')
+  : ACCEPTED_MANIFEST_RELATIVE_PATH;
 
 function resolveRepoRelativePath(relPath) {
   if (typeof relPath !== 'string' || !relPath.trim()) {
@@ -318,7 +324,7 @@ ipcMain.handle('select-file', async (_event, opts) => {
 // --- Standard automated production loop ---
 
 ipcMain.handle('standard-loop-accepted-manifest', async () => (
-  summarizeManifest(REPO_ROOT, ACCEPTED_MANIFEST_RELATIVE_PATH)
+  summarizeManifest(REPO_ROOT, standardLoopAcceptedManifest)
 ));
 
 ipcMain.handle('standard-loop-select-manifest', async () => {
@@ -380,7 +386,11 @@ ipcMain.handle('standard-loop-start', async (_event, opts) => {
     (profile) => profile.name === 'regenerate' && profile.state === 'ready',
   );
   const renderTestDouble = process.env.NLMYTGEN_STANDARD_LOOP_RENDER_TEST_DOUBLE === '1';
-  if (!regenerateReady && !renderTestDouble) {
+  const realRenderProbe = (
+    standardLoopProbeMode
+    && process.env.NLMYTGEN_STANDARD_LOOP_REAL_RENDER === '1'
+  );
+  if (!regenerateReady && !renderTestDouble && !realRenderProbe) {
     return { ok: false, error: 'REGENERATE_PROFILE_NOT_READY', summary };
   }
   const resume = opts?.resume === true && summary.output.status !== 'absent';

@@ -1,0 +1,151 @@
+{
+  "schema": "nlmytgen.factory_canary_source_claim_registry.v1",
+  "episode_id": "real_estate_reins_transparency_001",
+  "topic": "REINSと不動産情報流通の仕組み",
+  "content_boundary": "internal_factory_canary_not_human_accepted",
+  "raw_discovery_inputs": [
+    {
+      "path": "samples/不動産DX_魔法の鍵とキュレーション.txt",
+      "role": "untrusted editorial discovery input",
+      "selected_spans": [
+        {
+          "review_segment": "RE-02",
+          "line_start": 13,
+          "line_end": 24,
+          "time_start_seconds": 112.933,
+          "time_end_seconds": 201.0
+        },
+        {
+          "review_segment": "RE-03",
+          "line_start": 25,
+          "line_end": 36,
+          "time_start_seconds": 201.0,
+          "time_end_seconds": 276.033
+        }
+      ]
+    },
+    {
+      "path": "samples/_probe/g24/real_estate_dx_review_packet.json",
+      "role": "segment and risk discovery input; not factual authority"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "REINS-ABOUT",
+      "exact_title": "レインズってなに？",
+      "publisher": "公益財団法人 東日本不動産流通機構",
+      "canonical_url": "https://www.reins.or.jp/about/",
+      "captured_sections": [
+        "レインズってなに？",
+        "全国に4つのレインズ",
+        "住まいの取引を円滑に"
+      ],
+      "primary_source": true
+    },
+    {
+      "source_id": "REINS-CONTRACT",
+      "exact_title": "媒介契約制度",
+      "publisher": "公益財団法人 東日本不動産流通機構",
+      "canonical_url": "https://www.reins.or.jp/contract/",
+      "captured_sections": [
+        "３種類の媒介契約を比較",
+        "インターネットを利用したレインズ登録状況確認",
+        "取引状況の表示"
+      ],
+      "primary_source": true
+    },
+    {
+      "source_id": "REINS-SELLER",
+      "exact_title": "売却依頼主様向け説明ページ",
+      "publisher": "公益財団法人 東日本不動産流通機構",
+      "canonical_url": "https://www.reins.or.jp/explanation.html",
+      "captured_sections": [
+        "レインズ（REINS）とは？",
+        "登録内容をご確認いただけます",
+        "確認できる物件登録の内容"
+      ],
+      "primary_source": true
+    },
+    {
+      "source_id": "MLIT-STATUS-2024",
+      "exact_title": "レインズの機能強化について、物件の売主向けのリーフレットを作成しました！",
+      "publisher": "国土交通省 不動産・建設経済局不動産業課",
+      "canonical_url": "https://www.mlit.go.jp/report/press/content/001853467.pdf",
+      "captured_sections": [
+        "page 1: 概要",
+        "page 2: レインズとは",
+        "page 2: ステータス管理機能"
+      ],
+      "primary_source": true
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "REINS-C01",
+      "statement": "REINS is operated by real-estate information network organizations designated by the Minister of Land, Infrastructure, Transport and Tourism and shares property information among real-estate companies.",
+      "support": [
+        "REINS-ABOUT",
+        "REINS-SELLER",
+        "MLIT-STATUS-2024"
+      ],
+      "status": "supported"
+    },
+    {
+      "claim_id": "REINS-C02",
+      "statement": "Member real-estate companies register property information based on client requests and other member companies can search it.",
+      "support": [
+        "REINS-ABOUT",
+        "REINS-SELLER"
+      ],
+      "status": "supported"
+    },
+    {
+      "claim_id": "REINS-C03",
+      "statement": "For exclusive-agency and exclusive-right-to-sell agreements, registration in REINS and delivery of a registration certificate are required under the Real Estate Brokerage Act.",
+      "support": [
+        "REINS-CONTRACT",
+        "MLIT-STATUS-2024"
+      ],
+      "status": "supported"
+    },
+    {
+      "claim_id": "REINS-C04",
+      "statement": "A seller can use the seller-only screen to confirm registered information and transaction status for the seller's property.",
+      "support": [
+        "REINS-CONTRACT",
+        "REINS-SELLER",
+        "MLIT-STATUS-2024"
+      ],
+      "status": "supported"
+    },
+    {
+      "claim_id": "REINS-C05",
+      "statement": "The displayed transaction-status categories are public, written purchase application received, and temporarily unavailable for introduction at the seller's request.",
+      "support": [
+        "REINS-CONTRACT",
+        "MLIT-STATUS-2024"
+      ],
+      "status": "supported"
+    },
+    {
+      "claim_id": "REINS-C06",
+      "statement": "Registration, search, and seller-side confirmation support information sharing and smoother real-estate transactions.",
+      "support": [
+        "REINS-ABOUT",
+        "REINS-SELLER",
+        "MLIT-STATUS-2024"
+      ],
+      "status": "supported"
+    }
+  ],
+  "excluded_raw_claim_classes": [
+    "VIP-club metaphor",
+    "all raw listings are centralized",
+    "portal sites receive only a subset from REINS",
+    "three asserted reasons for non-public access",
+    "fee or intermediary malice claims",
+    "hidden policy intent",
+    "criminal or tax allegations",
+    "unsupported quantitative or future-policy claims"
+  ]
+}

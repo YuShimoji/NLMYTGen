@@ -1,8 +1,52 @@
 # Project Context — NLMYTGen
 
-## 現在の監修AIハンドオフ（2026-07-25 JST・標準自動制作ループGUI）
+## 現在の監修AIハンドオフ（2026-07-25 JST・第2実トピックFactory Validation）
 
-この節だけが現在の再開地点である。accepted cut、creative locks、Electron 43、
+この節だけが現在の再開地点である。標準制作GUIとaccepted new-banknote identityを
+維持し、REINSを異なる入力形状の第2実トピックとして実YMM4 renderまで通した。
+
+- **取得先 / exact base**:
+  `codex/nlmytgen-standard-production-loop-gui-v1`の
+  `02e5464c0f7d0ce90a198e788a336cb201682e9b`から
+  `codex/nlmytgen-second-real-topic-factory-v1`を作成した。
+- **topic package**:
+  `production_pilots/factory_canaries/real_estate_reins_transparency_001/`。
+  REINSを7 cues / 4 scenes / Reimu 4・Marisa 3 / 2725 framesへ変換した。
+  raw/G-27 packetはdiscovery入力で、6 factual cuesはofficial 4 sourcesへ結合、
+  unsupported spoken factual unit 0。
+- **pipeline一般化**: episode pipelineを固定9 cues / 3 scenes / 3・6 speaker
+  assumptionから任意の正のcontiguous cue列へ一般化した。tracked static contractは
+  new-banknoteとの差分shape、source edge、CSV、raster provenance、boundaryを検査する。
+- **YMM4**: 7 VoiceItemsを実YMM4 UIで生成した。driverはkeyboard/mouse injectionを
+  使用せずUIA patternだけでrow add、speaker、output settings、character-settings
+  dialogを扱う。project-load待ち、portable Tachie path、MP4 completion判定を修復した。
+- **GUI real proof**: Electron 43.2.0でmanifest load、deep doctor、protected
+  inputs 9/9 exact、dry-run、real YMM4 render、result readback、2 viewportをpass。
+  GUI receiptはstatus `passed`、全check true。
+- **artifacts**: generated project `ea4bc0...e4da8`、MP4
+  `4c99fe...5c75`。MP4はH.264/AAC、1920x1080、60fps、45.416秒、
+  57,508,191 bytes、full decode pass。7 cue framesは全て異なるSHA。
+- **repeatability**: fresh real run 2回でgenerated project、final MP4、
+  local media manifest、cue readbackが全て同一SHA。existing runの上書き拒否と
+  resume drift fail-closedも確認した。3連続operator proofは次gate。
+- **identity protection**: accepted new-banknote source `beee7e...aa54`、
+  generated project `244c05...2611`、MP4 `423553...a476`、human receipt
+  `cd0b4f...f4b8`は全てexact不変。
+- **boundary**: REINSはtechnical internal canary。human creative acceptance、
+  rights、production、publication、upload、release、PR、merge、master integrationは
+  未承認・未実施。
+- **next gate**:
+  `third-topic-variation-or-three-run-operator-repeatability`。既定は第三トピックを
+  新しいcue/scene/speaker/time shapeで通す。運用安定性優先なら新run IDで3回連続
+  GUI実行し、manual intervention 0、process残留0、artifact SHA一致を測る。
+- **詳細**:
+  `docs/verification/SECOND_REAL_TOPIC_FACTORY_VALIDATION_2026-07-25.md`。
+  通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md`。
+
+## 直前の監修AIハンドオフ（2026-07-25 JST・標準自動制作ループGUI）
+
+この節は直前sliceの履歴である。accepted cut、creative locks、Electron 43、
 35.7.5 rollback、runtime doctorを維持し、CLI中心だったepisode operationを
 Electronの既定経路へ接続した。
 

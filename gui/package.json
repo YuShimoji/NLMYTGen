@@ -14,6 +14,7 @@
     "capture:pipeline-smoke-gui": "electron capture_pipeline_smoke_review_screenshot.js",
     "smoke:electron-compatibility": "electron electron_compatibility_smoke.js",
     "smoke:standard-production-loop": "electron standard_production_loop_smoke.js",
+    "smoke:second-real-topic": "electron second_real_topic_production_loop_smoke.js",
     "test:standard-production-loop": "node --test standard_production_loop.test.js"
   },
   "devDependencies": {

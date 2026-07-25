@@ -1,0 +1,139 @@
+{
+  "schema": "nlmytgen.real_media_provenance.v1",
+  "episode_id": "real_estate_reins_transparency_001_internal_review",
+  "purpose": "second-topic internal factory canary only",
+  "sources": [
+    {
+      "source_id": "REINS-ABOUT",
+      "exact_title": "レインズってなに？",
+      "publisher": "公益財団法人 東日本不動産流通機構",
+      "canonical_url": "https://www.reins.or.jp/about/"
+    },
+    {
+      "source_id": "REINS-CONTRACT",
+      "exact_title": "媒介契約制度",
+      "publisher": "公益財団法人 東日本不動産流通機構",
+      "canonical_url": "https://www.reins.or.jp/contract/"
+    },
+    {
+      "source_id": "REINS-SELLER",
+      "exact_title": "売却依頼主様向け説明ページ",
+      "publisher": "公益財団法人 東日本不動産流通機構",
+      "canonical_url": "https://www.reins.or.jp/explanation.html"
+    },
+    {
+      "source_id": "MLIT-STATUS",
+      "exact_title": "レインズにおける取引状況の登録について",
+      "publisher": "国土交通省",
+      "canonical_url": "https://www.mlit.go.jp/report/press/content/001853467.pdf"
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "reins_cue_001_about_heading",
+      "cue_ids": ["cue_001"],
+      "source_id": "REINS-ABOUT",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_001_reins_about_heading.png",
+      "sha256": "98c50562769c25107fcb616a4f36454bd61a9330d6deb60d149dfe9c77e47c47",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login browser capture 2026-07-25",
+      "crop_or_segment": "official page heading and opening definition section; deterministic 1265x1000 raster crop",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface captured for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "reins_cue_002_definition",
+      "cue_ids": ["cue_002"],
+      "source_id": "REINS-ABOUT",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_002_reins_definition.png",
+      "sha256": "959cac0ad4f1b8fa643047521cb0216279240588da9a75fbed56e6537224a67c",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login browser capture 2026-07-25",
+      "crop_or_segment": "official REINS definition section; deterministic 1265x1000 raster crop",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface captured for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "reins_cue_003_four_regions",
+      "cue_ids": ["cue_003"],
+      "source_id": "REINS-ABOUT",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_003_reins_four_regions.png",
+      "sha256": "339e752cc6ac647aef83dd231481757858db90551d6211b7718450653e5e792e",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login browser capture 2026-07-25",
+      "crop_or_segment": "official four-regional-organization section; deterministic 1265x1000 raster crop",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface captured for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "reins_cue_004_transaction_flow",
+      "cue_ids": ["cue_007"],
+      "source_id": "REINS-ABOUT",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_004_reins_transaction_flow.png",
+      "sha256": "d9b0e2d2dee718a765bd83090acbf670cbcdb91370bd03006cc8b23f706419dd",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login browser capture 2026-07-25",
+      "crop_or_segment": "official registration, search, and contract-flow diagram; deterministic 1265x1000 raster crop",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface captured for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "reins_cue_005_contract_comparison",
+      "cue_ids": ["cue_004"],
+      "source_id": "REINS-CONTRACT",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_005_contract_comparison.png",
+      "sha256": "23fcaf9c9b3fb7eaffb6633a8d51429d11b81ce0462c24229501c8fd3591456c",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login browser capture 2026-07-25",
+      "crop_or_segment": "official three-brokerage-agreement comparison; deterministic 1265x1000 raster crop",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface captured for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "reins_cue_006_status_categories",
+      "cue_ids": ["cue_006"],
+      "source_id": "REINS-CONTRACT",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_006_seller_status_categories.png",
+      "sha256": "3a5418ede781928c0df16026d686da42f75511c07bb3202b0893b0ca852c7b30",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login browser capture 2026-07-25",
+      "crop_or_segment": "live viewport capture centered on the official transaction-status display section",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface captured for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "reins_cue_007_seller_confirmation",
+      "cue_ids": ["cue_005"],
+      "source_id": "REINS-SELLER",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_007_seller_confirmation.png",
+      "sha256": "00ce29747b6bc5161d435c6e83488ff57ddf9a7af7a7a73097d763c81f7d7e78",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login browser capture 2026-07-25",
+      "crop_or_segment": "full official seller-confirmation explanation page",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface captured for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    }
+  ],
+  "boundary": {
+    "internal_review_only": true,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "source_media_tracked": false
+  }
+}

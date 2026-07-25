@@ -1,0 +1,202 @@
+{
+  "schema": "nlmytgen.episode_manifest.v1",
+  "episode_id": "real_estate_reins_transparency_001_internal_review",
+  "source_package": "production_pilots/factory_canaries/real_estate_reins_transparency_001/source_claim_registry.json",
+  "approved_script": "production_pilots/factory_canaries/real_estate_reins_transparency_001/canonical_script.json",
+  "derived_csv": "production_pilots/factory_canaries/real_estate_reins_transparency_001/derived_yymm4_import.csv",
+  "provenance_manifest_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_pipeline/real_estate_reins_media_provenance.json",
+  "cue_mapping": [
+    {
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "speaker": "ゆっくり霊夢赤縁",
+      "visual_id": "reins_cue_001_about_heading",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_001_reins_about_heading.png",
+      "source_provenance_id": "REINS-ABOUT",
+      "subtitle_lines": ["レインズは、どんな仕組みなの？"],
+      "speaker_label": "れいむ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "speaker": "ゆっくり魔理沙黄縁",
+      "visual_id": "reins_cue_002_definition",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_002_reins_definition.png",
+      "source_provenance_id": "REINS-ABOUT",
+      "subtitle_lines": [
+        "国土交通大臣が指定した不動産流通機構が運営する、",
+        "不動産会社間の物件情報共有システムだぜ。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "speaker": "ゆっくり霊夢赤縁",
+      "visual_id": "reins_cue_003_four_regions",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_003_reins_four_regions.png",
+      "source_provenance_id": "REINS-ABOUT",
+      "subtitle_lines": [
+        "不動産会社が依頼内容をもとに物件情報を登録し、",
+        "ほかの会員会社が検索する流れなんだね。"
+      ],
+      "speaker_label": "れいむ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "speaker": "ゆっくり魔理沙黄縁",
+      "visual_id": "reins_cue_005_contract_comparison",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_005_contract_comparison.png",
+      "source_provenance_id": "REINS-CONTRACT",
+      "subtitle_lines": [
+        "専属専任媒介契約と専任媒介契約では、法律により",
+        "レインズへの登録と登録証明書の交付が定められているぜ。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_005",
+      "scene_id": "S3",
+      "speaker": "ゆっくり霊夢赤縁",
+      "visual_id": "reins_cue_007_seller_confirmation",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_007_seller_confirmation.png",
+      "source_provenance_id": "REINS-SELLER",
+      "subtitle_lines": [
+        "売主は登録証明書の情報を使って、専用画面で",
+        "登録内容や取引状況を確認できるよ。"
+      ],
+      "speaker_label": "れいむ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_006",
+      "scene_id": "S3",
+      "speaker": "ゆっくり霊夢赤縁",
+      "visual_id": "reins_cue_006_status_categories",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_006_seller_status_categories.png",
+      "source_provenance_id": "REINS-CONTRACT",
+      "subtitle_lines": [
+        "取引状況は、公開中、書面による購入申込みあり、",
+        "売主都合で一時紹介停止中の三種類なんだね。"
+      ],
+      "speaker_label": "れいむ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_007",
+      "scene_id": "S4",
+      "speaker": "ゆっくり魔理沙黄縁",
+      "visual_id": "reins_cue_004_transaction_flow",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1/cue_004_reins_transaction_flow.png",
+      "source_provenance_id": "REINS-ABOUT",
+      "subtitle_lines": [
+        "登録、検索、売主による確認がつながり、",
+        "情報共有と円滑な取引を支える仕組みなんだぜ。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    }
+  ],
+  "visual_source_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_media_real_estate_reins_v1",
+  "yymm4": {
+    "source_project_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_projects/real_estate_reins_source.local.ymmp",
+      "source_project_sha256": "ed2773ce87a41936dd82d16d666d253f8bdba8763fc11bfa829d4818cb1b3ec9",
+    "profile_id": "ymm4_4_54_0_1_yukkuri_characters_v1",
+    "profile_version_expected": "4.54.0.1",
+    "observed_product_version": "4.54.0.1",
+    "version_difference_policy": "exact_match_required",
+    "fps": 60,
+    "timeline_frames": 2725,
+    "duration_seconds": 45.416667
+  },
+  "output": {
+    "run_root_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs",
+    "run_id": "real_estate_reins_internal_review_v1",
+    "project_filename": "generated_project.local.ymmp",
+    "mp4_filename": "internal_review_real_estate_reins.mp4"
+  },
+  "render_settings": {
+    "container": "mp4",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "video_bitrate_kbps": 10000,
+    "video_maxrate_kbps": 12000,
+    "video_bufsize_kbps": 20000,
+    "audio_bitrate_kbps": 192,
+    "max_duration_delta_seconds": 0.5,
+    "max_size_bytes": 250000000,
+    "timeout_seconds": 1200,
+    "min_distinct_frame_hashes": 6
+  },
+  "boundaries": {
+    "content_authority": "internal_factory_canary_not_human_accepted",
+    "internal_review_only": true,
+    "real_media": true,
+    "proxy_visual": false,
+    "ai_generated_visuals": false,
+    "custom_illustration": false,
+    "final_aesthetic_acceptance": false,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "speaker_playback": false,
+    "preview_playback": false
+  },
+  "content_locks": [
+    {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/source_claim_registry.json",
+      "sha256": "ba0dd85307f843a359a0962b2e3691cbff37954e09d61ebf63b9140f7abae2fe"
+    },
+    {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/canonical_script.json",
+      "sha256": "905587b5b6a58d54a16694b392d928c2174ac4821d5fe9186a8a79e094372af8"
+    },
+    {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/canonical_script.txt",
+      "sha256": "b4c70c6c2e1518d5dc58383b4c1b26ea0aecb09ac32bf0b1cb5c1081710802ec"
+    },
+    {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/canonical_yymm4.csv",
+      "sha256": "628655b0e0ac45061b388b79161355c577186bfe2b841e85ab7d5f66c702ab79"
+    },
+    {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/derived_yymm4_import.csv",
+      "sha256": "6113ab30619db81f2c8dffdbba34969a0bd50c64eadbc2c1a84d4686de7f605b"
+    },
+    {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/source_support_edges.json",
+      "sha256": "a5aad7e5451b64fd28219b8f5284fe21bdcfd11c22679b0dcf6ffc350b5c9e33"
+    },
+    {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/transformation_ledger.json",
+      "sha256": "6a729097fe4ad28792992b2499a71f13b903ee0a0be6b1e49b6a1e73955db8cf"
+    },
+    {
+      "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_pipeline/real_estate_reins_media_provenance.json",
+      "sha256": "39c8cc9826d3af6ef0bd91db859fba5b0b3f1ebe0b2fb6ed3355fbe1d1ea1356"
+    }
+  ]
+}

@@ -126,8 +126,15 @@ async function captureAt(win, width, height, directory) {
 
 async function run(win, observations) {
   const runRoot = path.dirname(receiptPath());
+  const realRender = process.env.NLMYTGEN_STANDARD_LOOP_REAL_RENDER === '1';
+  const manifestNeedle = path.basename(
+    process.env.NLMYTGEN_STANDARD_LOOP_MANIFEST
+      || 'new_banknote_real_media_episode_manifest.json',
+  );
+  const workflowTimeoutMs = realRender ? 1500000 : 150000;
   const workflow = await withTimeout(win.webContents.executeJavaScript(`
     (async () => {
+      const realRender = ${JSON.stringify(realRender)};
       const waitFor = async (predicate, label, timeoutMs = 90000) => {
         const started = Date.now();
         while (!predicate()) {
@@ -142,7 +149,7 @@ async function run(win, observations) {
       document.getElementById('btn-standard-accepted-manifest').click();
       document.getElementById('btn-standard-doctor').click();
       await waitFor(
-        () => document.getElementById('standard-manifest-path').textContent.includes('new_banknote_real_media_episode_manifest.json'),
+        () => document.getElementById('standard-manifest-path').textContent.includes(${JSON.stringify(manifestNeedle)}),
         'accepted manifest'
       );
       await waitFor(
@@ -160,6 +167,7 @@ async function run(win, observations) {
       const startButton = document.getElementById('btn-standard-start');
       const focusElement = (id) => {
         const element = document.getElementById(id);
+        if (element?.disabled) return true;
         element?.focus();
         return document.activeElement?.id === id;
       };
@@ -174,7 +182,9 @@ async function run(win, observations) {
       let cancelFocus = null;
       let generationStartMode = 'enabled_primary_action';
       if (startButton.disabled) {
-        generationStartMode = 'direct_bridge_test_double_while_git_dirty';
+        generationStartMode = realRender
+          ? 'direct_bridge_real_render_while_git_dirty'
+          : 'direct_bridge_test_double_while_git_dirty';
         const started = await window.nlmytgen.standardLoopStart({
           manifestPath: document.getElementById('standard-manifest-path').textContent,
           resume: true,
@@ -191,22 +201,30 @@ async function run(win, observations) {
       }
       await waitFor(
         () => ['完了', '失敗', '取り消し済み'].includes(document.getElementById('standard-job-status').textContent),
-        'render command test double'
+        realRender ? 'real YMM4 render command' : 'render command test double',
+        realRender ? 1200000 : 90000
       );
       const completedJobStatus = document.getElementById('standard-job-status').textContent;
-      const cancelStarted = await window.nlmytgen.standardLoopStart({
-        manifestPath: document.getElementById('standard-manifest-path').textContent,
-        resume: true,
-      });
-      if (!cancelStarted.ok) throw new Error('cancel test-double start failed: ' + cancelStarted.error);
-      const activeStateObserved = cancelStarted.job.active === true && cancelStarted.job.state === 'running';
-      const cancelResult = await window.nlmytgen.standardLoopCancel(cancelStarted.job.id);
-      if (!cancelResult.ok) throw new Error('owned-process cancel failed: ' + cancelResult.error);
-      await waitFor(
-        () => document.getElementById('standard-job-status').textContent === '取り消し済み',
-        'owned-process cancellation'
-      );
-      const finalJob = await window.nlmytgen.standardLoopJob();
+      let activeStateObserved = true;
+      let cancelResult = { ok: true };
+      let finalJob;
+      if (realRender) {
+        finalJob = await window.nlmytgen.standardLoopJob();
+      } else {
+        const cancelStarted = await window.nlmytgen.standardLoopStart({
+          manifestPath: document.getElementById('standard-manifest-path').textContent,
+          resume: true,
+        });
+        if (!cancelStarted.ok) throw new Error('cancel test-double start failed: ' + cancelStarted.error);
+        activeStateObserved = cancelStarted.job.active === true && cancelStarted.job.state === 'running';
+        cancelResult = await window.nlmytgen.standardLoopCancel(cancelStarted.job.id);
+        if (!cancelResult.ok) throw new Error('owned-process cancel failed: ' + cancelResult.error);
+        await waitFor(
+          () => document.getElementById('standard-job-status').textContent === '取り消し済み',
+          'owned-process cancellation'
+        );
+        finalJob = await window.nlmytgen.standardLoopJob();
+      }
       const keyboardIds = [
         'btn-standard-select-manifest',
         'btn-standard-doctor',
@@ -252,7 +270,7 @@ async function run(win, observations) {
         ),
       };
     })()
-  `), 150000, 'standard production workflow');
+  `), workflowTimeoutMs, 'standard production workflow');
 
   const layouts = [
     await captureAt(win, 1280, 720, runRoot),
@@ -272,26 +290,57 @@ async function run(win, observations) {
   const keyboardPositions = workflow.keyboard.dom_positions;
   const keyboardOrderValid = keyboardPositions.every((position) => position >= 0)
     && keyboardPositions.every((position, index) => index === 0 || position > keyboardPositions[index - 1]);
+  let realRenderReceipt = null;
+  let realRenderReceiptPath = null;
+  if (realRender) {
+    const repoRoot = path.resolve(__dirname, '..');
+    const manifestPath = path.resolve(repoRoot, workflow.manifest_path);
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+    realRenderReceiptPath = path.resolve(
+      repoRoot,
+      manifest.output.run_root_path,
+      manifest.output.run_id,
+      'pipeline_run_receipt.json',
+    );
+    realRenderReceipt = JSON.parse(fs.readFileSync(realRenderReceiptPath, 'utf8'));
+  }
   const checks = {
     electron_exact_43_2_0: process.versions.electron === '43.2.0',
     default_surface_is_standard_loop: workflow.active_tab === 'standard',
     legacy_tabs_preserved: expectedTabs.every((label) => workflow.tab_labels.includes(label)),
     vertical_spine_order_exact: JSON.stringify(workflow.step_order) === JSON.stringify(expectedSteps),
-    accepted_manifest_loaded: workflow.manifest_path.endsWith('new_banknote_real_media_episode_manifest.json'),
+    accepted_manifest_loaded: workflow.manifest_path.endsWith(manifestNeedle),
     protected_inputs_exact: /完全一致しています/.test(workflow.protected_summary),
     four_runtime_profiles_classified: workflow.profile_states.length === 4,
     runtime_profile_expectation_met: !requireAllProfilesReady || allProfilesReady,
     actual_dry_run_passed: workflow.dry_run_status === '書き込みなしの工程確認に成功',
-    render_command_wired_to_test_double: workflow.completed_job_status === '完了'
+    render_command_wired_to_test_double: realRender || (
+      workflow.completed_job_status === '完了'
       && workflow.job_log.includes('build-episode-video')
       && workflow.job_log.includes('--render')
-      && workflow.job_log.includes('TEST_DOUBLE_RENDER_NOT_PERFORMED'),
-    active_and_cancelled_states_verified: workflow.active_state_observed
+      && workflow.job_log.includes('TEST_DOUBLE_RENDER_NOT_PERFORMED')
+    ),
+    real_render_command_completed: !realRender || (
+      workflow.completed_job_status === '完了'
+      && workflow.final_job.active === false
+      && workflow.final_job.state === 'completed'
+      && realRenderReceipt?.status === 'passed'
+      && realRenderReceipt?.render_requested === true
+      && ['passed', 'reused'].includes(realRenderReceipt?.render?.status)
+      && realRenderReceipt?.media_validation?.status === 'passed'
+    ),
+    active_and_cancelled_states_verified: realRender || (
+      workflow.active_state_observed
       && workflow.cancellation_result_ok
-      && workflow.job_status === '取り消し済み',
-    project_owned_job_inactive_after_cancel: workflow.final_job.active === false
-      && workflow.final_job.state === 'cancelled',
-    accepted_output_visible: workflow.result_summary === '採用済み出力と完全一致',
+      && workflow.job_status === '取り消し済み'
+    ),
+    project_owned_job_inactive_after_cancel: realRender || (
+      workflow.final_job.active === false
+      && workflow.final_job.state === 'cancelled'
+    ),
+    output_state_visible: realRender
+      ? workflow.result_summary === '生成済み・人の採用判断前'
+      : workflow.result_summary === '採用済み出力と完全一致',
     first_viewport_contains_episode_readiness_action: layouts.every((layout) => (
       layout.episode?.top >= 0
       && layout.readiness?.top >= 0
@@ -323,7 +372,9 @@ async function run(win, observations) {
   writeReceipt({
     schema: 'nlmytgen.standard_production_loop_probe.v1',
     status,
-    scope: 'actual Electron main/renderer/preload + runtime doctor + accepted-manifest dry-run + render test double',
+    scope: realRender
+      ? 'actual Electron main/renderer/preload + runtime doctor + manifest dry-run + real YMM4 render'
+      : 'actual Electron main/renderer/preload + runtime doctor + accepted-manifest dry-run + render test double',
     runtime: {
       electron: process.versions.electron,
       chrome: process.versions.chrome,
@@ -336,9 +387,16 @@ async function run(win, observations) {
     workflow,
     layouts,
     observations,
+    real_render_receipt: realRender ? {
+      path: realRenderReceiptPath,
+      status: realRenderReceipt?.status,
+      render_status: realRenderReceipt?.render?.status,
+      media_validation_status: realRenderReceipt?.media_validation?.status,
+      project_owned_process_cleanup: realRenderReceipt?.render?.project_owned_process_cleanup,
+    } : null,
     boundaries: {
-      render_performed: false,
-      yymm4_launched: false,
+      render_performed: realRender,
+      yymm4_launched: realRender,
       playback_performed: false,
       system_volume_changed: false,
       external_upload: false,

@@ -1,10 +1,13 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Windows.Automation;
+using Microsoft.VisualBasic.FileIO;
 
 namespace Ymm4RenderAutomation;
 
@@ -14,6 +17,11 @@ internal static class Program
     private static readonly string[] OutputVideoNames = ["動画出力", "Video Output", "Output Video"];
     private static readonly string[] StartOutputNames = ["出力", "開始", "Output", "Start"];
     private static readonly string[] SaveNames = ["保存", "Save"];
+    private static readonly string[] OpenNames = ["開く", "Open"];
+    private static readonly string[] ToolsMenuNames = ["ツール", "Tools"];
+    private static readonly string[] FileMenuNames = ["ファイル", "File"];
+    private static readonly string[] ScriptImportNames = ["台本", "Script Import", "Import Script"];
+    private static readonly string[] ImportConfirmNames = ["読み込み", "読込", "追加", "Import", "OK"];
 
     [STAThread]
     private static int Main(string[] args)
@@ -26,8 +34,9 @@ internal static class Program
             return options.Command switch
             {
                 "inspect" => Inspect(options),
+                "import-script" => ImportScript(options),
                 "render" => Render(options),
-                _ => throw new InvalidOperationException("command must be inspect or render"),
+                _ => throw new InvalidOperationException("command must be inspect, import-script, or render"),
             };
         }
         catch (Exception exception)
@@ -47,6 +56,7 @@ internal static class Program
     {
         using var owned = Launch(options);
         var main = WaitForMainWindow(owned.Processes, options.TimeoutSeconds);
+        WaitForProjectLoaded(main, owned.Processes, options.Project!, options.TimeoutSeconds);
         var tree = DumpTree(main, maxDepth: 7);
         if (options.Output is not null)
         {
@@ -76,6 +86,8 @@ internal static class Program
         using var owned = Launch(options);
         CurrentStage = "wait_main";
         var main = WaitForMainWindow(owned.Processes, options.TimeoutSeconds);
+        CurrentStage = "wait_project_loaded";
+        WaitForProjectLoaded(main, owned.Processes, options.Project!, options.TimeoutSeconds);
         CurrentStage = "open_video_output";
         OpenVideoOutput(main, owned.Processes);
 
@@ -127,6 +139,64 @@ internal static class Program
             output_bytes = file.Length,
             video_bitrate_kbps_requested = options.VideoBitrateKbps,
             audio_bitrate_kbps_requested = options.AudioBitrateKbps,
+            preview_playback = false,
+            speaker_playback = false,
+            process_cleanup = owned.Processes.All(process => process.HasExited),
+        }));
+        return 0;
+    }
+
+    private static int ImportScript(Options options)
+    {
+        if (options.Project is null || !File.Exists(options.Project))
+        {
+            throw new FileNotFoundException("blank source project is missing");
+        }
+        if (options.Csv is null || !File.Exists(options.Csv))
+        {
+            throw new FileNotFoundException("script CSV is missing");
+        }
+
+        var project = new FileInfo(options.Project);
+        var originalWriteTime = project.LastWriteTimeUtc;
+        var originalLength = project.Length;
+
+        CurrentStage = "launch_source_project";
+        using var owned = Launch(options);
+        CurrentStage = "wait_source_project";
+        var main = WaitForMainWindow(owned.Processes, options.TimeoutSeconds);
+        CurrentStage = "wait_source_project_loaded";
+        WaitForProjectLoaded(main, owned.Processes, options.Project!, options.TimeoutSeconds);
+        CurrentStage = "add_script_rows";
+        var importedRows = AddScriptRows(main, owned.Processes, options.Csv);
+        CurrentStage = "save_source_project";
+        var save = FindNamedAction(main, ["プロジェクトを保存", "Save Project"])
+            ?? FindProcessNamedAction(owned.Processes, ["プロジェクトを保存", "Save Project"])
+            ?? throw new InvalidOperationException("project save control was not found");
+        Invoke(save);
+        CurrentStage = "wait_source_project_save";
+        WaitForFileModifiedStable(options.Project, originalWriteTime, originalLength, options.TimeoutSeconds);
+
+        CurrentStage = "close_owned_windows";
+        TryClose(main);
+        HandleGeneratedProjectClosePrompt(owned.Processes);
+        WaitForExit(owned.Processes, 30);
+        var timelineFrames = NormalizeSourceTimeline(
+            options.Project,
+            expectedVoiceCount: importedRows,
+            trailingPaddingFrames: 30
+        );
+
+        project.Refresh();
+        Console.WriteLine(JsonSerializer.Serialize(new
+        {
+            status = "passed",
+            driver = "windows_uia",
+            operation = "script_row_builder",
+            imported_rows = importedRows,
+            timeline_frames = timelineFrames,
+            project_bytes = project.Length,
+            source_csv = Path.GetFileName(options.Csv),
             preview_playback = false,
             speaker_playback = false,
             process_cleanup = owned.Processes.All(process => process.HasExited),
@@ -197,10 +267,170 @@ internal static class Program
             window =>
                 window.Current.ControlType == ControlType.Window
                 && !string.IsNullOrWhiteSpace(window.Current.Name)
-                && !window.Current.Name.Contains("起動中", StringComparison.OrdinalIgnoreCase),
+                && !window.Current.Name.Contains("起動中", StringComparison.OrdinalIgnoreCase)
+                && LooksLikeReadyMainWindow(window),
             timeoutSeconds,
             excludeHandle: null
         );
+    }
+
+    private static void WaitForProjectLoaded(
+        AutomationElement main,
+        IReadOnlyList<Process> processes,
+        string projectPath,
+        int timeoutSeconds)
+    {
+        var projectName = Path.GetFileNameWithoutExtension(projectPath);
+        var deadline = DateTime.UtcNow.AddSeconds(timeoutSeconds);
+        var stableSince = DateTime.MinValue;
+        while (DateTime.UtcNow < deadline)
+        {
+            try
+            {
+                if (HandleCharacterSettingsDialog(processes))
+                {
+                    stableSince = DateTime.MinValue;
+                    Thread.Sleep(500);
+                    continue;
+                }
+                var labels = main
+                    .FindAll(
+                        TreeScope.Descendants,
+                        new PropertyCondition(
+                            AutomationElement.ControlTypeProperty,
+                            ControlType.Text))
+                    .Cast<AutomationElement>()
+                    .Select(element => element.Current.Name ?? string.Empty)
+                    .Where(name => !string.IsNullOrWhiteSpace(name))
+                    .ToList();
+                var projectVisible = labels.Any(name =>
+                    name.Contains(projectName, StringComparison.OrdinalIgnoreCase));
+                var untitledVisible = labels.Any(name =>
+                    name.Equals("無題", StringComparison.OrdinalIgnoreCase)
+                    || name.Equals("Untitled", StringComparison.OrdinalIgnoreCase));
+                if (projectVisible && !untitledVisible)
+                {
+                    if (stableSince == DateTime.MinValue)
+                    {
+                        stableSince = DateTime.UtcNow;
+                    }
+                    if ((DateTime.UtcNow - stableSince).TotalSeconds >= 2)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    stableSince = DateTime.MinValue;
+                }
+            }
+            catch (ElementNotAvailableException)
+            {
+                stableSince = DateTime.MinValue;
+            }
+            catch (COMException)
+            {
+                stableSince = DateTime.MinValue;
+            }
+            Thread.Sleep(250);
+        }
+        throw new TimeoutException($"YMM4 did not load project: {projectName}");
+    }
+
+    private static bool HandleCharacterSettingsDialog(IReadOnlyList<Process> processes)
+    {
+        var processIds = processes
+            .Where(process => !process.HasExited)
+            .Select(process => process.Id)
+            .ToHashSet();
+        var elements = AutomationElement.RootElement
+            .FindAll(TreeScope.Descendants, Condition.TrueCondition)
+            .Cast<AutomationElement>()
+            .Where(element =>
+            {
+                try
+                {
+                    return processIds.Contains(element.Current.ProcessId);
+                }
+                catch (ElementNotAvailableException)
+                {
+                    return false;
+                }
+                catch (COMException)
+                {
+                    return false;
+                }
+            })
+            .ToList();
+        var promptVisible = elements.Any(element =>
+            (element.Current.Name ?? string.Empty).Contains(
+                "異なる設定のキャラクター",
+                StringComparison.OrdinalIgnoreCase)
+            || (element.Current.Name ?? string.Empty).Contains(
+                "different character settings",
+                StringComparison.OrdinalIgnoreCase));
+        if (!promptVisible)
+        {
+            return false;
+        }
+        var keepCurrent = elements.FirstOrDefault(element =>
+            element.Current.ControlType == ControlType.RadioButton
+            && (
+                (element.Current.Name ?? string.Empty).Equals(
+                    "現在の設定で上書き",
+                    StringComparison.OrdinalIgnoreCase)
+                || (element.Current.Name ?? string.Empty).Contains(
+                    "current settings",
+                    StringComparison.OrdinalIgnoreCase)
+            ))
+            ?? throw new InvalidOperationException(
+                "YMM4 character-settings dialog has no keep-current-settings choice");
+        Invoke(keepCurrent);
+        Thread.Sleep(250);
+        var confirm = elements.FirstOrDefault(element =>
+            element.Current.ControlType == ControlType.Button
+            && (element.Current.Name ?? string.Empty).Equals(
+                "OK",
+                StringComparison.OrdinalIgnoreCase))
+            ?? throw new InvalidOperationException(
+                "YMM4 character-settings dialog has no OK button");
+        Invoke(confirm);
+        return true;
+    }
+
+    private static bool LooksLikeReadyMainWindow(AutomationElement window)
+    {
+        try
+        {
+            var descendants = window.FindAll(TreeScope.Descendants, Condition.TrueCondition)
+                .Cast<AutomationElement>()
+                .ToList();
+            var hasProgressWindow = descendants.Any(element =>
+                element.Current.ControlType == ControlType.Window
+                && (
+                    (element.Current.Name ?? string.Empty).Contains(
+                        "ProgressViewModel",
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                    || (element.Current.Name ?? string.Empty).Contains(
+                        "読み込み中",
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                ));
+            var hasToolsMenu = descendants.Any(element =>
+                element.Current.IsEnabled
+                && element.Current.ControlType == ControlType.MenuItem
+                && ContainsAny(element.Current.Name, ToolsMenuNames));
+            return !hasProgressWindow && hasToolsMenu;
+        }
+        catch (ElementNotAvailableException)
+        {
+            return false;
+        }
+        catch (COMException)
+        {
+            return false;
+        }
     }
 
     private static AutomationElement WaitForWindow(
@@ -238,6 +468,10 @@ internal static class Program
                 {
                     continue;
                 }
+                catch (COMException)
+                {
+                    continue;
+                }
             }
             Thread.Sleep(250);
         }
@@ -260,6 +494,382 @@ internal static class Program
             }
         }
         return null;
+    }
+
+    private static AutomationElement? FindProcessNamedAction(
+        IReadOnlyList<Process> processes,
+        IEnumerable<string> names)
+    {
+        var processIds = processes.Where(process => !process.HasExited).Select(process => process.Id).ToHashSet();
+        return AutomationElement.RootElement
+            .FindAll(TreeScope.Descendants, Condition.TrueCondition)
+            .Cast<AutomationElement>()
+            .LastOrDefault(element =>
+            {
+                try
+                {
+                    return processIds.Contains(element.Current.ProcessId)
+                        && element.Current.IsEnabled
+                        && !element.Current.IsOffscreen
+                        && ContainsAny(element.Current.Name, names)
+                        && (
+                            element.TryGetCurrentPattern(InvokePattern.Pattern, out _)
+                            || element.TryGetCurrentPattern(SelectionItemPattern.Pattern, out _)
+                        );
+                }
+                catch (ElementNotAvailableException)
+                {
+                    return false;
+                }
+            });
+    }
+
+    private static int AddScriptRows(
+        AutomationElement main,
+        IReadOnlyList<Process> processes,
+        string csvPath)
+    {
+        var rows = ReadScriptRows(csvPath);
+
+        foreach (var row in rows)
+        {
+            var speakerCombo = FindSpeakerCombo(main);
+            var textEdit = FindVoiceTextEdit(main);
+            SelectComboValue(speakerCombo, processes, row.Speaker);
+            if (!textEdit.TryGetCurrentPattern(ValuePattern.Pattern, out var value))
+            {
+                throw new InvalidOperationException("YMM4 voice text edit lost ValuePattern");
+            }
+            ((ValuePattern)value).SetValue(row.Text);
+
+            var addDeadline = DateTime.UtcNow.AddSeconds(30);
+            AutomationElement? add = null;
+            while (DateTime.UtcNow < addDeadline)
+            {
+                add = main
+                    .FindAll(
+                        TreeScope.Descendants,
+                        new PropertyCondition(
+                            AutomationElement.ControlTypeProperty,
+                            ControlType.Button
+                        )
+                    )
+                    .Cast<AutomationElement>()
+                    .LastOrDefault(element =>
+                        element.Current.IsEnabled
+                        && !element.Current.IsOffscreen
+                        && element.Current.Name.Equals("追加", StringComparison.OrdinalIgnoreCase)
+                        && element.TryGetCurrentPattern(InvokePattern.Pattern, out _)
+                    );
+                if (add is not null)
+                {
+                    break;
+                }
+                Thread.Sleep(100);
+            }
+            if (add is null)
+            {
+                throw new TimeoutException("timed out waiting for the YMM4 voice add button");
+            }
+            Invoke(add);
+
+            var completionDeadline = DateTime.UtcNow.AddSeconds(60);
+            while (DateTime.UtcNow < completionDeadline)
+            {
+                textEdit = FindVoiceTextEdit(main);
+                if (
+                    textEdit.TryGetCurrentPattern(ValuePattern.Pattern, out var current)
+                    && string.IsNullOrEmpty(((ValuePattern)current).Current.Value)
+                )
+                {
+                    break;
+                }
+                Thread.Sleep(100);
+            }
+            if (
+                !textEdit.TryGetCurrentPattern(ValuePattern.Pattern, out var completed)
+                || !string.IsNullOrEmpty(((ValuePattern)completed).Current.Value)
+            )
+            {
+                throw new TimeoutException("timed out waiting for YMM4 voice generation");
+            }
+        }
+        return rows.Count;
+    }
+
+    private static AutomationElement FindSpeakerCombo(AutomationElement main) => main
+        .FindAll(
+            TreeScope.Descendants,
+            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.ComboBox)
+        )
+        .Cast<AutomationElement>()
+        .FirstOrDefault(element =>
+            element.Current.IsEnabled
+            && element.Current.AutomationId.Equals("combobox", StringComparison.OrdinalIgnoreCase)
+        )
+        ?? throw new InvalidOperationException("YMM4 speaker combo was not found");
+
+    private static AutomationElement FindVoiceTextEdit(AutomationElement main) => main
+        .FindAll(
+            TreeScope.Descendants,
+            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit)
+        )
+        .Cast<AutomationElement>()
+        .FirstOrDefault(element =>
+            element.Current.IsEnabled
+            && element.Current.AutomationId.Equals("PARTS_TextBox", StringComparison.OrdinalIgnoreCase)
+            && element.TryGetCurrentPattern(ValuePattern.Pattern, out _)
+        )
+        ?? throw new InvalidOperationException("YMM4 voice text edit was not found");
+
+    private static void SelectComboValue(
+        AutomationElement combo,
+        IReadOnlyList<Process> processes,
+        string expected)
+    {
+        if (combo.TryGetCurrentPattern(SelectionPattern.Pattern, out var currentSelection))
+        {
+            var selected = ((SelectionPattern)currentSelection).Current.GetSelection();
+            if (selected.Any(element => element.Current.Name.Equals(expected, StringComparison.Ordinal)))
+            {
+                return;
+            }
+        }
+        if (!combo.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out var expand))
+        {
+            throw new InvalidOperationException("YMM4 speaker combo is not expandable");
+        }
+        ((ExpandCollapsePattern)expand).Expand();
+
+        var deadline = DateTime.UtcNow.AddSeconds(15);
+        while (DateTime.UtcNow < deadline)
+        {
+            var processIds = processes.Where(process => !process.HasExited).Select(process => process.Id).ToHashSet();
+            var visibleElements = AutomationElement.RootElement
+                .FindAll(TreeScope.Descendants, Condition.TrueCondition)
+                .Cast<AutomationElement>();
+            var label = visibleElements.LastOrDefault(element =>
+                {
+                    try
+                    {
+                        return processIds.Contains(element.Current.ProcessId)
+                            && element.Current.IsEnabled
+                            && !element.Current.IsOffscreen
+                            && element.Current.Name.Equals(expected, StringComparison.Ordinal);
+                    }
+                    catch (ElementNotAvailableException)
+                    {
+                        return false;
+                    }
+                });
+            var choice = label;
+            while (
+                choice is not null
+                && !choice.TryGetCurrentPattern(SelectionItemPattern.Pattern, out _)
+            )
+            {
+                choice = TreeWalker.ControlViewWalker.GetParent(choice);
+            }
+            if (
+                choice is not null
+                && choice.TryGetCurrentPattern(SelectionItemPattern.Pattern, out var selection)
+            )
+            {
+                ((SelectionItemPattern)selection).Select();
+                if (
+                    combo.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out var collapse)
+                    && ((ExpandCollapsePattern)collapse).Current.ExpandCollapseState
+                        != ExpandCollapseState.Collapsed
+                )
+                {
+                    ((ExpandCollapsePattern)collapse).Collapse();
+                }
+                return;
+            }
+            Thread.Sleep(100);
+        }
+        var available = AutomationElement.RootElement
+            .FindAll(TreeScope.Descendants, Condition.TrueCondition)
+            .Cast<AutomationElement>()
+            .Where(element =>
+            {
+                try
+                {
+                    return processes.Any(process =>
+                            !process.HasExited && process.Id == element.Current.ProcessId
+                        )
+                        && !string.IsNullOrWhiteSpace(element.Current.Name)
+                        && element.TryGetCurrentPattern(SelectionItemPattern.Pattern, out _);
+                }
+                catch (ElementNotAvailableException)
+                {
+                    return false;
+                }
+            })
+            .Select(element => element.Current.Name)
+            .Distinct()
+            .Take(30);
+        throw new TimeoutException(
+            $"YMM4 speaker was not found: {expected}; selectable values: {string.Join(" | ", available)}"
+        );
+    }
+
+    private static List<ScriptRow> ReadScriptRows(string path)
+    {
+        using var parser = new TextFieldParser(path, Encoding.UTF8, detectEncoding: true)
+        {
+            TextFieldType = FieldType.Delimited,
+            HasFieldsEnclosedInQuotes = true,
+            TrimWhiteSpace = false,
+        };
+        parser.SetDelimiters(",");
+        var rows = new List<ScriptRow>();
+        while (!parser.EndOfData)
+        {
+            var fields = parser.ReadFields();
+            if (fields is null || fields.Length == 0)
+            {
+                continue;
+            }
+            if (fields.Length != 2 || fields.Any(string.IsNullOrWhiteSpace))
+            {
+                throw new InvalidDataException("script CSV rows must contain speaker and text");
+            }
+            rows.Add(new ScriptRow(fields[0], fields[1]));
+        }
+        if (rows.Count == 0)
+        {
+            throw new InvalidDataException("script CSV is empty");
+        }
+        return rows;
+    }
+
+    private static int NormalizeSourceTimeline(
+        string path,
+        int expectedVoiceCount,
+        int trailingPaddingFrames)
+    {
+        var root = JsonNode.Parse(
+                File.ReadAllText(path, Encoding.UTF8),
+                nodeOptions: new JsonNodeOptions { PropertyNameCaseInsensitive = false },
+                documentOptions: default
+            )?.AsObject()
+            ?? throw new InvalidDataException("saved YMM4 project root is invalid");
+        var timelines = root["Timelines"]?.AsArray()
+            ?? throw new InvalidDataException("saved YMM4 project has no timelines");
+        if (timelines.Count != 1)
+        {
+            throw new InvalidDataException("saved YMM4 project must have one timeline");
+        }
+        var timeline = timelines[0]?.AsObject()
+            ?? throw new InvalidDataException("saved YMM4 timeline is invalid");
+        var items = timeline["Items"]?.AsArray()
+            ?? throw new InvalidDataException("saved YMM4 timeline has no items");
+        var voices = items
+            .Select(node => node?.AsObject())
+            .Where(item =>
+                item is not null
+                && (item["$type"]?.GetValue<string>() ?? string.Empty).StartsWith(
+                    "YukkuriMovieMaker.Project.Items.VoiceItem",
+                    StringComparison.Ordinal
+                )
+            )
+            .Cast<JsonObject>()
+            .ToList();
+        if (voices.Count != expectedVoiceCount)
+        {
+            throw new InvalidDataException(
+                $"saved YMM4 project has {voices.Count} voices; expected {expectedVoiceCount}"
+            );
+        }
+
+        var frame = 0;
+        foreach (var voice in voices)
+        {
+            var generatedLength = voice["Length"]?.GetValue<int>() ?? 0;
+            if (generatedLength <= 0)
+            {
+                throw new InvalidDataException("saved YMM4 voice has an invalid length");
+            }
+            voice["Frame"] = frame;
+            voice["Length"] = generatedLength + trailingPaddingFrames;
+            SanitizeRootedPaths(voice["TachieFaceParameter"]);
+            SanitizeRootedPaths(voice["TachieFaceEffects"]);
+            frame += generatedLength + trailingPaddingFrames;
+        }
+        if (root["Characters"] is JsonArray characters)
+        {
+            foreach (var characterNode in characters)
+            {
+                if (characterNode is not JsonObject character)
+                {
+                    continue;
+                }
+                SanitizeRootedPaths(character["TachieCharacterParameter"]);
+                SanitizeRootedPaths(character["TachieDefaultItemParameter"]);
+                SanitizeRootedPaths(character["TachieDefaultFaceParameter"]);
+                SanitizeRootedPaths(character["TachieItemVideoEffects"]);
+                SanitizeRootedPaths(character["TachieDefaultFaceEffects"]);
+            }
+        }
+        timeline["Length"] = frame;
+        timeline["CurrentFrame"] = 0;
+        timeline["MaxLayer"] = voices.Max(voice => voice["Layer"]?.GetValue<int>() ?? 0);
+        File.WriteAllText(
+            path,
+            root.ToJsonString(new JsonSerializerOptions { WriteIndented = false }),
+            new UTF8Encoding(encoderShouldEmitUTF8Identifier: false)
+        );
+        return frame;
+    }
+
+    private static void SanitizeRootedPaths(JsonNode? node)
+    {
+        if (node is JsonObject jsonObject)
+        {
+            foreach (var property in jsonObject.ToList())
+            {
+                if (
+                    property.Value is JsonValue value
+                    && value.TryGetValue<string>(out var text)
+                    && !string.IsNullOrWhiteSpace(text)
+                    && Path.IsPathRooted(text)
+                )
+                {
+                    var trimmed = text.TrimEnd(
+                        Path.DirectorySeparatorChar,
+                        Path.AltDirectorySeparatorChar);
+                    jsonObject[property.Key] = Path.GetFileName(trimmed);
+                }
+                else
+                {
+                    SanitizeRootedPaths(property.Value);
+                }
+            }
+            return;
+        }
+        if (node is JsonArray jsonArray)
+        {
+            for (var index = 0; index < jsonArray.Count; index += 1)
+            {
+                if (
+                    jsonArray[index] is JsonValue value
+                    && value.TryGetValue<string>(out var text)
+                    && !string.IsNullOrWhiteSpace(text)
+                    && Path.IsPathRooted(text)
+                )
+                {
+                    var trimmed = text.TrimEnd(
+                        Path.DirectorySeparatorChar,
+                        Path.AltDirectorySeparatorChar);
+                    jsonArray[index] = Path.GetFileName(trimmed);
+                }
+                else
+                {
+                    SanitizeRootedPaths(jsonArray[index]);
+                }
+            }
+        }
     }
 
     private static bool LooksLikeOutputWindow(AutomationElement window)
@@ -323,16 +933,220 @@ internal static class Program
         throw new InvalidOperationException("YMM4 video-output menu item was not found");
     }
 
+    private static void OpenMenuAction(
+        AutomationElement main,
+        IReadOnlyList<Process> processes,
+        IEnumerable<string> menuNames,
+        IEnumerable<string> actionNames)
+    {
+        var menu = main.FindAll(TreeScope.Descendants, Condition.TrueCondition)
+            .Cast<AutomationElement>()
+            .FirstOrDefault(element =>
+                element.Current.IsEnabled
+                && element.Current.ControlType == ControlType.MenuItem
+                && ContainsAny(element.Current.Name, menuNames));
+        if (menu is null)
+        {
+            throw new InvalidOperationException("YMM4 menu was not found");
+        }
+        main.SetFocus();
+        menu.SetFocus();
+        if (!menu.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out var expand))
+        {
+            throw new InvalidOperationException("YMM4 menu does not expose ExpandCollapsePattern");
+        }
+        ((ExpandCollapsePattern)expand).Expand();
+
+        var deadline = DateTime.UtcNow.AddSeconds(15);
+        while (DateTime.UtcNow < deadline)
+        {
+            var processIds = processes.Where(process => !process.HasExited).Select(process => process.Id).ToHashSet();
+            var action = AutomationElement.RootElement
+                .FindAll(TreeScope.Descendants, Condition.TrueCondition)
+                .Cast<AutomationElement>()
+                .LastOrDefault(element =>
+                    processIds.Contains(element.Current.ProcessId)
+                    && element.Current.IsEnabled
+                    && !element.Current.IsOffscreen
+                    && element.Current.BoundingRectangle.Width > 0
+                    && element.Current.BoundingRectangle.Height > 0
+                    && ContainsAny(element.Current.Name, actionNames)
+                    && (
+                        element.TryGetCurrentPattern(InvokePattern.Pattern, out _)
+                        || element.TryGetCurrentPattern(SelectionItemPattern.Pattern, out _)
+                    )
+                );
+            if (action is not null)
+            {
+                if (action.TryGetCurrentPattern(InvokePattern.Pattern, out var invoke))
+                {
+                    try
+                    {
+                        ((InvokePattern)invoke).Invoke();
+                    }
+                    catch (ElementNotAvailableException)
+                    {
+                        // WPF removes the popup menu element synchronously when
+                        // the command opens its owned window.
+                    }
+                    return;
+                }
+                if (action.TryGetCurrentPattern(SelectionItemPattern.Pattern, out var selection))
+                {
+                    try
+                    {
+                        ((SelectionItemPattern)selection).Select();
+                    }
+                    catch (ElementNotAvailableException)
+                    {
+                        // Same popup disposal behavior as InvokePattern.
+                    }
+                    return;
+                }
+                throw new InvalidOperationException(
+                    $"YMM4 menu action is neither selectable nor invokable: {action.Current.Name}"
+                );
+            }
+            Thread.Sleep(250);
+        }
+        throw new InvalidOperationException("YMM4 menu action was not found");
+    }
+
+    private static void CloseStaleScriptEditor(
+        AutomationElement main,
+        IReadOnlyList<Process> processes)
+    {
+        var processIds = processes.Where(process => !process.HasExited).Select(process => process.Id).ToHashSet();
+        AutomationElement? FindEditorWindow()
+        {
+            var title = AutomationElement.RootElement
+                .FindAll(TreeScope.Descendants, Condition.TrueCondition)
+                .Cast<AutomationElement>()
+                .FirstOrDefault(element =>
+                    processIds.Contains(element.Current.ProcessId)
+                    && (element.Current.Name ?? string.Empty).Contains(
+                        "台本編集",
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                );
+            if (title is null)
+            {
+                return null;
+            }
+            var titleRect = title.Current.BoundingRectangle;
+            var titleCenter = new System.Windows.Point(
+                titleRect.Left + titleRect.Width / 2,
+                titleRect.Top + titleRect.Height / 2
+            );
+            return AutomationElement.RootElement
+                .FindAll(
+                    TreeScope.Descendants,
+                    new PropertyCondition(
+                        AutomationElement.ControlTypeProperty,
+                        ControlType.Window
+                    )
+                )
+                .Cast<AutomationElement>()
+                .FirstOrDefault(window =>
+                    processIds.Contains(window.Current.ProcessId)
+                    && window.Current.NativeWindowHandle != main.Current.NativeWindowHandle
+                    && window.Current.BoundingRectangle.Contains(titleCenter)
+                );
+        }
+
+        var editor = FindEditorWindow();
+        if (editor is null)
+        {
+            return;
+        }
+        TryClose(editor);
+
+        var deadline = DateTime.UtcNow.AddSeconds(10);
+        while (DateTime.UtcNow < deadline)
+        {
+            var prompt = AutomationElement.RootElement
+                .FindAll(
+                    TreeScope.Descendants,
+                    new PropertyCondition(
+                        AutomationElement.ControlTypeProperty,
+                        ControlType.Window
+                    )
+                )
+                .Cast<AutomationElement>()
+                .FirstOrDefault(window =>
+                    processIds.Contains(window.Current.ProcessId)
+                    && window.Current.NativeWindowHandle != main.Current.NativeWindowHandle
+                    && FindNamedAction(
+                        window,
+                        ["保存しない", "破棄", "いいえ", "Don't Save", "No"]
+                    ) is not null
+                );
+            if (prompt is not null)
+            {
+                var discard = FindNamedAction(
+                    prompt,
+                    ["保存しない", "破棄", "いいえ", "Don't Save", "No"]
+                )!;
+                Invoke(discard);
+            }
+            if (FindEditorWindow() is null)
+            {
+                return;
+            }
+            Thread.Sleep(250);
+        }
+        throw new TimeoutException("timed out closing the stale YMM4 script editor");
+    }
+
+    private static AutomationElement WaitForNamedElement(
+        IReadOnlyList<Process> processes,
+        IEnumerable<string> names,
+        int timeoutSeconds)
+    {
+        var deadline = DateTime.UtcNow.AddSeconds(timeoutSeconds);
+        while (DateTime.UtcNow < deadline)
+        {
+            var processIds = processes
+                .Where(process => !process.HasExited)
+                .Select(process => process.Id)
+                .ToHashSet();
+            var element = AutomationElement.RootElement
+                .FindAll(TreeScope.Descendants, Condition.TrueCondition)
+                .Cast<AutomationElement>()
+                .FirstOrDefault(candidate =>
+                {
+                    try
+                    {
+                        return processIds.Contains(candidate.Current.ProcessId)
+                            && candidate.Current.IsEnabled
+                            && ContainsAny(candidate.Current.Name, names);
+                    }
+                    catch (ElementNotAvailableException)
+                    {
+                        return false;
+                    }
+                });
+            if (element is not null)
+            {
+                return element;
+            }
+            Thread.Sleep(250);
+        }
+        throw new TimeoutException("timed out waiting for a named YMM4 element");
+    }
+
     private static void ConfigureOutput(
         AutomationElement outputWindow,
         IReadOnlyList<Process> processes,
         Options options)
     {
         var combos = GetOutputCombos(outputWindow);
-        SelectManualBitrate(combos[2]);
+        CurrentStage = "configure_output_video_mode";
+        SelectComboIndex(combos[2], processes, 1);
         Thread.Sleep(500);
         combos = GetOutputCombos(outputWindow);
 
+        CurrentStage = "configure_output_video_bitrate";
         var numericEdit = outputWindow
             .FindAll(
                 TreeScope.Descendants,
@@ -355,8 +1169,10 @@ internal static class Program
         ((ValuePattern)numericPattern).SetValue(options.VideoBitrateKbps.ToString());
         Thread.Sleep(250);
         combos = GetOutputCombos(outputWindow);
-        combos[4].SetFocus();
+        CurrentStage = "configure_output_audio_bitrate";
+        SelectComboContaining(combos[4], processes, options.AudioBitrateKbps.ToString());
 
+        CurrentStage = "confirm_output_video_bitrate";
         var expected = $"-b:v {options.VideoBitrateKbps * 1000}";
         var deadline = DateTime.UtcNow.AddSeconds(10);
         while (DateTime.UtcNow < deadline)
@@ -371,8 +1187,6 @@ internal static class Program
                     && ((ValuePattern)value).Current.Value.Contains(expected, StringComparison.Ordinal));
             if (confirmed)
             {
-                combos = GetOutputCombos(outputWindow);
-                SelectAudioBitrate(combos[4], options.AudioBitrateKbps);
                 return;
             }
             Thread.Sleep(250);
@@ -398,18 +1212,212 @@ internal static class Program
         return combos;
     }
 
-    private static void SelectManualBitrate(AutomationElement combo)
+    private static void SelectComboIndex(
+        AutomationElement combo,
+        IReadOnlyList<Process> processes,
+        int index)
     {
-        combo.SetFocus();
-        System.Windows.Forms.SendKeys.SendWait("{HOME}{DOWN}{ENTER}");
-        Thread.Sleep(350);
+        var choices = ExpandComboChoices(combo, processes);
+        if (index < 0 || index >= choices.Count)
+        {
+            throw new InvalidOperationException(
+                $"YMM4 output combo has {choices.Count} choices; index {index} is unavailable"
+            );
+        }
+        CurrentStage = $"{CurrentStage}_select";
+        SelectComboChoice(combo, choices[index]);
     }
 
-    private static void SelectAudioBitrate(AutomationElement combo, int bitrateKbps)
+    private static void SelectComboContaining(
+        AutomationElement combo,
+        IReadOnlyList<Process> processes,
+        string expectedFragment)
     {
+        var choices = ExpandComboChoices(combo, processes);
+        var choice = choices.FirstOrDefault(element =>
+            ChoiceLabel(element).Contains(
+                expectedFragment,
+                StringComparison.OrdinalIgnoreCase
+            )
+        );
+        if (choice is null)
+        {
+            var available = string.Join(", ", choices.Select(DescribeElement));
+            throw new InvalidOperationException(
+                $"YMM4 output combo value was not found: {expectedFragment}; available={available}"
+            );
+        }
+        CurrentStage = $"{CurrentStage}_select";
+        SelectComboChoice(combo, choice);
+    }
+
+    private static string ChoiceLabel(AutomationElement element)
+    {
+        try
+        {
+            var labels = element
+                .FindAll(
+                    TreeScope.Descendants,
+                    new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Text))
+                .Cast<AutomationElement>()
+                .Select(label => label.Current.Name)
+                .Where(name => !string.IsNullOrWhiteSpace(name))
+                .ToList();
+            return labels.Count > 0
+                ? string.Join(" ", labels)
+                : element.Current.Name ?? string.Empty;
+        }
+        catch (ElementNotAvailableException)
+        {
+            return string.Empty;
+        }
+        catch (COMException)
+        {
+            return string.Empty;
+        }
+        catch (InvalidOperationException)
+        {
+            return string.Empty;
+        }
+    }
+
+    private static string DescribeElement(AutomationElement element)
+    {
+        try
+        {
+            return $"{element.Current.ControlType.ProgrammaticName}:{ChoiceLabel(element)}";
+        }
+        catch (ElementNotAvailableException)
+        {
+            return "unavailable";
+        }
+        catch (COMException)
+        {
+            return "unavailable";
+        }
+        catch (InvalidOperationException)
+        {
+            return "unavailable";
+        }
+    }
+
+    private static IReadOnlyList<AutomationElement> ExpandComboChoices(
+        AutomationElement combo,
+        IReadOnlyList<Process> processes)
+    {
+        var stagePrefix = CurrentStage;
+        CurrentStage = $"{stagePrefix}_pattern";
+        if (!combo.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out var expand))
+        {
+            throw new InvalidOperationException("YMM4 output combo is not expandable");
+        }
+        var comboRect = combo.Current.BoundingRectangle;
+        CurrentStage = $"{stagePrefix}_focus";
         combo.SetFocus();
-        System.Windows.Forms.SendKeys.SendWait(bitrateKbps.ToString());
-        System.Windows.Forms.SendKeys.SendWait("{ENTER}");
+        Thread.Sleep(150);
+        CurrentStage = $"{stagePrefix}_state";
+        var expander = (ExpandCollapsePattern)expand;
+        if (expander.Current.ExpandCollapseState == ExpandCollapseState.Collapsed)
+        {
+            CurrentStage = $"{stagePrefix}_expand";
+            try
+            {
+                expander.Expand();
+            }
+            catch (InvalidOperationException) when (
+                combo.TryGetCurrentPattern(InvokePattern.Pattern, out var invoke)
+            )
+            {
+                ((InvokePattern)invoke).Invoke();
+            }
+        }
+        else if (expander.Current.ExpandCollapseState == ExpandCollapseState.LeafNode)
+        {
+            throw new InvalidOperationException("YMM4 output combo has no expandable choices");
+        }
+        CurrentStage = $"{stagePrefix}_choices";
+        var deadline = DateTime.UtcNow.AddSeconds(15);
+        while (DateTime.UtcNow < deadline)
+        {
+            var processIds = processes.Where(process => !process.HasExited).Select(process => process.Id).ToHashSet();
+            var choices = AutomationElement.RootElement
+                .FindAll(TreeScope.Descendants, Condition.TrueCondition)
+                .Cast<AutomationElement>()
+                .Where(element =>
+                {
+                    try
+                    {
+                        var rect = element.Current.BoundingRectangle;
+                        var horizontallyOverlaps = rect.Right > comboRect.Left
+                            && rect.Left < comboRect.Right;
+                        return processIds.Contains(element.Current.ProcessId)
+                            && element.Current.IsEnabled
+                            && !element.Current.IsOffscreen
+                            && rect.Width > 0
+                            && rect.Height > 0
+                            && horizontallyOverlaps
+                            && element.TryGetCurrentPattern(SelectionItemPattern.Pattern, out _);
+                    }
+                    catch (ElementNotAvailableException)
+                    {
+                        return false;
+                    }
+                    catch (COMException)
+                    {
+                        return false;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        return false;
+                    }
+                })
+                .OrderBy(element => element.Current.BoundingRectangle.Top)
+                .ToList();
+            if (choices.Count > 0)
+            {
+                CurrentStage = stagePrefix;
+                return choices;
+            }
+            Thread.Sleep(100);
+        }
+        throw new TimeoutException("timed out reading YMM4 output combo choices");
+    }
+
+    private static void SelectComboChoice(AutomationElement combo, AutomationElement choice)
+    {
+        if (!choice.TryGetCurrentPattern(SelectionItemPattern.Pattern, out var selection))
+        {
+            throw new InvalidOperationException("YMM4 output combo choice is not selectable");
+        }
+        try
+        {
+            ((SelectionItemPattern)selection).Select();
+        }
+        catch (InvalidOperationException) when (
+            choice.TryGetCurrentPattern(InvokePattern.Pattern, out var invoke)
+        )
+        {
+            ((InvokePattern)invoke).Invoke();
+        }
+        try
+        {
+            if (
+                combo.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out var collapse)
+                && ((ExpandCollapsePattern)collapse).Current.ExpandCollapseState
+                    == ExpandCollapseState.Expanded
+            )
+            {
+                ((ExpandCollapsePattern)collapse).Collapse();
+            }
+        }
+        catch (ElementNotAvailableException)
+        {
+            // Selection can replace the WPF ComboBox peer after it commits.
+        }
+        catch (InvalidOperationException)
+        {
+            // Some WPF peers commit by selecting and immediately invalidate Collapse.
+        }
         Thread.Sleep(350);
     }
 
@@ -444,7 +1452,17 @@ internal static class Program
         return fileNameEdit is not null;
     }
 
+    private static bool IsOpenDialog(AutomationElement window)
+    {
+        var name = window.Current.Name ?? string.Empty;
+        return name.Contains("開く", StringComparison.OrdinalIgnoreCase)
+            || name.Contains("Open", StringComparison.OrdinalIgnoreCase);
+    }
+
     private static void SetSavePath(AutomationElement dialog, string path)
+        => SetDialogPath(dialog, path);
+
+    private static void SetDialogPath(AutomationElement dialog, string path)
     {
         var edit = dialog.FindFirst(
             TreeScope.Descendants,
@@ -465,7 +1483,62 @@ internal static class Program
         ((ValuePattern)value).SetValue(path);
     }
 
-    private static void WaitForFileStable(string path, int timeoutSeconds)
+    private static void CompleteScriptImportDialogs(
+        AutomationElement main,
+        IReadOnlyList<Process> processes)
+    {
+        var deadline = DateTime.UtcNow.AddSeconds(90);
+        var quietSince = DateTime.MinValue;
+        while (DateTime.UtcNow < deadline)
+        {
+            var processIds = processes.Where(process => !process.HasExited).Select(process => process.Id).ToHashSet();
+            var dialogs = AutomationElement.RootElement
+                .FindAll(
+                    TreeScope.Descendants,
+                    new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Window))
+                .Cast<AutomationElement>()
+                .Where(window =>
+                    processIds.Contains(window.Current.ProcessId)
+                    && window.Current.NativeWindowHandle != main.Current.NativeWindowHandle)
+                .ToList();
+            var actionable = dialogs
+                .Select(dialog => FindNamedAction(dialog, ImportConfirmNames))
+                .FirstOrDefault(action => action is not null);
+            if (actionable is not null)
+            {
+                Invoke(actionable);
+                quietSince = DateTime.MinValue;
+                Thread.Sleep(500);
+                continue;
+            }
+            var blocking = dialogs.Any(dialog =>
+                !string.IsNullOrWhiteSpace(dialog.Current.Name)
+                && !dialog.Current.Name.Contains("ProgressViewModel", StringComparison.OrdinalIgnoreCase));
+            if (!blocking)
+            {
+                if (quietSince == DateTime.MinValue)
+                {
+                    quietSince = DateTime.UtcNow;
+                }
+                if ((DateTime.UtcNow - quietSince).TotalSeconds >= 3)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                quietSince = DateTime.MinValue;
+            }
+            Thread.Sleep(250);
+        }
+        throw new TimeoutException("timed out waiting for YMM4 script import to complete");
+    }
+
+    private static void WaitForFileStable(
+        string path,
+        int timeoutSeconds,
+        long minimumLengthBytes = 64 * 1024,
+        int stableSeconds = 10)
     {
         var deadline = DateTime.UtcNow.AddSeconds(timeoutSeconds);
         long previousLength = -1;
@@ -475,13 +1548,13 @@ internal static class Program
             if (File.Exists(path))
             {
                 var length = new FileInfo(path).Length;
-                if (length > 0 && length == previousLength)
+                if (length >= minimumLengthBytes && length == previousLength)
                 {
                     if (stableSince == DateTime.MinValue)
                     {
                         stableSince = DateTime.UtcNow;
                     }
-                    if ((DateTime.UtcNow - stableSince).TotalSeconds >= 3)
+                    if ((DateTime.UtcNow - stableSince).TotalSeconds >= stableSeconds)
                     {
                         return;
                     }
@@ -495,6 +1568,43 @@ internal static class Program
             Thread.Sleep(500);
         }
         throw new TimeoutException("timed out waiting for the render file to stabilize");
+    }
+
+    private static void WaitForFileModifiedStable(
+        string path,
+        DateTime originalWriteTime,
+        long originalLength,
+        int timeoutSeconds)
+    {
+        var deadline = DateTime.UtcNow.AddSeconds(timeoutSeconds);
+        long previousLength = -1;
+        var stableSince = DateTime.MinValue;
+        while (DateTime.UtcNow < deadline)
+        {
+            if (File.Exists(path))
+            {
+                var file = new FileInfo(path);
+                var changed = file.LastWriteTimeUtc > originalWriteTime || file.Length != originalLength;
+                if (changed && file.Length > 0 && file.Length == previousLength)
+                {
+                    if (stableSince == DateTime.MinValue)
+                    {
+                        stableSince = DateTime.UtcNow;
+                    }
+                    if ((DateTime.UtcNow - stableSince).TotalSeconds >= 2)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    previousLength = file.Length;
+                    stableSince = DateTime.MinValue;
+                }
+            }
+            Thread.Sleep(500);
+        }
+        throw new TimeoutException("timed out waiting for the source project save");
     }
 
     private static void TryClose(AutomationElement window)
@@ -566,7 +1676,11 @@ internal static class Program
             if (element.TryGetCurrentPattern(InvokePattern.Pattern, out _)) patterns.Add("Invoke");
             if (element.TryGetCurrentPattern(ValuePattern.Pattern, out _)) patterns.Add("Value");
             if (element.TryGetCurrentPattern(SelectionItemPattern.Pattern, out _)) patterns.Add("Select");
-            lines.Add($"{new string(' ', depth * 2)}{element.Current.ControlType.ProgrammaticName}|name={element.Current.Name}|id={element.Current.AutomationId}|enabled={element.Current.IsEnabled}|patterns={string.Join(',', patterns)}");
+            if (element.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out var expand))
+            {
+                patterns.Add($"Expand:{((ExpandCollapsePattern)expand).Current.ExpandCollapseState}");
+            }
+            lines.Add($"{new string(' ', depth * 2)}{element.Current.ControlType.ProgrammaticName}|name={element.Current.Name}|id={element.Current.AutomationId}|enabled={element.Current.IsEnabled}|focusable={element.Current.IsKeyboardFocusable}|offscreen={element.Current.IsOffscreen}|patterns={string.Join(',', patterns)}");
             var children = element.FindAll(TreeScope.Children, Condition.TrueCondition);
             foreach (AutomationElement child in children)
             {
@@ -597,6 +1711,7 @@ internal static class Program
             Executable: Get(values, "exe"),
             Project: Get(values, "project"),
             Output: Get(values, "output"),
+            Csv: Get(values, "csv"),
             VideoBitrateKbps: GetInt(values, "video-bitrate-kbps", 10000),
             AudioBitrateKbps: GetInt(values, "audio-bitrate-kbps", 192),
             TimeoutSeconds: GetInt(values, "timeout-seconds", 1200)
@@ -614,10 +1729,13 @@ internal static class Program
         string? Executable,
         string? Project,
         string? Output,
+        string? Csv,
         int VideoBitrateKbps,
         int AudioBitrateKbps,
         int TimeoutSeconds
     );
+
+    private sealed record ScriptRow(string Speaker, string Text);
 
     private sealed class OwnedProcesses(IReadOnlyList<Process> processes) : IDisposable
     {

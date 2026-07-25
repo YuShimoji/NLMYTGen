@@ -1,0 +1,78 @@
+{
+  "schema": "nlmytgen.factory_canary_canonical_script.v1",
+  "episode_id": "real_estate_reins_transparency_001",
+  "title": "REINSと不動産情報流通の仕組み",
+  "content_boundary": "internal_factory_canary_not_human_accepted",
+  "language": "ja-JP",
+  "cue_count": 7,
+  "scene_count": 4,
+  "speaker_distribution": {
+    "れいむ": 4,
+    "まりさ": 3
+  },
+  "cues": [
+    {
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "text": "レインズは、どんな仕組みなの？",
+      "claim_ids": []
+    },
+    {
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "speaker": "まりさ",
+      "text": "国土交通大臣が指定した不動産流通機構が運営する、不動産会社間の物件情報共有システムだぜ。",
+      "claim_ids": [
+        "REINS-C01"
+      ]
+    },
+    {
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "speaker": "れいむ",
+      "text": "不動産会社が依頼内容をもとに物件情報を登録し、ほかの会員会社が検索する流れなんだね。",
+      "claim_ids": [
+        "REINS-C02"
+      ]
+    },
+    {
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "専属専任媒介契約と専任媒介契約では、法律によりレインズへの登録と登録証明書の交付が定められているぜ。",
+      "claim_ids": [
+        "REINS-C03"
+      ]
+    },
+    {
+      "cue_id": "cue_005",
+      "scene_id": "S3",
+      "speaker": "れいむ",
+      "text": "売主は登録証明書の情報を使って、専用画面で登録内容や取引状況を確認できるよ。",
+      "claim_ids": [
+        "REINS-C04"
+      ]
+    },
+    {
+      "cue_id": "cue_006",
+      "scene_id": "S3",
+      "speaker": "れいむ",
+      "text": "取引状況は、公開中、書面による購入申込みあり、売主都合で一時紹介停止中の三種類なんだね。",
+      "claim_ids": [
+        "REINS-C05"
+      ]
+    },
+    {
+      "cue_id": "cue_007",
+      "scene_id": "S4",
+      "speaker": "まりさ",
+      "text": "登録、検索、売主による確認がつながり、情報共有と円滑な取引を支える仕組みなんだぜ。",
+      "claim_ids": [
+        "REINS-C06"
+      ]
+    }
+  ],
+  "unsupported_spoken_factual_units": 0,
+  "human_creative_acceptance": false
+}
