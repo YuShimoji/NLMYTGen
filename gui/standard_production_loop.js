@@ -14,6 +14,35 @@ const ACCEPTED_MANIFEST_RELATIVE_PATH = [
 const ACCEPTANCE_RECEIPT_FILENAME = 'human_real_media_cut_acceptance_receipt.json';
 const PIPELINE_RECEIPT_FILENAME = 'pipeline_run_receipt.json';
 const MAX_LOG_LINES = 240;
+const RUN_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$/;
+const WINDOWS_RESERVED_NAMES = new Set([
+  'CON', 'PRN', 'AUX', 'NUL', 'CLOCK$',
+  ...Array.from({ length: 9 }, (_, index) => `COM${index + 1}`),
+  ...Array.from({ length: 9 }, (_, index) => `LPT${index + 1}`),
+]);
+
+function validateRunId(value) {
+  const runId = String(value || '').trim();
+  if (!runId) return { ok: false, error: 'run ID is required' };
+  if (
+    path.isAbsolute(runId)
+    || /^[A-Za-z]:/.test(runId)
+    || runId.startsWith('\\\\')
+    || runId.includes('/')
+    || runId.includes('\\')
+    || runId === '.'
+    || runId === '..'
+  ) {
+    return { ok: false, error: 'run ID must be one safe directory name' };
+  }
+  if (!RUN_ID_PATTERN.test(runId)) {
+    return { ok: false, error: 'run ID contains unsafe characters or is too long' };
+  }
+  if (WINDOWS_RESERVED_NAMES.has(runId.split('.', 1)[0].toUpperCase())) {
+    return { ok: false, error: 'run ID uses a reserved Windows name' };
+  }
+  return { ok: true, runId };
+}
 
 function resolveRepoRelativePath(repoRoot, relPath) {
   if (typeof relPath !== 'string' || !relPath.trim()) {
@@ -149,7 +178,7 @@ function inspectOutput(repoRoot, manifest, manifestPath) {
   return output;
 }
 
-function summarizeManifest(repoRoot, relPath) {
+function summarizeManifest(repoRoot, relPath, runIdOverride = null) {
   const resolved = resolveRepoRelativePath(repoRoot, relPath);
   if (!resolved.ok) return { ok: false, error: resolved.error };
   if (!fs.existsSync(resolved.full)) return { ok: false, error: `not found: ${resolved.rel}` };
@@ -161,6 +190,18 @@ function summarizeManifest(repoRoot, relPath) {
   }
   if (manifest.schema !== 'nlmytgen.episode_manifest.v1') {
     return { ok: false, error: `unsupported manifest schema: ${manifest.schema || 'missing'}`, path: resolved.rel };
+  }
+  const defaultRunId = manifest.output?.run_id || '';
+  if (runIdOverride !== null && runIdOverride !== undefined) {
+    const validated = validateRunId(runIdOverride);
+    if (!validated.ok) return { ok: false, error: validated.error, path: resolved.rel };
+    manifest = {
+      ...manifest,
+      output: {
+        ...manifest.output,
+        run_id: validated.runId,
+      },
+    };
   }
 
   const locks = (manifest.content_locks || []).map((lock) => inspectLockedFile(repoRoot, lock));
@@ -177,6 +218,8 @@ function summarizeManifest(repoRoot, relPath) {
     ok: true,
     path: resolved.rel,
     manifest_sha256: sha256(resolved.full),
+    default_run_id: defaultRunId,
+    resolved_run_id: manifest.output.run_id,
     episode: {
       id: manifest.episode_id,
       cue_count: (manifest.cue_mapping || []).length,
@@ -188,6 +231,7 @@ function summarizeManifest(repoRoot, relPath) {
         height: manifest.render_settings?.height,
         fps: manifest.render_settings?.fps,
         container: manifest.render_settings?.container,
+        timeout_seconds: manifest.render_settings?.timeout_seconds,
       },
       internal_review_only: manifest.boundaries?.internal_review_only === true,
     },
@@ -215,8 +259,21 @@ function buildDoctorArgs() {
   return ['doctor-runtime', '--profile', 'all', '--deep', '--format', 'json'];
 }
 
-function buildEpisodeArgs(relPath, { dryRun = false, render = false, resume = false } = {}) {
+function buildEpisodeArgs(
+  relPath,
+  {
+    dryRun = false,
+    render = false,
+    resume = false,
+    runId = null,
+  } = {},
+) {
   const args = ['build-episode-video', '--episode', relPath];
+  if (runId !== null && runId !== undefined) {
+    const validated = validateRunId(runId);
+    if (!validated.ok) throw new Error(validated.error);
+    args.push('--run-id', validated.runId);
+  }
   if (dryRun) args.push('--dry-run');
   if (render) args.push('--render');
   if (resume) args.push('--resume');
@@ -340,4 +397,5 @@ module.exports = {
   resolveRepoRelativePath,
   sanitizeText,
   summarizeManifest,
+  validateRunId,
 };

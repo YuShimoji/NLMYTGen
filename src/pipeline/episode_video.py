@@ -31,6 +31,7 @@ from src.pipeline.media_validation import (
     probe_with_ffprobe,
 )
 from src.pipeline.silent_media_runtime import (
+    OwnedProcessJob,
     assert_command_allowed,
     descendant_pids,
     find_browser,
@@ -45,6 +46,19 @@ PROJECT_READBACK_SCHEMA = "nlmytgen.episode_video_project_readback.v1"
 VISUAL_READBACK_SCHEMA = "nlmytgen.cue_visual_readback.v1"
 MEDIA_VALIDATION_SCHEMA = "nlmytgen.episode_media_validation.v1"
 REAL_MEDIA_PROVENANCE_SCHEMA = "nlmytgen.real_media_provenance.v1"
+CONTENT_IDENTITY_SCHEMA = "nlmytgen.episode_content_identity.v1"
+RUN_IDENTITY_SCHEMA = "nlmytgen.episode_run_identity.v1"
+RESUME_OBSERVATION_SCHEMA = "nlmytgen.episode_resume_observation.v1"
+FAILURE_RECEIPT_SCHEMA = "nlmytgen.episode_video_failure_receipt.v1"
+RENDER_CLEANUP_GRACE_SECONDS = 60
+RENDER_OBSERVER_GRACE_SECONDS = 30
+RENDER_PROCESS_EXECUTABLES = {
+    "dotnet.exe",
+    "ymm4renderautomation.exe",
+    "yukkurimoviemaker.exe",
+    "win32service.exe",
+    "ffmpeg.exe",
+}
 VOICE_ITEM_TYPE = "YukkuriMovieMaker.Project.Items.VoiceItem, YukkuriMovieMaker"
 IMAGE_ITEM_TYPE = "YukkuriMovieMaker.Project.Items.ImageItem, YukkuriMovieMaker"
 ABSOLUTE_WINDOWS_PATH = re.compile(r"^[A-Za-z]:[\\/]")
@@ -58,14 +72,42 @@ REAL_MEDIA_USAGE_CLASSIFICATIONS = {
 }
 IMAGE_EXTENSIONS = {".bmp", ".jpeg", ".jpg", ".png", ".webp"}
 VIDEO_EXTENSIONS = {".m4v", ".mkv", ".mov", ".mp4", ".webm"}
+RUN_ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$")
+WINDOWS_RESERVED_NAMES = {
+    "CON",
+    "PRN",
+    "AUX",
+    "NUL",
+    "CLOCK$",
+    *(f"COM{index}" for index in range(1, 10)),
+    *(f"LPT{index}" for index in range(1, 10)),
+}
+CONTENT_IDENTITY_EXCLUDED_FIELDS = (
+    "output.run_id",
+    "runtime_resolution.run_directory",
+    "run_identity.created_at_utc",
+    "run_identity.started_at_utc",
+    "run_identity.completed_at_utc",
+    "run_identity.elapsed_seconds",
+    "run_identity.process_ids",
+    "run_identity.host_local_paths",
+    "diagnostic locator fields",
+)
 
 
 class EpisodeVideoError(RuntimeError):
     """Structured pipeline failure with a stable error code."""
 
-    def __init__(self, message: str, *, code: str = "episode_video_pipeline_failed") -> None:
+    def __init__(
+        self,
+        message: str,
+        *,
+        code: str = "episode_video_pipeline_failed",
+        details: Mapping[str, Any] | None = None,
+    ) -> None:
         super().__init__(message)
         self.code = code
+        self.details = dict(details or {})
 
 
 @dataclass(frozen=True)
@@ -326,12 +368,34 @@ def resolve_repo_path(repo_root: Path, relative: str) -> Path:
     return resolved
 
 
+def path_is_absolute_or_qualified(value: str) -> bool:
+    return (
+        Path(value).is_absolute()
+        or bool(ABSOLUTE_WINDOWS_PATH.match(value))
+        or value.startswith("\\\\")
+    )
+
+
+def validate_run_id(value: str) -> str:
+    run_id = str(value or "").strip()
+    if not run_id:
+        raise EpisodeVideoError("run_id is required", code="run_id_invalid")
+    if path_is_absolute_or_qualified(run_id):
+        raise EpisodeVideoError("run_id must not be absolute", code="run_id_invalid")
+    if run_id in {".", ".."} or "/" in run_id or "\\" in run_id:
+        raise EpisodeVideoError("run_id traversal is not allowed", code="run_id_invalid")
+    if not RUN_ID_PATTERN.fullmatch(run_id):
+        raise EpisodeVideoError("run_id contains unsafe characters", code="run_id_invalid")
+    reserved_stem = run_id.split(".", 1)[0].upper()
+    if reserved_stem in WINDOWS_RESERVED_NAMES:
+        raise EpisodeVideoError("run_id uses a reserved Windows name", code="run_id_invalid")
+    return run_id
+
+
 def build_pipeline_paths(repo_root: Path, manifest: Mapping[str, Any]) -> PipelinePaths:
     output = manifest["output"]
     output_root = resolve_repo_path(repo_root, str(output["run_root_path"]))
-    run_id = str(output["run_id"])
-    if not re.fullmatch(r"[A-Za-z0-9._-]+", run_id):
-        raise EpisodeVideoError("run_id contains unsafe characters", code="run_id_invalid")
+    run_id = validate_run_id(str(output["run_id"]))
     run = output_root / run_id
     return PipelinePaths(
         run_directory=run,
@@ -705,6 +769,134 @@ def preflight_episode(
     )
 
 
+def build_content_identity(
+    repo_root: Path,
+    manifest: Mapping[str, Any],
+    timings: Sequence[CueTiming],
+) -> dict[str, Any]:
+    semantic_manifest_keys = (
+        "schema",
+        "episode_id",
+        "source_package",
+        "approved_script",
+        "derived_csv",
+        "visual_source_path",
+        "provenance_manifest_path",
+        "content_locks",
+        "cue_mapping",
+        "yymm4",
+        "render_settings",
+        "boundaries",
+    )
+    payload = {
+        "schema": CONTENT_IDENTITY_SCHEMA,
+        "pipeline_semantics": {
+            "manifest_schema": MANIFEST_SCHEMA,
+            "run_receipt_schema": RUN_RECEIPT_SCHEMA,
+            "project_builder": "voice_preserving_visual_binding_v2",
+            "real_media_materializer": "silent_ffmpeg_subtitle_binding_v1",
+            "media_validator": MEDIA_VALIDATION_SCHEMA,
+        },
+        "manifest": {
+            key: manifest[key]
+            for key in semantic_manifest_keys
+            if key in manifest
+        },
+        "output_semantics": {
+            "project_filename": manifest["output"]["project_filename"],
+            "mp4_filename": manifest["output"]["mp4_filename"],
+        },
+        "cue_semantics": [
+            {
+                "cue_id": timing.cue_id,
+                "scene_id": timing.scene_id,
+                "speaker": timing.speaker,
+                "text": timing.text,
+                "frame": timing.frame,
+                "length_frames": timing.length_frames,
+                "end_frame": timing.end_frame,
+                "visual_id": timing.visual_id,
+                "asset_id": timing.asset_id,
+                "asset_type": timing.asset_type,
+                "source_path": _repo_relative(repo_root, timing.visual_source),
+                "source_sha256": sha256_file(timing.visual_source),
+                "source_provenance_id": timing.source_provenance_id,
+                "fit_mode": timing.fit_mode,
+                "crop": list(timing.crop) if timing.crop is not None else None,
+                "source_start_seconds": timing.source_start_seconds,
+                "source_end_seconds": timing.source_end_seconds,
+                "internal_review_only": timing.internal_review_only,
+                "subtitle_lines": list(timing.subtitle_lines),
+                "speaker_label": timing.speaker_label,
+            }
+            for timing in timings
+        ],
+    }
+    return {
+        "schema": CONTENT_IDENTITY_SCHEMA,
+        "sha256": _json_digest(payload),
+        "excluded_volatile_fields": list(CONTENT_IDENTITY_EXCLUDED_FIELDS),
+        "canonical_payload": payload,
+    }
+
+
+def normalized_project_structural_identity(
+    project_path: Path,
+    run_directory: Path,
+) -> dict[str, Any]:
+    project = _read_project(project_path)
+    normalized = _normalize_run_local_values(project, run_directory.resolve())
+    return {
+        "schema": "nlmytgen.normalized_yymm4_project_structure.v1",
+        "sha256": _json_digest(normalized),
+        "run_local_paths_normalized": True,
+        "excluded_volatile_fields": [
+            "project.FilePath run-directory prefix",
+            "ImageItem.FilePath run-directory prefix",
+        ],
+    }
+
+
+def _normalize_run_local_values(value: Any, run_directory: Path) -> Any:
+    if isinstance(value, dict):
+        return {
+            key: _normalize_run_local_values(item, run_directory)
+            for key, item in value.items()
+        }
+    if isinstance(value, list):
+        return [_normalize_run_local_values(item, run_directory) for item in value]
+    if not isinstance(value, str) or not path_is_absolute_or_qualified(value):
+        return value
+    try:
+        relative = Path(value).resolve().relative_to(run_directory)
+    except (OSError, ValueError):
+        return value
+    return f"<run-dir>/{relative.as_posix()}"
+
+
+def semantic_real_media_manifest_sha256(path: Path) -> str:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    normalized = json.loads(json.dumps(payload, ensure_ascii=False))
+    for record in normalized.get("records", []):
+        process = record.pop("materialization_process", None)
+        if isinstance(process, dict):
+            record["materialization_contract"] = {
+                key: value
+                for key, value in process.items()
+                if key not in {"status"}
+            }
+    return _json_digest(normalized)
+
+
+def semantic_cue_visual_readback_sha256(path: Path) -> str:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    normalized = json.loads(json.dumps(payload, ensure_ascii=False))
+    for record in normalized.get("records", []):
+        if "path" in record:
+            record["path"] = f"<cue-frame>/{Path(str(record['path'])).name}"
+    return _json_digest(normalized)
+
+
 def _escape_drawtext(value: str) -> str:
     return (
         value.replace("\\", "\\\\")
@@ -847,6 +1039,22 @@ def materialize_visuals(
         unique_sources.setdefault(timing.asset_id, timing)
     paths.generated_assets.mkdir(parents=True, exist_ok=True)
     browser = find_browser() if any(timing.asset_type == "svg" for timing in timings) else None
+    existing_records: dict[str, Mapping[str, Any]] = {}
+    if resume and paths.real_media_asset_manifest.is_file():
+        try:
+            existing_payload = json.loads(
+                paths.real_media_asset_manifest.read_text(encoding="utf-8")
+            )
+            existing_records = {
+                str(row["asset_id"]): row
+                for row in existing_payload.get("records", [])
+                if isinstance(row, dict) and row.get("asset_id")
+            }
+        except (json.JSONDecodeError, OSError, TypeError) as exc:
+            raise EpisodeVideoError(
+                "cached real-media manifest is unreadable",
+                code="resume_artifact_drift",
+            ) from exc
     records: list[dict[str, Any]] = []
     outputs: dict[str, Path] = {}
     for asset_id in sorted(unique_sources):
@@ -859,12 +1067,22 @@ def materialize_visuals(
                 raise EpisodeVideoError(
                     f"cached visual has wrong dimensions: {asset_id}", code="cached_visual_invalid"
                 )
-            process_receipt = {
-                "status": "reused",
-                "cleanup_verified": True,
-                "speaker_playback": False,
-                "preview_playback": False,
-            }
+            prior_record = existing_records.get(asset_id)
+            prior_process = (
+                prior_record.get("materialization_process")
+                if isinstance(prior_record, Mapping)
+                else None
+            )
+            process_receipt = (
+                dict(prior_process)
+                if isinstance(prior_process, Mapping)
+                else {
+                    "status": "reused",
+                    "cleanup_verified": True,
+                    "speaker_playback": False,
+                    "preview_playback": False,
+                }
+            )
         else:
             if timing.asset_type in REAL_MEDIA_ASSET_TYPES:
                 process_receipt = _materialize_real_media_frame(timing, output)
@@ -982,6 +1200,12 @@ def build_yymm4_project(
         raise EpisodeVideoError("VoiceItem object drift occurred", code="voice_item_object_drift")
     readback["source_project_sha256"] = source_hash_before
     readback["generated_project_sha256"] = sha256_file(paths.generated_project)
+    readback["normalized_project_structural_identity"] = (
+        normalized_project_structural_identity(
+            paths.generated_project,
+            paths.run_directory,
+        )
+    )
     readback["voice_items_unchanged"] = True
     return readback
 
@@ -1186,6 +1410,72 @@ def build_render_driver_command(
     ]
 
 
+def build_render_timeout_contract(manifest: Mapping[str, Any]) -> dict[str, Any]:
+    raw_timeout = (manifest.get("render_settings") or {}).get("timeout_seconds", 1200)
+    if isinstance(raw_timeout, bool):
+        raise EpisodeVideoError("render timeout must be a positive integer", code="render_timeout_invalid")
+    try:
+        render_timeout_seconds = int(raw_timeout)
+    except (TypeError, ValueError) as exc:
+        raise EpisodeVideoError(
+            "render timeout must be a positive integer",
+            code="render_timeout_invalid",
+        ) from exc
+    if render_timeout_seconds <= 0:
+        raise EpisodeVideoError("render timeout must be a positive integer", code="render_timeout_invalid")
+    pipeline_timeout_seconds = render_timeout_seconds + RENDER_CLEANUP_GRACE_SECONDS
+    return {
+        "schema": "nlmytgen.render_timeout_contract.v1",
+        "authority": "manifest.render_settings.timeout_seconds",
+        "render_timeout_seconds": render_timeout_seconds,
+        "cleanup_grace_seconds": RENDER_CLEANUP_GRACE_SECONDS,
+        "pipeline_timeout_seconds": pipeline_timeout_seconds,
+        "observer_grace_seconds": RENDER_OBSERVER_GRACE_SECONDS,
+        "observer_timeout_seconds": pipeline_timeout_seconds + RENDER_OBSERVER_GRACE_SECONDS,
+    }
+
+
+def _driver_last_stage(stderr: str) -> str | None:
+    last_stage: str | None = None
+    for line in (stderr or "").splitlines():
+        try:
+            payload = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(payload, dict) and isinstance(payload.get("stage"), str):
+            last_stage = payload["stage"]
+    return last_stage
+
+
+def _wait_for_render_cleanup(
+    *,
+    baseline: Mapping[int, Mapping[str, Any]],
+    owned_pids: set[int],
+    cleanup_grace_seconds: int,
+) -> dict[str, Any]:
+    started = time.perf_counter()
+    deadline = time.monotonic() + cleanup_grace_seconds
+    residual: set[int] = set()
+    while True:
+        snapshot = process_snapshot()
+        new_render_pids = {
+            pid
+            for pid, row in snapshot.items()
+            if pid not in baseline
+            and str(row.get("executable") or row.get("name") or "").lower()
+            in RENDER_PROCESS_EXECUTABLES
+        }
+        residual = ({pid for pid in owned_pids if pid in snapshot} | new_render_pids)
+        if not residual or time.monotonic() >= deadline:
+            break
+        time.sleep(0.2)
+    return {
+        "cleanup_verified": not residual,
+        "residual_count": len(residual),
+        "cleanup_seconds": round(time.perf_counter() - started, 6),
+    }
+
+
 def execute_yymm4_render(
     repo_root: Path,
     manifest: Mapping[str, Any],
@@ -1200,40 +1490,107 @@ def execute_yymm4_render(
             "render_size_bytes": paths.yymm4_render.stat().st_size,
             "project_sha256": sha256_file(paths.generated_project),
             "project_owned_process_cleanup": True,
+            "yymm4_launched": False,
+            "timings": {
+                "automation_total_seconds": 0.0,
+                "cleanup_seconds": 0.0,
+            },
         }
     executable = resolve_yymm4_executable()
     command = build_render_driver_command(
         repo_root, executable, paths.generated_project, paths.yymm4_render, manifest["render_settings"]
     )
+    assert_command_allowed(command)
+    timeout_contract = build_render_timeout_contract(manifest)
     baseline = process_snapshot()
     started_ns = time.time_ns()
-    completed = subprocess.run(
+    automation_started = time.perf_counter()
+    process = subprocess.Popen(
         command,
         cwd=repo_root,
         stdin=subprocess.DEVNULL,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        check=False,
-        timeout=int(manifest["render_settings"].get("timeout_seconds", 1200)) + 60,
         text=True,
         encoding="utf-8",
         errors="replace",
+        creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0,
     )
-    after = process_snapshot()
-    new_yymm4 = [
-        pid
-        for pid, row in after.items()
-        if pid not in baseline
-        and str(row.get("name", "")).lower() == "yukkurimoviemaker.exe"
-    ]
-    if new_yymm4:
+    try:
+        process_job = OwnedProcessJob(process)
+    except OSError as exc:
+        process.kill()
+        process.communicate()
         raise EpisodeVideoError(
-            f"project-owned YMM4 process remained: {new_yymm4}", code="yymm4_process_residual"
+            "YMM4 render process containment failed",
+            code="yymm4_process_containment_failed",
+            details={
+                "failed_stage": "yymm4_render",
+                "driver_stage": "launch",
+                "job_object_assigned": False,
+                "cleanup_verified": False,
+                "timeout_contract": timeout_contract,
+            },
+        ) from exc
+    timed_out = False
+    completed_stdout = ""
+    completed_stderr = ""
+    try:
+        completed_stdout, completed_stderr = process.communicate(
+            timeout=timeout_contract["pipeline_timeout_seconds"]
         )
-    if completed.returncode != 0 or not paths.yymm4_render.is_file():
-        summary = _sanitize_subprocess_output(completed.stderr or completed.stdout, paths)
+    except subprocess.TimeoutExpired:
+        timed_out = True
+    before_cleanup = process_snapshot()
+    owned_pids = descendant_pids(process.pid, before_cleanup)
+    process_job.close()
+    if process.poll() is None:
+        process.kill()
+    try:
+        trailing_stdout, trailing_stderr = process.communicate(timeout=10)
+        if trailing_stdout:
+            completed_stdout = trailing_stdout
+        if trailing_stderr:
+            completed_stderr = trailing_stderr
+    except subprocess.TimeoutExpired:
+        process.kill()
+        process.communicate()
+        completed_stderr = (
+            f"{completed_stderr}\nowned render process did not close after Job Object termination"
+        ).strip()
+    cleanup = _wait_for_render_cleanup(
+        baseline=baseline,
+        owned_pids=owned_pids,
+        cleanup_grace_seconds=timeout_contract["cleanup_grace_seconds"],
+    )
+    driver_stage = _driver_last_stage(completed_stderr)
+    failure_details = {
+        "failed_stage": "yymm4_render",
+        "driver_stage": driver_stage,
+        "job_object_assigned": True,
+        "cleanup_verified": cleanup["cleanup_verified"],
+        "residual_count": cleanup["residual_count"],
+        "cleanup_seconds": cleanup["cleanup_seconds"],
+        "timeout_contract": timeout_contract,
+    }
+    if not cleanup["cleanup_verified"]:
         raise EpisodeVideoError(
-            f"YMM4 render automation failed: {summary}", code="yymm4_render_failed"
+            "project-owned render process remained after bounded cleanup",
+            code="yymm4_process_residual",
+            details=failure_details,
+        )
+    if timed_out:
+        raise EpisodeVideoError(
+            "YMM4 render automation timed out; owned process tree was cleaned",
+            code="yymm4_render_timeout",
+            details=failure_details,
+        )
+    if process.returncode != 0 or not paths.yymm4_render.is_file():
+        summary = _sanitize_subprocess_output(completed_stderr or completed_stdout, paths)
+        raise EpisodeVideoError(
+            f"YMM4 render automation failed: {summary}",
+            code="yymm4_render_failed",
+            details=failure_details,
         )
     if paths.yymm4_render.stat().st_mtime_ns < started_ns:
         raise EpisodeVideoError("YMM4 render is stale", code="render_freshness_failed")
@@ -1246,9 +1603,18 @@ def execute_yymm4_render(
         "project_sha256": sha256_file(paths.generated_project),
         "render_fresh": True,
         "project_owned_process_cleanup": True,
+        "yymm4_launched": True,
         "speaker_playback_used": False,
         "preview_used": False,
-        "stdout_summary": _sanitize_subprocess_output(completed.stdout, paths),
+        "stdout_summary": _sanitize_subprocess_output(completed_stdout, paths),
+        "timeout_contract": timeout_contract,
+        "timings": {
+            "automation_total_seconds": round(
+                time.perf_counter() - automation_started,
+                6,
+            ),
+            "cleanup_seconds": cleanup["cleanup_seconds"],
+        },
     }
 
 
@@ -1440,6 +1806,188 @@ def extract_review_frames(
     }
 
 
+def runtime_git_identity(repo_root: Path) -> dict[str, Any]:
+    try:
+        source_commit = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"],
+            cwd=repo_root,
+            stderr=subprocess.DEVNULL,
+            text=True,
+            encoding="utf-8",
+        ).strip()
+        status = subprocess.check_output(
+            ["git", "status", "--porcelain", "--untracked-files=no"],
+            cwd=repo_root,
+            stderr=subprocess.DEVNULL,
+            text=True,
+            encoding="utf-8",
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return {
+            "source_commit": "unavailable",
+            "tracked_worktree_clean": None,
+        }
+    return {
+        "source_commit": source_commit,
+        "tracked_worktree_clean": not status.strip(),
+    }
+
+
+def build_artifact_identities(
+    paths: PipelinePaths,
+    *,
+    render: bool,
+) -> dict[str, Any]:
+    identities: dict[str, Any] = {
+        "generated_project": {
+            "raw_sha256": sha256_file(paths.generated_project),
+            "size_bytes": paths.generated_project.stat().st_size,
+            "normalized_structural": normalized_project_structural_identity(
+                paths.generated_project,
+                paths.run_directory,
+            ),
+        },
+        "real_media_asset_manifest": {
+            "raw_sha256": sha256_file(paths.real_media_asset_manifest),
+            "semantic_sha256": semantic_real_media_manifest_sha256(
+                paths.real_media_asset_manifest
+            ),
+        },
+        "cue_visual_readback": {
+            "raw_sha256": sha256_file(paths.cue_visual_readback),
+            "semantic_sha256": semantic_cue_visual_readback_sha256(
+                paths.cue_visual_readback
+            ),
+        },
+    }
+    if render:
+        identities.update(
+            {
+                "yymm4_render_intermediate": {
+                    "sha256": sha256_file(paths.yymm4_render),
+                    "size_bytes": paths.yymm4_render.stat().st_size,
+                },
+                "internal_review_mp4": {
+                    "sha256": sha256_file(paths.review_mp4),
+                    "size_bytes": paths.review_mp4.stat().st_size,
+                },
+                "media_validation": {
+                    "sha256": sha256_file(paths.media_validation),
+                },
+            }
+        )
+    return identities
+
+
+def verify_completed_run(
+    paths: PipelinePaths,
+    *,
+    content_identity: Mapping[str, Any],
+    render: bool,
+) -> dict[str, Any] | None:
+    if not paths.run_receipt.is_file():
+        return None
+    try:
+        prior = json.loads(paths.run_receipt.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as exc:
+        raise EpisodeVideoError(
+            "completed run receipt is unreadable",
+            code="resume_artifact_drift",
+        ) from exc
+    if prior.get("status") != "passed":
+        return None
+    if prior.get("content_identity_sha256") != content_identity.get("sha256"):
+        raise EpisodeVideoError(
+            "resume content identity differs from completed run",
+            code="resume_artifact_drift",
+        )
+    if prior.get("run_id") != paths.run_directory.name:
+        raise EpisodeVideoError(
+            "resume run identity differs from completed run",
+            code="resume_artifact_drift",
+        )
+    if render and prior.get("render_requested") is not True:
+        return None
+    expected = prior.get("artifact_identities")
+    if not isinstance(expected, dict):
+        raise EpisodeVideoError(
+            "completed run lacks artifact identities",
+            code="resume_artifact_drift",
+        )
+    try:
+        actual = build_artifact_identities(paths, render=render)
+    except (FileNotFoundError, json.JSONDecodeError, OSError) as exc:
+        raise EpisodeVideoError(
+            "completed run output is missing or corrupt",
+            code="resume_artifact_drift",
+        ) from exc
+    if actual != expected:
+        raise EpisodeVideoError(
+            "completed run artifact identity mismatch",
+            code="resume_artifact_drift",
+        )
+    return {
+        **prior,
+        "resume": True,
+        "resume_observation": {
+            "schema": RESUME_OBSERVATION_SCHEMA,
+            "status": "verified_noop",
+            "content_identity_sha256": content_identity["sha256"],
+            "prior_receipt_sha256": sha256_file(paths.run_receipt),
+            "outputs_rewritten": False,
+            "yymm4_launched": False,
+            "validation_only": True,
+            "artifact_identities_exact": True,
+            "excluded_volatile_fields": list(CONTENT_IDENTITY_EXCLUDED_FIELDS),
+        },
+    }
+
+
+def persist_pipeline_failure(
+    paths: PipelinePaths,
+    *,
+    plan: Mapping[str, Any],
+    error: EpisodeVideoError,
+) -> Path:
+    completed_at_utc = datetime.now(timezone.utc).isoformat()
+    target = paths.run_directory / "pipeline_failure_receipt.json"
+    if target.exists():
+        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+        target = paths.run_directory / f"pipeline_failure_receipt.{stamp}.json"
+    details = dict(error.details)
+    details.pop("failure_receipt", None)
+    payload = {
+        "schema": FAILURE_RECEIPT_SCHEMA,
+        "status": "failed",
+        "episode_id": plan["episode_id"],
+        "run_id": plan["run_id"],
+        "content_identity_sha256": plan["content_identity_sha256"],
+        "source_commit": plan["run_identity"]["source_commit"],
+        "tracked_worktree_clean_at_start": plan["run_identity"][
+            "tracked_worktree_clean_at_start"
+        ],
+        "failed_stage": details.get("failed_stage") or "unknown",
+        "error_code": error.code,
+        "message": _sanitize_subprocess_output(str(error), paths),
+        "failure_details": details,
+        "stage_timings": dict(plan["stage_timings"]),
+        "operator_controls": {
+            "manual_intervention_count": 0,
+            "computer_use_count": 0,
+            "keyboard_mouse_injection_count": 0,
+            "sendkeys_count": 0,
+            "system_volume_operation_count": 0,
+            "preview_playback_count": 0,
+        },
+        "boundaries": plan["boundaries"],
+        "completed_at_utc": completed_at_utc,
+    }
+    target.write_bytes(canonical_json_bytes(payload))
+    error.details["failure_receipt"] = target.name
+    _append_log(paths.run_log, f"failure receipt written: {target.name}")
+    return target
+
+
 def run_episode_video(
     *,
     repo_root: Path,
@@ -1448,17 +1996,54 @@ def run_episode_video(
     dry_run: bool,
     resume: bool,
     force: bool,
+    run_id_override: str | None = None,
 ) -> dict[str, Any]:
+    total_started = time.perf_counter()
+    started_at_utc = datetime.now(timezone.utc).isoformat()
     repo_root = repo_root.resolve()
     manifest_path = manifest_path.resolve()
     manifest = load_episode_manifest(repo_root, manifest_path)
+    if run_id_override is not None:
+        manifest = json.loads(json.dumps(manifest, ensure_ascii=False))
+        manifest["output"]["run_id"] = validate_run_id(run_id_override)
+    else:
+        validate_run_id(str(manifest["output"]["run_id"]))
     paths = build_pipeline_paths(repo_root, manifest)
+    preflight_started = time.perf_counter()
     preflight, timings = preflight_episode(repo_root, manifest)
+    stage_timings = {
+        "preflight_seconds": round(time.perf_counter() - preflight_started, 6),
+    }
+    identity_started = time.perf_counter()
+    content_identity = build_content_identity(repo_root, manifest, timings)
+    stage_timings["content_identity_seconds"] = round(
+        time.perf_counter() - identity_started,
+        6,
+    )
+    git_identity = runtime_git_identity(repo_root)
+    run_identity = {
+        "schema": RUN_IDENTITY_SCHEMA,
+        "run_id": manifest["output"]["run_id"],
+        "resolved_run_directory": (
+            str(manifest["output"]["run_root_path"]).rstrip("/")
+            + "/"
+            + str(manifest["output"]["run_id"])
+        ),
+        "source_commit": git_identity["source_commit"],
+        "tracked_worktree_clean_at_start": git_identity["tracked_worktree_clean"],
+        "started_at_utc": started_at_utc,
+    }
     plan = {
         "schema": RUN_RECEIPT_SCHEMA,
         "status": "dry_run" if dry_run else "running",
         "episode_id": manifest["episode_id"],
         "run_id": manifest["output"]["run_id"],
+        "content_identity_sha256": content_identity["sha256"],
+        "content_identity": {
+            "schema": content_identity["schema"],
+            "excluded_volatile_fields": content_identity["excluded_volatile_fields"],
+        },
+        "run_identity": run_identity,
         "stages": [
             "preflight",
             "media_materialization",
@@ -1476,9 +2061,29 @@ def run_episode_video(
         "resume": resume,
         "force": force,
         "boundaries": manifest["boundaries"],
+        "render_timeout_contract": build_render_timeout_contract(manifest),
+        "stage_timings": stage_timings,
     }
     if dry_run:
+        plan["stage_timings"]["total_seconds"] = round(
+            time.perf_counter() - total_started,
+            6,
+        )
         return plan
+
+    if paths.run_directory.exists() and resume and not force:
+        resume_started = time.perf_counter()
+        completed = verify_completed_run(
+            paths,
+            content_identity=content_identity,
+            render=render,
+        )
+        if completed is not None:
+            completed["resume_observation"]["elapsed_seconds"] = round(
+                time.perf_counter() - resume_started,
+                6,
+            )
+            return completed
 
     if paths.run_directory.exists() and not (resume or force):
         raise EpisodeVideoError(
@@ -1503,6 +2108,12 @@ def run_episode_video(
 
     resolved_manifest = {
         **manifest,
+        "content_identity": content_identity,
+        "run_identity_contract": {
+            "schema": RUN_IDENTITY_SCHEMA,
+            "run_id": manifest["output"]["run_id"],
+            "excluded_from_content_identity": True,
+        },
         "runtime_resolution": {
             "repo_root": "<repo-root>",
             "manifest_path": _repo_relative(repo_root, manifest_path),
@@ -1511,27 +2122,68 @@ def run_episode_video(
     }
     _write_or_verify(paths.resolved_manifest, canonical_json_bytes(resolved_manifest), resume=resume)
 
+    visual_started = time.perf_counter()
     visuals, visual_receipt = materialize_visuals(
         timings, paths, resume=resume, repo_root=repo_root
     )
+    stage_timings["media_materialization_seconds"] = round(
+        time.perf_counter() - visual_started,
+        6,
+    )
     _append_log(paths.run_log, "visual materialization passed")
+    project_started = time.perf_counter()
     project_readback = build_yymm4_project(
         repo_root, manifest, timings, visuals, paths, resume=resume
     )
+    stage_timings["yymm4_project_seconds"] = round(
+        time.perf_counter() - project_started,
+        6,
+    )
     _append_log(paths.run_log, "YMM4 project generation/readback passed")
+    cue_readback_started = time.perf_counter()
     cue_readback = build_cue_visual_readback(timings, visuals, paths)
     _write_or_verify(paths.cue_visual_readback, canonical_json_bytes(cue_readback), resume=resume)
+    stage_timings["cue_readback_seconds"] = round(
+        time.perf_counter() - cue_readback_started,
+        6,
+    )
 
     render_receipt: dict[str, Any] | None = None
     normalization: dict[str, Any] | None = None
     media: dict[str, Any] | None = None
     if render:
-        render_receipt = execute_yymm4_render(repo_root, manifest, paths, resume=resume)
+        render_started = time.perf_counter()
+        try:
+            render_receipt = execute_yymm4_render(repo_root, manifest, paths, resume=resume)
+        except EpisodeVideoError as exc:
+            stage_timings["yymm4_render_seconds"] = round(
+                time.perf_counter() - render_started,
+                6,
+            )
+            stage_timings["cleanup_seconds"] = float(
+                exc.details.get("cleanup_seconds") or 0.0
+            )
+            persist_pipeline_failure(paths, plan=plan, error=exc)
+            _append_log(paths.run_log, f"YMM4 render failed: {exc.code}")
+            raise
+        stage_timings["yymm4_render_seconds"] = round(
+            time.perf_counter() - render_started,
+            6,
+        )
+        stage_timings["cleanup_seconds"] = float(
+            (render_receipt.get("timings") or {}).get("cleanup_seconds") or 0.0
+        )
         _append_log(paths.run_log, "YMM4 render passed")
+        normalization_started = time.perf_counter()
         normalization = normalize_review_mp4(
             paths.yymm4_render, paths.review_mp4, manifest["render_settings"], resume=resume
         )
+        stage_timings["normalization_seconds"] = round(
+            time.perf_counter() - normalization_started,
+            6,
+        )
         _append_log(paths.run_log, "review MP4 normalization passed")
+        validation_started = time.perf_counter()
         media = validate_media(
             paths.review_mp4,
             timings,
@@ -1539,16 +2191,31 @@ def run_episode_video(
             manifest["render_settings"],
             sha256_file(paths.generated_project),
         )
+        stage_timings["media_validation_seconds"] = round(
+            time.perf_counter() - validation_started,
+            6,
+        )
         _append_log(paths.run_log, "media validation and frame extraction passed")
 
+    artifact_identities = build_artifact_identities(paths, render=render)
+    receipt_started = time.perf_counter()
+    completed_at_utc = datetime.now(timezone.utc).isoformat()
+    run_identity = {
+        **run_identity,
+        "completed_at_utc": completed_at_utc,
+        "elapsed_seconds": round(time.perf_counter() - total_started, 6),
+    }
     receipt = {
         **plan,
         "status": "passed",
-        "completed_at_utc": datetime.now(timezone.utc).isoformat(),
+        "completed_at_utc": completed_at_utc,
+        "content_identity_sha256": content_identity["sha256"],
+        "run_identity": run_identity,
         "preflight": preflight,
         "visual_materialization": visual_receipt,
         "project_readback": project_readback,
         "cue_visual_readback_sha256": sha256_file(paths.cue_visual_readback),
+        "artifact_identities": artifact_identities,
         "render": render_receipt,
         "normalization": normalization,
         "media_validation": media,
@@ -1567,6 +2234,16 @@ def run_episode_video(
             "deterministic_project_generation": True,
             "existing_run_requires_resume_or_force": True,
             "existing_render_not_overwritten_without_force": True,
+            "content_and_run_identity_separated": True,
+            "completed_run_resume_is_validation_only": True,
+        },
+        "operator_controls": {
+            "manual_intervention_count": 0,
+            "computer_use_count": 0,
+            "keyboard_mouse_injection_count": 0,
+            "sendkeys_count": 0,
+            "system_volume_operation_count": 0,
+            "preview_playback_count": 0,
         },
         "silent_execution": {
             "policy": resolve_audio_policy(),
@@ -1576,6 +2253,15 @@ def run_episode_video(
             "public_media_access": False,
         },
     }
+    stage_timings["receipt_generation_seconds"] = round(
+        time.perf_counter() - receipt_started,
+        6,
+    )
+    stage_timings["total_seconds"] = round(
+        time.perf_counter() - total_started,
+        6,
+    )
+    receipt["stage_timings"] = stage_timings
     paths.run_receipt.write_bytes(canonical_json_bytes(receipt))
     _append_log(paths.run_log, "run receipt written")
     return receipt

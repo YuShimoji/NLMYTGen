@@ -428,6 +428,9 @@ class _JobObject:
             self.handle = None
 
 
+OwnedProcessJob = _JobObject
+
+
 class _WebSocket:
     def __init__(self, url: str) -> None:
         parsed = urlparse(url)

@@ -1714,6 +1714,10 @@ def main(argv: list[str] | None = None) -> int:
         "--resume", action="store_true", help="Verify and continue an existing run without overwriting media"
     )
     p_episode_video.add_argument(
+        "--run-id",
+        help="Optional safe run destination override; episode content remains unchanged",
+    )
+    p_episode_video.add_argument(
         "--force",
         action="store_true",
         help="Archive the existing local run and rebuild it from protected inputs",
@@ -6502,6 +6506,7 @@ def _cmd_build_episode_video(args: argparse.Namespace) -> int:
             dry_run=bool(args.dry_run),
             resume=bool(args.resume),
             force=bool(args.force),
+            run_id_override=args.run_id,
         )
     except EpisodeVideoError as exc:
         print(

@@ -12,6 +12,7 @@ const {
   classifyProfiles,
   resolveRepoRelativePath: resolveStandardLoopPath,
   summarizeManifest,
+  validateRunId,
 } = require('./standard_production_loop');
 
 const SETTINGS_PATH = path.join(__dirname, 'project-settings.json');
@@ -203,6 +204,20 @@ const standardLoopAcceptedManifest = (
   ? process.env.NLMYTGEN_STANDARD_LOOP_MANIFEST.replace(/\\/g, '/')
   : ACCEPTED_MANIFEST_RELATIVE_PATH;
 
+function standardLoopRequest(value) {
+  if (typeof value === 'string') {
+    return { manifestPath: value, runId: null };
+  }
+  return {
+    manifestPath: value?.manifestPath,
+    runId: value?.runId ?? null,
+  };
+}
+
+function standardLoopDryRunKey(manifestPath, runId) {
+  return `${manifestPath}\u0000${runId || ''}`;
+}
+
 function resolveRepoRelativePath(relPath) {
   if (typeof relPath !== 'string' || !relPath.trim()) {
     return { ok: false, error: 'repo-relative path is required' };
@@ -341,9 +356,10 @@ ipcMain.handle('standard-loop-select-manifest', async () => {
   return summarizeManifest(REPO_ROOT, relative.replace(/\\/g, '/'));
 });
 
-ipcMain.handle('standard-loop-load-manifest', async (_event, relPath) => (
-  summarizeManifest(REPO_ROOT, relPath)
-));
+ipcMain.handle('standard-loop-load-manifest', async (_event, request) => {
+  const normalized = standardLoopRequest(request);
+  return summarizeManifest(REPO_ROOT, normalized.manifestPath, normalized.runId);
+});
 
 ipcMain.handle('standard-loop-doctor', async () => {
   const result = await runCli(buildDoctorArgs());
@@ -356,14 +372,30 @@ ipcMain.handle('standard-loop-doctor', async () => {
   };
 });
 
-ipcMain.handle('standard-loop-dry-run', async (_event, relPath) => {
-  const resolved = resolveStandardLoopPath(REPO_ROOT, relPath);
+ipcMain.handle('standard-loop-dry-run', async (_event, request) => {
+  const normalized = standardLoopRequest(request);
+  const resolved = resolveStandardLoopPath(REPO_ROOT, normalized.manifestPath);
   if (!resolved.ok) return { code: -1, stdout: '', stderr: resolved.error, json: null };
-  const result = await runCli(buildEpisodeArgs(resolved.rel, { dryRun: true }));
+  const runId = normalized.runId === null
+    ? null
+    : validateRunId(normalized.runId);
+  if (runId && !runId.ok) {
+    return { code: -1, stdout: '', stderr: runId.error, json: null };
+  }
+  const resolvedRunId = runId?.runId || null;
+  const result = await runCli(buildEpisodeArgs(resolved.rel, {
+    dryRun: true,
+    runId: resolvedRunId,
+  }));
   const json = parseJsonLine(result.stdout);
   if (result.code === 0 && json) {
-    const summary = summarizeManifest(REPO_ROOT, resolved.rel);
-    if (summary.ok) standardLoopDryRunPasses.set(resolved.rel, summary.manifest_sha256);
+    const summary = summarizeManifest(REPO_ROOT, resolved.rel, resolvedRunId);
+    if (summary.ok) {
+      standardLoopDryRunPasses.set(
+        standardLoopDryRunKey(resolved.rel, summary.resolved_run_id),
+        summary.manifest_sha256,
+      );
+    }
   }
   return { ...result, json };
 });
@@ -374,28 +406,38 @@ ipcMain.handle('standard-loop-start', async (_event, opts) => {
   }
   const resolved = resolveStandardLoopPath(REPO_ROOT, opts?.manifestPath);
   if (!resolved.ok) return { ok: false, error: resolved.error };
-  const summary = summarizeManifest(REPO_ROOT, resolved.rel);
+  const validatedRunId = validateRunId(opts?.runId);
+  if (!validatedRunId.ok) return { ok: false, error: validatedRunId.error };
+  const summary = summarizeManifest(REPO_ROOT, resolved.rel, validatedRunId.runId);
   if (!summary.ok) return summary;
   if (summary.protected_inputs.status !== 'exact') {
     return { ok: false, error: 'PROTECTED_INPUTS_NOT_EXACT', summary };
   }
-  if (standardLoopDryRunPasses.get(resolved.rel) !== summary.manifest_sha256) {
+  const dryRunKey = standardLoopDryRunKey(resolved.rel, summary.resolved_run_id);
+  if (standardLoopDryRunPasses.get(dryRunKey) !== summary.manifest_sha256) {
     return { ok: false, error: 'SUCCESSFUL_DRY_RUN_REQUIRED', summary };
   }
-  const regenerateReady = standardLoopDoctorProfiles.some(
-    (profile) => profile.name === 'regenerate' && profile.state === 'ready',
+  const allProfilesReady = (
+    standardLoopDoctorProfiles.length === 4
+    && standardLoopDoctorProfiles.every((profile) => profile.state === 'ready')
   );
   const renderTestDouble = process.env.NLMYTGEN_STANDARD_LOOP_RENDER_TEST_DOUBLE === '1';
-  const realRenderProbe = (
-    standardLoopProbeMode
-    && process.env.NLMYTGEN_STANDARD_LOOP_REAL_RENDER === '1'
-  );
-  if (!regenerateReady && !renderTestDouble && !realRenderProbe) {
-    return { ok: false, error: 'REGENERATE_PROFILE_NOT_READY', summary };
+  if (!allProfilesReady && !renderTestDouble) {
+    return { ok: false, error: 'ALL_RUNTIME_PROFILES_NOT_READY', summary };
   }
   const resume = opts?.resume === true && summary.output.status !== 'absent';
-  const args = buildEpisodeArgs(resolved.rel, { render: true, resume });
-  return standardLoopJobs.start({ args, manifestPath: resolved.rel });
+  const args = buildEpisodeArgs(resolved.rel, {
+    render: true,
+    resume,
+    runId: summary.resolved_run_id,
+  });
+  return standardLoopJobs.start({
+    args,
+    manifestPath: resolved.rel,
+    runId: summary.resolved_run_id,
+    readinessBypass: false,
+    renderTestDouble,
+  });
 });
 
 ipcMain.handle('standard-loop-cancel', async (_event, jobId) => (

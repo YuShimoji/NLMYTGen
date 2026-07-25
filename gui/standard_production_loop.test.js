@@ -14,6 +14,7 @@ const {
   resolveRepoRelativePath,
   sanitizeText,
   summarizeManifest,
+  validateRunId,
 } = require('./standard_production_loop');
 
 function digest(value) {
@@ -41,6 +42,34 @@ test('command builders keep the read-only doctor and never add force', () => {
     ['build-episode-video', '--episode', 'episode.json', '--dry-run'],
   );
   assert.equal(buildEpisodeArgs('episode.json', { render: true }).includes('--force'), false);
+  assert.deepEqual(
+    buildEpisodeArgs('episode.json', {
+      render: true,
+      runId: 'real_estate_reins_repeatability_01',
+    }),
+    [
+      'build-episode-video',
+      '--episode',
+      'episode.json',
+      '--run-id',
+      'real_estate_reins_repeatability_01',
+      '--render',
+    ],
+  );
+});
+
+test('run ID validation rejects traversal, absolute, reserved, empty, and unsafe values', () => {
+  for (const value of ['', '..', '../escape', 'C:\\escape', '\\\\server\\share', 'CON', 'LPT1.txt']) {
+    assert.equal(validateRunId(value).ok, false, value);
+  }
+  assert.deepEqual(
+    validateRunId('real_estate_reins_repeatability_03'),
+    { ok: true, runId: 'real_estate_reins_repeatability_03' },
+  );
+  assert.throws(
+    () => buildEpisodeArgs('episode.json', { runId: '../escape' }),
+    /safe directory name/,
+  );
 });
 
 test('repo path resolver rejects absolute paths and traversal', () => {
@@ -92,7 +121,13 @@ test('manifest summary distinguishes exact protected inputs and accepted output'
       project_filename: 'generated.ymmp',
       mp4_filename: 'review.mp4',
     },
-    render_settings: { width: 1920, height: 1080, fps: 60, container: 'mp4' },
+    render_settings: {
+      width: 1920,
+      height: 1080,
+      fps: 60,
+      container: 'mp4',
+      timeout_seconds: 1200,
+    },
     boundaries: { internal_review_only: true },
     content_locks: [{ path: 'inputs/locked.json', sha256: digest(lockedValue) }],
   };
@@ -106,7 +141,14 @@ test('manifest summary distinguishes exact protected inputs and accepted output'
   assert.equal(summary.episode.cue_count, 2);
   assert.equal(summary.episode.scene_count, 2);
   assert.equal(summary.episode.speaker_count, 2);
+  assert.equal(summary.episode.render.timeout_seconds, 1200);
   assert.equal(path.isAbsolute(summary.output.media_path), false);
+
+  const alternate = summarizeManifest(root, 'manifests/episode.json', 'repeatability-01');
+  assert.equal(alternate.default_run_id, 'run-1');
+  assert.equal(alternate.resolved_run_id, 'repeatability-01');
+  assert.equal(alternate.output.status, 'absent');
+  assert.equal(alternate.output.run_path, 'runs/repeatability-01');
 
   write(root, 'inputs/locked.json', 'changed');
   const mismatch = summarizeManifest(root, 'manifests/episode.json');

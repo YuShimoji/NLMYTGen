@@ -40,8 +40,10 @@ def test_standard_loop_bridge_covers_manifest_doctor_dry_run_job_and_result() ->
         GUI_ROOT / "standard_production_loop.js"
     ).read_text(encoding="utf-8")
     assert "SUCCESSFUL_DRY_RUN_REQUIRED" in main
-    assert "REGENERATE_PROFILE_NOT_READY" in main
+    assert "ALL_RUNTIME_PROFILES_NOT_READY" in main
     assert "SILENT_POLICY_REQUIRED" in main
+    assert "realRenderProbe" not in main
+    assert "standardLoopDryRunKey" in main
 
 
 def test_gui_slice_adds_no_generated_design_asset_or_forbidden_visual_direction() -> None:
@@ -69,4 +71,7 @@ def test_package_scripts_expose_focused_contract_and_electron_smoke() -> None:
     )
     assert package["scripts"]["smoke:standard-production-loop"] == (
         "electron standard_production_loop_smoke.js"
+    )
+    assert package["scripts"]["smoke:three-run-repeatability"] == (
+        "electron three_run_operator_repeatability_smoke.js"
     )

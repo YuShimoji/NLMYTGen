@@ -49,7 +49,45 @@ const standardLoopState = {
   currentStage: '',
   elapsedTimer: null,
   logLines: [],
+  runId: '',
+  runIdValid: false,
 };
+
+const STANDARD_RUN_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$/;
+const STANDARD_RESERVED_RUN_IDS = new Set([
+  'CON', 'PRN', 'AUX', 'NUL', 'CLOCK$',
+  ...Array.from({ length: 9 }, (_, index) => `COM${index + 1}`),
+  ...Array.from({ length: 9 }, (_, index) => `LPT${index + 1}`),
+]);
+
+function validateStandardRunId(value) {
+  const runId = String(value || '').trim();
+  if (
+    !runId
+    || !STANDARD_RUN_ID_PATTERN.test(runId)
+    || runId.includes('/')
+    || runId.includes('\\')
+    || STANDARD_RESERVED_RUN_IDS.has(runId.split('.', 1)[0].toUpperCase())
+  ) {
+    return { ok: false, runId, error: '英数字で始まる安全な実行IDを入力してください。' };
+  }
+  return { ok: true, runId };
+}
+
+function renderStandardRunIdState(value) {
+  const input = document.getElementById('standard-run-id');
+  const status = document.getElementById('standard-run-id-status');
+  const validated = validateStandardRunId(value);
+  standardLoopState.runId = validated.runId;
+  standardLoopState.runIdValid = validated.ok;
+  input.value = validated.runId;
+  input.disabled = !standardLoopState.summary || standardLoopState.active;
+  status.textContent = validated.ok
+    ? `出力先: ${validated.runId}`
+    : validated.error;
+  status.dataset.state = validated.ok ? 'ready' : 'failed';
+  return validated;
+}
 
 function standardSafeText(value) {
   return String(value || '')
@@ -72,6 +110,7 @@ function standardOutputLabel(status) {
 function renderStandardManifest(summary) {
   standardLoopState.summary = summary?.ok ? summary : null;
   standardLoopState.dryRunPassed = false;
+  delete document.getElementById('btn-standard-start').dataset.renderWaitTimeoutMs;
   const pathEl = document.getElementById('standard-manifest-path');
   const facts = document.getElementById('standard-episode-summary');
   const protectedSummary = document.getElementById('standard-protected-summary');
@@ -85,10 +124,14 @@ function renderStandardManifest(summary) {
     protectedDetails.textContent = standardSafeText(summary?.error || '—');
     resultSummary.textContent = '生成結果を確認できません。';
     resultDetails.textContent = '—';
+    standardLoopState.runIdValid = false;
+    document.getElementById('standard-run-id').disabled = true;
+    document.getElementById('standard-run-id-status').textContent = '実行IDを確認できません。';
     refreshStandardActions();
     return;
   }
   pathEl.textContent = summary.path;
+  renderStandardRunIdState(summary.resolved_run_id || summary.default_run_id);
   facts.innerHTML = '';
   const factRows = [
     ['エピソード', summary.episode.id],
@@ -184,8 +227,11 @@ function stopStandardElapsedTimer() {
   standardLoopState.currentStage = '';
 }
 
-function standardRegenerateReady() {
-  return standardLoopState.profiles.some((profile) => profile.name === 'regenerate' && profile.state === 'ready');
+function standardAllProfilesReady() {
+  return (
+    standardLoopState.profiles.length === 4
+    && standardLoopState.profiles.every((profile) => profile.state === 'ready')
+  );
 }
 
 function refreshStandardActions() {
@@ -197,7 +243,8 @@ function refreshStandardActions() {
   dryRunButton.disabled = !hasExactInputs || standardLoopState.active;
   startButton.disabled = !(
     hasExactInputs
-    && standardRegenerateReady()
+    && standardAllProfilesReady()
+    && standardLoopState.runIdValid
     && standardLoopState.dryRunPassed
     && !standardLoopState.active
   );
@@ -225,8 +272,28 @@ async function standardDryRun() {
   const status = document.getElementById('standard-dry-run-status');
   status.textContent = '工程を確認中…';
   document.getElementById('btn-standard-dry-run').disabled = true;
-  const result = await window.nlmytgen.standardLoopDryRun(standardLoopState.summary.path);
+  const runId = validateStandardRunId(standardLoopState.runId);
+  if (!runId.ok) {
+    status.textContent = runId.error;
+    standardLoopState.dryRunPassed = false;
+    refreshStandardActions();
+    return;
+  }
+  const result = await window.nlmytgen.standardLoopDryRun({
+    manifestPath: standardLoopState.summary.path,
+    runId: runId.runId,
+  });
   standardLoopState.dryRunPassed = result.code === 0 && Boolean(result.json);
+  const observerTimeoutSeconds = Number(
+    result.json?.render_timeout_contract?.observer_timeout_seconds,
+  );
+  if (standardLoopState.dryRunPassed && Number.isFinite(observerTimeoutSeconds)) {
+    document.getElementById('btn-standard-start').dataset.renderWaitTimeoutMs = String(
+      observerTimeoutSeconds * 1000,
+    );
+  } else {
+    delete document.getElementById('btn-standard-start').dataset.renderWaitTimeoutMs;
+  }
   status.textContent = standardLoopState.dryRunPassed
     ? '書き込みなしの工程確認に成功'
     : '工程確認に失敗';
@@ -248,6 +315,7 @@ async function standardStart() {
   appendStandardLog(['内部レビュー用の生成コマンドを開始します。']);
   const result = await window.nlmytgen.standardLoopStart({
     manifestPath: standardLoopState.summary.path,
+    runId: standardLoopState.runId,
     resume: standardLoopState.summary.output.status !== 'absent',
   });
   if (!result.ok) {
@@ -273,7 +341,10 @@ async function standardCancel() {
 
 async function standardRefreshAfterJob() {
   if (!standardLoopState.summary?.path) return;
-  renderStandardManifest(await window.nlmytgen.standardLoopLoadManifest(standardLoopState.summary.path));
+  renderStandardManifest(await window.nlmytgen.standardLoopLoadManifest({
+    manifestPath: standardLoopState.summary.path,
+    runId: standardLoopState.runId,
+  }));
 }
 
 function initStandardProductionLoop() {
@@ -282,6 +353,20 @@ function initStandardProductionLoop() {
     renderStandardManifest(await window.nlmytgen.standardLoopSelectManifest());
   });
   document.getElementById('btn-standard-doctor').addEventListener('click', standardRunDoctor);
+  document.getElementById('standard-run-id').addEventListener('input', (event) => {
+    renderStandardRunIdState(event.target.value);
+    standardLoopState.dryRunPassed = false;
+    document.getElementById('standard-dry-run-status').textContent = '実行ID変更後は再確認が必要です。';
+    refreshStandardActions();
+  });
+  document.getElementById('standard-run-id').addEventListener('change', async (event) => {
+    const validated = validateStandardRunId(event.target.value);
+    if (!validated.ok || !standardLoopState.summary?.path) return;
+    renderStandardManifest(await window.nlmytgen.standardLoopLoadManifest({
+      manifestPath: standardLoopState.summary.path,
+      runId: validated.runId,
+    }));
+  });
   document.getElementById('btn-standard-dry-run').addEventListener('click', standardDryRun);
   document.getElementById('btn-standard-start').addEventListener('click', standardStart);
   document.getElementById('btn-standard-cancel').addEventListener('click', standardCancel);

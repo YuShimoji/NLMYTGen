@@ -131,10 +131,11 @@ async function run(win, observations) {
     process.env.NLMYTGEN_STANDARD_LOOP_MANIFEST
       || 'new_banknote_real_media_episode_manifest.json',
   );
-  const workflowTimeoutMs = realRender ? 1500000 : 150000;
-  const workflow = await withTimeout(win.webContents.executeJavaScript(`
+  const requestedRunId = process.env.NLMYTGEN_STANDARD_LOOP_RUN_ID || null;
+  const workflowPromise = win.webContents.executeJavaScript(`
     (async () => {
       const realRender = ${JSON.stringify(realRender)};
+      const requestedRunId = ${JSON.stringify(requestedRunId)};
       const waitFor = async (predicate, label, timeoutMs = 90000) => {
         const started = Date.now();
         while (!predicate()) {
@@ -146,25 +147,46 @@ async function run(win, observations) {
         () => document.readyState === 'complete' && document.getElementById('btn-standard-doctor'),
         'standard-loop DOM'
       );
+      const workflowStarted = performance.now();
       document.getElementById('btn-standard-accepted-manifest').click();
-      document.getElementById('btn-standard-doctor').click();
       await waitFor(
         () => document.getElementById('standard-manifest-path').textContent.includes(${JSON.stringify(manifestNeedle)}),
         'accepted manifest'
       );
+      if (requestedRunId) {
+        const runIdInput = document.getElementById('standard-run-id');
+        runIdInput.value = requestedRunId;
+        runIdInput.dispatchEvent(new Event('input', { bubbles: true }));
+        runIdInput.dispatchEvent(new Event('change', { bubbles: true }));
+        await waitFor(
+          () => document.getElementById('standard-result-details').textContent.includes('run: ' + requestedRunId),
+          'resolved run ID'
+        );
+      }
+      const doctorStarted = performance.now();
+      document.getElementById('btn-standard-doctor').click();
       await waitFor(
         () => !document.getElementById('standard-readiness-summary').textContent.includes('確認中'),
         'runtime doctor'
       );
+      const doctorSeconds = (performance.now() - doctorStarted) / 1000;
       const dryRunButton = document.getElementById('btn-standard-dry-run');
       await waitFor(() => !dryRunButton.disabled, 'dry-run eligibility');
+      const dryRunStarted = performance.now();
       dryRunButton.click();
       await waitFor(
         () => !document.getElementById('standard-dry-run-status').textContent.includes('確認中'),
         'actual manifest dry-run',
         120000
       );
+      const dryRunSeconds = (performance.now() - dryRunStarted) / 1000;
       const startButton = document.getElementById('btn-standard-start');
+      const renderWaitTimeoutMs = realRender
+        ? Number(startButton.dataset.renderWaitTimeoutMs)
+        : 90000;
+      if (realRender && (!Number.isFinite(renderWaitTimeoutMs) || renderWaitTimeoutMs <= 0)) {
+        throw new Error('render timeout contract is unavailable after dry-run');
+      }
       const focusElement = (id) => {
         const element = document.getElementById(id);
         if (element?.disabled) return true;
@@ -180,39 +202,60 @@ async function run(win, observations) {
       };
       let generateFocus = null;
       let cancelFocus = null;
-      let generationStartMode = 'enabled_primary_action';
-      if (startButton.disabled) {
-        generationStartMode = realRender
-          ? 'direct_bridge_real_render_while_git_dirty'
-          : 'direct_bridge_test_double_while_git_dirty';
-        const started = await window.nlmytgen.standardLoopStart({
-          manifestPath: document.getElementById('standard-manifest-path').textContent,
-          resume: true,
-        });
-        if (!started.ok) throw new Error('direct render test double start failed: ' + started.error);
-      } else {
-        generateFocus = focusElement('btn-standard-start');
-        startButton.click();
+      let generationStartMode = 'enabled_primary_action_normal_path';
+      const productionEligibility = () => ({
+        start_disabled: startButton.disabled,
+        readiness: document.getElementById('standard-readiness-summary').textContent,
+        dry_run: document.getElementById('standard-dry-run-status').textContent,
+        run_id: document.getElementById('standard-run-id').value,
+        run_id_state: document.getElementById('standard-run-id-status').dataset.state,
+        protected_inputs: document.getElementById('standard-protected-summary').textContent,
+      });
+      try {
         await waitFor(
-          () => !document.getElementById('btn-standard-cancel').disabled,
-          'cancel button enabled'
+          () => !startButton.disabled,
+          'normal production action eligibility',
+          10000
         );
-        cancelFocus = focusElement('btn-standard-cancel');
+      } catch (error) {
+        throw new Error(
+          error.message + ': ' + JSON.stringify(productionEligibility())
+        );
       }
+      generateFocus = focusElement('btn-standard-start');
+      const renderDispatchedAt = new Date().toISOString();
+      const renderStarted = performance.now();
+      startButton.click();
+      await waitFor(
+        () => !document.getElementById('btn-standard-cancel').disabled,
+        'cancel button enabled'
+      );
+      cancelFocus = focusElement('btn-standard-cancel');
       await waitFor(
         () => ['完了', '失敗', '取り消し済み'].includes(document.getElementById('standard-job-status').textContent),
         realRender ? 'real YMM4 render command' : 'render command test double',
-        realRender ? 1200000 : 90000
+        renderWaitTimeoutMs
       );
       const completedJobStatus = document.getElementById('standard-job-status').textContent;
+      const renderSeconds = (performance.now() - renderStarted) / 1000;
       let activeStateObserved = true;
       let cancelResult = { ok: true };
       let finalJob;
       if (realRender) {
         finalJob = await window.nlmytgen.standardLoopJob();
+        if (completedJobStatus !== '完了') {
+          throw new Error(
+            'real YMM4 render command failed: ' + JSON.stringify({
+              completed_job_status: completedJobStatus,
+              final_job_state: finalJob.state,
+              log_lines: (finalJob.log_lines || []).slice(-40),
+            })
+          );
+        }
       } else {
         const cancelStarted = await window.nlmytgen.standardLoopStart({
           manifestPath: document.getElementById('standard-manifest-path').textContent,
+          runId: document.getElementById('standard-run-id').value,
           resume: true,
         });
         if (!cancelStarted.ok) throw new Error('cancel test-double start failed: ' + cancelStarted.error);
@@ -239,6 +282,8 @@ async function run(win, observations) {
         active_tab: document.querySelector('.tab.active')?.dataset.tab,
         tab_labels: [...document.querySelectorAll('header .tab')].map((element) => element.textContent.trim()),
         manifest_path: document.getElementById('standard-manifest-path').textContent,
+        run_id: document.getElementById('standard-run-id').value,
+        run_id_status: document.getElementById('standard-run-id-status').textContent,
         episode_summary: document.getElementById('standard-episode-summary').innerText,
         protected_summary: document.getElementById('standard-protected-summary').textContent,
         readiness_summary: document.getElementById('standard-readiness-summary').textContent,
@@ -248,6 +293,7 @@ async function run(win, observations) {
         })),
         dry_run_status: document.getElementById('standard-dry-run-status').textContent,
         generation_start_mode: generationStartMode,
+        render_dispatched_at_utc: renderDispatchedAt,
         completed_job_status: completedJobStatus,
         active_state_observed: activeStateObserved,
         cancellation_result_ok: cancelResult.ok,
@@ -262,6 +308,19 @@ async function run(win, observations) {
         job_status: document.getElementById('standard-job-status').textContent,
         job_log: document.getElementById('standard-job-log').textContent,
         result_summary: document.getElementById('standard-result-summary').textContent,
+        timings: {
+          doctor_seconds: doctorSeconds,
+          dry_run_seconds: dryRunSeconds,
+          render_job_seconds: renderSeconds,
+          workflow_total_seconds: (performance.now() - workflowStarted) / 1000,
+          render_wait_timeout_ms: renderWaitTimeoutMs,
+        },
+        operator_controls: {
+          manual_intervention_count: 0,
+          computer_use_count: 0,
+          keyboard_mouse_injection_count: 0,
+          sendkeys_count: 0,
+        },
         step_order: [...document.querySelectorAll('#tab-standard > .standard-loop > .standard-step')].map(
           (element) => element.id
         ),
@@ -270,7 +329,10 @@ async function run(win, observations) {
         ),
       };
     })()
-  `), workflowTimeoutMs, 'standard production workflow');
+  `);
+  const workflow = realRender
+    ? await workflowPromise
+    : await withTimeout(workflowPromise, 150000, 'standard production workflow');
 
   const layouts = [
     await captureAt(win, 1280, 720, runRoot),
@@ -299,7 +361,7 @@ async function run(win, observations) {
     realRenderReceiptPath = path.resolve(
       repoRoot,
       manifest.output.run_root_path,
-      manifest.output.run_id,
+      workflow.run_id,
       'pipeline_run_receipt.json',
     );
     realRenderReceipt = JSON.parse(fs.readFileSync(realRenderReceiptPath, 'utf8'));
@@ -310,6 +372,7 @@ async function run(win, observations) {
     legacy_tabs_preserved: expectedTabs.every((label) => workflow.tab_labels.includes(label)),
     vertical_spine_order_exact: JSON.stringify(workflow.step_order) === JSON.stringify(expectedSteps),
     accepted_manifest_loaded: workflow.manifest_path.endsWith(manifestNeedle),
+    resolved_run_id_visible: !requestedRunId || workflow.run_id === requestedRunId,
     protected_inputs_exact: /完全一致しています/.test(workflow.protected_summary),
     four_runtime_profiles_classified: workflow.profile_states.length === 4,
     runtime_profile_expectation_met: !requireAllProfilesReady || allProfilesReady,
@@ -329,6 +392,15 @@ async function run(win, observations) {
       && ['passed', 'reused'].includes(realRenderReceipt?.render?.status)
       && realRenderReceipt?.media_validation?.status === 'passed'
     ),
+    readiness_bypass_false: workflow.generation_start_mode === 'enabled_primary_action_normal_path',
+    render_test_double_false: !realRender
+      || process.env.NLMYTGEN_STANDARD_LOOP_RENDER_TEST_DOUBLE !== '1',
+    tracked_worktree_clean_at_dispatch: !realRender
+      || realRenderReceipt?.run_identity?.tracked_worktree_clean_at_start === true,
+    manual_intervention_zero: workflow.operator_controls.manual_intervention_count === 0,
+    computer_use_zero: workflow.operator_controls.computer_use_count === 0,
+    keyboard_mouse_injection_zero: workflow.operator_controls.keyboard_mouse_injection_count === 0,
+    sendkeys_zero: workflow.operator_controls.sendkeys_count === 0,
     active_and_cancelled_states_verified: realRender || (
       workflow.active_state_observed
       && workflow.cancellation_result_ok
@@ -382,6 +454,8 @@ async function run(win, observations) {
       audio_policy: process.env.NLMYTGEN_AUDIO_POLICY,
       require_all_profiles_ready: requireAllProfilesReady,
       all_profiles_ready: allProfilesReady,
+      readiness_bypass: false,
+      render_test_double: process.env.NLMYTGEN_STANDARD_LOOP_RENDER_TEST_DOUBLE === '1',
     },
     checks,
     workflow,
@@ -393,13 +467,19 @@ async function run(win, observations) {
       render_status: realRenderReceipt?.render?.status,
       media_validation_status: realRenderReceipt?.media_validation?.status,
       project_owned_process_cleanup: realRenderReceipt?.render?.project_owned_process_cleanup,
+      content_identity_sha256: realRenderReceipt?.content_identity_sha256,
+      run_identity: realRenderReceipt?.run_identity,
+      artifact_identities: realRenderReceipt?.artifact_identities,
+      stage_timings: realRenderReceipt?.stage_timings,
     } : null,
     boundaries: {
       render_performed: realRender,
-      yymm4_launched: realRender,
+      yymm4_launched: realRenderReceipt?.render?.yymm4_launched === true,
       playback_performed: false,
       system_volume_changed: false,
       external_upload: false,
+      readiness_bypass: false,
+      render_test_double: process.env.NLMYTGEN_STANDARD_LOOP_RENDER_TEST_DOUBLE === '1',
     },
   });
   observations.dispose();

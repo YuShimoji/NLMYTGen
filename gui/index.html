@@ -75,6 +75,18 @@
             <button type="button" id="btn-standard-select-manifest">別のマニフェストを選択</button>
           </div>
           <p id="standard-manifest-path" class="standard-path">未選択</p>
+          <div class="standard-run-id-control">
+            <label for="standard-run-id">実行ID</label>
+            <input
+              type="text"
+              id="standard-run-id"
+              maxlength="80"
+              autocomplete="off"
+              spellcheck="false"
+              disabled
+            >
+            <span id="standard-run-id-status" role="status">マニフェスト読込後に設定できます。</span>
+          </div>
           <dl id="standard-episode-summary" class="standard-facts">
             <div><dt>エピソード</dt><dd>未読込</dd></div>
             <div><dt>構成</dt><dd>—</dd></div>

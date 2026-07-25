@@ -23,6 +23,17 @@ internal static class Program
     private static readonly string[] ScriptImportNames = ["台本", "Script Import", "Import Script"];
     private static readonly string[] ImportConfirmNames = ["読み込み", "読込", "追加", "Import", "OK"];
 
+    private static void SetStage(string stage)
+    {
+        CurrentStage = stage;
+        Console.Error.WriteLine(JsonSerializer.Serialize(new
+        {
+            event_type = "stage",
+            stage,
+        }));
+        Console.Error.Flush();
+    }
+
     [STAThread]
     private static int Main(string[] args)
     {
@@ -82,16 +93,16 @@ internal static class Program
             throw new IOException("render output already exists");
         }
 
-        CurrentStage = "launch";
+        SetStage("launch");
         using var owned = Launch(options);
-        CurrentStage = "wait_main";
+        SetStage("wait_main");
         var main = WaitForMainWindow(owned.Processes, options.TimeoutSeconds);
-        CurrentStage = "wait_project_loaded";
+        SetStage("wait_project_loaded");
         WaitForProjectLoaded(main, owned.Processes, options.Project!, options.TimeoutSeconds);
-        CurrentStage = "open_video_output";
+        SetStage("open_video_output");
         OpenVideoOutput(main, owned.Processes);
 
-        CurrentStage = "wait_output_window";
+        SetStage("wait_output_window");
         var outputWindow = WaitForWindow(
             owned.Processes,
             window => ContainsAny(window.Current.Name, OutputVideoNames)
@@ -101,14 +112,14 @@ internal static class Program
             excludeHandle: main.Current.NativeWindowHandle
         );
 
-        CurrentStage = "configure_output";
+        SetStage("configure_output");
         ConfigureOutput(outputWindow, owned.Processes, options);
-        CurrentStage = "start_output";
+        SetStage("start_output");
         var start = FindNamedAction(outputWindow, StartOutputNames)
             ?? throw new InvalidOperationException("video-output start control was not found");
         Invoke(start);
 
-        CurrentStage = "wait_save_dialog";
+        SetStage("wait_save_dialog");
         var saveDialog = WaitForWindow(
             owned.Processes,
             window => IsSaveDialog(window),
@@ -116,16 +127,16 @@ internal static class Program
             excludeHandle: outputWindow.Current.NativeWindowHandle,
             allowAnyProcess: true
         );
-        CurrentStage = "set_save_path";
+        SetStage("set_save_path");
         SetSavePath(saveDialog, options.Output);
-        CurrentStage = "confirm_save";
+        SetStage("confirm_save");
         var save = FindNamedAction(saveDialog, SaveNames)
             ?? throw new InvalidOperationException("save button was not found");
         Invoke(save);
 
-        CurrentStage = "wait_render_file";
+        SetStage("wait_render_file");
         WaitForFileStable(options.Output, options.TimeoutSeconds);
-        CurrentStage = "close_owned_windows";
+        SetStage("close_owned_windows");
         TryClose(outputWindow);
         TryClose(main);
         HandleGeneratedProjectClosePrompt(owned.Processes);
@@ -161,23 +172,23 @@ internal static class Program
         var originalWriteTime = project.LastWriteTimeUtc;
         var originalLength = project.Length;
 
-        CurrentStage = "launch_source_project";
+        SetStage("launch_source_project");
         using var owned = Launch(options);
-        CurrentStage = "wait_source_project";
+        SetStage("wait_source_project");
         var main = WaitForMainWindow(owned.Processes, options.TimeoutSeconds);
-        CurrentStage = "wait_source_project_loaded";
+        SetStage("wait_source_project_loaded");
         WaitForProjectLoaded(main, owned.Processes, options.Project!, options.TimeoutSeconds);
-        CurrentStage = "add_script_rows";
+        SetStage("add_script_rows");
         var importedRows = AddScriptRows(main, owned.Processes, options.Csv);
-        CurrentStage = "save_source_project";
+        SetStage("save_source_project");
         var save = FindNamedAction(main, ["プロジェクトを保存", "Save Project"])
             ?? FindProcessNamedAction(owned.Processes, ["プロジェクトを保存", "Save Project"])
             ?? throw new InvalidOperationException("project save control was not found");
         Invoke(save);
-        CurrentStage = "wait_source_project_save";
+        SetStage("wait_source_project_save");
         WaitForFileModifiedStable(options.Project, originalWriteTime, originalLength, options.TimeoutSeconds);
 
-        CurrentStage = "close_owned_windows";
+        SetStage("close_owned_windows");
         TryClose(main);
         HandleGeneratedProjectClosePrompt(owned.Processes);
         WaitForExit(owned.Processes, 30);
@@ -1141,12 +1152,12 @@ internal static class Program
         Options options)
     {
         var combos = GetOutputCombos(outputWindow);
-        CurrentStage = "configure_output_video_mode";
+        SetStage("configure_output_video_mode");
         SelectComboIndex(combos[2], processes, 1);
         Thread.Sleep(500);
         combos = GetOutputCombos(outputWindow);
 
-        CurrentStage = "configure_output_video_bitrate";
+        SetStage("configure_output_video_bitrate");
         var numericEdit = outputWindow
             .FindAll(
                 TreeScope.Descendants,
@@ -1169,10 +1180,10 @@ internal static class Program
         ((ValuePattern)numericPattern).SetValue(options.VideoBitrateKbps.ToString());
         Thread.Sleep(250);
         combos = GetOutputCombos(outputWindow);
-        CurrentStage = "configure_output_audio_bitrate";
+        SetStage("configure_output_audio_bitrate");
         SelectComboContaining(combos[4], processes, options.AudioBitrateKbps.ToString());
 
-        CurrentStage = "confirm_output_video_bitrate";
+        SetStage("confirm_output_video_bitrate");
         var expected = $"-b:v {options.VideoBitrateKbps * 1000}";
         var deadline = DateTime.UtcNow.AddSeconds(10);
         while (DateTime.UtcNow < deadline)
@@ -1224,7 +1235,7 @@ internal static class Program
                 $"YMM4 output combo has {choices.Count} choices; index {index} is unavailable"
             );
         }
-        CurrentStage = $"{CurrentStage}_select";
+        SetStage($"{CurrentStage}_select");
         SelectComboChoice(combo, choices[index]);
     }
 
@@ -1247,7 +1258,7 @@ internal static class Program
                 $"YMM4 output combo value was not found: {expectedFragment}; available={available}"
             );
         }
-        CurrentStage = $"{CurrentStage}_select";
+        SetStage($"{CurrentStage}_select");
         SelectComboChoice(combo, choice);
     }
 
@@ -1306,20 +1317,20 @@ internal static class Program
         IReadOnlyList<Process> processes)
     {
         var stagePrefix = CurrentStage;
-        CurrentStage = $"{stagePrefix}_pattern";
+        SetStage($"{stagePrefix}_pattern");
         if (!combo.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out var expand))
         {
             throw new InvalidOperationException("YMM4 output combo is not expandable");
         }
         var comboRect = combo.Current.BoundingRectangle;
-        CurrentStage = $"{stagePrefix}_focus";
+        SetStage($"{stagePrefix}_focus");
         combo.SetFocus();
         Thread.Sleep(150);
-        CurrentStage = $"{stagePrefix}_state";
+        SetStage($"{stagePrefix}_state");
         var expander = (ExpandCollapsePattern)expand;
         if (expander.Current.ExpandCollapseState == ExpandCollapseState.Collapsed)
         {
-            CurrentStage = $"{stagePrefix}_expand";
+            SetStage($"{stagePrefix}_expand");
             try
             {
                 expander.Expand();
@@ -1335,7 +1346,7 @@ internal static class Program
         {
             throw new InvalidOperationException("YMM4 output combo has no expandable choices");
         }
-        CurrentStage = $"{stagePrefix}_choices";
+        SetStage($"{stagePrefix}_choices");
         var deadline = DateTime.UtcNow.AddSeconds(15);
         while (DateTime.UtcNow < deadline)
         {
@@ -1375,7 +1386,7 @@ internal static class Program
                 .ToList();
             if (choices.Count > 0)
             {
-                CurrentStage = stagePrefix;
+                SetStage(stagePrefix);
                 return choices;
             }
             Thread.Sleep(100);
