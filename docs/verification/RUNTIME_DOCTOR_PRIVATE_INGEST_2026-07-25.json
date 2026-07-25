@@ -1,0 +1,166 @@
+{
+  "schema": "nlmytgen.runtime_doctor_private_ingest_verification.v1",
+  "schema_version": "1.0",
+  "date": "2026-07-25",
+  "launch_set_id": "nlmytgen-runtime-portability-2026-07-25",
+  "mission_id": "runtime-doctor-private-artifact-ingest-v1",
+  "source": {
+    "branch": "codex/nlmytgen-electron-43-compatibility-v1",
+    "commit": "21194b60f6824eaedaddacf05bb920e1a324936a",
+    "upstream_parity": "0/0",
+    "tracked_clean": true
+  },
+  "outcome": {
+    "branch": "codex/nlmytgen-runtime-doctor-private-ingest-v1",
+    "commit": "resolve_from_remote_branch_tip",
+    "project_state_id": "nlmytgen-runtime-doctor-private-ingest-ready-v1"
+  },
+  "doctor": {
+    "command": "uv run python -m src.cli.main doctor-runtime --profile all --deep --format json",
+    "result_schema": "nlmytgen.runtime_doctor_result.v1",
+    "schema_version": "1.0",
+    "profiles": [
+      "code",
+      "review",
+      "render",
+      "regenerate"
+    ],
+    "deterministic_json": true,
+    "human_readable_default": true,
+    "require_profile_exit_semantics": "exit 1 only when the named profile is unavailable; invalid input exits 2"
+  },
+  "identity": {
+    "electron_candidate": "43.2.0",
+    "electron_candidate_lock_sha256": "095706aba72687058863d8bca16c5a9a9f7d4e45cde3397dda3197a528d0f047",
+    "electron_rollback": "35.7.5",
+    "electron_rollback_commit": "2e11987ff0732d21df4a5da83d1ea557614991ac",
+    "electron_rollback_lock_sha256": "81b060f37fd2c7c4151fcf6fc402b554476d4ea6785022c8eef01aaaa9ff4a73",
+    "uv_lock_sha256": "40e64f793775f0b0181f5ba8972c17842717dbe14bc8c0a6c0cabd14442435d0",
+    "accepted_media_sha256": "423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476",
+    "generated_project_sha256": "244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611",
+    "accepted_creative_dimensions_changed": false
+  },
+  "private_artifact_contract": {
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_private_artifact_ingest_contract.json",
+    "schema": "nlmytgen.private_artifact_ingest_contract.v1",
+    "artifact_set_id": "new-banknote-real-media-stable-internal-cut-v1",
+    "accepted_run_id": "new_banknote_real_media_review_v1",
+    "artifact_count": 12,
+    "source_project_count": 1,
+    "generated_project_count": 1,
+    "accepted_media_count": 1,
+    "real_media_source_count": 9,
+    "validation_only": true,
+    "copy_authorized": false,
+    "apply_authorized": false,
+    "private_absolute_paths": 0,
+    "credentials": 0
+  },
+  "current_terminal": {
+    "classification_after_outcome_commit": {
+      "code": "ready",
+      "review": "ready",
+      "render": "ready",
+      "regenerate": "ready"
+    },
+    "live_artifacts_present_exact": 12,
+    "ingest_ready": true,
+    "electron_runtime": "present_exact",
+    "electron_hidden_smoke": "capability_pass",
+    "yymm4_version": "4.54.0.1",
+    "yymm4_launched": false,
+    "review_media_ffprobe": "capability_pass",
+    "media_playback": false
+  },
+  "tracked_only_clean_checkout": {
+    "short_path": true,
+    "private_artifacts_copied": false,
+    "locked_python_restore": "passed",
+    "locked_npm_restore": "passed",
+    "electron_runtime": "43.2.0",
+    "electron_hidden_smoke": "capability_pass",
+    "code": "ready",
+    "review": "unavailable",
+    "render": "unavailable",
+    "regenerate": "unavailable",
+    "artifact_status": "receipt_only_no_live_file",
+    "artifact_count": 12,
+    "temporary_worktree_removed": true
+  },
+  "fixtures": {
+    "empty_root": {
+      "artifact_count": 12,
+      "status": "receipt_only_no_live_file",
+      "ingest_ready": false,
+      "exit_code_without_required_profile": 0
+    },
+    "hash_mismatch": {
+      "artifact_id": "accepted_internal_review_mp4",
+      "fixture_bytes": "synthetic_empty_file",
+      "status": "present_hash_mismatch",
+      "required_profile": "review",
+      "exit_code": 1
+    },
+    "copy_performed": false,
+    "overwrite_performed": false,
+    "delete_performed": false,
+    "archive_extraction_performed": false,
+    "temporary_fixtures_removed": true
+  },
+  "hidden_electron_smoke": {
+    "actual_application_entrypoint": true,
+    "window_hidden": true,
+    "audio_policy": "silent",
+    "mute_audio": true,
+    "public_network": false,
+    "cleanup_verified": true,
+    "persistent_profile": false
+  },
+  "focused_validation": {
+    "python_compile": "passed",
+    "doctor_private_ingest_tests": {
+      "passed": 17,
+      "failed": 0,
+      "errors": 0
+    },
+    "electron_43_contract_tests": {
+      "passed": 6,
+      "failed": 0,
+      "errors": 0
+    },
+    "dependency_authority_current_applicable_tests": {
+      "passed": 5,
+      "failed": 0,
+      "errors": 0,
+      "excluded_stale_checkpoint_specific_tests": 2
+    },
+    "project_state_sync": "passed",
+    "json_markdown_parse": "passed",
+    "git_diff_check": "passed"
+  },
+  "canonical_regression": {
+    "run_after_outcome_commit": true,
+    "failures": 0,
+    "errors": 0,
+    "declared_locator_skip_contract": "valid",
+    "workspace_integrity": "passed",
+    "temporary_workspace_removed": true
+  },
+  "boundaries": {
+    "receipt_implies_live_availability": false,
+    "private_bytes_copied": false,
+    "private_artifacts_mutated": false,
+    "yymm4_launched": false,
+    "render_performed": false,
+    "media_playback": false,
+    "system_volume_changed": false,
+    "rights_clearance": false,
+    "production": false,
+    "publication": false,
+    "upload": false,
+    "release": false,
+    "pull_request": false,
+    "master_merge": false,
+    "actual_cross_terminal_transport": false
+  }
+}

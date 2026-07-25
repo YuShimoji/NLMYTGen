@@ -1,0 +1,265 @@
+{
+  "schema": "nlmytgen.private_artifact_ingest_contract.v1",
+  "schema_version": "1.0",
+  "artifact_set_id": "new-banknote-real-media-stable-internal-cut-v1",
+  "accepted_run_id": "new_banknote_real_media_review_v1",
+  "authority": {
+    "episode_manifest": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_real_media_episode_manifest.json",
+    "provenance": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_real_media_provenance.json",
+    "media_receipt": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/validated_real_media_run_receipt.json",
+    "human_acceptance": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/human_real_media_cut_acceptance_receipt.json"
+  },
+  "default_action": "validation_only",
+  "copy_authorized": false,
+  "apply_authorized": false,
+  "artifacts": [
+    {
+      "artifact_id": "source_yymm4_project",
+      "artifact_role": "source_project",
+      "expected_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+      "bundle_source_path": "source_project/new_banknote_yymm4_import_observation.local.ymmp",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/new_banknote_yymm4_import_observation.local.ymmp",
+      "required_consumer_profiles": [
+        "render",
+        "regenerate"
+      ],
+      "sensitivity": "private_local_project",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "internal_review_source_only",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    },
+    {
+      "artifact_id": "generated_yymm4_project",
+      "artifact_role": "generated_project",
+      "expected_sha256": "244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611",
+      "bundle_source_path": "generated_project/generated_project.local.ymmp",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_real_media_review_v1/generated_project.local.ymmp",
+      "required_consumer_profiles": [],
+      "sensitivity": "private_generated_project",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "accepted_internal_cut_lineage_only",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    },
+    {
+      "artifact_id": "accepted_internal_review_mp4",
+      "artifact_role": "accepted_review_media",
+      "expected_sha256": "423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476",
+      "bundle_source_path": "review/internal_review_real_media.mp4",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_real_media_review_v1/internal_review_real_media.mp4",
+      "required_consumer_profiles": [
+        "review"
+      ],
+      "sensitivity": "private_internal_review_media",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "stable_internal_cut_rights_unresolved",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    },
+    {
+      "artifact_id": "real_cue_001_banknote_overview",
+      "artifact_role": "real_media_source",
+      "expected_sha256": "e69537ee8b0ab8b3c8b0aa7a93da5b7351af19be1043ab50dd5ff795bf390195",
+      "bundle_source_path": "real_media/J05_fnn.png",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/J05_fnn.png",
+      "required_consumer_profiles": [
+        "render",
+        "regenerate"
+      ],
+      "sensitivity": "private_source_media",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "internal_review_only_reuse_unresolved",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    },
+    {
+      "artifact_id": "real_cue_002_features_overview",
+      "artifact_role": "real_media_source",
+      "expected_sha256": "fb9182baf74de56a5b3765df6304c6c0bfe624a904a0d632a3db531682165ee7",
+      "bundle_source_path": "real_media/O02_boj_annotated_note.png",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O02_boj_annotated_note.png",
+      "required_consumer_profiles": [
+        "render",
+        "regenerate"
+      ],
+      "sensitivity": "private_source_media",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "official_reuse_candidate_permission_unresolved",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    },
+    {
+      "artifact_id": "real_cue_003_high_definition_watermark",
+      "artifact_role": "real_media_source",
+      "expected_sha256": "987efb5f461f4f605aefea77c1524b935d335619a20a82282495ca107a91e6e8",
+      "bundle_source_path": "real_media/O01_npb_hyper_sukiire10.jpg",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_hyper_sukiire10.jpg",
+      "required_consumer_profiles": [
+        "render",
+        "regenerate"
+      ],
+      "sensitivity": "private_source_media",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "official_reuse_candidate_permission_unresolved",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    },
+    {
+      "artifact_id": "real_cue_004_3d_hologram",
+      "artifact_role": "real_media_source",
+      "expected_sha256": "39a81c76d56cf6cc555844c909603aa1a3bb239c3797de82ed37d1d0db68082c",
+      "bundle_source_path": "real_media/O01_npb_hologram.jpg",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_hologram.jpg",
+      "required_consumer_profiles": [
+        "render",
+        "regenerate"
+      ],
+      "sensitivity": "private_source_media",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "official_reuse_candidate_permission_unresolved",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    },
+    {
+      "artifact_id": "real_cue_005_deep_intaglio",
+      "artifact_role": "real_media_source",
+      "expected_sha256": "8120da0426b9dc09bedc77d3225c0a2a9e94862b6bb2a33c991fe2e7d2a20ec1",
+      "bundle_source_path": "real_media/O01_npb_fuka10.jpg",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_fuka10.jpg",
+      "required_consumer_profiles": [
+        "render",
+        "regenerate"
+      ],
+      "sensitivity": "private_source_media",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "official_reuse_candidate_permission_unresolved",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    },
+    {
+      "artifact_id": "real_cue_006_microtext",
+      "artifact_role": "real_media_source",
+      "expected_sha256": "6860688c55568c2cd10b15ba37d74686ac86a5872ec1084d0923db8e9d4e5f31",
+      "bundle_source_path": "real_media/O01_npb_micro10_02.jpg",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_micro10_02.jpg",
+      "required_consumer_profiles": [
+        "render",
+        "regenerate"
+      ],
+      "sensitivity": "private_source_media",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "official_reuse_candidate_permission_unresolved",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    },
+    {
+      "artifact_id": "real_cue_007_identification_mark",
+      "artifact_role": "real_media_source",
+      "expected_sha256": "fbce48d296551f9f02ddd1c10bc7c19587b04f9a340bca6e00931d6b9f7e64c9",
+      "bundle_source_path": "real_media/O01_npb_universal10_01_yoko.jpg",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_universal10_01_yoko.jpg",
+      "required_consumer_profiles": [
+        "render",
+        "regenerate"
+      ],
+      "sensitivity": "private_source_media",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "official_reuse_candidate_permission_unresolved",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    },
+    {
+      "artifact_id": "real_cue_008_denomination_comparison",
+      "artifact_role": "real_media_source",
+      "expected_sha256": "66dcfe1f932e6279198c8ac945b657ad9304ca4db4ad0f37829370719b1bf6c6",
+      "bundle_source_path": "real_media/O01_npb_denomination_comparison.local.png",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_denomination_comparison.local.png",
+      "required_consumer_profiles": [
+        "render",
+        "regenerate"
+      ],
+      "sensitivity": "private_source_media",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "official_source_montage_components_unresolved",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    },
+    {
+      "artifact_id": "real_cue_009_four_checks",
+      "artifact_role": "real_media_source",
+      "expected_sha256": "f960a035eb0b20c0e98db425daf0f000d9d4cf84e8917a24f801b40d56b1a558",
+      "bundle_source_path": "real_media/O01_npb_four_checks_montage.local.png",
+      "repo_relative_destination": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_four_checks_montage.local.png",
+      "required_consumer_profiles": [
+        "render",
+        "regenerate"
+      ],
+      "sensitivity": "private_source_media",
+      "mutable": false,
+      "overwrite": false,
+      "rights_classification": "official_source_montage_components_unresolved",
+      "production_allowed": false,
+      "publication_allowed": false,
+      "upload_allowed": false
+    }
+  ],
+  "lineage": [
+    {
+      "from": "source_yymm4_project",
+      "to": "generated_yymm4_project",
+      "relation": "protected_source_project_materialized_with_manifest_locked_media",
+      "authority_source": "media_receipt"
+    },
+    {
+      "from": "real_media_source_set",
+      "to": "generated_yymm4_project",
+      "relation": "nine_exact_assets_referenced_by_generated_project",
+      "authority_source": "provenance"
+    },
+    {
+      "from": "generated_yymm4_project",
+      "to": "accepted_internal_review_mp4",
+      "relation": "rendered_to_internal_review_media",
+      "authority_source": "media_receipt"
+    },
+    {
+      "from": "accepted_internal_review_mp4",
+      "to": "human_acceptance",
+      "relation": "accepted_as_stable_internal_cut",
+      "authority_source": "human_acceptance"
+    }
+  ],
+  "boundary": {
+    "validation_only": true,
+    "private_bytes_tracked": false,
+    "rights_clearance": false,
+    "production": false,
+    "publication": false,
+    "upload": false,
+    "release": false,
+    "master_merge": false
+  }
+}

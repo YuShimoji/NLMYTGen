@@ -168,6 +168,31 @@ python -m src.cli.main build-csv transcript.txt --unlabeled --merge-consecutive 
 python -m src.cli.main build-csv file1.txt file2.txt file3.txt --speaker-map Host1=れいむ,Host2=まりさ
 ```
 
+## ランタイム診断と private artifact 検証
+
+別端末では、依存関係を tracked lock から復元した後に次の read-only doctor を使う。
+
+```powershell
+uv run python -m src.cli.main doctor-runtime --profile all --deep --format json
+```
+
+profile は `code`（Python / Node / Electron / Git）、`review`（受理済みMP4）、
+`render`（YMM4 / media tool / source project / 9素材）、`regenerate`
+（render基盤 / manifest / provenance / 既存episode pipeline）を独立に判定する。
+`--require-profile code` のように指定した場合だけ、そのprofileがreadyでなければ
+終了コード1になる。通常の `all` はprivate data不在をcode regressionにしない。
+
+受領候補を検査するときは `--artifact-root <staging-root>` を追加する。versioned
+contractに対して相対path、SHA-256、既存destination衝突を検証し、提案先だけを返す。
+doctorはprivate bytesのcopy、上書き、削除、展開、YMM4起動、render、再生を行わない。
+profileがreadyでない場合は、JSONの`blocking_checks`と`consumer_effect`を読む。
+`code`はtracked lockから依存を復元してGitをcleanにし、private profileはnamed
+recipientと別途のtransfer authorityを確定してから不足artifactを用意する。
+
+詳細な結果と境界は
+[`RUNTIME_DOCTOR_PRIVATE_INGEST_2026-07-25.md`](docs/verification/RUNTIME_DOCTOR_PRIVATE_INGEST_2026-07-25.md)
+を参照する。
+
 ## 開発環境とテスト
 
 このリポジトリは `uv` を推奨する。`pytest` は `pyproject.toml` の

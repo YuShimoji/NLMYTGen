@@ -10,6 +10,7 @@ Usage:
     python -m src.cli.main validate <input>
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main diagnose-script <input> [--speaker-map ...] [--format text|json] [--strict]
+    python -m src.cli.main doctor-runtime [--profile code|review|render|regenerate|all] [--require-profile PROFILE] [--artifact-root PATH] [--deep] [--format text|json]
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
     python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown] [--with-fetch-report]
     python -m src.cli.main list-feed-sources [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
@@ -3288,6 +3289,41 @@ def main(argv: list[str] | None = None) -> int:
         help="Exit 1 if any ERROR diagnostic (e.g. unmapped speaker with incomplete map)",
     )
 
+    p_doctor_runtime = subparsers.add_parser(
+        "doctor-runtime",
+        help="Read-only runtime and private-artifact consumer readiness doctor",
+    )
+    p_doctor_runtime.add_argument(
+        "--profile",
+        choices=["code", "review", "render", "regenerate", "all"],
+        default="all",
+        help="Readiness profile to report (default: all)",
+    )
+    p_doctor_runtime.add_argument(
+        "--require-profile",
+        choices=["code", "review", "render", "regenerate"],
+        default=None,
+        help="Return nonzero when this profile is unavailable",
+    )
+    p_doctor_runtime.add_argument(
+        "--artifact-root",
+        type=Path,
+        default=None,
+        help="Validate a staged private-artifact root without copying it",
+    )
+    p_doctor_runtime.add_argument(
+        "--deep",
+        action="store_true",
+        help="Run the existing hidden/silent Electron compatibility smoke",
+    )
+    p_doctor_runtime.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        dest="doctor_format",
+        help="Output format (default: text)",
+    )
+
     args = parser.parse_args(argv)
 
     try:
@@ -3417,6 +3453,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_analyze_notebooklm_audio_transcript(args)
         elif args.command == "diagnose-script":
             return _cmd_diagnose_script(args)
+        elif args.command == "doctor-runtime":
+            return _cmd_doctor_runtime(args)
         else:
             parser.print_help()
             return 1
@@ -6477,6 +6515,46 @@ def _cmd_build_episode_video(args: argparse.Namespace) -> int:
         return 1
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
+
+
+def _cmd_doctor_runtime(args: argparse.Namespace) -> int:
+    from src.pipeline.runtime_doctor import RuntimeDoctorError, render_text, run_doctor
+
+    try:
+        result, exit_code = run_doctor(
+            repo_root=Path.cwd(),
+            profile=args.profile,
+            require_profile=args.require_profile,
+            artifact_root=args.artifact_root,
+            deep=bool(args.deep),
+        )
+    except (RuntimeDoctorError, OSError) as exc:
+        error = {
+            "schema": "nlmytgen.runtime_doctor_result.v1",
+            "schema_version": "1.0",
+            "command": "doctor-runtime",
+            "status": "capability_fail",
+            "error_class": type(exc).__name__,
+            "message": str(exc),
+            "boundaries": {
+                "private_bytes_copied": False,
+                "private_artifacts_mutated": False,
+                "yymm4_launched": False,
+                "render_performed": False,
+                "media_playback": False,
+            },
+            "exit_code": 2,
+        }
+        if args.doctor_format == "json":
+            print(json.dumps(error, ensure_ascii=False, indent=2, sort_keys=True))
+        else:
+            print(f"Runtime doctor failed: {exc}", file=sys.stderr)
+        return 2
+    if args.doctor_format == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+    else:
+        print(render_text(result))
+    return exit_code
 
 
 def cli_entry() -> None:
