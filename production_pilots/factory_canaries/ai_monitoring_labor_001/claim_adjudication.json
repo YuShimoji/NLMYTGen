@@ -1,0 +1,102 @@
+{
+  "schema": "nlmytgen.claim_adjudication.v1",
+  "topic": "AIによる職場モニタリングと働く人への影響",
+  "claims": [
+    {
+      "claim_id": "AML-C01",
+      "canonical_claim_ja": "AIやアルゴリズムを使う職場管理システムは、仕事の割り当て、進捗の測定、働きぶりの評価に使われる。",
+      "status": "supported",
+      "spoken_cue_ids": ["cue_002"],
+      "support": [
+        {
+          "source_id": "OECD-ALG-MGMT-2025",
+          "location": "PDF page 20, printed page 19, Table 1",
+          "support_type": "direct_examples"
+        },
+        {
+          "source_id": "EUOSHA-AIWM-2025",
+          "location": "PDF page 2, What is AI and algorithm-based worker management?",
+          "support_type": "direct_definition"
+        },
+        {
+          "source_id": "ILO-ALG-MGMT-2022",
+          "location": "PDF page 12, section 3.1 closing paragraph",
+          "support_type": "direct_function_description"
+        }
+      ]
+    },
+    {
+      "claim_id": "AML-C02",
+      "canonical_claim_ja": "AIを使う職場管理は、技能に合う仕事の配分や、判断に使う情報の整理を助ける場合がある。",
+      "status": "supported",
+      "spoken_cue_ids": ["cue_003"],
+      "qualification": "可能性を示す限定表現とし、常に改善するとは述べない。",
+      "support": [
+        {
+          "source_id": "EUOSHA-AIWM-2025",
+          "location": "PDF page 2, Opportunities for occupational safety and health",
+          "support_type": "direct_opportunity"
+        },
+        {
+          "source_id": "OECD-ALG-MGMT-2025",
+          "location": "PDF page 30, printed page 29, Main findings",
+          "support_type": "survey_reported_mechanism"
+        }
+      ]
+    },
+    {
+      "claim_id": "AML-C03",
+      "canonical_claim_ja": "職場管理AIの運用では、仕事の裁量、負荷、説明の透明性を確認することが重要である。",
+      "status": "supported",
+      "spoken_cue_ids": ["cue_005"],
+      "support": [
+        {
+          "source_id": "EUOSHA-AIWM-2025",
+          "location": "PDF page 2, associated risks and job control sections",
+          "support_type": "direct_risk_dimensions"
+        },
+        {
+          "source_id": "ILO-ALG-MGMT-2022",
+          "location": "PDF pages 21-22, skills and discretion plus work intensity",
+          "support_type": "job_quality_dimensions"
+        }
+      ]
+    },
+    {
+      "claim_id": "AML-C04",
+      "canonical_claim_ja": "透明性、人による管理、対話、働く人の協議と参加は、職場管理AIの設計・導入・利用に必要なガバナンス要素である。",
+      "status": "supported",
+      "spoken_cue_ids": ["cue_005"],
+      "support": [
+        {
+          "source_id": "EUOSHA-AIWM-2025",
+          "location": "PDF page 4, Human insight for optimal results",
+          "support_type": "direct_recommendation"
+        },
+        {
+          "source_id": "ILO-ALG-MGMT-2022",
+          "location": "PDF pages 25-28, governance discussion",
+          "support_type": "corroborating_governance_discussion"
+        }
+      ]
+    }
+  ],
+  "nonfactual_dialogue": [
+    {
+      "cue_id": "cue_001",
+      "classification": "opening_question",
+      "reason": "題材を提示する問いであり、事実命題を断定しない。"
+    },
+    {
+      "cue_id": "cue_004",
+      "classification": "evaluation_question",
+      "reason": "次の確認軸を尋ねる問いであり、効果や害を断定しない。"
+    }
+  ],
+  "checks": {
+    "spoken_factual_cue_count": 3,
+    "supported_spoken_factual_cue_count": 3,
+    "unsupported_spoken_factual_units": 0,
+    "official_primary_source_count": 3
+  }
+}

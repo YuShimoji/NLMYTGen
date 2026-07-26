@@ -1,0 +1,174 @@
+{
+  "schema": "nlmytgen.episode_manifest.v1",
+  "episode_id": "ai_monitoring_labor_001_internal_review",
+  "source_package": "production_pilots/factory_canaries/ai_monitoring_labor_001/source_registry.json",
+  "approved_script": "production_pilots/factory_canaries/ai_monitoring_labor_001/canonical_script.json",
+  "derived_csv": "production_pilots/factory_canaries/ai_monitoring_labor_001/derived_yymm4_import.csv",
+  "provenance_manifest_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/real_media_provenance.json",
+  "cue_mapping": [
+    {
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "speaker": "ゆっくり霊夢赤縁",
+      "visual_id": "aml_cue_001_oecd_cover",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_media_ai_monitoring_labor_v1/cue_001_oecd_cover.png",
+      "source_provenance_id": "OECD-ALG-MGMT-2025",
+      "subtitle_lines": ["AIで職場をモニタリングするって、何を見ているの？"],
+      "speaker_label": "れいむ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "speaker": "ゆっくり魔理沙黄縁",
+      "visual_id": "aml_cue_002_oecd_uses",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_media_ai_monitoring_labor_v1/cue_002_oecd_uses_table.png",
+      "source_provenance_id": "OECD-ALG-MGMT-2025",
+      "subtitle_lines": [
+        "ソフトが仕事の割り当て、進み具合の測定、",
+        "働きぶりの評価を支える仕組みなんだぜ。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_003",
+      "scene_id": "S1",
+      "speaker": "ゆっくり魔理沙黄縁",
+      "visual_id": "aml_cue_003_oecd_decision",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_media_ai_monitoring_labor_v1/cue_003_oecd_decision_findings.png",
+      "source_provenance_id": "OECD-ALG-MGMT-2025",
+      "subtitle_lines": [
+        "技能に合う仕事の配分や、判断に使う情報の整理を",
+        "助ける場合がある。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "speaker": "ゆっくり霊夢赤縁",
+      "visual_id": "aml_cue_004_eu_osha_impacts",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_media_ai_monitoring_labor_v1/cue_004_eu_osha_impacts.png",
+      "source_provenance_id": "EUOSHA-AIWM-2025",
+      "subtitle_lines": [
+        "効率が上がっても、働く人の裁量や負担は",
+        "どう確かめるの？"
+      ],
+      "speaker_label": "れいむ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_005",
+      "scene_id": "S2",
+      "speaker": "ゆっくり魔理沙黄縁",
+      "visual_id": "aml_cue_005_eu_osha_participation",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_media_ai_monitoring_labor_v1/cue_005_eu_osha_participation.png",
+      "source_provenance_id": "EUOSHA-AIWM-2025",
+      "subtitle_lines": [
+        "運用結果と一緒に、仕事の裁量、負荷、説明の透明性を確かめ、",
+        "働く人も関わることが大切だぜ。"
+      ],
+      "speaker_label": "まりさ",
+      "fit_mode": "contain",
+      "internal_review_only": true
+    }
+  ],
+  "visual_source_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_media_ai_monitoring_labor_v1",
+  "yymm4": {
+    "source_project_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_projects/ai_monitoring_labor_source.local.ymmp",
+    "source_project_sha256": "2585c0994ca56a6665ae834b71866ab3c92bc5bc9c59ca7f5a76c9128e7d0e12",
+    "profile_id": "ymm4_4_54_0_1_yukkuri_characters_v1",
+    "profile_version_expected": "4.54.0.1",
+    "observed_product_version": "4.54.0.1",
+    "version_difference_policy": "exact_match_required",
+    "fps": 60,
+    "timeline_frames": 1606,
+    "duration_seconds": 26.766667
+  },
+  "output": {
+    "run_root_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs",
+    "run_id": "ai_monitoring_labor_internal_review_v1",
+    "project_filename": "generated_project.local.ymmp",
+    "mp4_filename": "internal_review_ai_monitoring_labor.mp4"
+  },
+  "render_settings": {
+    "container": "mp4",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "video_bitrate_kbps": 10000,
+    "video_maxrate_kbps": 12000,
+    "video_bufsize_kbps": 20000,
+    "audio_bitrate_kbps": 192,
+    "max_duration_delta_seconds": 0.5,
+    "max_size_bytes": 250000000,
+    "timeout_seconds": 1200,
+    "min_distinct_frame_hashes": 5
+  },
+  "boundaries": {
+    "content_authority": "internal_factory_canary_not_human_accepted",
+    "internal_review_only": true,
+    "real_media": true,
+    "proxy_visual": false,
+    "ai_generated_visuals": false,
+    "custom_illustration": false,
+    "final_aesthetic_acceptance": false,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "speaker_playback": false,
+    "preview_playback": false
+  },
+  "content_locks": [
+    {
+      "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/source_registry.json",
+      "sha256": "52a730152ccfe5aa88de8cc018e9761949fd68c31cf0ec35d9cb840d168ea95b"
+    },
+    {
+      "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/claim_adjudication.json",
+      "sha256": "03895055ae268aedb8786b90d4cb89a71399dcb9281e6c874298b5d0c4f3890c"
+    },
+    {
+      "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/canonical_script.json",
+      "sha256": "1aad118b3a60651d172643a90c2b2cfef1858a82050b9d34bb943d38f03016f6"
+    },
+    {
+      "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/canonical_script.txt",
+      "sha256": "b7c450a7c8e2830a8a119a7481981e2062fa765527b18ffdc2a4d39b5087c41e"
+    },
+    {
+      "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/canonical_yymm4.csv",
+      "sha256": "0eae9c292127a0f94f5073bee4bee8973b16b436a4f3f7f1ba1fc10499182f39"
+    },
+    {
+      "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/derived_yymm4_import.csv",
+      "sha256": "d52df8bba2d4e3bc49c347a9c1083c62c5e5b6cae5c8f0a9f2662e3e45868ba0"
+    },
+    {
+      "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/source_support_edges.json",
+      "sha256": "c3a613e129e4d8a1e3617ec18b73c710f33021dd0ed8ec5608af00cad627f2fc"
+    },
+    {
+      "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/transformation_ledger.json",
+      "sha256": "e1437a7c349bcb8d7ad4ba755883692b8784a13ccba23cdb0c3253444cff22e7"
+    },
+    {
+      "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/real_media_provenance.json",
+      "sha256": "b903fb012f1d19cbfefe3169ebda297bcfa9892187cd3f27c6050e34bd397dd0"
+    }
+  ]
+}

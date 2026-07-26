@@ -1,0 +1,5 @@
+source_cache/
+source_extracts/
+auto_video_runs/
+!canonical_yymm4.csv
+!derived_yymm4_import.csv

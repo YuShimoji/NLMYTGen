@@ -1,5 +1,47 @@
 # Project Context — NLMYTGen
 
+## 現在の監修AIハンドオフ（2026-07-26 JST・第3実トピックVariation Validation）
+
+この節だけが現在の再開地点である。REINSの3-run repeatability checkpoint
+`fe6672686625d401a7d2dd77fa9d9935e6036e0a`から
+`codex/nlmytgen-third-real-topic-factory-v1`を作成し、第3実トピック
+「AIによる職場モニタリングと働く人への影響」をnormal production loopへ通した。
+
+- **shape**: 5 cues、2 scenes、れいむ2 / まりさ3、1606 frames、
+  26.766667秒、real raster media 5/5。既存new-banknote / REINSと全shape distinct。
+- **sources / claims**: OECD、EU-OSHA、ILOのofficial primary 3 surface。
+  spoken factual units 4、unsupported 0、login / credentials / playback 0。
+- **source YMMP**: existing generic arbitrary-row `import-script`とactual YMM4
+  4.54.0.1 / Windows UIAで5 rowsを自動import。manual edit、Computer Use、
+  SendKeys、input injection 0。
+- **actual GUI**: Electron 43.2.0 main / renderer / preload、doctor 4/4、
+  protected 10/10、write-free dry-run、normal enabled primary action、
+  real YMM4 render、media validation、readback pass。bypass / test double false。
+- **output**: generated project Voice 5 / Image 5 / scenes 2 / speakers 2:3。
+  MP4 SHA `f39297...80e8d`、33,762,259 bytes、H.264/AAC、1920x1080、
+  60fps、26.766016秒、full decode pass、5 cue frames inspected。
+- **human boundary**: official pagesと字幕は識別可能。既存character settingsの
+  赤/黄keyword emphasisが一部subtitleへ重なるためaesthetic acceptanceはopen。
+- **resume / negative**: completed run CLI resumeは0.269496秒、
+  `verified_noop`、22 files SHA / size / mtime不変、YMM4 / driver launch 0。
+  isolated bitrate driftは`resume_artifact_drift`で拒否しcanonical runは不変。
+- **preservation**: accepted new-banknote、prior REINS、repeatability v3の
+  live identity 20/20 exact。dry-run only 5/5 pass、prior rerender 0。
+- **current state**:
+  `three-distinct-real-topics-through-one-clean-gui-and-video-pipeline`。
+  Product-Gateは`factory-contract-v2-extraction`。
+- **next action**: 3 observed packagesからrequired / variable / optional /
+  forbiddenを抽出し、Factory Contract v2をversion化する。3 fixturesを
+  rerenderせず再検証した後、第4topicをout-of-sample gateにする。
+- **boundary**: 結論は3 observed topicsに限定。universal compatibility、
+  production readiness、rights、AI-monitoring human acceptance、publication、
+  release、PR、merge、master integration、deploymentは未承認・未実施。
+- **詳細**:
+  `docs/verification/THIRD_REAL_TOPIC_FACTORY_VALIDATION_2026-07-26.md`、
+  `production_pilots/factory_canaries/ai_monitoring_labor_001/technical_validation_receipt.json`、
+  `three_topic_variation_receipt.json`。通常再開は`AGENTS.md` →
+  `docs/REPO_LOCAL_RULES.md` → `docs/runtime-state.md`。
+
 ## 現在の監修AIハンドオフ（2026-07-26 JST・3回連続Operator Repeatability）
 
 この節だけが現在の再開地点である。accepted new-banknoteとprior REINS identityを

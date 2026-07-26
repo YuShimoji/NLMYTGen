@@ -1,0 +1,132 @@
+{
+  "schema": "nlmytgen.three_topic_variation_receipt.v1",
+  "schema_version": "1.0",
+  "status": "passed",
+  "validated_at": "2026-07-26 JST",
+  "project_state_id": "nlmytgen-third-real-topic-gui-render-validated-v1",
+  "product_state": "three-distinct-real-topics-through-one-clean-gui-and-video-pipeline",
+  "product_gate": "factory-contract-v2-extraction",
+  "recommended_next": "derive-factory-contract-v2-from-three-observed-topics",
+  "topics": [
+    {
+      "topic_id": "new_banknote_security_notebooklm_001",
+      "title": "新紙幣の偽造防止技術",
+      "cue_count": 9,
+      "scene_count": 3,
+      "speaker_counts": {
+        "れいむ": 3,
+        "まりさ": 6
+      },
+      "timeline_frames": 4415,
+      "duration_seconds": 73.583333,
+      "real_media_asset_count": 9,
+      "source_project_sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+      "generated_project_sha256": "244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611",
+      "mp4_sha256": "423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476",
+      "technical_state": "accepted-cut-regression-exact",
+      "human_acceptance": "separate exact human receipt exists"
+    },
+    {
+      "topic_id": "real_estate_reins_transparency_001",
+      "title": "REINSと不動産情報流通の仕組み",
+      "cue_count": 7,
+      "scene_count": 4,
+      "speaker_counts": {
+        "れいむ": 4,
+        "まりさ": 3
+      },
+      "timeline_frames": 2725,
+      "duration_seconds": 45.416667,
+      "real_media_asset_count": 7,
+      "source_project_sha256": "ed2773ce87a41936dd82d16d666d253f8bdba8763fc11bfa829d4818cb1b3ec9",
+      "generated_project_sha256": "ea4bc001068cf0f398d428072b2b94a6b3b1f4beed5ba0efb2b04f0d040e4da8",
+      "mp4_sha256": "4c99feed4e487743e5243074c3eca6aad51a7b16392f7f405ce158f038cb5c75",
+      "technical_state": "factory-canary-plus-three-run-repeatability-exact",
+      "human_acceptance": false
+    },
+    {
+      "topic_id": "ai_monitoring_labor_001",
+      "title": "AIによる職場モニタリングと働く人への影響",
+      "cue_count": 5,
+      "scene_count": 2,
+      "speaker_counts": {
+        "れいむ": 2,
+        "まりさ": 3
+      },
+      "timeline_frames": 1606,
+      "duration_seconds": 26.766667,
+      "real_media_asset_count": 5,
+      "source_project_sha256": "2585c0994ca56a6665ae834b71866ab3c92bc5bc9c59ca7f5a76c9128e7d0e12",
+      "generated_project_sha256": "47a68b940df29937f735876fcf272bcfb403b1efe692e2cd0a153d2756c78d9d",
+      "mp4_sha256": "f39297c9888fb59e0260676c1810430f06145949d99a8c3b46dea5d606d80e8d",
+      "technical_state": "third-topic-clean-gui-render-validated",
+      "human_acceptance": false
+    }
+  ],
+  "observed_variation": {
+    "cue_counts": [9, 7, 5],
+    "scene_counts": [3, 4, 2],
+    "speaker_distributions": ["3/6", "4/3", "2/3"],
+    "timeline_frames": [4415, 2725, 1606],
+    "real_media_asset_counts": [9, 7, 5],
+    "all_topic_shapes_distinct": true,
+    "all_episode_ids_distinct": true,
+    "all_source_project_paths_distinct": true,
+    "all_run_ids_distinct": true
+  },
+  "common_observed_contract": {
+    "manifest_schema": "nlmytgen.episode_manifest.v1",
+    "real_media_provenance_schema": "nlmytgen.real_media_provenance.v1",
+    "source_project_profile": "1920x1080 at 60fps",
+    "standard_electron_gui": true,
+    "deep_runtime_doctor": true,
+    "protected_input_hash_lock": true,
+    "write_free_dry_run": true,
+    "real_yymm4_render": true,
+    "iso_bmff_h264_aac_validation": true,
+    "full_file_decode": true,
+    "silent_by_default": true,
+    "internal_review_boundary": true
+  },
+  "third_topic_operator_result": {
+    "electron_version": "43.2.0",
+    "runtime_profiles_ready": "4/4",
+    "protected_inputs_exact": "10/10",
+    "readiness_bypass": false,
+    "render_test_double": false,
+    "manual_intervention_count": 0,
+    "computer_use_count": 0,
+    "keyboard_mouse_injection_count": 0,
+    "sendkeys_count": 0,
+    "completed_run_resume": "verified_noop",
+    "semantic_drift_negative": "resume_artifact_drift",
+    "project_owned_process_cleanup": true
+  },
+  "preservation": {
+    "live_identity_count": 20,
+    "live_identity_exact_count": 20,
+    "new_banknote_dry_run": "passed without render",
+    "prior_reins_dry_run": "passed without render",
+    "repeatability_v3_dry_runs": "3/3 passed without render"
+  },
+  "conclusion": {
+    "supported": "Three observed real topics with distinct cue, scene, speaker, time, and media counts have passed the same clean standard GUI and video pipeline contract.",
+    "not_supported": [
+      "universal arbitrary-topic compatibility",
+      "production readiness",
+      "human creative acceptance for REINS or AI-monitoring canaries",
+      "rights approval",
+      "publication or release authority"
+    ],
+    "next_evidence_needed": "Extract and version factory contract v2 from the three observed packages, then revalidate all three fixtures without rerendering accepted outputs."
+  },
+  "boundaries": {
+    "bounded_three_topic_observation_only": true,
+    "human_creative_acceptance_inherited": false,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "release": false
+  }
+}

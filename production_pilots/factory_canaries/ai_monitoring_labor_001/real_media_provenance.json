@@ -1,0 +1,108 @@
+{
+  "schema": "nlmytgen.real_media_provenance.v1",
+  "episode_id": "ai_monitoring_labor_001_internal_review",
+  "purpose": "third-topic internal factory canary only",
+  "sources": [
+    {
+      "source_id": "OECD-ALG-MGMT-2025",
+      "exact_title": "Algorithmic management in the workplace: New evidence from an OECD employer survey",
+      "publisher": "Organisation for Economic Co-operation and Development",
+      "canonical_url": "https://www.oecd.org/en/publications/algorithmic-management-in-the-workplace_287c13c4-en.html",
+      "pdf_sha256": "3080f2d54ecc1ecf540cc7101280399b8a0a9d9b4a23a3ea5361ba23ab37a981"
+    },
+    {
+      "source_id": "EUOSHA-AIWM-2025",
+      "exact_title": "Artificial intelligence for worker management: implications for occupational safety and health",
+      "publisher": "European Agency for Safety and Health at Work",
+      "canonical_url": "https://healthy-workplaces.osha.europa.eu/en/publications/artificial-intelligence-worker-management-implications-occupational-safety-and-health",
+      "pdf_sha256": "6008d7a981c3f82afc3a1e8d492c8ab7ac7cdea97883293bc318691dd72becec"
+    },
+    {
+      "source_id": "ILO-ALG-MGMT-2022",
+      "exact_title": "The Algorithmic Management of work and its implications in different contexts",
+      "publisher": "International Labour Organization",
+      "canonical_url": "https://www.ilo.org/publications/algorithmic-management-work-and-its-implications-different-contexts",
+      "pdf_sha256": "eb28f489f5bdb78b34a8f82ea3cda6cd1feece8dc483c1648b912227de85e7a5"
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "aml_cue_001_oecd_cover",
+      "cue_ids": ["cue_001"],
+      "source_id": "OECD-ALG-MGMT-2025",
+      "local_asset_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_media_ai_monitoring_labor_v1/cue_001_oecd_cover.png",
+      "sha256": "bcd2322bb57b5a5397afff44591fd3252c220d41dac0c2961f66f617e3c9e4b3",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login official PDF retrieval and page render 2026-07-26",
+      "crop_or_segment": "OECD PDF page 1 full-page raster render at 180 dpi; visually inspected",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface rendered for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "aml_cue_002_oecd_uses",
+      "cue_ids": ["cue_002"],
+      "source_id": "OECD-ALG-MGMT-2025",
+      "local_asset_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_media_ai_monitoring_labor_v1/cue_002_oecd_uses_table.png",
+      "sha256": "b2fd6f49801705fa5285c724089f926e30255434416b505f222b6cfb9697ffc0",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login official PDF retrieval and page render 2026-07-26",
+      "crop_or_segment": "OECD PDF page 20, printed page 19, full-page raster render at 180 dpi; visually inspected",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface rendered for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "aml_cue_003_oecd_decision",
+      "cue_ids": ["cue_003"],
+      "source_id": "OECD-ALG-MGMT-2025",
+      "local_asset_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_media_ai_monitoring_labor_v1/cue_003_oecd_decision_findings.png",
+      "sha256": "0b6e1d224c38423452cc485820fcff5e07b604a392e10185af2e2cd890214b34",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login official PDF retrieval and page render 2026-07-26",
+      "crop_or_segment": "OECD PDF page 30, printed page 29, full-page raster render at 180 dpi; visually inspected",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface rendered for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "aml_cue_004_eu_osha_impacts",
+      "cue_ids": ["cue_004"],
+      "source_id": "EUOSHA-AIWM-2025",
+      "local_asset_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_media_ai_monitoring_labor_v1/cue_004_eu_osha_impacts.png",
+      "sha256": "46f13954bc3031a2d2c2793c775e30cc10356b75bb908dc7e2e5242e112f562d",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login official PDF retrieval and page render 2026-07-26",
+      "crop_or_segment": "EU-OSHA PDF page 2 full-page raster render at 180 dpi; visually inspected",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface rendered for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "aml_cue_005_eu_osha_participation",
+      "cue_ids": ["cue_005"],
+      "source_id": "EUOSHA-AIWM-2025",
+      "local_asset_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_media_ai_monitoring_labor_v1/cue_005_eu_osha_participation.png",
+      "sha256": "1d72ec2b44d6c79e17fa69ce2bbc23e9e77dfff9fe1307dc5adbd55236c4a501",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login official PDF retrieval and page render 2026-07-26",
+      "crop_or_segment": "EU-OSHA PDF page 4 full-page raster render at 180 dpi; visually inspected",
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface rendered for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    }
+  ],
+  "boundary": {
+    "internal_review_only": true,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "source_media_tracked": false
+  }
+}

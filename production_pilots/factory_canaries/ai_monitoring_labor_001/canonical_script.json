@@ -1,0 +1,59 @@
+{
+  "schema": "nlmytgen.canonical_script.v1",
+  "episode_id": "ai_monitoring_labor_001_internal_review",
+  "title": "AIによる職場モニタリングと働く人への影響",
+  "cue_count": 5,
+  "scene_count": 2,
+  "speaker_distribution": {
+    "れいむ": 2,
+    "まりさ": 3
+  },
+  "target_duration_seconds": {
+    "min": 25,
+    "max": 40
+  },
+  "unsupported_spoken_factual_units": 0,
+  "human_creative_acceptance": false,
+  "cues": [
+    {
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "text": "AIで職場をモニタリングするって、何を見ているの？",
+      "spoken_factual_unit": false,
+      "claim_ids": []
+    },
+    {
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "speaker": "まりさ",
+      "text": "ソフトが仕事の割り当て、進み具合の測定、働きぶりの評価を支える仕組みなんだぜ。",
+      "spoken_factual_unit": true,
+      "claim_ids": ["AML-C01"]
+    },
+    {
+      "cue_id": "cue_003",
+      "scene_id": "S1",
+      "speaker": "まりさ",
+      "text": "技能に合う仕事の配分や、判断に使う情報の整理を助ける場合がある。",
+      "spoken_factual_unit": true,
+      "claim_ids": ["AML-C02"]
+    },
+    {
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "speaker": "れいむ",
+      "text": "効率が上がっても、働く人の裁量や負担はどう確かめるの？",
+      "spoken_factual_unit": false,
+      "claim_ids": []
+    },
+    {
+      "cue_id": "cue_005",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "text": "運用結果と一緒に、仕事の裁量、負荷、説明の透明性を確かめ、働く人も関わることが大切だぜ。",
+      "spoken_factual_unit": true,
+      "claim_ids": ["AML-C03", "AML-C04"]
+    }
+  ]
+}

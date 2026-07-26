@@ -1,0 +1,103 @@
+{
+  "schema": "nlmytgen.source_registry.v1",
+  "topic": "AIによる職場モニタリングと働く人への影響",
+  "retrieval_policy": {
+    "official_primary_surfaces_only": true,
+    "login_used": false,
+    "credentials_used": false,
+    "playback_used": false,
+    "source_count": 3
+  },
+  "sources": [
+    {
+      "source_id": "OECD-ALG-MGMT-2025",
+      "exact_title": "Algorithmic management in the workplace: New evidence from an OECD employer survey",
+      "publisher": "Organisation for Economic Co-operation and Development",
+      "publication_year": 2025,
+      "primary_source": true,
+      "surface_type": "official_publication_pdf",
+      "canonical_url": "https://www.oecd.org/en/publications/algorithmic-management-in-the-workplace_287c13c4-en.html",
+      "pdf_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2025/02/algorithmic-management-in-the-workplace_3c84ed6d/287c13c4-en.pdf",
+      "local_ignored_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/source_cache/oecd_algorithmic_management_2025.pdf",
+      "sha256": "3080f2d54ecc1ecf540cc7101280399b8a0a9d9b4a23a3ea5361ba23ab37a981",
+      "pages_used": [
+        {
+          "pdf_page": 20,
+          "printed_page": 19,
+          "support": "Table 1 lists instruction, monitoring, and evaluation uses, including allocating work, monitoring completion/time/speed, and setting targets."
+        },
+        {
+          "pdf_page": 30,
+          "printed_page": 29,
+          "support": "Main findings report managers' perceived decision-making benefits and identify increased information available for decisions as one mechanism."
+        }
+      ]
+    },
+    {
+      "source_id": "EUOSHA-AIWM-2025",
+      "exact_title": "Artificial intelligence for worker management: implications for occupational safety and health",
+      "publisher": "European Agency for Safety and Health at Work",
+      "publication_year": 2025,
+      "primary_source": true,
+      "surface_type": "official_infosheet_pdf",
+      "canonical_url": "https://healthy-workplaces.osha.europa.eu/en/publications/artificial-intelligence-worker-management-implications-occupational-safety-and-health",
+      "pdf_url": "https://healthy-workplaces.osha.europa.eu/sites/hwc/files/hwc/publication/Worker-management-through-AI_infosheet_EN.pdf",
+      "local_ignored_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/source_cache/eu_osha_worker_management_ai_infosheet.pdf",
+      "sha256": "6008d7a981c3f82afc3a1e8d492c8ab7ac7cdea97883293bc318691dd72becec",
+      "pages_used": [
+        {
+          "pdf_page": 2,
+          "printed_page": 2,
+          "support": "Defines AI worker management as data-driven systems used to allocate work and shifts and monitor or evaluate worker behaviour and performance; describes task-allocation opportunities and autonomy or workload risks."
+        },
+        {
+          "pdf_page": 4,
+          "printed_page": 4,
+          "support": "Calls for transparency, human control, dialogue, worker consultation, and participation in design and implementation."
+        }
+      ]
+    },
+    {
+      "source_id": "ILO-ALG-MGMT-2022",
+      "exact_title": "The Algorithmic Management of work and its implications in different contexts",
+      "publisher": "International Labour Organization",
+      "publication_year": 2022,
+      "primary_source": true,
+      "surface_type": "official_working_paper_pdf",
+      "canonical_url": "https://www.ilo.org/publications/algorithmic-management-work-and-its-implications-different-contexts",
+      "pdf_url": "https://www.ilo.org/sites/default/files/wcmsp5/groups/public/%40ed_emp/documents/publication/wcms_849220.pdf",
+      "local_ignored_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/source_cache/ilo_algorithmic_management_contexts_2022.pdf",
+      "sha256": "eb28f489f5bdb78b34a8f82ea3cda6cd1feece8dc483c1648b912227de85e7a5",
+      "pages_used": [
+        {
+          "pdf_page": 12,
+          "printed_page": 12,
+          "support": "Describes allocation, direction, monitoring, evaluation, discipline, and reward as algorithmic-management functions."
+        },
+        {
+          "pdf_page": 21,
+          "printed_page": 21,
+          "support": "Discusses autonomy and discretion as job-quality dimensions affected by pervasive monitoring and algorithmic instructions."
+        },
+        {
+          "pdf_page": 22,
+          "printed_page": 22,
+          "support": "Discusses work intensity and workload implications."
+        },
+        {
+          "pdf_page_range": [25, 28],
+          "printed_page_range": [25, 28],
+          "support": "Discusses transparency, human monitoring, and worker consultation as governance needs."
+        }
+      ]
+    }
+  ],
+  "boundaries": {
+    "raw_source_bytes_tracked": false,
+    "internal_technical_review_only": true,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false
+  }
+}

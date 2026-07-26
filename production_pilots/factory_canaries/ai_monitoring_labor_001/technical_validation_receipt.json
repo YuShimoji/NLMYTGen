@@ -1,0 +1,239 @@
+{
+  "schema": "nlmytgen.third_real_topic_technical_validation_receipt.v1",
+  "schema_version": "1.0",
+  "status": "passed",
+  "validated_at": "2026-07-26 JST",
+  "project_state_id": "nlmytgen-third-real-topic-gui-render-validated-v1",
+  "topic": "AIによる職場モニタリングと働く人への影響",
+  "git": {
+    "source_branch": "codex/nlmytgen-three-run-operator-repeatability-v1",
+    "source_head": "fe6672686625d401a7d2dd77fa9d9935e6036e0a",
+    "source_remote_head_at_start": "fe6672686625d401a7d2dd77fa9d9935e6036e0a",
+    "source_parity_at_start": "0/0",
+    "target_branch": "codex/nlmytgen-third-real-topic-factory-v1",
+    "target_remote_at_start": "absent",
+    "tracked_worktree_clean_at_decisive_dispatch": true,
+    "outcome_commit_subject": "feat: validate third real topic through production loop",
+    "push_target_only": true
+  },
+  "source_and_script": {
+    "official_primary_source_count": 3,
+    "source_ids": [
+      "OECD-ALG-MGMT-2025",
+      "EUOSHA-AIWM-2025",
+      "ILO-ALG-MGMT-2022"
+    ],
+    "login_used": false,
+    "credentials_used": false,
+    "playback_used": false,
+    "cue_count": 5,
+    "scene_count": 2,
+    "speaker_counts": {
+      "れいむ": 2,
+      "まりさ": 3
+    },
+    "spoken_factual_cue_count": 3,
+    "nonfactual_question_cue_count": 2,
+    "unsupported_spoken_factual_units": 0
+  },
+  "source_project": {
+    "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_projects/ai_monitoring_labor_source.local.ymmp",
+    "sha256": "2585c0994ca56a6665ae834b71866ab3c92bc5bc9c59ca7f5a76c9128e7d0e12",
+    "size_bytes": 722656,
+    "builder": "Ymm4RenderAutomation import-script generic arbitrary-row path",
+    "driver": "windows_uia",
+    "imported_rows": 5,
+    "voice_item_count": 5,
+    "speaker_counts": {
+      "ゆっくり霊夢赤縁": 2,
+      "ゆっくり魔理沙黄縁": 3
+    },
+    "timeline_frames": 1606,
+    "duration_seconds": 26.766667,
+    "fps": 60,
+    "width": 1920,
+    "height": 1080,
+    "preview_playback": false,
+    "speaker_playback": false,
+    "process_cleanup": true,
+    "source_reins_project_sha256_after_read_only_template_use": "ed2773ce87a41936dd82d16d666d253f8bdba8763fc11bfa829d4818cb1b3ec9"
+  },
+  "manifest": {
+    "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_pipeline/ai_monitoring_labor_episode_manifest.json",
+    "sha256": "8ed65380489896278de698875f3064c2f4cdc252fd3e2a550b188c6f416a6ff7",
+    "content_lock_count": 9,
+    "protected_inputs_in_gui": "10/10 exact",
+    "content_identity_sha256": "dfb6ad91822b9aa69a5be3b511bfe7b9d395f051d7c33aaf4e5a2384495485cf"
+  },
+  "real_media": {
+    "asset_count": 5,
+    "unique_source_sha256_count": 5,
+    "cue_provenance_coverage": "5/5",
+    "media_type": "raster PNG only",
+    "svg_reference_count": 0,
+    "ai_generated_visual_count": 0,
+    "source_media_tracked": false,
+    "visual_inspection_before_use": "5 selected PDF pages plus 2 ILO backup pages inspected",
+    "rights_approved": false,
+    "production_allowed": false,
+    "publication_allowed": false
+  },
+  "focused_gates_before_render": {
+    "python_tests": {
+      "status": "passed",
+      "count": 27,
+      "files": [
+        "tests/test_third_real_topic_factory_canary.py",
+        "tests/test_episode_video_pipeline.py",
+        "tests/test_standard_production_loop_gui.py"
+      ]
+    },
+    "node_standard_loop_tests": {
+      "status": "passed",
+      "count": 7
+    },
+    "dotnet_release_build": {
+      "status": "passed",
+      "warnings": 0,
+      "errors": 0
+    },
+    "write_free_dry_run": {
+      "status": "passed",
+      "tracked_worktree_clean_at_start": true,
+      "protected_inputs": "9/9 exact",
+      "voice_items": 5,
+      "real_media": "5/5",
+      "svg_reference_count": 0
+    },
+    "repair": {
+      "classification": "focused_test_boundary_only",
+      "observed": "tracked-text scan attempted to decode ignored source_cache PNG bytes as UTF-8",
+      "action": "excluded all three package-local ignored roots from the tracked-text scan",
+      "product_bytes_changed": false
+    }
+  },
+  "electron_gui": {
+    "receipt_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/ai_monitoring_labor_internal_review_v1_gui_probe/receipt.json",
+    "receipt_sha256": "7a378ce87c8137eeb1ab519e5662232616391d28cc48db7f1a215a1aef6ed66c",
+    "status": "passed",
+    "scope": "actual Electron main/renderer/preload, deep doctor, manifest dry-run, real YMM4 render",
+    "electron": "43.2.0",
+    "runtime_profiles": {
+      "code": "ready",
+      "review": "ready",
+      "render": "ready",
+      "regenerate": "ready"
+    },
+    "default_surface": "standard automated video production",
+    "actual_dry_run": "passed",
+    "generation_start_mode": "enabled_primary_action_normal_path",
+    "readiness_bypass": false,
+    "render_test_double": false,
+    "manual_intervention_count": 0,
+    "computer_use_count": 0,
+    "keyboard_mouse_injection_count": 0,
+    "sendkeys_count": 0,
+    "audio_policy": "silent",
+    "mute_audio_switch": true,
+    "hidden_window": true,
+    "console_security_renderer_errors": 0,
+    "workflow_total_seconds": 147.1044
+  },
+  "generated_project": {
+    "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/ai_monitoring_labor_internal_review_v1/generated_project.local.ymmp",
+    "sha256": "47a68b940df29937f735876fcf272bcfb403b1efe692e2cd0a153d2756c78d9d",
+    "size_bytes": 966920,
+    "normalized_structural_sha256": "d7b4a4b096cd97f82a26cdc803107502613dbbdcc9166ec23187955b48c15306",
+    "voice_item_count": 5,
+    "image_item_count": 5,
+    "scene_count": 2,
+    "speaker_counts": {
+      "ゆっくり霊夢赤縁": 2,
+      "ゆっくり魔理沙黄縁": 3
+    },
+    "timeline_frames": 1606,
+    "exact_text_order": true,
+    "voice_items_unchanged": true,
+    "only_run_directory_absolute_paths": true,
+    "absolute_path_leaks": [],
+    "svg_reference_count": 0
+  },
+  "mp4": {
+    "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/ai_monitoring_labor_internal_review_v1/internal_review_ai_monitoring_labor.mp4",
+    "sha256": "f39297c9888fb59e0260676c1810430f06145949d99a8c3b46dea5d606d80e8d",
+    "size_bytes": 33762259,
+    "container": "ISO-BMFF",
+    "top_level_boxes": ["ftyp", "moov", "free", "mdat"],
+    "video_codec": "H.264 Main",
+    "audio_codec": "AAC-LC",
+    "audio_sample_rate_hz": 48000,
+    "audio_channels": 2,
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "video_frame_count": 1606,
+    "duration_seconds": 26.766016,
+    "overall_bitrate_bps": 10091082,
+    "full_file_decode": "passed",
+    "decode_source_unchanged": true,
+    "cue_frame_count": 5,
+    "total_extracted_frame_count": 8,
+    "unique_extracted_frame_sha256_count": 8,
+    "cue_frames_visually_inspected": 5
+  },
+  "human_review_note": {
+    "machine_and_spot_visual_status": "passed",
+    "observation": "Existing YMM4 character settings add large red or yellow keyword emphasis that overlaps subtitle text in some cues.",
+    "effect": "Technical identity and readability checks remain valid; final aesthetic acceptance remains open.",
+    "owner": "human creative reviewer",
+    "next_move": "Review the exact MP4 SHA cue by cue and return accept, repair, or reject without inheriting new-banknote acceptance."
+  },
+  "completed_run_resume": {
+    "status": "verified_noop",
+    "mode": "CLI --render --resume",
+    "elapsed_seconds": 0.269496,
+    "outputs_rewritten": false,
+    "yymm4_launched": false,
+    "render_driver_launched": false,
+    "artifact_identities_exact": true,
+    "canonical_file_count": 22,
+    "sha_size_mtime_mismatch_count": 0,
+    "aggregate_identity_sha256": "ac3b450260433e7ac39c7b4a95db750b9f3ec1d2091fcd114496d4b53d3a046a"
+  },
+  "semantic_drift_negative": {
+    "status": "passed",
+    "fixture": "ignored isolated manifest and copied run directory",
+    "mutated_field": "render_settings.video_bitrate_kbps",
+    "original_value": 10000,
+    "drifted_value": 9999,
+    "observed_error_code": "resume_artifact_drift",
+    "canonical_run_unchanged": true
+  },
+  "identity_preservation": {
+    "live_identity_checks": 20,
+    "live_identity_exact": 20,
+    "all_exact": true,
+    "families": [
+      "accepted new-banknote source, generated project, MP4, and human receipt",
+      "prior REINS source, generated project, MP4, and GUI receipt",
+      "REINS repeatability v3 run 01, 02, and 03 projects, MP4s, pipeline receipts, and GUI receipts"
+    ],
+    "dry_run_only_rechecks": 5,
+    "dry_run_only_rechecks_passed": 5,
+    "prior_render_count": 0
+  },
+  "boundaries": {
+    "content_authority": "internal_factory_canary_not_human_accepted",
+    "human_creative_acceptance": false,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "release": false,
+    "pull_request": false,
+    "merge": false,
+    "master_mutation": false,
+    "deployment": false,
+    "public_exposure": false
+  }
+}

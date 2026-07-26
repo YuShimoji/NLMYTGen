@@ -1,0 +1,44 @@
+{
+  "schema": "nlmytgen.source_support_edges.v1",
+  "episode_id": "ai_monitoring_labor_001_internal_review",
+  "edges": [
+    {
+      "cue_id": "cue_001",
+      "spoken_factual_unit": false,
+      "classification": "opening_question",
+      "claim_ids": [],
+      "source_ids": []
+    },
+    {
+      "cue_id": "cue_002",
+      "spoken_factual_unit": true,
+      "claim_ids": ["AML-C01"],
+      "source_ids": ["OECD-ALG-MGMT-2025", "EUOSHA-AIWM-2025", "ILO-ALG-MGMT-2022"]
+    },
+    {
+      "cue_id": "cue_003",
+      "spoken_factual_unit": true,
+      "claim_ids": ["AML-C02"],
+      "source_ids": ["EUOSHA-AIWM-2025", "OECD-ALG-MGMT-2025"]
+    },
+    {
+      "cue_id": "cue_004",
+      "spoken_factual_unit": false,
+      "classification": "evaluation_question",
+      "claim_ids": [],
+      "source_ids": []
+    },
+    {
+      "cue_id": "cue_005",
+      "spoken_factual_unit": true,
+      "claim_ids": ["AML-C03", "AML-C04"],
+      "source_ids": ["EUOSHA-AIWM-2025", "ILO-ALG-MGMT-2022"]
+    }
+  ],
+  "checks": {
+    "cue_order_exact": true,
+    "every_spoken_factual_unit_supported": true,
+    "unsupported_spoken_factual_units": 0,
+    "primary_source_surface_count": 3
+  }
+}

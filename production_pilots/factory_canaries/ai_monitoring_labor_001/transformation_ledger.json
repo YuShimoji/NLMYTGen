@@ -1,0 +1,70 @@
+{
+  "schema": "nlmytgen.transformation_ledger.v1",
+  "episode_id": "ai_monitoring_labor_001_internal_review",
+  "topic_input": {
+    "value": "AIによる職場モニタリングと働く人への影響",
+    "authority": "user_fixed_topic",
+    "factual_authority": false
+  },
+  "steps": [
+    {
+      "step_id": "T01",
+      "operation": "bounded_official_source_acquisition",
+      "input": "user_fixed_topic",
+      "output": "source_registry.json",
+      "decision": "OECD、EU-OSHA、ILOの公式PDF3件で必要な事実単位が揃ったため取得を停止した。"
+    },
+    {
+      "step_id": "T02",
+      "operation": "claim_adjudication",
+      "input": "official PDF passages",
+      "output": "claim_adjudication.json",
+      "decision": "用途、限定的な利点、裁量・負荷・透明性・参加の4 claimだけを採用した。"
+    },
+    {
+      "step_id": "T03",
+      "operation": "short_script_composition",
+      "input": "supported claims",
+      "output": "canonical_script.json",
+      "decision": "2シーン、5 cue、霊夢2／魔理沙3、25–40秒を狙う短文へ圧縮した。質問2 cueは非事実として分離した。"
+    },
+    {
+      "step_id": "T04",
+      "operation": "speaker_alias_projection",
+      "input": "canonical_yymm4.csv",
+      "output": "derived_yymm4_import.csv",
+      "decision": "れいむ／まりさを端末で観測済みのゆっくり霊夢赤縁／ゆっくり魔理沙黄縁へだけ射影し、本文と順序は変えない。"
+    },
+    {
+      "step_id": "T05",
+      "operation": "official_pdf_page_rasterization",
+      "input": "official PDF bytes",
+      "output": "five ignored PNG assets",
+      "decision": "AI生成画像、SVG、装飾proxyを使わず、目視確認済みの公式ページrenderを各cueへ1対1で割り当てる。"
+    }
+  ],
+  "excluded_or_softened": [
+    {
+      "candidate": "AI監視は必ず生産性を上げる",
+      "action": "excluded",
+      "reason": "資料は条件付きの機会や管理者の知覚を示すが、普遍的効果を支えない。"
+    },
+    {
+      "candidate": "AI監視は必ず働く人を害する",
+      "action": "excluded",
+      "reason": "リスクは示されるが、全ての導入で同じ結果になるとは支えられない。"
+    },
+    {
+      "candidate": "技能配分と意思決定を改善する",
+      "action": "softened",
+      "replacement": "助ける場合がある",
+      "reason": "機会とsurvey-reported mechanismの範囲へ限定する。"
+    }
+  ],
+  "checks": {
+    "script_text_added_without_source_edge": false,
+    "speaker_projection_changes_text": false,
+    "ai_generated_visuals": false,
+    "svg_assets": false
+  }
+}
