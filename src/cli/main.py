@@ -11,6 +11,8 @@ Usage:
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main diagnose-script <input> [--speaker-map ...] [--format text|json] [--strict]
     python -m src.cli.main doctor-runtime [--profile code|review|render|regenerate|all] [--require-profile PROFILE] [--artifact-root PATH] [--deep] [--format text|json]
+    python -m src.cli.main validate-factory-package --package factory_package_v2.json [--check-live] [--format text|json]
+    python -m src.cli.main build-episode-video --factory-package factory_package_v2.json --dry-run
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
     python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown] [--with-fetch-report]
     python -m src.cli.main list-feed-sources [--opml feeds.opml] [--reader opml|inoreader] [--format markdown|json]
@@ -1703,7 +1705,12 @@ def main(argv: list[str] | None = None) -> int:
         "build-episode-video",
         help="Build one manifest-locked episode through validated internal-review MP4",
     )
-    p_episode_video.add_argument("--episode", required=True, help="Episode manifest path")
+    p_episode_source = p_episode_video.add_mutually_exclusive_group(required=True)
+    p_episode_source.add_argument("--episode", help="Episode manifest path")
+    p_episode_source.add_argument(
+        "--factory-package",
+        help="Factory Package v2 descriptor; currently accepted for write-free dry-run only",
+    )
     p_episode_video.add_argument(
         "--render", action="store_true", help="Run YMM4 output and validate the review MP4"
     )
@@ -1721,6 +1728,29 @@ def main(argv: list[str] | None = None) -> int:
         "--force",
         action="store_true",
         help="Archive the existing local run and rebuild it from protected inputs",
+    )
+
+    p_factory_validate = subparsers.add_parser(
+        "validate-factory-package",
+        help="Validate and normalize one tracked Factory Package v2 descriptor",
+    )
+    p_factory_validate.add_argument(
+        "--package",
+        required=True,
+        type=Path,
+        help="Repository-relative Factory Package v2 descriptor",
+    )
+    p_factory_validate.add_argument(
+        "--check-live",
+        action="store_true",
+        help="Read-only hash check for declared live/private artifacts when present",
+    )
+    p_factory_validate.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="json",
+        dest="factory_format",
+        help="Output format (default: json)",
     )
 
     # build-csv
@@ -3333,6 +3363,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.command == "build-episode-video":
             return _cmd_build_episode_video(args)
+        elif args.command == "validate-factory-package":
+            return _cmd_validate_factory_package(args)
         elif args.command == "build-csv":
             return _cmd_build_csv(args)
         elif args.command == "validate":
@@ -6498,10 +6530,64 @@ def _cmd_score_thumbnail_s8(args: argparse.Namespace) -> int:
 def _cmd_build_episode_video(args: argparse.Namespace) -> int:
     from src.pipeline.episode_video import EpisodeVideoError, run_episode_video
 
+    factory_validation: dict[str, Any] | None = None
+    manifest_path: Path
+    if args.factory_package:
+        from src.pipeline.factory_contract_v2 import (
+            FactoryContractError,
+            validate_factory_package,
+        )
+
+        if (
+            not args.dry_run
+            or args.render
+            or args.resume
+            or args.force
+            or args.run_id is not None
+        ):
+            print(
+                json.dumps(
+                    {
+                        "status": "failed",
+                        "error_code": "factory_package_dry_run_only",
+                        "message": (
+                            "--factory-package currently permits only --dry-run "
+                            "without render, resume, force, or run-id override"
+                        ),
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                file=sys.stderr,
+            )
+            return 1
+        try:
+            factory_validation = validate_factory_package(
+                repo_root=Path.cwd(),
+                descriptor_path=Path(args.factory_package),
+                check_live=True,
+            )
+        except FactoryContractError as exc:
+            print(
+                json.dumps(
+                    exc.as_payload(),
+                    ensure_ascii=False,
+                    indent=2,
+                    sort_keys=True,
+                ),
+                file=sys.stderr,
+            )
+            return 1
+        manifest_path = Path(
+            factory_validation["normalized"]["episode_manifest_path"]
+        )
+    else:
+        manifest_path = Path(args.episode)
+
     try:
         result = run_episode_video(
             repo_root=Path.cwd(),
-            manifest_path=Path(args.episode),
+            manifest_path=manifest_path,
             render=bool(args.render),
             dry_run=bool(args.dry_run),
             resume=bool(args.resume),
@@ -6518,7 +6604,89 @@ def _cmd_build_episode_video(args: argparse.Namespace) -> int:
             file=sys.stderr,
         )
         return 1
+    if factory_validation is not None:
+        expected_identity = factory_validation["normalized"][
+            "content_identity_sha256"
+        ]
+        if result.get("content_identity_sha256") != expected_identity:
+            print(
+                json.dumps(
+                    {
+                        "status": "failed",
+                        "error_code": "factory_content_identity_mismatch",
+                        "message": (
+                            "Factory Package v2 content identity differs from "
+                            "the existing episode pipeline dry-run"
+                        ),
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                file=sys.stderr,
+            )
+            return 1
+        result["factory_package_validation"] = {
+            "schema": factory_validation["schema"],
+            "status": factory_validation["status"],
+            "package_id": factory_validation["package_id"],
+            "descriptor": factory_validation["descriptor"],
+            "availability": factory_validation["availability"],
+            "source_artifacts_mutated": False,
+        }
     print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0
+
+
+def _cmd_validate_factory_package(args: argparse.Namespace) -> int:
+    from src.pipeline.factory_contract_v2 import (
+        FactoryContractError,
+        validate_factory_package,
+    )
+
+    try:
+        result = validate_factory_package(
+            repo_root=Path.cwd(),
+            descriptor_path=args.package,
+            check_live=bool(args.check_live),
+        )
+    except FactoryContractError as exc:
+        payload = exc.as_payload()
+        if args.factory_format == "json":
+            print(
+                json.dumps(
+                    payload,
+                    ensure_ascii=False,
+                    indent=2,
+                    sort_keys=True,
+                ),
+                file=sys.stderr,
+            )
+        else:
+            print(
+                f"{payload['status']}: {payload['error_code']} "
+                f"[{payload['section']} {payload['field_path']}] "
+                f"{payload['message']} "
+                f"(effect: {payload['consumer_effect']})",
+                file=sys.stderr,
+            )
+        return (
+            2
+            if exc.code in {"authority_unreadable", "descriptor_path_escape"}
+            else 1
+        )
+    if args.factory_format == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+    else:
+        availability = ", ".join(
+            f"{row['artifact_class']}={row['status']}"
+            for row in result["availability"]
+        )
+        print(
+            f"{result['status']}: {result['package_id']} "
+            f"cues={result['normalized']['cue_count']} "
+            f"scenes={result['normalized']['scene_count']} "
+            f"availability[{availability}]"
+        )
     return 0
 
 

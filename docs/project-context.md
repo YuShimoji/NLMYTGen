@@ -1,5 +1,54 @@
 # Project Context — NLMYTGen
 
+## 現在の監修AIハンドオフ（2026-07-26 JST・Factory Contract v2）
+
+この節だけが現在の再開地点である。第3実トピックcheckpoint
+`aad0043d1218cdfae8027160cd57651b04fec2ef`から
+`codex/nlmytgen-factory-contract-v2-v1`を作成し、観測済み3 packageの
+evidenceをversioned executable contractへ抽出した。
+
+- **contract**: `nlmytgen.factory_package.v2`、version 2.0。JSON Schema、
+  50-field inventory、descriptor-driven read-only validator、3 descriptor、
+  2 CLI entrypointsで構成する。
+- **sections / clocks**: source、claims、canonical、shape、media、episode、
+  source/generated project、render validation、content/resume identity、
+  human decision、rights / production / publication / upload、extensionsを分離した。
+- **inventory**: required 19、variable 10、optional 5、forbidden 7、
+  topic-extension 2、run-local 3、evidence-only 4。source、consumer、
+  migration / validation rule、absence可否、identity clock影響を各行に記録した。
+- **v1 compatibility**: 既存authorityをexact SHAで参照するgeneric read-only
+  adapter。shared validator内のknown topic IDは0。v1 schema / bytesは変更なし。
+- **three descriptors**: new-banknote、REINS、AI monitoringへ
+  `factory_package_v2.json`を追加。各2回のvalidationでdescriptor、
+  normalized、content identityが3/3 repeat exact。
+- **live profile**: source project、generated project、MP4の9 identityを
+  rehashし9/9 exact。before / after SHA / size / mtime mismatch 0。
+- **tracked-only profile**: proposed index 2948 filesをGit metadataなし、
+  `node_modules`なしで隔離し3/3 pass。非同梱の9 private identitiesはすべて
+  `receipt_only_no_live_file`であり、live availabilityは主張しない。
+- **pipeline bridge**: 3 descriptorを既存v1 `run_episode_video`へdry-runし、
+  3/3 content identity exact。render stage、YMM4 / Electron launch、playback、
+  network、v1 mutationは0。factory-packageからのrender semanticsは拒否する。
+- **negative / regression**: Factory Contract固有24 testsを含むfocused Python
+  51/51、Node standard-loop 7/7 pass。missing section、private path、
+  binding gap、hash drift、authority inheritance、unobserved overclaimを拒否する。
+- **authority boundary**: accepted exact artifactはnew-banknoteだけ。REINS /
+  AIは`internal_factory_canary_not_human_accepted`。rights、production、
+  publication、upload、releaseはfalseのまま。
+- **current state**:
+  `three-topic-evidence-extracted-into-versioned-executable-factory-contract`。
+  Product-Gateは`fourth-topic-out-of-sample-validation`。
+- **next action**: 既存3件に無い入力軸を持つ第4トピックをv2へ通す。
+  source / claim / media / rights境界、validator、tracked-only、live profile、
+  dry-runを先に通し、owner許可がある場合だけnormal production loopへ進む。
+- **boundary**: universal compatibility、fourth-topic success、REINS / AI human
+  acceptance、rights、production、publication、release、PR、merge、
+  master integration、deploymentは未承認・未実施。
+- **詳細**:
+  `docs/verification/FACTORY_CONTRACT_V2_VALIDATION_2026-07-26.md`と
+  `.json`。通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md`。
+
 ## 現在の監修AIハンドオフ（2026-07-26 JST・第3実トピックVariation Validation）
 
 この節だけが現在の再開地点である。REINSの3-run repeatability checkpoint

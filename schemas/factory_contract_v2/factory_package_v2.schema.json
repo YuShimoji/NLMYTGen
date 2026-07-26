@@ -1,0 +1,706 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nlmytgen.factory_package.v2",
+  "title": "NLMYTGen Factory Package v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "contract",
+    "package",
+    "source_intake",
+    "claim_support",
+    "canonical_content",
+    "shape",
+    "media_provenance",
+    "episode_execution",
+    "source_project",
+    "generated_project",
+    "render_validation",
+    "identities",
+    "resume_identity",
+    "human_decision",
+    "authority",
+    "extensions"
+  ],
+  "properties": {
+    "schema": {
+      "const": "nlmytgen.factory_package.v2"
+    },
+    "schema_version": {
+      "const": "2.0"
+    },
+    "contract": {
+      "$ref": "#/$defs/contract"
+    },
+    "package": {
+      "$ref": "#/$defs/package"
+    },
+    "source_intake": {
+      "$ref": "#/$defs/source_intake"
+    },
+    "claim_support": {
+      "$ref": "#/$defs/claim_support"
+    },
+    "canonical_content": {
+      "$ref": "#/$defs/canonical_content"
+    },
+    "shape": {
+      "$ref": "#/$defs/shape"
+    },
+    "media_provenance": {
+      "$ref": "#/$defs/media_provenance"
+    },
+    "episode_execution": {
+      "$ref": "#/$defs/episode_execution"
+    },
+    "source_project": {
+      "$ref": "#/$defs/source_project"
+    },
+    "generated_project": {
+      "$ref": "#/$defs/generated_project"
+    },
+    "render_validation": {
+      "$ref": "#/$defs/render_validation"
+    },
+    "identities": {
+      "$ref": "#/$defs/identities"
+    },
+    "resume_identity": {
+      "$ref": "#/$defs/resume_identity"
+    },
+    "human_decision": {
+      "$ref": "#/$defs/human_decision"
+    },
+    "authority": {
+      "$ref": "#/$defs/authority"
+    },
+    "extensions": {
+      "$ref": "#/$defs/extensions"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "repo_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^\\\\/:][^\\\\]*$"
+    },
+    "section_base": {
+      "type": "object"
+    },
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "schema_path",
+        "schema_sha256",
+        "field_inventory_path",
+        "field_inventory_sha256"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_contract.v2"
+        },
+        "schema_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "field_inventory_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "field_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "package_id",
+        "episode_id",
+        "title",
+        "content_authority"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.package_identity.v2"
+        },
+        "package_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "episode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_authority": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source_intake": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "authority_path",
+        "authority_sha256",
+        "source_count",
+        "source_backed"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.source_intake.v2"
+        },
+        "authority_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "authority_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_backed": {
+          "const": true
+        }
+      }
+    },
+    "claim_support": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "authority_path",
+        "authority_sha256",
+        "factual_cue_ids",
+        "nonfactual_cue_ids",
+        "unsupported_factual_units"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.claim_support.v2"
+        },
+        "authority_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "authority_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "factual_cue_ids": {
+          "$ref": "#/$defs/cue_ids"
+        },
+        "nonfactual_cue_ids": {
+          "$ref": "#/$defs/cue_ids"
+        },
+        "unsupported_factual_units": {
+          "const": 0
+        }
+      }
+    },
+    "canonical_content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "path",
+        "sha256",
+        "cue_sequence"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.canonical_content.v2"
+        },
+        "path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "cue_sequence": {
+          "$ref": "#/$defs/cue_ids"
+        }
+      }
+    },
+    "shape": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "cue_count",
+        "scene_count",
+        "scene_mapping",
+        "speaker_mapping",
+        "speaker_counts",
+        "timeline_frames",
+        "fps",
+        "duration_seconds",
+        "asset_count",
+        "source_count"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.shape.v2"
+        },
+        "cue_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "scene_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "scene_mapping": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "speaker_mapping": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "speaker_counts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "timeline_frames": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "duration_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "asset_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_count": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "media_provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "path",
+        "sha256",
+        "asset_mappings"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.media_provenance.v2"
+        },
+        "path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "asset_mappings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "cue_id",
+              "asset_id",
+              "source_id",
+              "sha256"
+            ],
+            "properties": {
+              "cue_id": {
+                "type": "string"
+              },
+              "asset_id": {
+                "type": "string"
+              },
+              "source_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        }
+      }
+    },
+    "episode_execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "manifest_path",
+        "manifest_sha256",
+        "manifest_schema",
+        "run_id",
+        "project_filename",
+        "mp4_filename",
+        "render_settings_sha256"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.episode_execution.v2"
+        },
+        "manifest_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "manifest_schema": {
+          "const": "nlmytgen.episode_manifest.v1"
+        },
+        "run_id": {
+          "type": "string"
+        },
+        "project_filename": {
+          "type": "string"
+        },
+        "mp4_filename": {
+          "type": "string"
+        },
+        "render_settings_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "source_project": {
+      "$ref": "#/$defs/project_identity"
+    },
+    "generated_project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "path",
+        "sha256",
+        "identity_source",
+        "availability_claim"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.generated_project.v2"
+        },
+        "path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "identity_source": {
+          "type": "string"
+        },
+        "availability_claim": {
+          "const": "receipt_identity_only"
+        }
+      }
+    },
+    "render_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "technical_receipt_path",
+        "technical_receipt_sha256",
+        "technical_status",
+        "mp4_path",
+        "mp4_sha256",
+        "container",
+        "video_codec",
+        "audio_codec",
+        "width",
+        "height",
+        "fps",
+        "duration_seconds",
+        "availability_claim"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.render_validation.v2"
+        },
+        "technical_receipt_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "technical_receipt_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "technical_status": {
+          "const": "passed"
+        },
+        "mp4_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "mp4_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "container": {
+          "type": "string"
+        },
+        "video_codec": {
+          "type": "string"
+        },
+        "audio_codec": {
+          "type": "string"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fps": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "duration_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "availability_claim": {
+          "const": "receipt_identity_only"
+        }
+      }
+    },
+    "identities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "protected_input_policy",
+        "content_identity_policy",
+        "content_identity_sha256",
+        "content_identity_excludes"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.identities.v2"
+        },
+        "protected_input_policy": {
+          "const": "manifest_content_locks_sha256"
+        },
+        "content_identity_policy": {
+          "const": "canonical_content_and_execution_without_run_local_state"
+        },
+        "content_identity_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "content_identity_excludes": {
+          "type": "array",
+          "contains": {
+            "const": "run_id"
+          }
+        }
+      }
+    },
+    "resume_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "policy",
+        "completed_run_observed",
+        "semantic_drift_fail_closed"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.resume_identity.v2"
+        },
+        "policy": {
+          "const": "content_identity_plus_canonical_artifact_sha_size_mtime"
+        },
+        "completed_run_observed": {
+          "type": "boolean"
+        },
+        "semantic_drift_fail_closed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "human_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "state",
+        "receipt_path",
+        "receipt_sha256",
+        "artifact_sha256"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.human_decision.v2"
+        },
+        "state": {
+          "enum": [
+            "accepted_exact_artifact",
+            "not_human_accepted"
+          ]
+        },
+        "receipt_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "receipt_sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "artifact_sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "rights",
+        "production",
+        "publication",
+        "upload",
+        "release"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.authority.v2"
+        },
+        "rights": {
+          "$ref": "#/$defs/authority_clock"
+        },
+        "production": {
+          "$ref": "#/$defs/authority_clock"
+        },
+        "publication": {
+          "$ref": "#/$defs/authority_clock"
+        },
+        "upload": {
+          "$ref": "#/$defs/authority_clock"
+        },
+        "release": {
+          "$ref": "#/$defs/authority_clock"
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "values"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.extensions.v2"
+        },
+        "values": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*){2,}$"
+          }
+        }
+      }
+    },
+    "cue_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^cue_[0-9]{3}$"
+      }
+    },
+    "project_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "strategy",
+        "path",
+        "sha256",
+        "identity_source",
+        "live_required_for_contract"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.source_project.v2"
+        },
+        "strategy": {
+          "type": "string"
+        },
+        "path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "identity_source": {
+          "type": "string"
+        },
+        "live_required_for_contract": {
+          "const": false
+        }
+      }
+    },
+    "authority_clock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approved",
+        "record"
+      ],
+      "properties": {
+        "approved": {
+          "type": "boolean"
+        },
+        "record": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

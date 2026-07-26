@@ -1,0 +1,173 @@
+{
+  "schema": "nlmytgen.factory_contract_v2_validation_receipt.v1",
+  "date": "2026-07-26",
+  "launch_set_id": "nlmytgen-factory-contract-v2-2026-07-26",
+  "mission_id": "factory-contract-v2-extraction-v1",
+  "source": {
+    "branch": "codex/nlmytgen-third-real-topic-factory-v1",
+    "head": "aad0043d1218cdfae8027160cd57651b04fec2ef",
+    "target_branch": "codex/nlmytgen-factory-contract-v2-v1",
+    "target_remote_absent_at_start": true,
+    "tracked_source_clean": true
+  },
+  "contract": {
+    "schema": "nlmytgen.factory_package.v2",
+    "version": "2.0",
+    "json_schema_path": "schemas/factory_contract_v2/factory_package_v2.schema.json",
+    "json_schema_sha256": "d0e831c60ceba17a83c6fe106bf1fa574cfa3881976934c3fb4571a59bb8dfbb",
+    "field_inventory_path": "schemas/factory_contract_v2/field_inventory.json",
+    "field_inventory_sha256": "8bc3a669e0b77b2dcc68f59f0f5bcf03fe6eaaaaf8aec3bad4fb3b814f6490d4",
+    "classification_counts": {
+      "required": 19,
+      "variable": 10,
+      "optional": 5,
+      "forbidden": 7,
+      "topic-extension": 2,
+      "run-local": 3,
+      "evidence-only": 4
+    },
+    "sections": [
+      "source_intake",
+      "claim_support",
+      "canonical_content",
+      "shape",
+      "media_provenance",
+      "episode_execution",
+      "source_project",
+      "generated_project",
+      "render_validation",
+      "identities",
+      "resume_identity",
+      "human_decision",
+      "authority",
+      "extensions"
+    ],
+    "compatibility_adapter": "generic_descriptor_driven_read_only",
+    "known_topic_ids_in_shared_validator": 0
+  },
+  "packages": [
+    {
+      "package_id": "new_banknote_security_notebooklm_001",
+      "descriptor_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/factory_package_v2.json",
+      "descriptor_sha256": "80f1130711a46c3f3a77f2ec1da391fd338569d9aaf0385deeb96a2a698333f7",
+      "normalized_sha256": "64c5c002902266dce2de36bfcdfaf2a2f8bfeb8c0f61c30330740c5ac40acd32",
+      "content_identity_sha256": "50772aa09294d634044c1598d9fc9c2f3366b79bbf953147830ff44c9aee4cf0",
+      "cue_count": 9,
+      "scene_count": 3,
+      "content_authority": "stable_internal_cut",
+      "human_decision": "accepted_exact_artifact"
+    },
+    {
+      "package_id": "real_estate_reins_transparency_001",
+      "descriptor_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/factory_package_v2.json",
+      "descriptor_sha256": "21e0052011b1d55f7ff27bf63af5c4f79dbc3932762df86375cdca86e59d63db",
+      "normalized_sha256": "3faccde84f16098f5e6d85c51b3c16721f3ea36535b6eededab5971de11de4ac",
+      "content_identity_sha256": "15375b3a9265269776e0c35e5f3104025fa5857155f4888ab75e9e43b3d45c06",
+      "cue_count": 7,
+      "scene_count": 4,
+      "content_authority": "internal_factory_canary_not_human_accepted",
+      "human_decision": "not_human_accepted"
+    },
+    {
+      "package_id": "ai_monitoring_labor_001",
+      "descriptor_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/factory_package_v2.json",
+      "descriptor_sha256": "866f03c7cff7570e1ad9d1b22525598a99084e9aa0b5227c4c2d31cea528eeb4",
+      "normalized_sha256": "125bef92da2db9c43223b6e1b4e3811fd456a307ef90006dd1b111baebd84081",
+      "content_identity_sha256": "dfb6ad91822b9aa69a5be3b511bfe7b9d395f051d7c33aaf4e5a2384495485cf",
+      "cue_count": 5,
+      "scene_count": 2,
+      "content_authority": "internal_factory_canary_not_human_accepted",
+      "human_decision": "not_human_accepted"
+    }
+  ],
+  "validation": {
+    "descriptor_repeat_count": 2,
+    "descriptor_repeat_exact": 3,
+    "live_profile": {
+      "packages_passed": 3,
+      "identity_artifacts_checked": 9,
+      "identity_artifacts_exact": 9,
+      "availability_status": "live_file_hash_exact"
+    },
+    "tracked_only_profile": {
+      "index_entries_copied": 2948,
+      "packages_passed": 3,
+      "identity_artifacts_checked": 9,
+      "availability_status": "receipt_only_no_live_file",
+      "git_metadata_present": false,
+      "node_modules_present": false
+    },
+    "pipeline_dry_run": {
+      "packages_passed": 3,
+      "same_v1_pipeline": true,
+      "content_identity_exact": 3,
+      "render_requested": false,
+      "render_stage_count": 0,
+      "yymm4_launch_count": 0,
+      "electron_launch_count": 0,
+      "media_playback_count": 0,
+      "network_access_count": 0,
+      "tracked_v1_files_modified": 0,
+      "live_identity_mismatches": 0
+    },
+    "focused_python": {
+      "command": "uv run pytest -q tests/test_factory_contract_v2.py tests/test_episode_video_pipeline.py tests/test_third_real_topic_factory_canary.py tests/test_standard_production_loop_gui.py",
+      "passed": 51,
+      "failed": 0
+    },
+    "focused_node": {
+      "command": "node --test gui/standard_production_loop.test.js",
+      "passed": 7,
+      "failed": 0
+    },
+    "negative_contract_cases": [
+      "missing_required_section",
+      "unknown_top_level_field",
+      "absolute_or_private_path",
+      "human_acceptance_inheritance",
+      "authority_without_exact_record",
+      "receipt_only_live_claim",
+      "cue_media_binding_gap",
+      "factual_claim_partition_gap",
+      "content_identity_run_local_field",
+      "unnamespaced_extension",
+      "bound_authority_hash_mismatch",
+      "live_file_hash_mismatch",
+      "shared_validator_topic_coupling",
+      "v1_authority_mutation",
+      "factory_package_render_request",
+      "unobserved_axis_overclaim"
+    ]
+  },
+  "preservation": {
+    "accepted_new_banknote_artifact_mutated": false,
+    "prior_reins_artifact_mutated": false,
+    "ai_monitoring_artifact_mutated": false,
+    "v1_authority_mutated": false,
+    "protected_untracked_or_ignored_artifacts_mutated": false,
+    "development_audio_policy": "silent_by_default"
+  },
+  "claims": {
+    "three_observed_packages_validate": true,
+    "deterministic_read_only_v1_compatibility": true,
+    "tracked_contract_valid_without_live_artifacts": true,
+    "universal_arbitrary_topic_compatibility": false,
+    "fourth_topic_validated": false,
+    "production_ready": false,
+    "rights_approved_for_all_packages": false,
+    "publication_approved": false,
+    "release_approved": false
+  },
+  "post_commit_gate": {
+    "command": "uv run python scripts/check_regression_integrity.py",
+    "required_runs": 1,
+    "result_owner": "final_supervising_handoff",
+    "reason": "The immutable receipt is committed before the exact outcome commit exists."
+  },
+  "next": {
+    "project_state_id": "nlmytgen-factory-contract-v2-validated-v1",
+    "product_state": "three-topic-evidence-extracted-into-versioned-executable-factory-contract",
+    "product_gate": "fourth-topic-out-of-sample-validation",
+    "recommended_next": "run-fourth-topic-through-factory-contract-v2-with-unobserved-input-axis"
+  }
+}

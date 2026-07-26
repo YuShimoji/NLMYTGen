@@ -1,0 +1,201 @@
+{
+  "schema": "nlmytgen.factory_package.v2",
+  "schema_version": "2.0",
+  "contract": {
+    "schema": "nlmytgen.factory_contract.v2",
+    "schema_path": "schemas/factory_contract_v2/factory_package_v2.schema.json",
+    "schema_sha256": "d0e831c60ceba17a83c6fe106bf1fa574cfa3881976934c3fb4571a59bb8dfbb",
+    "field_inventory_path": "schemas/factory_contract_v2/field_inventory.json",
+    "field_inventory_sha256": "8bc3a669e0b77b2dcc68f59f0f5bcf03fe6eaaaaf8aec3bad4fb3b814f6490d4"
+  },
+  "package": {
+    "schema": "nlmytgen.factory_package.package_identity.v2",
+    "package_id": "ai_monitoring_labor_001",
+    "episode_id": "ai_monitoring_labor_001_internal_review",
+    "title": "AIによる職場モニタリングと働く人への影響",
+    "content_authority": "internal_factory_canary_not_human_accepted"
+  },
+  "source_intake": {
+    "schema": "nlmytgen.factory_package.source_intake.v2",
+    "authority_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/source_registry.json",
+    "authority_sha256": "52a730152ccfe5aa88de8cc018e9761949fd68c31cf0ec35d9cb840d168ea95b",
+    "source_count": 3,
+    "source_backed": true
+  },
+  "claim_support": {
+    "schema": "nlmytgen.factory_package.claim_support.v2",
+    "authority_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/source_support_edges.json",
+    "authority_sha256": "c3a613e129e4d8a1e3617ec18b73c710f33021dd0ed8ec5608af00cad627f2fc",
+    "factual_cue_ids": [
+      "cue_002",
+      "cue_003",
+      "cue_005"
+    ],
+    "nonfactual_cue_ids": [
+      "cue_001",
+      "cue_004"
+    ],
+    "unsupported_factual_units": 0
+  },
+  "canonical_content": {
+    "schema": "nlmytgen.factory_package.canonical_content.v2",
+    "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/canonical_script.json",
+    "sha256": "1aad118b3a60651d172643a90c2b2cfef1858a82050b9d34bb943d38f03016f6",
+    "cue_sequence": [
+      "cue_001",
+      "cue_002",
+      "cue_003",
+      "cue_004",
+      "cue_005"
+    ]
+  },
+  "shape": {
+    "schema": "nlmytgen.factory_package.shape.v2",
+    "cue_count": 5,
+    "scene_count": 2,
+    "scene_mapping": {
+      "cue_001": "S1",
+      "cue_002": "S1",
+      "cue_003": "S1",
+      "cue_004": "S2",
+      "cue_005": "S2"
+    },
+    "speaker_mapping": {
+      "cue_001": "ゆっくり霊夢赤縁",
+      "cue_002": "ゆっくり魔理沙黄縁",
+      "cue_003": "ゆっくり魔理沙黄縁",
+      "cue_004": "ゆっくり霊夢赤縁",
+      "cue_005": "ゆっくり魔理沙黄縁"
+    },
+    "speaker_counts": {
+      "ゆっくり霊夢赤縁": 2,
+      "ゆっくり魔理沙黄縁": 3
+    },
+    "timeline_frames": 1606,
+    "fps": 60,
+    "duration_seconds": 26.766667,
+    "asset_count": 5,
+    "source_count": 3
+  },
+  "media_provenance": {
+    "schema": "nlmytgen.factory_package.media_provenance.v2",
+    "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/real_media_provenance.json",
+    "sha256": "b903fb012f1d19cbfefe3169ebda297bcfa9892187cd3f27c6050e34bd397dd0",
+    "asset_mappings": [
+      {
+        "cue_id": "cue_001",
+        "asset_id": "aml_cue_001_oecd_cover",
+        "source_id": "OECD-ALG-MGMT-2025",
+        "sha256": "bcd2322bb57b5a5397afff44591fd3252c220d41dac0c2961f66f617e3c9e4b3"
+      },
+      {
+        "cue_id": "cue_002",
+        "asset_id": "aml_cue_002_oecd_uses",
+        "source_id": "OECD-ALG-MGMT-2025",
+        "sha256": "b2fd6f49801705fa5285c724089f926e30255434416b505f222b6cfb9697ffc0"
+      },
+      {
+        "cue_id": "cue_003",
+        "asset_id": "aml_cue_003_oecd_decision",
+        "source_id": "OECD-ALG-MGMT-2025",
+        "sha256": "0b6e1d224c38423452cc485820fcff5e07b604a392e10185af2e2cd890214b34"
+      },
+      {
+        "cue_id": "cue_004",
+        "asset_id": "aml_cue_004_eu_osha_impacts",
+        "source_id": "EUOSHA-AIWM-2025",
+        "sha256": "46f13954bc3031a2d2c2793c775e30cc10356b75bb908dc7e2e5242e112f562d"
+      },
+      {
+        "cue_id": "cue_005",
+        "asset_id": "aml_cue_005_eu_osha_participation",
+        "source_id": "EUOSHA-AIWM-2025",
+        "sha256": "1d72ec2b44d6c79e17fa69ce2bbc23e9e77dfff9fe1307dc5adbd55236c4a501"
+      }
+    ]
+  },
+  "episode_execution": {
+    "schema": "nlmytgen.factory_package.episode_execution.v2",
+    "manifest_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_pipeline/ai_monitoring_labor_episode_manifest.json",
+    "manifest_sha256": "8ed65380489896278de698875f3064c2f4cdc252fd3e2a550b188c6f416a6ff7",
+    "manifest_schema": "nlmytgen.episode_manifest.v1",
+    "run_id": "ai_monitoring_labor_internal_review_v1",
+    "project_filename": "generated_project.local.ymmp",
+    "mp4_filename": "internal_review_ai_monitoring_labor.mp4",
+    "render_settings_sha256": "2270ad92c6941d5d887715d95589bd5168d67c3fdc92fd12a722604ded33e0e2"
+  },
+  "source_project": {
+    "schema": "nlmytgen.factory_package.source_project.v2",
+    "strategy": "generic_arbitrary_row_import",
+    "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/source_projects/ai_monitoring_labor_source.local.ymmp",
+    "sha256": "2585c0994ca56a6665ae834b71866ab3c92bc5bc9c59ca7f5a76c9128e7d0e12",
+    "identity_source": "bound_v1_manifest_and_third_topic_technical_receipt",
+    "live_required_for_contract": false
+  },
+  "generated_project": {
+    "schema": "nlmytgen.factory_package.generated_project.v2",
+    "path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/ai_monitoring_labor_internal_review_v1/generated_project.local.ymmp",
+    "sha256": "47a68b940df29937f735876fcf272bcfb403b1efe692e2cd0a153d2756c78d9d",
+    "identity_source": "third_topic_technical_receipt",
+    "availability_claim": "receipt_identity_only"
+  },
+  "render_validation": {
+    "schema": "nlmytgen.factory_package.render_validation.v2",
+    "technical_receipt_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/technical_validation_receipt.json",
+    "technical_receipt_sha256": "16c0ae38059262c0ddfe29f3acc71a8ded0e31960cb08512eadfb3e812a21e3a",
+    "technical_status": "passed",
+    "mp4_path": "production_pilots/factory_canaries/ai_monitoring_labor_001/auto_video_runs/ai_monitoring_labor_internal_review_v1/internal_review_ai_monitoring_labor.mp4",
+    "mp4_sha256": "f39297c9888fb59e0260676c1810430f06145949d99a8c3b46dea5d606d80e8d",
+    "container": "iso-bmff",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration_seconds": 26.766016,
+    "availability_claim": "receipt_identity_only"
+  },
+  "identities": {
+    "schema": "nlmytgen.factory_package.identities.v2",
+    "protected_input_policy": "manifest_content_locks_sha256",
+    "content_identity_policy": "canonical_content_and_execution_without_run_local_state",
+    "content_identity_sha256": "dfb6ad91822b9aa69a5be3b511bfe7b9d395f051d7c33aaf4e5a2384495485cf",
+    "content_identity_excludes": [
+      "timestamp",
+      "pid",
+      "machine_path",
+      "run_id"
+    ]
+  },
+  "resume_identity": {
+    "schema": "nlmytgen.factory_package.resume_identity.v2",
+    "policy": "content_identity_plus_canonical_artifact_sha_size_mtime",
+    "completed_run_observed": true,
+    "semantic_drift_fail_closed": true
+  },
+  "human_decision": {
+    "schema": "nlmytgen.factory_package.human_decision.v2",
+    "state": "not_human_accepted",
+    "receipt_path": null,
+    "receipt_sha256": null,
+    "artifact_sha256": null
+  },
+  "authority": {
+    "schema": "nlmytgen.factory_package.authority.v2",
+    "rights": {"approved": false, "record": null},
+    "production": {"approved": false, "record": null},
+    "publication": {"approved": false, "record": null},
+    "upload": {"approved": false, "record": null},
+    "release": {"approved": false, "record": null}
+  },
+  "extensions": {
+    "schema": "nlmytgen.factory_package.extensions.v2",
+    "values": {
+      "org.nlmytgen.ai_monitoring_human_review_debt": {
+        "state": "open_nonblocking",
+        "observation": "existing keyword emphasis overlaps some subtitles",
+        "human_acceptance": false
+      }
+    }
+  }
+}

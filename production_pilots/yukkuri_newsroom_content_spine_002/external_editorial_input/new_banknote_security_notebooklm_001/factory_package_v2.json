@@ -1,0 +1,239 @@
+{
+  "schema": "nlmytgen.factory_package.v2",
+  "schema_version": "2.0",
+  "contract": {
+    "schema": "nlmytgen.factory_contract.v2",
+    "schema_path": "schemas/factory_contract_v2/factory_package_v2.schema.json",
+    "schema_sha256": "d0e831c60ceba17a83c6fe106bf1fa574cfa3881976934c3fb4571a59bb8dfbb",
+    "field_inventory_path": "schemas/factory_contract_v2/field_inventory.json",
+    "field_inventory_sha256": "8bc3a669e0b77b2dcc68f59f0f5bcf03fe6eaaaaf8aec3bad4fb3b814f6490d4"
+  },
+  "package": {
+    "schema": "nlmytgen.factory_package.package_identity.v2",
+    "package_id": "new_banknote_security_notebooklm_001",
+    "episode_id": "new_banknote_security_notebooklm_001_real_media_review",
+    "title": "新紙幣の偽造防止技術",
+    "content_authority": "stable_internal_cut"
+  },
+  "source_intake": {
+    "schema": "nlmytgen.factory_package.source_intake.v2",
+    "authority_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/source_capture_receipts.json",
+    "authority_sha256": "6c4cc1817a3574b7278f2986522c91b05a51c1b8bba3ea4a544a78aee920e205",
+    "source_count": 4,
+    "source_backed": true
+  },
+  "claim_support": {
+    "schema": "nlmytgen.factory_package.claim_support.v2",
+    "authority_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/cue_source_traceability.json",
+    "authority_sha256": "5b6601134baf0e319cf252c24a3addecbecc02432f9a38234fdfc6580e038f47",
+    "factual_cue_ids": [
+      "cue_001",
+      "cue_002",
+      "cue_003",
+      "cue_004",
+      "cue_005",
+      "cue_006",
+      "cue_007",
+      "cue_008",
+      "cue_009"
+    ],
+    "nonfactual_cue_ids": [],
+    "unsupported_factual_units": 0
+  },
+  "canonical_content": {
+    "schema": "nlmytgen.factory_package.canonical_content.v2",
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+    "sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+    "cue_sequence": [
+      "cue_001",
+      "cue_002",
+      "cue_003",
+      "cue_004",
+      "cue_005",
+      "cue_006",
+      "cue_007",
+      "cue_008",
+      "cue_009"
+    ]
+  },
+  "shape": {
+    "schema": "nlmytgen.factory_package.shape.v2",
+    "cue_count": 9,
+    "scene_count": 3,
+    "scene_mapping": {
+      "cue_001": "S1",
+      "cue_002": "S1",
+      "cue_003": "S2",
+      "cue_004": "S2",
+      "cue_005": "S2",
+      "cue_006": "S2",
+      "cue_007": "S3",
+      "cue_008": "S3",
+      "cue_009": "S3"
+    },
+    "speaker_mapping": {
+      "cue_001": "ゆっくり霊夢",
+      "cue_002": "ゆっくり魔理沙",
+      "cue_003": "ゆっくり魔理沙",
+      "cue_004": "ゆっくり魔理沙",
+      "cue_005": "ゆっくり霊夢",
+      "cue_006": "ゆっくり魔理沙",
+      "cue_007": "ゆっくり魔理沙",
+      "cue_008": "ゆっくり霊夢",
+      "cue_009": "ゆっくり魔理沙"
+    },
+    "speaker_counts": {
+      "ゆっくり霊夢": 3,
+      "ゆっくり魔理沙": 6
+    },
+    "timeline_frames": 4415,
+    "fps": 60,
+    "duration_seconds": 73.583333,
+    "asset_count": 9,
+    "source_count": 4
+  },
+  "media_provenance": {
+    "schema": "nlmytgen.factory_package.media_provenance.v2",
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_real_media_provenance.json",
+    "sha256": "b96275a8e5f84494e17284135c1e4231df51930705a18f48f013d51746c2b920",
+    "asset_mappings": [
+      {
+        "cue_id": "cue_001",
+        "asset_id": "real_cue_001_banknote_overview",
+        "source_id": "J05",
+        "sha256": "e69537ee8b0ab8b3c8b0aa7a93da5b7351af19be1043ab50dd5ff795bf390195"
+      },
+      {
+        "cue_id": "cue_002",
+        "asset_id": "real_cue_002_features_overview",
+        "source_id": "O02",
+        "sha256": "fb9182baf74de56a5b3765df6304c6c0bfe624a904a0d632a3db531682165ee7"
+      },
+      {
+        "cue_id": "cue_003",
+        "asset_id": "real_cue_003_high_definition_watermark",
+        "source_id": "O01",
+        "sha256": "987efb5f461f4f605aefea77c1524b935d335619a20a82282495ca107a91e6e8"
+      },
+      {
+        "cue_id": "cue_004",
+        "asset_id": "real_cue_004_3d_hologram",
+        "source_id": "O01",
+        "sha256": "39a81c76d56cf6cc555844c909603aa1a3bb239c3797de82ed37d1d0db68082c"
+      },
+      {
+        "cue_id": "cue_005",
+        "asset_id": "real_cue_005_deep_intaglio",
+        "source_id": "O01",
+        "sha256": "8120da0426b9dc09bedc77d3225c0a2a9e94862b6bb2a33c991fe2e7d2a20ec1"
+      },
+      {
+        "cue_id": "cue_006",
+        "asset_id": "real_cue_006_microtext",
+        "source_id": "O01",
+        "sha256": "6860688c55568c2cd10b15ba37d74686ac86a5872ec1084d0923db8e9d4e5f31"
+      },
+      {
+        "cue_id": "cue_007",
+        "asset_id": "real_cue_007_identification_mark",
+        "source_id": "O01",
+        "sha256": "fbce48d296551f9f02ddd1c10bc7c19587b04f9a340bca6e00931d6b9f7e64c9"
+      },
+      {
+        "cue_id": "cue_008",
+        "asset_id": "real_cue_008_denomination_comparison",
+        "source_id": "O01-LINEUP",
+        "sha256": "66dcfe1f932e6279198c8ac945b657ad9304ca4db4ad0f37829370719b1bf6c6"
+      },
+      {
+        "cue_id": "cue_009",
+        "asset_id": "real_cue_009_four_checks",
+        "source_id": "O01",
+        "sha256": "f960a035eb0b20c0e98db425daf0f000d9d4cf84e8917a24f801b40d56b1a558"
+      }
+    ]
+  },
+  "episode_execution": {
+    "schema": "nlmytgen.factory_package.episode_execution.v2",
+    "manifest_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_real_media_episode_manifest.json",
+    "manifest_sha256": "25ac9df0a9af1c0170c88b2e92fef34ff7278934f7d5570e87e4007d44ab46f1",
+    "manifest_schema": "nlmytgen.episode_manifest.v1",
+    "run_id": "new_banknote_real_media_review_v1",
+    "project_filename": "generated_project.local.ymmp",
+    "mp4_filename": "internal_review_real_media.mp4",
+    "render_settings_sha256": "a1fb4012fc85eb1c55a74654d250d9dc2ad3bfc4d047a12755205d44255d154f"
+  },
+  "source_project": {
+    "schema": "nlmytgen.factory_package.source_project.v2",
+    "strategy": "existing_accepted_source_project",
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/local_outputs/new_banknote_yymm4_import_observation.local.ymmp",
+    "sha256": "beee7eab59196453c8d36b8889343cc82e876ea69e2bb00f5576bf17987eaa54",
+    "identity_source": "bound_v1_manifest_and_validated_real_media_receipt",
+    "live_required_for_contract": false
+  },
+  "generated_project": {
+    "schema": "nlmytgen.factory_package.generated_project.v2",
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_real_media_review_v1/generated_project.local.ymmp",
+    "sha256": "244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611",
+    "identity_source": "validated_real_media_receipt_and_human_acceptance_receipt",
+    "availability_claim": "receipt_identity_only"
+  },
+  "render_validation": {
+    "schema": "nlmytgen.factory_package.render_validation.v2",
+    "technical_receipt_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/validated_real_media_run_receipt.json",
+    "technical_receipt_sha256": "fcdc1a58c7afe3f58307522d7f3a636272bce31c51ab5cb870e111b5b1fcada0",
+    "technical_status": "passed",
+    "mp4_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_runs/new_banknote_real_media_review_v1/internal_review_real_media.mp4",
+    "mp4_sha256": "423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476",
+    "container": "iso-bmff",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration_seconds": 73.583008,
+    "availability_claim": "receipt_identity_only"
+  },
+  "identities": {
+    "schema": "nlmytgen.factory_package.identities.v2",
+    "protected_input_policy": "manifest_content_locks_sha256",
+    "content_identity_policy": "canonical_content_and_execution_without_run_local_state",
+    "content_identity_sha256": "50772aa09294d634044c1598d9fc9c2f3366b79bbf953147830ff44c9aee4cf0",
+    "content_identity_excludes": [
+      "timestamp",
+      "pid",
+      "machine_path",
+      "run_id"
+    ]
+  },
+  "resume_identity": {
+    "schema": "nlmytgen.factory_package.resume_identity.v2",
+    "policy": "content_identity_plus_canonical_artifact_sha_size_mtime",
+    "completed_run_observed": false,
+    "semantic_drift_fail_closed": true
+  },
+  "human_decision": {
+    "schema": "nlmytgen.factory_package.human_decision.v2",
+    "state": "accepted_exact_artifact",
+    "receipt_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/human_real_media_cut_acceptance_receipt.json",
+    "receipt_sha256": "cd0b4f02fb54cb0b0dbf8625a5baed6db3952b0a7342257c5456d1426e23f4b8",
+    "artifact_sha256": "423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476"
+  },
+  "authority": {
+    "schema": "nlmytgen.factory_package.authority.v2",
+    "rights": {"approved": false, "record": null},
+    "production": {"approved": false, "record": null},
+    "publication": {"approved": false, "record": null},
+    "upload": {"approved": false, "record": null},
+    "release": {"approved": false, "record": null}
+  },
+  "extensions": {
+    "schema": "nlmytgen.factory_package.extensions.v2",
+    "values": {
+      "org.nlmytgen.notebooklm_lineage": {
+        "state": "present_in_unchanged_v1_authorities",
+        "core_contract_required": false
+      }
+    }
+  }
+}

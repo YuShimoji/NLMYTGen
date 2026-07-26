@@ -1,0 +1,219 @@
+{
+  "schema": "nlmytgen.factory_package.v2",
+  "schema_version": "2.0",
+  "contract": {
+    "schema": "nlmytgen.factory_contract.v2",
+    "schema_path": "schemas/factory_contract_v2/factory_package_v2.schema.json",
+    "schema_sha256": "d0e831c60ceba17a83c6fe106bf1fa574cfa3881976934c3fb4571a59bb8dfbb",
+    "field_inventory_path": "schemas/factory_contract_v2/field_inventory.json",
+    "field_inventory_sha256": "8bc3a669e0b77b2dcc68f59f0f5bcf03fe6eaaaaf8aec3bad4fb3b814f6490d4"
+  },
+  "package": {
+    "schema": "nlmytgen.factory_package.package_identity.v2",
+    "package_id": "real_estate_reins_transparency_001",
+    "episode_id": "real_estate_reins_transparency_001_internal_review",
+    "title": "REINSと不動産情報流通の仕組み",
+    "content_authority": "internal_factory_canary_not_human_accepted"
+  },
+  "source_intake": {
+    "schema": "nlmytgen.factory_package.source_intake.v2",
+    "authority_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/source_claim_registry.json",
+    "authority_sha256": "ba0dd85307f843a359a0962b2e3691cbff37954e09d61ebf63b9140f7abae2fe",
+    "source_count": 4,
+    "source_backed": true
+  },
+  "claim_support": {
+    "schema": "nlmytgen.factory_package.claim_support.v2",
+    "authority_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/source_support_edges.json",
+    "authority_sha256": "a5aad7e5451b64fd28219b8f5284fe21bdcfd11c22679b0dcf6ffc350b5c9e33",
+    "factual_cue_ids": [
+      "cue_002",
+      "cue_003",
+      "cue_004",
+      "cue_005",
+      "cue_006",
+      "cue_007"
+    ],
+    "nonfactual_cue_ids": ["cue_001"],
+    "unsupported_factual_units": 0
+  },
+  "canonical_content": {
+    "schema": "nlmytgen.factory_package.canonical_content.v2",
+    "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/canonical_script.json",
+    "sha256": "905587b5b6a58d54a16694b392d928c2174ac4821d5fe9186a8a79e094372af8",
+    "cue_sequence": [
+      "cue_001",
+      "cue_002",
+      "cue_003",
+      "cue_004",
+      "cue_005",
+      "cue_006",
+      "cue_007"
+    ]
+  },
+  "shape": {
+    "schema": "nlmytgen.factory_package.shape.v2",
+    "cue_count": 7,
+    "scene_count": 4,
+    "scene_mapping": {
+      "cue_001": "S1",
+      "cue_002": "S1",
+      "cue_003": "S2",
+      "cue_004": "S2",
+      "cue_005": "S3",
+      "cue_006": "S3",
+      "cue_007": "S4"
+    },
+    "speaker_mapping": {
+      "cue_001": "ゆっくり霊夢赤縁",
+      "cue_002": "ゆっくり魔理沙黄縁",
+      "cue_003": "ゆっくり霊夢赤縁",
+      "cue_004": "ゆっくり魔理沙黄縁",
+      "cue_005": "ゆっくり霊夢赤縁",
+      "cue_006": "ゆっくり霊夢赤縁",
+      "cue_007": "ゆっくり魔理沙黄縁"
+    },
+    "speaker_counts": {
+      "ゆっくり霊夢赤縁": 4,
+      "ゆっくり魔理沙黄縁": 3
+    },
+    "timeline_frames": 2725,
+    "fps": 60,
+    "duration_seconds": 45.416667,
+    "asset_count": 7,
+    "source_count": 4
+  },
+  "media_provenance": {
+    "schema": "nlmytgen.factory_package.media_provenance.v2",
+    "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_pipeline/real_estate_reins_media_provenance.json",
+    "sha256": "39c8cc9826d3af6ef0bd91db859fba5b0b3f1ebe0b2fb6ed3355fbe1d1ea1356",
+    "asset_mappings": [
+      {
+        "cue_id": "cue_001",
+        "asset_id": "reins_cue_001_about_heading",
+        "source_id": "REINS-ABOUT",
+        "sha256": "98c50562769c25107fcb616a4f36454bd61a9330d6deb60d149dfe9c77e47c47"
+      },
+      {
+        "cue_id": "cue_002",
+        "asset_id": "reins_cue_002_definition",
+        "source_id": "REINS-ABOUT",
+        "sha256": "959cac0ad4f1b8fa643047521cb0216279240588da9a75fbed56e6537224a67c"
+      },
+      {
+        "cue_id": "cue_003",
+        "asset_id": "reins_cue_003_four_regions",
+        "source_id": "REINS-ABOUT",
+        "sha256": "339e752cc6ac647aef83dd231481757858db90551d6211b7718450653e5e792e"
+      },
+      {
+        "cue_id": "cue_004",
+        "asset_id": "reins_cue_005_contract_comparison",
+        "source_id": "REINS-CONTRACT",
+        "sha256": "23fcaf9c9b3fb7eaffb6633a8d51429d11b81ce0462c24229501c8fd3591456c"
+      },
+      {
+        "cue_id": "cue_005",
+        "asset_id": "reins_cue_007_seller_confirmation",
+        "source_id": "REINS-SELLER",
+        "sha256": "00ce29747b6bc5161d435c6e83488ff57ddf9a7af7a7a73097d763c81f7d7e78"
+      },
+      {
+        "cue_id": "cue_006",
+        "asset_id": "reins_cue_006_status_categories",
+        "source_id": "REINS-CONTRACT",
+        "sha256": "3a5418ede781928c0df16026d686da42f75511c07bb3202b0893b0ca852c7b30"
+      },
+      {
+        "cue_id": "cue_007",
+        "asset_id": "reins_cue_004_transaction_flow",
+        "source_id": "REINS-ABOUT",
+        "sha256": "d9b0e2d2dee718a765bd83090acbf670cbcdb91370bd03006cc8b23f706419dd"
+      }
+    ]
+  },
+  "episode_execution": {
+    "schema": "nlmytgen.factory_package.episode_execution.v2",
+    "manifest_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_pipeline/real_estate_reins_episode_manifest.json",
+    "manifest_sha256": "ed0437ee01b2c9d142e36dcb78b470a2961a17a189329d01fec91c7635b45bed",
+    "manifest_schema": "nlmytgen.episode_manifest.v1",
+    "run_id": "real_estate_reins_internal_review_v1",
+    "project_filename": "generated_project.local.ymmp",
+    "mp4_filename": "internal_review_real_estate_reins.mp4",
+    "render_settings_sha256": "acdba6ac53f383dd231056fcb9b2ca8e7ba5dd2dc208c877fa51284d572174ba"
+  },
+  "source_project": {
+    "schema": "nlmytgen.factory_package.source_project.v2",
+    "strategy": "generic_arbitrary_row_import",
+    "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/source_projects/real_estate_reins_source.local.ymmp",
+    "sha256": "ed2773ce87a41936dd82d16d666d253f8bdba8763fc11bfa829d4818cb1b3ec9",
+    "identity_source": "bound_v1_manifest_and_second_topic_technical_receipt",
+    "live_required_for_contract": false
+  },
+  "generated_project": {
+    "schema": "nlmytgen.factory_package.generated_project.v2",
+    "path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/real_estate_reins_internal_review_v1/generated_project.local.ymmp",
+    "sha256": "ea4bc001068cf0f398d428072b2b94a6b3b1f4beed5ba0efb2b04f0d040e4da8",
+    "identity_source": "second_topic_technical_receipt",
+    "availability_claim": "receipt_identity_only"
+  },
+  "render_validation": {
+    "schema": "nlmytgen.factory_package.render_validation.v2",
+    "technical_receipt_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/technical_validation_receipt.json",
+    "technical_receipt_sha256": "15454ab4e0d76447f3cb59d1f167347e9a65ada767fb1a0fcba4ff7898bf8e3d",
+    "technical_status": "passed",
+    "mp4_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/auto_video_runs/real_estate_reins_internal_review_v1/internal_review_real_estate_reins.mp4",
+    "mp4_sha256": "4c99feed4e487743e5243074c3eca6aad51a7b16392f7f405ce158f038cb5c75",
+    "container": "iso-bmff",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "duration_seconds": 45.416016,
+    "availability_claim": "receipt_identity_only"
+  },
+  "identities": {
+    "schema": "nlmytgen.factory_package.identities.v2",
+    "protected_input_policy": "manifest_content_locks_sha256",
+    "content_identity_policy": "canonical_content_and_execution_without_run_local_state",
+    "content_identity_sha256": "15375b3a9265269776e0c35e5f3104025fa5857155f4888ab75e9e43b3d45c06",
+    "content_identity_excludes": [
+      "timestamp",
+      "pid",
+      "machine_path",
+      "run_id"
+    ]
+  },
+  "resume_identity": {
+    "schema": "nlmytgen.factory_package.resume_identity.v2",
+    "policy": "content_identity_plus_canonical_artifact_sha_size_mtime",
+    "completed_run_observed": true,
+    "semantic_drift_fail_closed": true
+  },
+  "human_decision": {
+    "schema": "nlmytgen.factory_package.human_decision.v2",
+    "state": "not_human_accepted",
+    "receipt_path": null,
+    "receipt_sha256": null,
+    "artifact_sha256": null
+  },
+  "authority": {
+    "schema": "nlmytgen.factory_package.authority.v2",
+    "rights": {"approved": false, "record": null},
+    "production": {"approved": false, "record": null},
+    "publication": {"approved": false, "record": null},
+    "upload": {"approved": false, "record": null},
+    "release": {"approved": false, "record": null}
+  },
+  "extensions": {
+    "schema": "nlmytgen.factory_package.extensions.v2",
+    "values": {
+      "org.nlmytgen.repeatability": {
+        "state": "three_run_and_completed_resume_validated",
+        "receipt_path": "production_pilots/factory_canaries/real_estate_reins_transparency_001/three_run_repeatability_receipt.json",
+        "receipt_sha256": "7ff88a8c4c94d93e332c95a7b49386fb01279c43a07a1eafc442366ade7c635f"
+      }
+    }
+  }
+}
