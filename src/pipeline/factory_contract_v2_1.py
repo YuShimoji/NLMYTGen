@@ -836,14 +836,17 @@ def _validate_authorities_and_shape(
         manifest.get("schema") != episode["manifest_schema"]
         or manifest.get("schema") != PRE_RENDER_MANIFEST_SCHEMA
         or manifest.get("episode_id") != package["episode_id"]
-        or manifest.get("lifecycle") != sections["lifecycle"]["state"]
+        or manifest.get("lifecycle") != "package_prepared"
     ):
         _fail(
             "pre-render episode manifest identity or lifecycle differs",
             code="episode_manifest_invalid",
             section="episode_execution",
             field_path="$.episode_execution.manifest_path",
-            consumer_effect="stage planner could use a manifest from another lifecycle",
+            consumer_effect=(
+                "stage planner could use a manifest that is not the immutable "
+                "package-prepared content authority"
+            ),
         )
     if (
         manifest.get("source_package") != source_intake["authority_path"]

@@ -13,6 +13,7 @@ Usage:
     python -m src.cli.main doctor-runtime [--profile code|review|render|regenerate|all] [--require-profile PROFILE] [--artifact-root PATH] [--deep] [--format text|json]
     python -m src.cli.main validate-factory-package --package factory_package.json [--require-lifecycle STATE] [--check-live] [--format text|json]
     python -m src.cli.main evaluate-factory-queue --queue factory_queue.json [--check-live] [--execute-safe-stages] --format json
+    python -m src.cli.main advance-factory-package --queue factory_queue.json --package-id ID --to-lifecycle source_project_ready --authority-id ID [--execute] --format json
     python -m src.cli.main build-episode-video --factory-package factory_package_v2.json --dry-run
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
     python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown] [--with-fetch-report]
@@ -1792,6 +1793,49 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (json only)",
     )
 
+    p_factory_advance = subparsers.add_parser(
+        "advance-factory-package",
+        help="Plan or execute one queue-selected source-project promotion",
+    )
+    p_factory_advance.add_argument(
+        "--queue",
+        required=True,
+        type=Path,
+        help="Exact predecessor Factory Queue descriptor",
+    )
+    p_factory_advance.add_argument(
+        "--package-id",
+        required=True,
+        help="Package ID selected by the bounded queue",
+    )
+    p_factory_advance.add_argument(
+        "--to-lifecycle",
+        required=True,
+        help="Requested lifecycle; this command supports source_project_ready only",
+    )
+    p_factory_advance.add_argument(
+        "--authority-id",
+        required=True,
+        help="Exact supervisor source-project authority ID",
+    )
+    p_factory_advance.add_argument(
+        "--render-authority-id",
+        default=None,
+        help="Rejected: render authority is outside this source-only command",
+    )
+    p_factory_advance.add_argument(
+        "--execute",
+        action="store_true",
+        help="Materialize the source project; default behavior is plan-only",
+    )
+    p_factory_advance.add_argument(
+        "--format",
+        choices=["json"],
+        default="json",
+        dest="factory_advance_format",
+        help="Output format (json only)",
+    )
+
     # build-csv
     p_build = subparsers.add_parser("build-csv", help="Build YMM4 CSV from input")
     p_build.add_argument("input", nargs="+", help="Input file path(s) (.txt or .csv)")
@@ -3406,6 +3450,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_validate_factory_package(args)
         elif args.command == "evaluate-factory-queue":
             return _cmd_evaluate_factory_queue(args)
+        elif args.command == "advance-factory-package":
+            return _cmd_advance_factory_package(args)
         elif args.command == "build-csv":
             return _cmd_build_csv(args)
         elif args.command == "validate":
@@ -6786,6 +6832,37 @@ def _cmd_evaluate_factory_queue(args: argparse.Namespace) -> int:
         return 1
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0 if result["status"] == "passed" else 1
+
+
+def _cmd_advance_factory_package(args: argparse.Namespace) -> int:
+    from src.pipeline.factory_source_project_promotion import (
+        FactorySourceProjectPromotionError,
+        advance_factory_package,
+    )
+
+    try:
+        result = advance_factory_package(
+            repo_root=Path.cwd(),
+            queue_path=args.queue,
+            package_id=args.package_id,
+            to_lifecycle=args.to_lifecycle,
+            authority_id=args.authority_id,
+            execute=bool(args.execute),
+            render_authority_id=args.render_authority_id,
+        )
+    except FactorySourceProjectPromotionError as exc:
+        print(
+            json.dumps(
+                exc.as_payload(),
+                ensure_ascii=False,
+                indent=2,
+                sort_keys=True,
+            ),
+            file=sys.stderr,
+        )
+        return 1
+    print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0
 
 
 def _cmd_doctor_runtime(args: argparse.Namespace) -> int:

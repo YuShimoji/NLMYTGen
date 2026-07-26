@@ -178,6 +178,8 @@ internal static class Program
         var main = WaitForMainWindow(owned.Processes, options.TimeoutSeconds);
         SetStage("wait_source_project_loaded");
         WaitForProjectLoaded(main, owned.Processes, options.Project!, options.TimeoutSeconds);
+        SetStage("refresh_source_project_window");
+        main = WaitForMainWindow(owned.Processes, options.TimeoutSeconds);
         SetStage("add_script_rows");
         var importedRows = AddScriptRows(main, owned.Processes, options.Csv);
         SetStage("save_source_project");
@@ -579,34 +581,88 @@ internal static class Program
 
         foreach (var row in rows)
         {
-            var speakerCombo = FindSpeakerCombo(main);
-            var textEdit = FindVoiceTextEdit(main);
-            SelectComboValue(speakerCombo, processes, row.Speaker);
-            if (!textEdit.TryGetCurrentPattern(ValuePattern.Pattern, out var value))
+            AutomationElement? textEdit = null;
+            var configureDeadline = DateTime.UtcNow.AddSeconds(30);
+            while (DateTime.UtcNow < configureDeadline)
             {
-                throw new InvalidOperationException("YMM4 voice text edit lost ValuePattern");
+                try
+                {
+                    var speakerCombo = FindSpeakerCombo(main);
+                    textEdit = FindVoiceTextEdit(main);
+                    SelectComboValue(speakerCombo, processes, row.Speaker);
+                    if (!textEdit.TryGetCurrentPattern(ValuePattern.Pattern, out var value))
+                    {
+                        throw new InvalidOperationException(
+                            "YMM4 voice text edit lost ValuePattern");
+                    }
+                    ((ValuePattern)value).SetValue(row.Text);
+                    break;
+                }
+                catch (ElementNotAvailableException)
+                {
+                    main = WaitForMainWindow(processes, 30);
+                    textEdit = null;
+                    Thread.Sleep(250);
+                }
+                catch (COMException)
+                {
+                    main = WaitForMainWindow(processes, 30);
+                    textEdit = null;
+                    Thread.Sleep(250);
+                }
             }
-            ((ValuePattern)value).SetValue(row.Text);
+            if (textEdit is null)
+            {
+                throw new TimeoutException(
+                    "timed out configuring the YMM4 speaker and voice text");
+            }
 
             var addDeadline = DateTime.UtcNow.AddSeconds(30);
             AutomationElement? add = null;
             while (DateTime.UtcNow < addDeadline)
             {
-                add = main
-                    .FindAll(
-                        TreeScope.Descendants,
-                        new PropertyCondition(
-                            AutomationElement.ControlTypeProperty,
-                            ControlType.Button
+                try
+                {
+                    add = main
+                        .FindAll(
+                            TreeScope.Descendants,
+                            new PropertyCondition(
+                                AutomationElement.ControlTypeProperty,
+                                ControlType.Button
+                            )
                         )
-                    )
-                    .Cast<AutomationElement>()
-                    .LastOrDefault(element =>
-                        element.Current.IsEnabled
-                        && !element.Current.IsOffscreen
-                        && element.Current.Name.Equals("追加", StringComparison.OrdinalIgnoreCase)
-                        && element.TryGetCurrentPattern(InvokePattern.Pattern, out _)
-                    );
+                        .Cast<AutomationElement>()
+                        .LastOrDefault(element =>
+                        {
+                            try
+                            {
+                                return element.Current.IsEnabled
+                                    && !element.Current.IsOffscreen
+                                    && element.Current.Name.Equals(
+                                        "追加",
+                                        StringComparison.OrdinalIgnoreCase)
+                                    && element.TryGetCurrentPattern(
+                                        InvokePattern.Pattern,
+                                        out _);
+                            }
+                            catch (ElementNotAvailableException)
+                            {
+                                return false;
+                            }
+                            catch (COMException)
+                            {
+                                return false;
+                            }
+                        });
+                }
+                catch (ElementNotAvailableException)
+                {
+                    main = WaitForMainWindow(processes, 30);
+                }
+                catch (COMException)
+                {
+                    main = WaitForMainWindow(processes, 30);
+                }
                 if (add is not null)
                 {
                     break;
@@ -622,13 +678,24 @@ internal static class Program
             var completionDeadline = DateTime.UtcNow.AddSeconds(60);
             while (DateTime.UtcNow < completionDeadline)
             {
-                textEdit = FindVoiceTextEdit(main);
-                if (
-                    textEdit.TryGetCurrentPattern(ValuePattern.Pattern, out var current)
-                    && string.IsNullOrEmpty(((ValuePattern)current).Current.Value)
-                )
+                try
                 {
-                    break;
+                    textEdit = FindVoiceTextEdit(main);
+                    if (
+                        textEdit.TryGetCurrentPattern(ValuePattern.Pattern, out var current)
+                        && string.IsNullOrEmpty(((ValuePattern)current).Current.Value)
+                    )
+                    {
+                        break;
+                    }
+                }
+                catch (ElementNotAvailableException)
+                {
+                    main = WaitForMainWindow(processes, 30);
+                }
+                catch (COMException)
+                {
+                    main = WaitForMainWindow(processes, 30);
                 }
                 Thread.Sleep(100);
             }
@@ -650,9 +717,23 @@ internal static class Program
         )
         .Cast<AutomationElement>()
         .FirstOrDefault(element =>
-            element.Current.IsEnabled
-            && element.Current.AutomationId.Equals("combobox", StringComparison.OrdinalIgnoreCase)
-        )
+        {
+            try
+            {
+                return element.Current.IsEnabled
+                    && element.Current.AutomationId.Equals(
+                        "combobox",
+                        StringComparison.OrdinalIgnoreCase);
+            }
+            catch (ElementNotAvailableException)
+            {
+                return false;
+            }
+            catch (COMException)
+            {
+                return false;
+            }
+        })
         ?? throw new InvalidOperationException("YMM4 speaker combo was not found");
 
     private static AutomationElement FindVoiceTextEdit(AutomationElement main) => main
@@ -662,10 +743,24 @@ internal static class Program
         )
         .Cast<AutomationElement>()
         .FirstOrDefault(element =>
-            element.Current.IsEnabled
-            && element.Current.AutomationId.Equals("PARTS_TextBox", StringComparison.OrdinalIgnoreCase)
-            && element.TryGetCurrentPattern(ValuePattern.Pattern, out _)
-        )
+        {
+            try
+            {
+                return element.Current.IsEnabled
+                    && element.Current.AutomationId.Equals(
+                        "PARTS_TextBox",
+                        StringComparison.OrdinalIgnoreCase)
+                    && element.TryGetCurrentPattern(ValuePattern.Pattern, out _);
+            }
+            catch (ElementNotAvailableException)
+            {
+                return false;
+            }
+            catch (COMException)
+            {
+                return false;
+            }
+        })
         ?? throw new InvalidOperationException("YMM4 voice text edit was not found");
 
     private static void SelectComboValue(

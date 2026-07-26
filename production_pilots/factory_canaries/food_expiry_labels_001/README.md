@@ -32,3 +32,16 @@ uv run python -m src.cli.main build-episode-video `
 
 このdry-runはcompleted video dry-runではない。source-project generation前に
 成功停止し、YMM4、Electron、render driver、ffmpeg、playbackを起動しない。
+
+source-project promotion後の正本:
+
+- predecessor: `factory_package_v2_1.json` (`package_prepared`、immutable)
+- successor: `factory_package_v2_1_source_project_ready.json`
+- structural readback: `source_project_readback.json`
+- promotion receipt: `source_project_promotion_receipt.json`
+- local project:
+  `local_outputs/food_expiry_labels_source.local.ymmp` (ignored)
+
+同じauthorityとcontent identityで`advance-factory-package --execute`を再実行した
+場合はvalidation-only `verified_noop`となる。render authorityはこのcommandへ
+渡せず、render / MP4 / human decisionは別gateである。

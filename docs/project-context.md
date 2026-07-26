@@ -1,42 +1,50 @@
 # Project Context — NLMYTGen
 
-## 現在の監修AIハンドオフ（2026-07-26 JST・Bounded Factory Queue）
+## 現在の監修AIハンドオフ（2026-07-26 JST・Food-expiry Source Project）
 
-この節だけが現在の再開地点である。Factory Contract v2.1 checkpoint
-`88db8b84e8863aed366fd1683ddcfcc548a0b2a6`から
-`codex/nlmytgen-bounded-factory-queue-v1`を作成し、mixed v2.0 / v2.1
-4-package queueとpure render-on-change policyを実装した。
+この節だけが現在の再開地点である。bounded queue checkpoint
+`7c9ee4a9879e855911434b72105c04bb216d7088`から
+`codex/nlmytgen-food-expiry-source-project-ready-v1`を作成し、queue唯一候補
+`food_expiry_labels_001`をsource-project-readyへ進めた。
 
-- **queue contract**: `nlmytgen.factory_queue.v1`。declared maximum 4、
-  hard maximum 32。priority-descending / explicit order-ascending。
-- **identity baseline**: entryごとにpackage ID、content identity、
-  render-settings identity、completed-output identityを固定。
-- **fail closed**: duplicate package / unmarked content、target collision、
-  maximum、unstable order、private path、unknown version/schema、semantic drift、
-  corrupt outputを拒否する。shared engine内known topic IDは0。
-- **live decisions**: new-banknote `human_accepted` / `verified_noop`、
-  REINSとAI-monitoring `rendered` / `verified_noop`、food-expiry
-  `package_prepared` / `source_project_generation_required`。
-- **live counts**: no-op 3、source candidate 1、render candidate 0、
-  blocked / invalid 0、render schedule / execution set 0。
-- **tracked-only**: 4/4 contract valid。complete 3件は
-  `recorded_complete_no_live_file`、food-expiryはprepared。render 0。
-- **safe-stage**: existing dry-run 3、pre-render plan 1、identity 4/4 exact。
-  YMM4 / Electron / render / encode / playback / volume / product write 0。
-- **determinism**: live、tracked-only、safe-stageを各2回、raw exact。
-- **negative / tests**: queue 31/31、v2.0 / v2.1 / queue / episode 97/97。
-- **authority**: food-expiryのtechnical next stageは明示するがexecution false。
-  human、rights、production、publication、upload、releaseへ継承しない。
+- **authority**:
+  `supervisor-food-expiry-source-project-materialization-2026-07-26`。
+  commandはplan-only default、exact queue/package/lifecycle/authorityと
+  predecessor/content/CSV/shape identityを通過した場合だけexecuteする。
+- **source project**: package-local ignored locator、SHA `4f8dc1...bdbf`、
+  449,804 bytes、YMM4 `4.54.0.1`、VoiceItems 4、霊夢4、1 scene、
+  1335 frames / 22.25秒。canonical text/order 4/4 exact。
+- **clean structure**: ToolStates / LayoutXml / private absolute path /
+  unrelated itemは0。generated project、render receipt、MP4、human decisionは無い。
+- **append-only**: predecessor descriptor `18e078...329`とqueue-v1
+  `2cfbda...75f`はbyte-exact。successor descriptor `4017f7...688c`と
+  queue-v2 `4f0fe0...54d`を追加した。content identity
+  `27165f...5c6`は前後同一。
+- **live queue-v2**: completed 3件`verified_noop`。food-expiryは
+  `source_project_live_exact` / `render_required` / execution false。
+  render candidate 1、scheduled / execution / blocked / invalid 0。
+- **tracked-only**: private project 0。completed 3件
+  `recorded_complete_no_live_file`、food-expiry
+  `source_project_recorded_only` / `render_required`。demotion / regeneration /
+  render execution 0。
+- **idempotence**: 同一promotionは`verified_noop`、YMM4/build launch 0、
+  project hash/size/mtimeとsuccessor descriptor不変。追加2 runs exact。
+- **repair history**: actual YMM4 2 attempts。最初のvirtualized UIA elementを
+  fail closedで回収し、stale element再取得をgeneric driverへ追加して2回目成功。
+  owned process residue 0。
+- **validation**: dotnet 0 warning / 0 error、focused 137/137。
 - **current state**:
-  `lifecycle-aware-four-package-queue-with-complete-package-no-rerender-policy`。
-  Product-Gateは`advance-prepared-package-to-source-project-ready`。
-- **next action**: owner許可後、food-expiry 1件だけを同じcontent identityで
-  source projectへmaterializeし、exact locator / SHAを追加する。
-- **boundary**: fifth topic、queue再設計、render、PR、merge、master、
-  deployment、public actionは今回のnext stageではない。
+  `four-package-queue-with-single-prepared-package-promoted-to-source-project-ready`。
+  Product-Gateは`authorize-food-expiry-single-render`。
+- **next action**: 別authority後、queue-v2でfood-expiry 1件だけをrenderする。
+  generated project / MP4 / technical receiptはappend-only rendered successorへ
+  束縛し、human/rights/public gateは分離する。
+- **boundary**: render、MP4、playback、human decision、rights、production、
+  publication、upload、release、fifth topic、PR、merge、master、deploymentは
+  未実施。
 - **詳細**:
-  `docs/verification/BOUNDED_FACTORY_QUEUE_VALIDATION_2026-07-26.md`と`.json`。
-  通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/verification/FOOD_EXPIRY_SOURCE_PROJECT_PROMOTION_2026-07-26.md`と
+  `.json`。通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
   `docs/runtime-state.md`。
 
 ## 現在の監修AIハンドオフ（2026-07-26 JST・Factory Contract v2.1 lifecycle）

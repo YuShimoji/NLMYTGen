@@ -1,0 +1,152 @@
+{
+  "schema": "nlmytgen.food_expiry_source_project_promotion_validation.v1",
+  "schema_version": "1.0",
+  "status": "passed",
+  "source": {
+    "branch": "codex/nlmytgen-bounded-factory-queue-v1",
+    "commit": "7c9ee4a9879e855911434b72105c04bb216d7088",
+    "queue_path": "production_pilots/factory_queues/four_package_lifecycle_queue_v1.json",
+    "queue_sha256": "2cfbdab4bf3bfb765afa8909b54212311155ba85c3838078a1e0aac77a11375f",
+    "package_descriptor_path": "production_pilots/factory_canaries/food_expiry_labels_001/factory_package_v2_1.json",
+    "package_descriptor_sha256": "18e078f6f6c5b6e17808ec9378d8476a9cd8ce426cd1281563c833ae21acf329",
+    "content_identity_sha256": "27165fad6fadaee2e5c247a86758a505c7f5f5797eb7b386d174585622a585c6",
+    "baseline_evaluation_sha256": "52149bc8f1f3793586bc1d59dd31839d3dabb79266b7f7023339b9582a826229"
+  },
+  "promotion": {
+    "authority_id": "supervisor-food-expiry-source-project-materialization-2026-07-26",
+    "package_id": "food_expiry_labels_001",
+    "from_lifecycle": "package_prepared",
+    "to_lifecycle": "source_project_ready",
+    "command_default": "plan_only",
+    "explicit_execute_required": true,
+    "content_identity_unchanged": true,
+    "canonical_csv_sha256": "00ade6df462c9cefb8cc1960d385def18a053793561d96a1da38eb9d9c41b855",
+    "derived_csv_sha256": "b4b4bb7ae998fa3c850a030df2ba719cde8ba1bd8c82c1215b40a7d5a9ee2256"
+  },
+  "source_project": {
+    "path": "production_pilots/factory_canaries/food_expiry_labels_001/local_outputs/food_expiry_labels_source.local.ymmp",
+    "availability": "ignored_local_exact",
+    "sha256": "4f8dc13976cb4ef56ea582d75e1ff92ae9d2780fff4cf53c13923d561955bdbf",
+    "size_bytes": 449804,
+    "structural_identity_sha256": "10fa9fefac7ebc68ba3ace7af9f24e47a74eedf55be853fa05d5a4fb674183ff",
+    "yymm4_version": "4.54.0.1+76b177dd451f9d162816dabc4ac658180e869582",
+    "voice_item_count": 4,
+    "speaker_counts": {
+      "ゆっくり霊夢赤縁": 4
+    },
+    "scene_count": 1,
+    "timeline_frames": 1335,
+    "fps": 60,
+    "duration_seconds": 22.25,
+    "canonical_text_order_exact": true,
+    "tool_states_empty": true,
+    "layout_xml_empty": true,
+    "private_absolute_paths_absent": true,
+    "unrelated_non_voice_items": 0
+  },
+  "tracked_artifacts": {
+    "readback": {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/source_project_readback.json",
+      "sha256": "e98ebad7b8f1cbc7bc20f4cd675f423fe1b2da44aac773969ecc392ec2f91aea"
+    },
+    "promotion_receipt": {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/source_project_promotion_receipt.json",
+      "sha256": "81eae90ac4c4a8ab06b0c9bb62591d57a6fee9d96001e1a7279a803b8f77f18e"
+    },
+    "successor_descriptor": {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/factory_package_v2_1_source_project_ready.json",
+      "sha256": "4017f7d1591dc229f1163aecaf85f91e14d1d0eb919b03a3d1945e29d604688c"
+    },
+    "successor_queue": {
+      "path": "production_pilots/factory_queues/four_package_lifecycle_queue_v2.json",
+      "sha256": "4f0fe080a56697720409791e68c922655428f2832a604525e276bd3ee156554d"
+    }
+  },
+  "live_queue": {
+    "evaluation_sha256": "b782b2854e53b93a996e8498200c122f18532c9df14025df10ef2743dba52b53",
+    "verified_noop": 3,
+    "source_project_candidates": 0,
+    "render_candidates": 1,
+    "scheduled_for_render": 0,
+    "execution_set_size": 0,
+    "blocked_packages": 0,
+    "invalid_packages": 0,
+    "food_expiry_decision": "render_required",
+    "food_expiry_live_availability": "source_project_live_exact",
+    "food_expiry_execution_eligible": false
+  },
+  "tracked_only_queue": {
+    "private_source_project_present": false,
+    "predecessor_evaluation_sha256": "8a7e88e63ba064b3ddb51080e165cadc8851e24ed3ee4a4fc68852cb6482a7a1",
+    "successor_evaluation_sha256": "af8e67f4e58b5098eaf33f1fd0da8ad042fbca27a7c954f793b4ade2f7f031f4",
+    "recorded_complete_no_live_file": 3,
+    "source_project_candidates": 0,
+    "render_candidates": 1,
+    "scheduled_for_render": 0,
+    "execution_set_size": 0,
+    "blocked_packages": 0,
+    "invalid_packages": 0,
+    "food_expiry_lifecycle": "source_project_ready",
+    "food_expiry_availability": "source_project_recorded_only",
+    "food_expiry_decision": "render_required",
+    "food_expiry_execution_eligible": false
+  },
+  "idempotence": {
+    "second_invocation_result": "verified_noop",
+    "second_invocation_yymm4_launch_count": 0,
+    "second_invocation_builder_launch_count": 0,
+    "source_project_hash_size_mtime_unchanged": true,
+    "successor_descriptor_unchanged": true,
+    "additional_validation_runs": 2,
+    "tracked_artifacts_exact_across_additional_runs": true
+  },
+  "runtime": {
+    "audio_policy": "silent_by_default",
+    "yymm4_launch_attempts": 2,
+    "successful_materializations": 1,
+    "repairable_failed_attempts": 1,
+    "repairable_failure_class": "ElementNotAvailableException",
+    "process_residue": 0,
+    "preview_playback": false,
+    "speaker_playback": false,
+    "system_volume_operation": false
+  },
+  "preservation": {
+    "new_banknote_descriptor_sha256": "80f1130711a46c3f3a77f2ec1da391fd338569d9aaf0385deeb96a2a698333f7",
+    "reins_descriptor_sha256": "21e0052011b1d55f7ff27bf63af5c4f79dbc3932762df86375cdca86e59d63db",
+    "ai_monitoring_descriptor_sha256": "866f03c7cff7570e1ad9d1b22525598a99084e9aa0b5227c4c2d31cea528eeb4",
+    "predecessor_descriptor_exact": true,
+    "predecessor_queue_exact": true,
+    "completed_packages_modified": false
+  },
+  "validation": {
+    "dotnet_build_warnings": 0,
+    "dotnet_build_errors": 0,
+    "focused_tests_passed": 137,
+    "focused_tests_failed": 0,
+    "negative_promotion_tests_passed": 14,
+    "deterministic_regeneration_runs": 2,
+    "json_markdown_parse": "passed",
+    "canonical_regression": "post_commit_handoff_only"
+  },
+  "boundaries": {
+    "render_performed": false,
+    "generated_project_created": false,
+    "mp4_generated": false,
+    "ffmpeg_encode_performed": false,
+    "media_playback": false,
+    "human_decision_created": false,
+    "rights_approved": false,
+    "production_approved": false,
+    "publication_approved": false,
+    "upload_approved": false,
+    "release_approved": false,
+    "pr_created": false,
+    "master_modified": false
+  },
+  "outcome": {
+    "branch": "codex/nlmytgen-food-expiry-source-project-ready-v1",
+    "commit": "resolved_by_current_branch_tip",
+    "next_gate": "authorize-food-expiry-single-render"
+  }
+}
