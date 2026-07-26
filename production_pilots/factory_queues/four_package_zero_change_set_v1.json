@@ -1,0 +1,41 @@
+{
+  "schema": "nlmytgen.factory_queue.change_set.v1",
+  "schema_version": "1.0",
+  "contract": {
+    "schema": "nlmytgen.factory_queue.execution_contract.v1",
+    "change_set_schema_path": "schemas/factory_queue_execution_v1/factory_queue_change_set_v1.schema.json",
+    "change_set_schema_sha256": "e7dc761bd3bfe324818db7fb4ef2339ea82bd2fe8c49c3a532ad80fdce213fe7",
+    "authority_schema_path": "schemas/factory_queue_execution_v1/factory_queue_execution_authority_v1.schema.json",
+    "authority_schema_sha256": "acaf9cda4bdaba96aad9441fc94337a285dbcc1108015b706f6a3d3d70657d10",
+    "journal_schema_path": "schemas/factory_queue_execution_v1/factory_queue_execution_journal_v1.schema.json",
+    "journal_schema_sha256": "1cbfbc942c3d25b93ae6bdfd34d4c8c8962c0c2c5842a1f65ccc168bba84c603"
+  },
+  "change_set_id": "four_package_zero_change_set_v1",
+  "queue": {
+    "path": "production_pilots/factory_queues/four_package_lifecycle_queue_v3.json",
+    "sha256": "214d5e99b3a201c0afc216753410d16a52ef8ec6994e854e2fee2473405bd927"
+  },
+  "maximum_mutating_entries": 0,
+  "execution_policy": {
+    "schema": "nlmytgen.factory_queue.change_set_execution_policy.v1",
+    "ordering": "queue_order",
+    "serial": true,
+    "plan_only_default": true,
+    "noop_elision": true,
+    "stop_on_first_mutating_failure": true,
+    "drift_policy": "recheck_queue_descriptor_content_render_and_output_before_every_effect",
+    "unknown_effect_policy": "read_only_reconciliation_required_before_retry"
+  },
+  "entries": [],
+  "receipt_policy": {
+    "schema": "nlmytgen.factory_queue.execution_receipt_policy.v1",
+    "deterministic": true,
+    "append_only_journal": true,
+    "include_usernames": false,
+    "include_drive_letters": false,
+    "include_private_absolute_paths": false,
+    "include_credentials": false,
+    "include_private_media": false,
+    "include_process_command_lines": false
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "schema": "nlmytgen.bounded_factory_queue_executor_validation.v1",
+  "status": "passed",
+  "project_state_id": "nlmytgen-bounded-factory-queue-executor-validated-v1",
+  "source_commit": "995728f8e04c25b702d628a95e73e2801964f964",
+  "outcome_commit": "resolved-by-current-branch-tip",
+  "branch": "codex/nlmytgen-bounded-factory-queue-executor-v1",
+  "authority_id": "supervisor-nlmytgen-bounded-executor-feature-branch-2026-07-27",
+  "contracts": {
+    "change_set": {
+      "schema": "nlmytgen.factory_queue.change_set.v1",
+      "sha256": "e7dc761bd3bfe324818db7fb4ef2339ea82bd2fe8c49c3a532ad80fdce213fe7"
+    },
+    "authority_set": {
+      "schema": "nlmytgen.factory_queue.execution_authority_set.v1",
+      "record_schema": "nlmytgen.factory_queue.execution_authority.v1",
+      "sha256": "acaf9cda4bdaba96aad9441fc94337a285dbcc1108015b706f6a3d3d70657d10"
+    },
+    "journal": {
+      "schema": "nlmytgen.factory_queue.execution_journal.v1",
+      "sha256": "1cbfbc942c3d25b93ae6bdfd34d4c8c8962c0c2c5842a1f65ccc168bba84c603"
+    }
+  },
+  "real_zero_change_set": {
+    "path": "production_pilots/factory_queues/four_package_zero_change_set_v1.json",
+    "sha256": "0d8468173c843aa47286124b6fbcdad2d0bb58465e1a7094b87d66a19181f724",
+    "queue_path": "production_pilots/factory_queues/four_package_lifecycle_queue_v3.json",
+    "queue_sha256": "214d5e99b3a201c0afc216753410d16a52ef8ec6994e854e2fee2473405bd927",
+    "maximum_mutating_entries": 0,
+    "mutating_entries": 0
+  },
+  "real_execution": {
+    "status": "succeeded",
+    "deterministic_two_runs": true,
+    "queue_evaluation_sha256": "cc8a5ca43e7bee2767a8c24716892a477d930362c71b625219d942cda5b1eb9c",
+    "plan_identity_sha256": "0d07e9bb40dce6f9daa27496f6bac53e787a736cf72c8c151ca6f63d8f5561fa",
+    "journal_sha256": "da8b8a54316ea8fd1e6bbf2a8fac464ed28dacab397d40fe7ee891474d769cbc",
+    "execution_receipt_sha256": "56f26d1bb62a43b2986846d69412797f5afd0629762f8f0ecc594e370fcd1217",
+    "packages_validated": 4,
+    "verified_noop": 4,
+    "authority_consumptions": 0,
+    "backend_dispatch_count": 0,
+    "source_project_generation_count": 0,
+    "render_count": 0,
+    "yymm4_launch_count": 0,
+    "electron_launch_count": 0,
+    "render_driver_launch_count": 0,
+    "ffmpeg_encode_count": 0,
+    "playback_count": 0,
+    "system_volume_operation_count": 0,
+    "private_artifact_copy_count": 0,
+    "product_write_count": 0
+  },
+  "synthetic_execution": {
+    "isolated_non_product_fixtures": true,
+    "exact_authorized_dispatch_count": 1,
+    "noop_backend_dispatch_count": 0,
+    "known_failure_stops_later_entries": true,
+    "later_state": "skipped_after_failure",
+    "resume_skips_prior_success": true,
+    "resume_requires_replacement_authority": true,
+    "resume_preserves_event_prefix": true,
+    "effect_unknown_auto_retry": false,
+    "real_package_or_artifact_modified": false
+  },
+  "tracked_only": {
+    "short_root": true,
+    "private_directories": 0,
+    "mp4_files": 0,
+    "packages_validated": 4,
+    "recorded_complete_no_live_file": 4,
+    "mutating_entries": 0,
+    "backend_dispatch_count": 0,
+    "private_artifact_copy_count": 0,
+    "execution_receipt_sha256": "8f9621a7025cac9870c68c098617b0438dc0cebb0db741a0faed2f2cabfde38f",
+    "temporary_worktree_removed": true
+  },
+  "focused_validation": {
+    "executor_tests": 35,
+    "combined_factory_tests": 153,
+    "modified_python_compile": "passed",
+    "canonical_regression_integrity": "pending_outcome_commit"
+  },
+  "preservation_baseline": {
+    "factory_package_descriptor_count": 16,
+    "factory_package_descriptor_aggregate_sha256": "91964bdccfedd184de80c5a346bb6f32d5a304247ab07a0cb93bef1f8fdacc57",
+    "predecessor_queue_count": 3,
+    "predecessor_queue_aggregate_sha256": "9e12d2c0d4a7fe1e8a6905545f3e87666ae8e7d36aeef2442f79ffc7a29ac7a2",
+    "project_and_mp4_count": 102,
+    "project_and_mp4_aggregate_sha256": "07f73dde921dbef5bccaeb8ab1d00b7d5b53bd96b81d6e2b774cceb69bf57987"
+  },
+  "boundaries": {
+    "real_mutating_multi_package_execution": false,
+    "content_or_visual_change": false,
+    "fifth_topic": false,
+    "human_creative_acceptance": false,
+    "rights_or_legal_action": false,
+    "production_or_publication": false,
+    "upload_or_release": false,
+    "pull_request_or_merge": false,
+    "master_mutation": false,
+    "deployment": false
+  }
+}

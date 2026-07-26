@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nlmytgen.factory_queue.execution_authority_set.v1",
+  "title": "NLMYTGen Factory Queue One-Shot Authority Set v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "authorities"
+  ],
+  "properties": {
+    "schema": {
+      "const": "nlmytgen.factory_queue.execution_authority_set.v1"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "authorities": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema",
+          "authority_id",
+          "replaces_authority_id",
+          "queue",
+          "change_set",
+          "package",
+          "from_lifecycle",
+          "to_lifecycle",
+          "operation",
+          "maximum_use_count",
+          "status",
+          "constraints"
+        ],
+        "properties": {
+          "schema": {
+            "const": "nlmytgen.factory_queue.execution_authority.v1"
+          },
+          "authority_id": {
+            "$ref": "#/$defs/stableId"
+          },
+          "replaces_authority_id": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/stableId"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "queue": {
+            "$ref": "#/$defs/boundFile"
+          },
+          "change_set": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "change_set_id",
+              "sha256"
+            ],
+            "properties": {
+              "change_set_id": {
+                "$ref": "#/$defs/stableId"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          },
+          "package": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "package_id",
+              "descriptor_path",
+              "descriptor_sha256"
+            ],
+            "properties": {
+              "package_id": {
+                "$ref": "#/$defs/stableId"
+              },
+              "descriptor_path": {
+                "$ref": "#/$defs/repoLocator"
+              },
+              "descriptor_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          },
+          "from_lifecycle": {
+            "enum": [
+              "package_prepared",
+              "source_project_ready"
+            ]
+          },
+          "to_lifecycle": {
+            "enum": [
+              "source_project_ready",
+              "rendered"
+            ]
+          },
+          "operation": {
+            "enum": [
+              "source_project_generation",
+              "render"
+            ]
+          },
+          "maximum_use_count": {
+            "const": 1
+          },
+          "status": {
+            "enum": [
+              "available",
+              "consumed",
+              "revoked"
+            ]
+          },
+          "constraints": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "serial_only",
+              "exact_identity_recheck",
+              "private_artifact_copy",
+              "human_acceptance",
+              "rights",
+              "production",
+              "publication",
+              "upload",
+              "release"
+            ],
+            "properties": {
+              "serial_only": {
+                "const": true
+              },
+              "exact_identity_recheck": {
+                "const": true
+              },
+              "private_artifact_copy": {
+                "const": false
+              },
+              "human_acceptance": {
+                "const": false
+              },
+              "rights": {
+                "const": false
+              },
+              "production": {
+                "const": false
+              },
+              "publication": {
+                "const": false
+              },
+              "upload": {
+                "const": false
+              },
+              "release": {
+                "const": false
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "stableId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z0-9]+(?:[a-z0-9_.-]*[a-z0-9])?$"
+    },
+    "repoLocator": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[^\\\\:]+$"
+    },
+    "boundFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repoLocator"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}

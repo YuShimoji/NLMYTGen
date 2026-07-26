@@ -13,6 +13,7 @@ Usage:
     python -m src.cli.main doctor-runtime [--profile code|review|render|regenerate|all] [--require-profile PROFILE] [--artifact-root PATH] [--deep] [--format text|json]
     python -m src.cli.main validate-factory-package --package factory_package.json [--require-lifecycle STATE] [--check-live] [--format text|json]
     python -m src.cli.main evaluate-factory-queue --queue factory_queue.json [--check-live] [--execute-safe-stages] --format json
+    python -m src.cli.main execute-factory-queue --queue factory_queue.json --change-set change_set.json [--authority-file authorities.json] [--execute] [--resume-journal journal.json] --format json
     python -m src.cli.main advance-factory-package --queue factory_queue.json --package-id ID --to-lifecycle source_project_ready|rendered --authority-id ID [--execute] --format json
     python -m src.cli.main build-episode-video --factory-package factory_package_v2.json --dry-run
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
@@ -1793,6 +1794,47 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (json only)",
     )
 
+    p_factory_execute = subparsers.add_parser(
+        "execute-factory-queue",
+        help="Plan or execute one exact bounded Factory Queue change set",
+    )
+    p_factory_execute.add_argument(
+        "--queue",
+        required=True,
+        type=Path,
+        help="Exact Factory Queue v1 descriptor",
+    )
+    p_factory_execute.add_argument(
+        "--change-set",
+        required=True,
+        type=Path,
+        help="Versioned bounded change-set descriptor",
+    )
+    p_factory_execute.add_argument(
+        "--authority-file",
+        type=Path,
+        default=None,
+        help="One-shot authority set required only for mutating execute mode",
+    )
+    p_factory_execute.add_argument(
+        "--execute",
+        action="store_true",
+        help="Execute exact selected entries serially; default is plan-only",
+    )
+    p_factory_execute.add_argument(
+        "--resume-journal",
+        type=Path,
+        default=None,
+        help="Exact prior execution journal for append-only resume",
+    )
+    p_factory_execute.add_argument(
+        "--format",
+        choices=["json"],
+        default="json",
+        dest="factory_execute_format",
+        help="Output format (json only)",
+    )
+
     p_factory_advance = subparsers.add_parser(
         "advance-factory-package",
         help="Plan or execute one bounded queue-selected lifecycle promotion",
@@ -3450,6 +3492,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_validate_factory_package(args)
         elif args.command == "evaluate-factory-queue":
             return _cmd_evaluate_factory_queue(args)
+        elif args.command == "execute-factory-queue":
+            return _cmd_execute_factory_queue(args)
         elif args.command == "advance-factory-package":
             return _cmd_advance_factory_package(args)
         elif args.command == "build-csv":
@@ -6832,6 +6876,36 @@ def _cmd_evaluate_factory_queue(args: argparse.Namespace) -> int:
         return 1
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0 if result["status"] == "passed" else 1
+
+
+def _cmd_execute_factory_queue(args: argparse.Namespace) -> int:
+    from src.pipeline.factory_queue_executor import (
+        FactoryQueueExecutorError,
+        execute_factory_queue,
+    )
+
+    try:
+        result = execute_factory_queue(
+            repo_root=Path.cwd(),
+            queue_path=args.queue,
+            change_set_path=args.change_set,
+            authority_path=args.authority_file,
+            execute=bool(args.execute),
+            resume_journal_path=args.resume_journal,
+        )
+    except FactoryQueueExecutorError as exc:
+        print(
+            json.dumps(
+                exc.as_payload(),
+                ensure_ascii=False,
+                indent=2,
+                sort_keys=True,
+            ),
+            file=sys.stderr,
+        )
+        return 1
+    print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0 if result["status"] in {"planned", "succeeded"} else 1
 
 
 def _cmd_advance_factory_package(args: argparse.Namespace) -> int:

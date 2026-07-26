@@ -1,0 +1,276 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nlmytgen.factory_queue.change_set.v1",
+  "title": "NLMYTGen Bounded Factory Queue Change Set v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "contract",
+    "change_set_id",
+    "queue",
+    "maximum_mutating_entries",
+    "execution_policy",
+    "entries",
+    "receipt_policy"
+  ],
+  "properties": {
+    "schema": {
+      "const": "nlmytgen.factory_queue.change_set.v1"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "change_set_schema_path",
+        "change_set_schema_sha256",
+        "authority_schema_path",
+        "authority_schema_sha256",
+        "journal_schema_path",
+        "journal_schema_sha256"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_queue.execution_contract.v1"
+        },
+        "change_set_schema_path": {
+          "const": "schemas/factory_queue_execution_v1/factory_queue_change_set_v1.schema.json"
+        },
+        "change_set_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "authority_schema_path": {
+          "const": "schemas/factory_queue_execution_v1/factory_queue_execution_authority_v1.schema.json"
+        },
+        "authority_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "journal_schema_path": {
+          "const": "schemas/factory_queue_execution_v1/factory_queue_execution_journal_v1.schema.json"
+        },
+        "journal_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "change_set_id": {
+      "$ref": "#/$defs/stableId"
+    },
+    "queue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repoLocator"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "maximum_mutating_entries": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 32
+    },
+    "execution_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "ordering",
+        "serial",
+        "plan_only_default",
+        "noop_elision",
+        "stop_on_first_mutating_failure",
+        "drift_policy",
+        "unknown_effect_policy"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_queue.change_set_execution_policy.v1"
+        },
+        "ordering": {
+          "const": "queue_order"
+        },
+        "serial": {
+          "const": true
+        },
+        "plan_only_default": {
+          "const": true
+        },
+        "noop_elision": {
+          "const": true
+        },
+        "stop_on_first_mutating_failure": {
+          "const": true
+        },
+        "drift_policy": {
+          "const": "recheck_queue_descriptor_content_render_and_output_before_every_effect"
+        },
+        "unknown_effect_policy": {
+          "const": "read_only_reconciliation_required_before_retry"
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "order",
+          "package_id",
+          "descriptor_path",
+          "descriptor_sha256",
+          "expected_content_identity_sha256",
+          "expected_render_settings_identity_sha256",
+          "expected_completed_output_sha256",
+          "expected_target_identity_sha256",
+          "expected_current_lifecycle",
+          "requested_target_lifecycle",
+          "operation",
+          "authority_id"
+        ],
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "package_id": {
+            "$ref": "#/$defs/stableId"
+          },
+          "descriptor_path": {
+            "$ref": "#/$defs/repoLocator"
+          },
+          "descriptor_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "expected_content_identity_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "expected_render_settings_identity_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "expected_completed_output_sha256": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/sha256"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expected_target_identity_sha256": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/sha256"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expected_current_lifecycle": {
+            "enum": [
+              "package_prepared",
+              "source_project_ready"
+            ]
+          },
+          "requested_target_lifecycle": {
+            "enum": [
+              "source_project_ready",
+              "rendered"
+            ]
+          },
+          "operation": {
+            "enum": [
+              "source_project_generation",
+              "render"
+            ]
+          },
+          "authority_id": {
+            "$ref": "#/$defs/stableId"
+          },
+          "immutable_artifact_reference": {
+            "$ref": "#/$defs/stableId"
+          }
+        }
+      }
+    },
+    "receipt_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "deterministic",
+        "append_only_journal",
+        "include_usernames",
+        "include_drive_letters",
+        "include_private_absolute_paths",
+        "include_credentials",
+        "include_private_media",
+        "include_process_command_lines"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_queue.execution_receipt_policy.v1"
+        },
+        "deterministic": {
+          "const": true
+        },
+        "append_only_journal": {
+          "const": true
+        },
+        "include_usernames": {
+          "const": false
+        },
+        "include_drive_letters": {
+          "const": false
+        },
+        "include_private_absolute_paths": {
+          "const": false
+        },
+        "include_credentials": {
+          "const": false
+        },
+        "include_private_media": {
+          "const": false
+        },
+        "include_process_command_lines": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "stableId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z0-9]+(?:[a-z0-9_.-]*[a-z0-9])?$"
+    },
+    "repoLocator": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[^\\\\:]+$"
+    }
+  }
+}
