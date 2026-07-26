@@ -1,0 +1,198 @@
+{
+  "schema": "nlmytgen.factory_package.v2.1",
+  "schema_version": "2.1",
+  "contract": {
+    "schema": "nlmytgen.factory_contract.v2.1",
+    "schema_path": "schemas/factory_contract_v2_1/factory_package_v2_1.schema.json",
+    "schema_sha256": "5f9e84c115ac8a7618f57714a8df3722b2cdb83371711c40efb77caf2bd12d44",
+    "field_inventory_path": "schemas/factory_contract_v2_1/field_inventory.json",
+    "field_inventory_sha256": "fdf17bac964941c8c879595b8ec2003fcd9c959f1dbe105b4b1a13b1276b35f3",
+    "v2_0_schema_path": "schemas/factory_contract_v2/factory_package_v2.schema.json",
+    "v2_0_schema_sha256": "d0e831c60ceba17a83c6fe106bf1fa574cfa3881976934c3fb4571a59bb8dfbb",
+    "v2_0_field_inventory_path": "schemas/factory_contract_v2/field_inventory.json",
+    "v2_0_field_inventory_sha256": "8bc3a669e0b77b2dcc68f59f0f5bcf03fe6eaaaaf8aec3bad4fb3b814f6490d4"
+  },
+  "lifecycle": {
+    "schema": "nlmytgen.factory_package.lifecycle.v2.1",
+    "state": "package_prepared",
+    "contract_valid": true,
+    "tracked_package_ready": true,
+    "source_project_ready": false,
+    "render_ready": false,
+    "human_accepted": false
+  },
+  "package": {
+    "schema": "nlmytgen.factory_package.package_identity.v2.1",
+    "package_id": "food_expiry_labels_001",
+    "episode_id": "food_expiry_labels_001_internal_review",
+    "title": "賞味期限と消費期限の違い",
+    "content_authority": "internal_factory_canary_not_human_accepted"
+  },
+  "source_intake": {
+    "schema": "nlmytgen.factory_package.source_intake.v2.1",
+    "authority_path": "production_pilots/factory_canaries/food_expiry_labels_001/source_registry.json",
+    "authority_sha256": "c94d1897d1880cf9e652be6af4bfea6c607f728092f864f463c439c2a4170a50",
+    "source_count": 2,
+    "source_backed": true
+  },
+  "claim_support": {
+    "schema": "nlmytgen.factory_package.claim_support.v2.1",
+    "authority_path": "production_pilots/factory_canaries/food_expiry_labels_001/claim_adjudication.json",
+    "authority_sha256": "a490d2d819e5a4339ca0ceb7ef23212a6afc14fd24b4ba5ec2380ba6df42fcdf",
+    "factual_cue_ids": [
+      "cue_001",
+      "cue_002",
+      "cue_003",
+      "cue_004"
+    ],
+    "nonfactual_cue_ids": [],
+    "unsupported_factual_units": 0
+  },
+  "canonical_content": {
+    "schema": "nlmytgen.factory_package.canonical_content.v2.1",
+    "path": "production_pilots/factory_canaries/food_expiry_labels_001/canonical_script.json",
+    "sha256": "989312b58c31ad538b4ca622cba5a9dfebec1f9288ccb1312199fdb83aec0e9e",
+    "cue_sequence": [
+      "cue_001",
+      "cue_002",
+      "cue_003",
+      "cue_004"
+    ]
+  },
+  "shape": {
+    "schema": "nlmytgen.factory_package.shape.v2.1",
+    "cue_count": 4,
+    "scene_count": 1,
+    "scene_mapping": {
+      "cue_001": "S1",
+      "cue_002": "S1",
+      "cue_003": "S1",
+      "cue_004": "S1"
+    },
+    "speaker_mapping": {
+      "cue_001": "ゆっくり霊夢赤縁",
+      "cue_002": "ゆっくり霊夢赤縁",
+      "cue_003": "ゆっくり霊夢赤縁",
+      "cue_004": "ゆっくり霊夢赤縁"
+    },
+    "speaker_counts": {
+      "ゆっくり霊夢赤縁": 4
+    },
+    "timeline_frames": 1440,
+    "fps": 60,
+    "duration_seconds": 24.0,
+    "timing_basis": "planned_not_observed",
+    "asset_count": 2,
+    "source_count": 2
+  },
+  "media_provenance": {
+    "schema": "nlmytgen.factory_package.media_provenance.v2.1",
+    "path": "production_pilots/factory_canaries/food_expiry_labels_001/real_media_provenance.json",
+    "sha256": "0fc8cf2d4f1bfec672c1f1898dac7efd33df1835f212e7a2967814337ae7d9b8",
+    "asset_mappings": [
+      {
+        "cue_id": "cue_001",
+        "asset_id": "fel_caa_expiration_definitions",
+        "source_id": "CAA-EXPIRATION-DATE-2025",
+        "local_asset_path": "production_pilots/factory_canaries/food_expiry_labels_001/local_media/caa_expiration_date_page1.png",
+        "sha256": "2c06e90c629a3be96b2ce973e81900f128ea63d3a07124714607232166f04517",
+        "crop": [0.04, 0.14, 0.62, 0.18]
+      },
+      {
+        "cue_id": "cue_002",
+        "asset_id": "fel_caa_expiration_definitions",
+        "source_id": "CAA-EXPIRATION-DATE-2025",
+        "local_asset_path": "production_pilots/factory_canaries/food_expiry_labels_001/local_media/caa_expiration_date_page1.png",
+        "sha256": "2c06e90c629a3be96b2ce973e81900f128ea63d3a07124714607232166f04517",
+        "crop": [0.04, 0.34, 0.62, 0.23]
+      },
+      {
+        "cue_id": "cue_003",
+        "asset_id": "fel_maff_expiry_conditions",
+        "source_id": "MAFF-EXPIRY-DIFFERENCE-2025",
+        "local_asset_path": "production_pilots/factory_canaries/food_expiry_labels_001/local_media/maff_expiry_difference_page1.png",
+        "sha256": "931b2232c9ff611a1ce2d793b98687d606c422c4627e8a76b0acba22afa05e79",
+        "crop": [0.05, 0.08, 0.9, 0.35]
+      },
+      {
+        "cue_id": "cue_004",
+        "asset_id": "fel_maff_expiry_conditions",
+        "source_id": "MAFF-EXPIRY-DIFFERENCE-2025",
+        "local_asset_path": "production_pilots/factory_canaries/food_expiry_labels_001/local_media/maff_expiry_difference_page1.png",
+        "sha256": "931b2232c9ff611a1ce2d793b98687d606c422c4627e8a76b0acba22afa05e79",
+        "crop": [0.05, 0.84, 0.9, 0.14]
+      }
+    ]
+  },
+  "episode_execution": {
+    "schema": "nlmytgen.factory_package.episode_execution.v2.1",
+    "manifest_path": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_pipeline/food_expiry_labels_episode_manifest.json",
+    "manifest_sha256": "31bd6788a1bca8cbb631bcee9b3391e5a0a04912a65db8c40c0e93f66b814cb9",
+    "manifest_schema": "nlmytgen.episode_manifest.pre_render.v2.1",
+    "planned_run_id": "food_expiry_labels_internal_review_v1",
+    "project_filename": "generated_project.local.ymmp",
+    "mp4_filename": "internal_review_food_expiry_labels.mp4",
+    "render_settings_sha256": "2270ad92c6941d5d887715d95589bd5168d67c3fdc92fd12a722604ded33e0e2"
+  },
+  "source_project": {
+    "schema": "nlmytgen.factory_package.source_project.v2.1",
+    "state": "planned",
+    "strategy": "generic_arbitrary_row_yymm4_import",
+    "path": null,
+    "sha256": null,
+    "identity_source": "planned_from_exact_manifest_and_derived_csv",
+    "live_required_for_contract": false
+  },
+  "identities": {
+    "schema": "nlmytgen.factory_package.identities.v2.1",
+    "protected_input_policy": "manifest_content_locks_sha256",
+    "content_identity_policy": "protected_inputs_shape_media_views_and_render_settings_without_run_local_state",
+    "content_identity_sha256": "27165fad6fadaee2e5c247a86758a505c7f5f5797eb7b386d174585622a585c6",
+    "content_identity_excludes": [
+      "timestamp",
+      "pid",
+      "machine_path",
+      "run_id"
+    ]
+  },
+  "resume_identity": {
+    "schema": "nlmytgen.factory_package.resume_identity.v2.1",
+    "policy": "pre_render_content_identity_until_rendered_artifact_identity_exists",
+    "completed_run_observed": false,
+    "semantic_drift_fail_closed": true
+  },
+  "authority": {
+    "schema": "nlmytgen.factory_package.authority.v2.1",
+    "rights": {
+      "approved": false,
+      "record": null
+    },
+    "production": {
+      "approved": false,
+      "record": null
+    },
+    "publication": {
+      "approved": false,
+      "record": null
+    },
+    "upload": {
+      "approved": false,
+      "record": null
+    },
+    "release": {
+      "approved": false,
+      "record": null
+    }
+  },
+  "extensions": {
+    "schema": "nlmytgen.factory_package.extensions.v2.1",
+    "values": {
+      "org.nlmytgen.food_expiry_labels.lifecycle_axis": {
+        "single_speaker": true,
+        "one_scene": true,
+        "asset_reuse_with_distinct_crops": true,
+        "source_project_generation_authorized": false
+      }
+    }
+  }
+}

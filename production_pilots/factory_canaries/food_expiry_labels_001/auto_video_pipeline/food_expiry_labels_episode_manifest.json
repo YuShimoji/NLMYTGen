@@ -1,0 +1,167 @@
+{
+  "schema": "nlmytgen.episode_manifest.pre_render.v2.1",
+  "episode_id": "food_expiry_labels_001_internal_review",
+  "lifecycle": "package_prepared",
+  "source_package": "production_pilots/factory_canaries/food_expiry_labels_001/source_registry.json",
+  "approved_script": "production_pilots/factory_canaries/food_expiry_labels_001/canonical_script.json",
+  "derived_csv": "production_pilots/factory_canaries/food_expiry_labels_001/derived_yymm4_import.csv",
+  "provenance_manifest_path": "production_pilots/factory_canaries/food_expiry_labels_001/real_media_provenance.json",
+  "cue_mapping": [
+    {
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "speaker": "ゆっくり霊夢赤縁",
+      "visual_id": "fel_caa_expiration_definitions",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/food_expiry_labels_001/local_media/caa_expiration_date_page1.png",
+      "source_provenance_id": "CAA-EXPIRATION-DATE-2025",
+      "crop": [0.04, 0.14, 0.62, 0.18],
+      "subtitle_lines": [
+        "消費期限は、傷みやすい食品を安全に食べられる期限です。",
+        "過ぎたら食べるのは控えます。"
+      ],
+      "speaker_label": "れいむ",
+      "fit_mode": "cover",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "speaker": "ゆっくり霊夢赤縁",
+      "visual_id": "fel_caa_expiration_definitions",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/food_expiry_labels_001/local_media/caa_expiration_date_page1.png",
+      "source_provenance_id": "CAA-EXPIRATION-DATE-2025",
+      "crop": [0.04, 0.34, 0.62, 0.23],
+      "subtitle_lines": [
+        "賞味期限は、比較的傷みにくい食品をおいしく食べられる期限です。",
+        "過ぎてもすぐ食べられなくなるとは限りません。"
+      ],
+      "speaker_label": "れいむ",
+      "fit_mode": "cover",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_003",
+      "scene_id": "S1",
+      "speaker": "ゆっくり霊夢赤縁",
+      "visual_id": "fel_maff_expiry_conditions",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/food_expiry_labels_001/local_media/maff_expiry_difference_page1.png",
+      "source_provenance_id": "MAFF-EXPIRY-DIFFERENCE-2025",
+      "crop": [0.05, 0.08, 0.9, 0.35],
+      "subtitle_lines": [
+        "どちらも、未開封で表示どおりに保存した場合の期限です。"
+      ],
+      "speaker_label": "れいむ",
+      "fit_mode": "cover",
+      "internal_review_only": true
+    },
+    {
+      "cue_id": "cue_004",
+      "scene_id": "S1",
+      "speaker": "ゆっくり霊夢赤縁",
+      "visual_id": "fel_maff_expiry_conditions",
+      "asset_type": "image",
+      "local_asset_path": "production_pilots/factory_canaries/food_expiry_labels_001/local_media/maff_expiry_difference_page1.png",
+      "source_provenance_id": "MAFF-EXPIRY-DIFFERENCE-2025",
+      "crop": [0.05, 0.84, 0.9, 0.14],
+      "subtitle_lines": [
+        "開封した食品は、期限に関係なく早めに食べるのが基本です。"
+      ],
+      "speaker_label": "れいむ",
+      "fit_mode": "cover",
+      "internal_review_only": true
+    }
+  ],
+  "visual_source_path": "production_pilots/factory_canaries/food_expiry_labels_001/local_media",
+  "source_project_plan": {
+    "strategy": "generic_arbitrary_row_yymm4_import",
+    "state": "planned",
+    "path": null,
+    "sha256": null,
+    "generation_authorized": false,
+    "profile_id": "ymm4_4_54_0_1_yukkuri_characters_v1",
+    "profile_version_expected": "4.54.0.1",
+    "fps": 60,
+    "planned_timeline_frames": 1440,
+    "planned_duration_seconds": 24.0
+  },
+  "output_plan": {
+    "run_id": "food_expiry_labels_internal_review_v1",
+    "project_filename": "generated_project.local.ymmp",
+    "mp4_filename": "internal_review_food_expiry_labels.mp4",
+    "materialization_authorized": false,
+    "render_authorized": false
+  },
+  "render_settings": {
+    "container": "mp4",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "video_bitrate_kbps": 10000,
+    "video_maxrate_kbps": 12000,
+    "video_bufsize_kbps": 20000,
+    "audio_bitrate_kbps": 192,
+    "max_duration_delta_seconds": 0.5,
+    "max_size_bytes": 250000000,
+    "timeout_seconds": 1200,
+    "min_distinct_frame_hashes": 5
+  },
+  "boundaries": {
+    "content_authority": "internal_factory_canary_not_human_accepted",
+    "internal_review_only": true,
+    "real_media": true,
+    "proxy_visual": false,
+    "ai_generated_visuals": false,
+    "custom_illustration": false,
+    "final_aesthetic_acceptance": false,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "release": false,
+    "speaker_playback": false,
+    "preview_playback": false
+  },
+  "content_locks": [
+    {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/source_registry.json",
+      "sha256": "c94d1897d1880cf9e652be6af4bfea6c607f728092f864f463c439c2a4170a50"
+    },
+    {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/claim_adjudication.json",
+      "sha256": "a490d2d819e5a4339ca0ceb7ef23212a6afc14fd24b4ba5ec2380ba6df42fcdf"
+    },
+    {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/canonical_script.json",
+      "sha256": "989312b58c31ad538b4ca622cba5a9dfebec1f9288ccb1312199fdb83aec0e9e"
+    },
+    {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/canonical_script.txt",
+      "sha256": "585ee9c6e8cc8d9521e778b41b4739cd96bb7ab3fccb8c07663af7d118213562"
+    },
+    {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/canonical_yymm4.csv",
+      "sha256": "00ade6df462c9cefb8cc1960d385def18a053793561d96a1da38eb9d9c41b855"
+    },
+    {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/derived_yymm4_import.csv",
+      "sha256": "b4b4bb7ae998fa3c850a030df2ba719cde8ba1bd8c82c1215b40a7d5a9ee2256"
+    },
+    {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/source_support_edges.json",
+      "sha256": "08b379d8ac5d6416cadd77933f9e76b0ff757298fd96ff704f35e1f4827db299"
+    },
+    {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/transformation_ledger.json",
+      "sha256": "dfb1a0122d04e13284404530c1a468f8d04633945b48390d0f5db3621c69c122"
+    },
+    {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/real_media_provenance.json",
+      "sha256": "0fc8cf2d4f1bfec672c1f1898dac7efd33df1835f212e7a2967814337ae7d9b8"
+    }
+  ]
+}

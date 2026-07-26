@@ -1,0 +1,59 @@
+{
+  "schema": "nlmytgen.transformation_ledger.v1",
+  "episode_id": "food_expiry_labels_001_internal_review",
+  "topic_input": {
+    "value": "賞味期限と消費期限の違い",
+    "authority": "mission_fixed_topic",
+    "factual_authority": false
+  },
+  "steps": [
+    {
+      "step_id": "T01",
+      "operation": "bounded_official_source_acquisition",
+      "input": "mission_fixed_topic",
+      "output": "source_registry.json",
+      "decision": "消費者庁と農林水産省の公式PDF2件で4 factual cuesが揃ったため取得を停止した。"
+    },
+    {
+      "step_id": "T02",
+      "operation": "claim_adjudication",
+      "input": "official PDF page 1 passages",
+      "output": "claim_adjudication.json",
+      "decision": "期限の意味2件、未開封・保存条件、開封後の扱いの4 claimだけを採用した。"
+    },
+    {
+      "step_id": "T03",
+      "operation": "single_speaker_short_script_composition",
+      "input": "supported claims",
+      "output": "canonical_script.json",
+      "decision": "1 scene、4 cues、れいむ4、planned 24 secondsへ圧縮し、まりさを省略した。"
+    },
+    {
+      "step_id": "T04",
+      "operation": "official_pdf_page_rasterization",
+      "input": "official PDF bytes",
+      "output": "two ignored PNG assets",
+      "decision": "各PDF page 1を180 dpiでraster化し、異なるcropを使って4 cueへ2 assetsを再利用する計画を固定した。"
+    }
+  ],
+  "excluded_or_softened": [
+    {
+      "candidate": "賞味期限を過ぎた食品は必ず安全である",
+      "action": "excluded",
+      "reason": "公式資料は品質が保持される場合があると述べ、個別食品の安全を保証しない。"
+    },
+    {
+      "candidate": "開封後も表示期限まで安全である",
+      "action": "excluded",
+      "reason": "公式資料は開封後、期限に関係なく早めに食べるよう案内している。"
+    }
+  ],
+  "checks": {
+    "script_text_added_without_source_edge": false,
+    "speaker_projection_changes_text": false,
+    "ai_generated_visuals": false,
+    "svg_assets": false,
+    "source_project_generated": false,
+    "rendered_output_created": false
+  }
+}

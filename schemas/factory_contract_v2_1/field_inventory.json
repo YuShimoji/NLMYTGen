@@ -1,0 +1,262 @@
+{
+  "schema": "nlmytgen.factory_contract_field_inventory.v2.1",
+  "version": "2.1",
+  "inventory_mode": "v2_0_exact_base_plus_v2_1_lifecycle_delta",
+  "inherits": {
+    "schema": "nlmytgen.factory_contract_field_inventory.v2",
+    "path": "schemas/factory_contract_v2/field_inventory.json",
+    "sha256": "8bc3a669e0b77b2dcc68f59f0f5bcf03fe6eaaaaf8aec3bad4fb3b814f6490d4",
+    "base_rows": 50,
+    "preserved_byte_exact": true
+  },
+  "lifecycle_order": [
+    "package_prepared",
+    "source_project_ready",
+    "rendered",
+    "human_accepted"
+  ],
+  "lifecycle_requirements": {
+    "package_prepared": {
+      "required_evidence": [
+        "source_intake",
+        "claim_support",
+        "canonical_content",
+        "shape",
+        "media_provenance",
+        "episode_execution",
+        "content_identity",
+        "source_project_strategy"
+      ],
+      "source_project_state": "planned",
+      "forbidden_evidence": [
+        "generated_project",
+        "render_validation",
+        "human_decision"
+      ]
+    },
+    "source_project_ready": {
+      "inherits": "package_prepared",
+      "source_project_state": "ready",
+      "required_evidence": [
+        "source_project_path",
+        "source_project_sha256"
+      ],
+      "forbidden_evidence": [
+        "generated_project",
+        "render_validation",
+        "human_decision"
+      ]
+    },
+    "rendered": {
+      "inherits": "source_project_ready",
+      "required_evidence": [
+        "generated_project",
+        "technical_render_validation",
+        "mp4_identity"
+      ],
+      "forbidden_evidence": [
+        "human_decision"
+      ]
+    },
+    "human_accepted": {
+      "inherits": "rendered",
+      "required_evidence": [
+        "exact_human_decision_receipt",
+        "accepted_artifact_identity"
+      ],
+      "forbidden_evidence": []
+    }
+  },
+  "schema_change_table": [
+    {
+      "rule": "lifecycle_is_explicit",
+      "v2_0_behavior": "All descriptors represent completed rendered packages.",
+      "v2_1_behavior": "Every descriptor declares one of four ordered lifecycle states.",
+      "causal_reason": "Pre-render packages need a truthful contract state.",
+      "affected_consumers": [
+        "pre-render validation",
+        "queue planning",
+        "render-on-change policy"
+      ],
+      "migration": "Normalize v2.0 accepted artifacts to human_accepted and other rendered canaries to rendered.",
+      "rollback": "Remove v2.1 artifacts and continue validating unchanged v2.0 descriptors."
+    },
+    {
+      "rule": "generated_project_is_conditional",
+      "v2_0_behavior": "Root generated_project is always required.",
+      "v2_1_behavior": "generated_project is absent before rendered and required from rendered onward.",
+      "causal_reason": "A package must validate before project generation.",
+      "affected_consumers": [
+        "package intake",
+        "bounded queue",
+        "operator batch planning"
+      ],
+      "migration": "Existing v2.0 project identities are retained by the compatibility normalizer.",
+      "rollback": "Use v2.0 only for completed rendered packages."
+    },
+    {
+      "rule": "render_validation_is_conditional",
+      "v2_0_behavior": "A passed technical receipt and MP4 identity are always required.",
+      "v2_1_behavior": "Render evidence is absent before rendered and required from rendered onward.",
+      "causal_reason": "Contract development must not force YMM4 or rendering.",
+      "affected_consumers": [
+        "pre-render dry-run",
+        "render-on-change policy"
+      ],
+      "migration": "Existing v2.0 render receipts remain exact and normalize to rendered evidence.",
+      "rollback": "Continue using v2.0 completed-render validation."
+    },
+    {
+      "rule": "human_decision_is_conditional",
+      "v2_0_behavior": "Root human_decision is always present, including not_human_accepted placeholders.",
+      "v2_1_behavior": "human_decision is absent until human_accepted and then requires an exact receipt.",
+      "causal_reason": "Absence must not be represented as fabricated decision evidence.",
+      "affected_consumers": [
+        "human review",
+        "release authority"
+      ],
+      "migration": "v2.0 not_human_accepted normalizes to rendered without human evidence.",
+      "rollback": "Retain v2.0 explicit not_human_accepted objects."
+    },
+    {
+      "rule": "single_speaker_and_asset_reuse_are_valid",
+      "v2_0_behavior": "Observed fixtures happened to use two speakers and mostly one asset per cue.",
+      "v2_1_behavior": "speaker_counts needs one or more positive entries; asset_count may be lower than cue_count when every cue has a provenance-bound view.",
+      "causal_reason": "Observed fixture shape is not a universal requirement.",
+      "affected_consumers": [
+        "out-of-sample package validation",
+        "media planning"
+      ],
+      "migration": "No v2.0 rewrite; existing shapes remain valid through normalization.",
+      "rollback": "No package bytes require rollback."
+    },
+    {
+      "rule": "public_authority_clocks_remain_independent",
+      "v2_0_behavior": "Rights, production, publication, upload, and release are separate booleans with exact records when true.",
+      "v2_1_behavior": "The same clocks remain separate and are never implied by lifecycle.",
+      "causal_reason": "Technical maturity cannot grant creative, legal, production, or public authority.",
+      "affected_consumers": [
+        "rights review",
+        "production",
+        "publication",
+        "release"
+      ],
+      "migration": "Copy clock state read-only during normalization.",
+      "rollback": "Unchanged v2.0 authority clocks remain authoritative."
+    }
+  ],
+  "delta_rows": [
+    {
+      "normalized_path": "$.lifecycle.state",
+      "classification": "required",
+      "consumer": "all lifecycle-aware consumers",
+      "validation_rule": "must be one ordered lifecycle state",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.lifecycle.contract_valid",
+      "classification": "derived-required",
+      "consumer": "contract intake",
+      "validation_rule": "must be true only after all state-specific validation passes",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.lifecycle.tracked_package_ready",
+      "classification": "derived-required",
+      "consumer": "tracked-only validation",
+      "validation_rule": "true from package_prepared onward",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.lifecycle.source_project_ready",
+      "classification": "derived-required",
+      "consumer": "source-project stage",
+      "validation_rule": "false at package_prepared and true from source_project_ready onward",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.lifecycle.render_ready",
+      "classification": "derived-required",
+      "consumer": "render-on-change planner",
+      "validation_rule": "false before rendered and true from rendered onward",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.lifecycle.human_accepted",
+      "classification": "derived-required",
+      "consumer": "human decision consumer",
+      "validation_rule": "true only at human_accepted with exact receipt",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.source_project.state",
+      "classification": "lifecycle-variable",
+      "consumer": "source-project stage",
+      "validation_rule": "planned at package_prepared; ready afterward",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.source_project.path",
+      "classification": "conditional",
+      "consumer": "source-project stage",
+      "validation_rule": "null when planned; repository-relative path when ready",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.source_project.sha256",
+      "classification": "conditional",
+      "consumer": "source-project identity",
+      "validation_rule": "null when planned; exact SHA-256 when ready",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.generated_project",
+      "classification": "conditional-section",
+      "consumer": "project and render stages",
+      "validation_rule": "absent before rendered; required from rendered onward",
+      "absence_allowed": true
+    },
+    {
+      "normalized_path": "$.render_validation",
+      "classification": "conditional-section",
+      "consumer": "technical render validation",
+      "validation_rule": "absent before rendered; passed exact evidence required from rendered onward",
+      "absence_allowed": true
+    },
+    {
+      "normalized_path": "$.human_decision",
+      "classification": "conditional-section",
+      "consumer": "human acceptance",
+      "validation_rule": "absent before human_accepted; exact accepted record required at human_accepted",
+      "absence_allowed": true
+    },
+    {
+      "normalized_path": "$.shape.timing_basis",
+      "classification": "lifecycle-variable",
+      "consumer": "timeline consumer",
+      "validation_rule": "planned_not_observed at package_prepared; observed basis at later states",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.media_provenance.asset_mappings[*].crop",
+      "classification": "variable",
+      "consumer": "pre-render materialization planner",
+      "validation_rule": "four normalized values within image bounds",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.episode_execution.planned_run_id",
+      "classification": "run-local",
+      "consumer": "operator stage plan",
+      "validation_rule": "safe run ID excluded from content identity",
+      "absence_allowed": false
+    },
+    {
+      "normalized_path": "$.authority.*",
+      "classification": "independent-authority",
+      "consumer": "rights, production, publication, upload, and release owners",
+      "validation_rule": "lifecycle never changes the clock; true requires exact record",
+      "absence_allowed": false
+    }
+  ]
+}

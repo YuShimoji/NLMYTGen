@@ -1,0 +1,170 @@
+{
+  "schema": "nlmytgen.factory_contract_v2_1_lifecycle_validation_receipt.v1",
+  "date": "2026-07-26",
+  "launch_set_id": "nlmytgen-factory-contract-lifecycle-2026-07-26",
+  "mission_id": "factory-contract-v2-prerender-lifecycle-out-of-sample-v1",
+  "source": {
+    "branch": "codex/nlmytgen-factory-contract-v2-v1",
+    "head": "ab960978ab1c29fc8ea5d59d69dc185ddc0d257a",
+    "target_branch": "codex/nlmytgen-factory-contract-v2-lifecycle-v1",
+    "target_remote_absent_at_start": true,
+    "source_parity": "0/0",
+    "tracked_source_clean": true
+  },
+  "contract": {
+    "schema": "nlmytgen.factory_package.v2.1",
+    "json_schema_path": "schemas/factory_contract_v2_1/factory_package_v2_1.schema.json",
+    "json_schema_sha256": "5f9e84c115ac8a7618f57714a8df3722b2cdb83371711c40efb77caf2bd12d44",
+    "field_inventory_path": "schemas/factory_contract_v2_1/field_inventory.json",
+    "field_inventory_sha256": "fdf17bac964941c8c879595b8ec2003fcd9c959f1dbe105b4b1a13b1276b35f3",
+    "base_rows": 50,
+    "delta_rows": 16,
+    "schema_change_rows": 6,
+    "lifecycle_order": [
+      "package_prepared",
+      "source_project_ready",
+      "rendered",
+      "human_accepted"
+    ],
+    "conditional_evidence": true,
+    "dummy_evidence_allowed": false,
+    "known_topic_ids_in_shared_validator": 0
+  },
+  "v2_0_compatibility": {
+    "schema_sha256": "d0e831c60ceba17a83c6fe106bf1fa574cfa3881976934c3fb4571a59bb8dfbb",
+    "field_inventory_sha256": "8bc3a669e0b77b2dcc68f59f0f5bcf03fe6eaaaaf8aec3bad4fb3b814f6490d4",
+    "schema_and_inventory_byte_exact": true,
+    "descriptors_byte_exact": true,
+    "normalizer": "v2_0_to_v2_1_read_only_lifecycle_normalizer",
+    "packages": [
+      {
+        "package_id": "new_banknote_security_notebooklm_001",
+        "descriptor_sha256": "80f1130711a46c3f3a77f2ec1da391fd338569d9aaf0385deeb96a2a698333f7",
+        "normalized_lifecycle": "human_accepted"
+      },
+      {
+        "package_id": "real_estate_reins_transparency_001",
+        "descriptor_sha256": "21e0052011b1d55f7ff27bf63af5c4f79dbc3932762df86375cdca86e59d63db",
+        "normalized_lifecycle": "rendered"
+      },
+      {
+        "package_id": "ai_monitoring_labor_001",
+        "descriptor_sha256": "866f03c7cff7570e1ad9d1b22525598a99084e9aa0b5227c4c2d31cea528eeb4",
+        "normalized_lifecycle": "rendered"
+      }
+    ]
+  },
+  "fourth_package": {
+    "package_id": "food_expiry_labels_001",
+    "topic": "賞味期限と消費期限の違い",
+    "lifecycle": "package_prepared",
+    "descriptor_sha256": "18e078f6f6c5b6e17808ec9378d8476a9cd8ce426cd1281563c833ae21acf329",
+    "normalized_sha256": "5bfebe8c93d18dc546a8fe675de7ad303219ff5654b362c0950e371a6093a234",
+    "content_identity_sha256": "27165fad6fadaee2e5c247a86758a505c7f5f5797eb7b386d174585622a585c6",
+    "cue_count": 4,
+    "scene_count": 1,
+    "speaker_counts": {
+      "ゆっくり霊夢赤縁": 4
+    },
+    "source_count": 2,
+    "asset_count": 2,
+    "cue_media_mapping_count": 4,
+    "planned_duration_seconds": 24.0,
+    "source_project": "planned_not_generated",
+    "generated_project": "absent",
+    "render_receipt": "absent",
+    "mp4": "absent",
+    "human_decision": "absent"
+  },
+  "validation": {
+    "descriptor_repeat_count": 2,
+    "descriptor_repeat_exact": true,
+    "normalized_repeat_exact": true,
+    "content_identity_repeat_exact": true,
+    "live_profile": {
+      "media_assets_exact": 2,
+      "media_assets_total": 2,
+      "status": "live_file_hash_exact"
+    },
+    "tracked_only_profile": {
+      "isolated_file_count": 2970,
+      "git_metadata_present": false,
+      "node_modules_present": false,
+      "v2_1_packages_passed": 1,
+      "v2_0_packages_passed": 3,
+      "media_status": "receipt_only_no_live_file"
+    },
+    "pre_render_stage_plan": {
+      "status": "pre_render_plan_complete",
+      "completed_video_dry_run": false,
+      "successful_stop_before": "source_project_generation",
+      "yymm4_launch_count": 0,
+      "electron_launch_count": 0,
+      "render_driver_launch_count": 0,
+      "ffmpeg_encode_count": 0,
+      "playback_count": 0,
+      "system_volume_operation_count": 0,
+      "writes": false
+    },
+    "focused_python": {
+      "command": "uv run pytest -q tests/test_factory_contract_v2.py tests/test_factory_contract_v2_1_lifecycle.py tests/test_episode_video_pipeline.py",
+      "passed": 66,
+      "failed": 0
+    },
+    "expanded_python": {
+      "command": "uv run pytest -q tests/test_factory_contract_v2.py tests/test_factory_contract_v2_1_lifecycle.py tests/test_episode_video_pipeline.py tests/test_third_real_topic_factory_canary.py tests/test_standard_production_loop_gui.py tests/test_project_state_sync.py",
+      "passed": 82,
+      "failed": 0
+    },
+    "focused_node": {
+      "command": "node --test gui/standard_production_loop.test.js",
+      "passed": 7,
+      "failed": 0
+    },
+    "v2_1_negative_coverage": [
+      "rendered_without_generated_project",
+      "rendered_without_render_validation",
+      "human_accepted_without_exact_receipt",
+      "authority_without_exact_record",
+      "cue_media_binding_gap",
+      "unsupported_factual_unit",
+      "run_local_identity_field",
+      "private_absolute_path",
+      "unknown_section_field",
+      "lifecycle_contradiction",
+      "known_topic_id_coupling",
+      "universal_compatibility_overclaim"
+    ]
+  },
+  "preservation": {
+    "v2_0_schema_or_inventory_mutated": false,
+    "v2_0_descriptors_mutated": false,
+    "prior_rendered_artifacts_mutated": false,
+    "auto_video_runs_created": false,
+    "protected_untracked_or_ignored_artifacts_mutated": false,
+    "development_audio_policy": "silent_by_default"
+  },
+  "claims": {
+    "fourth_topic_pre_render_package_validated": true,
+    "lifecycle_aware_contract_validated": true,
+    "post_render_lifecycle_out_of_sample_validated": false,
+    "universal_arbitrary_topic_compatibility": false,
+    "human_acceptance": false,
+    "rights_approved": false,
+    "production_approved": false,
+    "publication_approved": false,
+    "upload_approved": false,
+    "release_approved": false
+  },
+  "post_commit_gate": {
+    "command": "uv run python scripts/check_regression_integrity.py",
+    "required_runs": 1,
+    "result_owner": "final_supervising_handoff"
+  },
+  "next": {
+    "project_state_id": "nlmytgen-factory-contract-v2-1-prerender-out-of-sample-validated-v1",
+    "product_state": "lifecycle-aware-factory-contract-with-real-prerender-out-of-sample-package",
+    "product_gate": "bounded-multi-episode-queue-and-render-on-change-policy",
+    "recommended_next": "build-queue-over-v2-lifecycle-without-rerendering-complete-packages"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "nlmytgen.source_support_edges.v1",
+  "episode_id": "food_expiry_labels_001_internal_review",
+  "edges": [
+    {
+      "cue_id": "cue_001",
+      "spoken_factual_unit": true,
+      "claim_ids": ["FEL-C01"],
+      "source_ids": ["CAA-EXPIRATION-DATE-2025", "MAFF-EXPIRY-DIFFERENCE-2025"]
+    },
+    {
+      "cue_id": "cue_002",
+      "spoken_factual_unit": true,
+      "claim_ids": ["FEL-C02"],
+      "source_ids": ["CAA-EXPIRATION-DATE-2025", "MAFF-EXPIRY-DIFFERENCE-2025"]
+    },
+    {
+      "cue_id": "cue_003",
+      "spoken_factual_unit": true,
+      "claim_ids": ["FEL-C03"],
+      "source_ids": ["MAFF-EXPIRY-DIFFERENCE-2025"]
+    },
+    {
+      "cue_id": "cue_004",
+      "spoken_factual_unit": true,
+      "claim_ids": ["FEL-C04"],
+      "source_ids": ["MAFF-EXPIRY-DIFFERENCE-2025"]
+    }
+  ],
+  "checks": {
+    "cue_order_exact": true,
+    "every_spoken_factual_unit_supported": true,
+    "unsupported_spoken_factual_units": 0,
+    "primary_source_surface_count": 2
+  }
+}

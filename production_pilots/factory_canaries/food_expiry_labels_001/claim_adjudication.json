@@ -1,0 +1,75 @@
+{
+  "schema": "nlmytgen.claim_adjudication.v1",
+  "topic": "賞味期限と消費期限の違い",
+  "claims": [
+    {
+      "claim_id": "FEL-C01",
+      "canonical_claim_ja": "消費期限は、定められた方法で保存した場合に安全性を欠くおそれがないと認められる期限で、傷みやすい食品に表示される。",
+      "status": "supported",
+      "spoken_cue_ids": ["cue_001"],
+      "support": [
+        {
+          "source_id": "CAA-EXPIRATION-DATE-2025",
+          "location": "PDF page 1, 消費期限の定義と表示食品例",
+          "support_type": "direct_definition"
+        },
+        {
+          "source_id": "MAFF-EXPIRY-DIFFERENCE-2025",
+          "location": "PDF page 1, 消費期限 section",
+          "support_type": "direct_explanation"
+        }
+      ]
+    },
+    {
+      "claim_id": "FEL-C02",
+      "canonical_claim_ja": "賞味期限は、定められた方法で保存した場合に期待される品質を十分保持できる期限で、期限後も品質が保たれることがある。",
+      "status": "supported",
+      "spoken_cue_ids": ["cue_002"],
+      "support": [
+        {
+          "source_id": "CAA-EXPIRATION-DATE-2025",
+          "location": "PDF page 1, 賞味期限の定義と表示食品例",
+          "support_type": "direct_definition"
+        },
+        {
+          "source_id": "MAFF-EXPIRY-DIFFERENCE-2025",
+          "location": "PDF page 1, 賞味期限 section",
+          "support_type": "direct_explanation"
+        }
+      ]
+    },
+    {
+      "claim_id": "FEL-C03",
+      "canonical_claim_ja": "消費期限と賞味期限はいずれも、未開封で表示どおりに保存した場合の期限である。",
+      "status": "supported",
+      "spoken_cue_ids": ["cue_003"],
+      "support": [
+        {
+          "source_id": "MAFF-EXPIRY-DIFFERENCE-2025",
+          "location": "PDF page 1, 共通条件",
+          "support_type": "direct_condition"
+        }
+      ]
+    },
+    {
+      "claim_id": "FEL-C04",
+      "canonical_claim_ja": "一度開封した食品は、期限に関係なく早めに食べる。",
+      "status": "supported",
+      "spoken_cue_ids": ["cue_004"],
+      "support": [
+        {
+          "source_id": "MAFF-EXPIRY-DIFFERENCE-2025",
+          "location": "PDF page 1, 開封後の注意",
+          "support_type": "direct_instruction"
+        }
+      ]
+    }
+  ],
+  "nonfactual_dialogue": [],
+  "checks": {
+    "spoken_factual_cue_count": 4,
+    "supported_spoken_factual_cue_count": 4,
+    "unsupported_spoken_factual_units": 0,
+    "official_primary_source_count": 2
+  }
+}

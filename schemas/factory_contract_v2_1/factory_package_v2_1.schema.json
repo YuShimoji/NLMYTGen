@@ -1,0 +1,1073 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nlmytgen.factory_package.v2.1",
+  "title": "NLMYTGen Factory Package v2.1 Lifecycle Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "contract",
+    "lifecycle",
+    "package",
+    "source_intake",
+    "claim_support",
+    "canonical_content",
+    "shape",
+    "media_provenance",
+    "episode_execution",
+    "source_project",
+    "identities",
+    "resume_identity",
+    "authority",
+    "extensions"
+  ],
+  "properties": {
+    "schema": {
+      "const": "nlmytgen.factory_package.v2.1"
+    },
+    "schema_version": {
+      "const": "2.1"
+    },
+    "contract": {
+      "$ref": "#/$defs/contract"
+    },
+    "lifecycle": {
+      "$ref": "#/$defs/lifecycle"
+    },
+    "package": {
+      "$ref": "#/$defs/package"
+    },
+    "source_intake": {
+      "$ref": "#/$defs/source_intake"
+    },
+    "claim_support": {
+      "$ref": "#/$defs/claim_support"
+    },
+    "canonical_content": {
+      "$ref": "#/$defs/canonical_content"
+    },
+    "shape": {
+      "$ref": "#/$defs/shape"
+    },
+    "media_provenance": {
+      "$ref": "#/$defs/media_provenance"
+    },
+    "episode_execution": {
+      "$ref": "#/$defs/episode_execution"
+    },
+    "source_project": {
+      "$ref": "#/$defs/source_project"
+    },
+    "generated_project": {
+      "$ref": "#/$defs/generated_project"
+    },
+    "render_validation": {
+      "$ref": "#/$defs/render_validation"
+    },
+    "identities": {
+      "$ref": "#/$defs/identities"
+    },
+    "resume_identity": {
+      "$ref": "#/$defs/resume_identity"
+    },
+    "human_decision": {
+      "$ref": "#/$defs/human_decision"
+    },
+    "authority": {
+      "$ref": "#/$defs/authority"
+    },
+    "extensions": {
+      "$ref": "#/$defs/extensions"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "lifecycle": {
+            "properties": {
+              "state": {
+                "const": "package_prepared"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "source_project": {
+            "properties": {
+              "state": {
+                "const": "planned"
+              },
+              "path": {
+                "type": "null"
+              },
+              "sha256": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": ["generated_project"]
+            },
+            {
+              "required": ["render_validation"]
+            },
+            {
+              "required": ["human_decision"]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "lifecycle": {
+            "properties": {
+              "state": {
+                "const": "source_project_ready"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "source_project": {
+            "properties": {
+              "state": {
+                "const": "ready"
+              },
+              "path": {
+                "$ref": "#/$defs/repo_path"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": ["generated_project"]
+            },
+            {
+              "required": ["render_validation"]
+            },
+            {
+              "required": ["human_decision"]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "lifecycle": {
+            "properties": {
+              "state": {
+                "const": "rendered"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "required": ["generated_project", "render_validation"],
+        "properties": {
+          "source_project": {
+            "properties": {
+              "state": {
+                "const": "ready"
+              },
+              "path": {
+                "$ref": "#/$defs/repo_path"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        },
+        "not": {
+          "required": ["human_decision"]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "lifecycle": {
+            "properties": {
+              "state": {
+                "const": "human_accepted"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "generated_project",
+          "render_validation",
+          "human_decision"
+        ],
+        "properties": {
+          "source_project": {
+            "properties": {
+              "state": {
+                "const": "ready"
+              },
+              "path": {
+                "$ref": "#/$defs/repo_path"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          },
+          "human_decision": {
+            "properties": {
+              "state": {
+                "const": "accepted_exact_artifact"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "repo_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "schema_path",
+        "schema_sha256",
+        "field_inventory_path",
+        "field_inventory_sha256",
+        "v2_0_schema_path",
+        "v2_0_schema_sha256",
+        "v2_0_field_inventory_path",
+        "v2_0_field_inventory_sha256"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_contract.v2.1"
+        },
+        "schema_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "field_inventory_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "field_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "v2_0_schema_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "v2_0_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "v2_0_field_inventory_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "v2_0_field_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "lifecycle": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/lifecycle_package_prepared"
+        },
+        {
+          "$ref": "#/$defs/lifecycle_source_project_ready"
+        },
+        {
+          "$ref": "#/$defs/lifecycle_rendered"
+        },
+        {
+          "$ref": "#/$defs/lifecycle_human_accepted"
+        }
+      ]
+    },
+    "lifecycle_base": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "state",
+        "contract_valid",
+        "tracked_package_ready",
+        "source_project_ready",
+        "render_ready",
+        "human_accepted"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.lifecycle.v2.1"
+        },
+        "state": {
+          "enum": [
+            "package_prepared",
+            "source_project_ready",
+            "rendered",
+            "human_accepted"
+          ]
+        },
+        "contract_valid": {
+          "type": "boolean"
+        },
+        "tracked_package_ready": {
+          "type": "boolean"
+        },
+        "source_project_ready": {
+          "type": "boolean"
+        },
+        "render_ready": {
+          "type": "boolean"
+        },
+        "human_accepted": {
+          "type": "boolean"
+        }
+      }
+    },
+    "lifecycle_package_prepared": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/lifecycle_base"
+        },
+        {
+          "properties": {
+            "state": {
+              "const": "package_prepared"
+            },
+            "contract_valid": {
+              "const": true
+            },
+            "tracked_package_ready": {
+              "const": true
+            },
+            "source_project_ready": {
+              "const": false
+            },
+            "render_ready": {
+              "const": false
+            },
+            "human_accepted": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    "lifecycle_source_project_ready": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/lifecycle_base"
+        },
+        {
+          "properties": {
+            "state": {
+              "const": "source_project_ready"
+            },
+            "contract_valid": {
+              "const": true
+            },
+            "tracked_package_ready": {
+              "const": true
+            },
+            "source_project_ready": {
+              "const": true
+            },
+            "render_ready": {
+              "const": false
+            },
+            "human_accepted": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    "lifecycle_rendered": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/lifecycle_base"
+        },
+        {
+          "properties": {
+            "state": {
+              "const": "rendered"
+            },
+            "contract_valid": {
+              "const": true
+            },
+            "tracked_package_ready": {
+              "const": true
+            },
+            "source_project_ready": {
+              "const": true
+            },
+            "render_ready": {
+              "const": true
+            },
+            "human_accepted": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    "lifecycle_human_accepted": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/lifecycle_base"
+        },
+        {
+          "properties": {
+            "state": {
+              "const": "human_accepted"
+            },
+            "contract_valid": {
+              "const": true
+            },
+            "tracked_package_ready": {
+              "const": true
+            },
+            "source_project_ready": {
+              "const": true
+            },
+            "render_ready": {
+              "const": true
+            },
+            "human_accepted": {
+              "const": true
+            }
+          }
+        }
+      ]
+    },
+    "package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "package_id",
+        "episode_id",
+        "title",
+        "content_authority"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.package_identity.v2.1"
+        },
+        "package_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "episode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_authority": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source_intake": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "authority_path",
+        "authority_sha256",
+        "source_count",
+        "source_backed"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.source_intake.v2.1"
+        },
+        "authority_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "authority_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_backed": {
+          "const": true
+        }
+      }
+    },
+    "claim_support": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "authority_path",
+        "authority_sha256",
+        "factual_cue_ids",
+        "nonfactual_cue_ids",
+        "unsupported_factual_units"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.claim_support.v2.1"
+        },
+        "authority_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "authority_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "factual_cue_ids": {
+          "$ref": "#/$defs/cue_ids"
+        },
+        "nonfactual_cue_ids": {
+          "$ref": "#/$defs/cue_ids"
+        },
+        "unsupported_factual_units": {
+          "const": 0
+        }
+      }
+    },
+    "canonical_content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "path",
+        "sha256",
+        "cue_sequence"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.canonical_content.v2.1"
+        },
+        "path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "cue_sequence": {
+          "$ref": "#/$defs/cue_ids"
+        }
+      }
+    },
+    "shape": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "cue_count",
+        "scene_count",
+        "scene_mapping",
+        "speaker_mapping",
+        "speaker_counts",
+        "timeline_frames",
+        "fps",
+        "duration_seconds",
+        "timing_basis",
+        "asset_count",
+        "source_count"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.shape.v2.1"
+        },
+        "cue_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "scene_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "scene_mapping": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "speaker_mapping": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "speaker_counts": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "timeline_frames": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "duration_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "timing_basis": {
+          "enum": [
+            "planned_not_observed",
+            "source_project_observed",
+            "render_observed"
+          ]
+        },
+        "asset_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_count": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "media_provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "path",
+        "sha256",
+        "asset_mappings"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.media_provenance.v2.1"
+        },
+        "path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "asset_mappings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "cue_id",
+              "asset_id",
+              "source_id",
+              "local_asset_path",
+              "sha256",
+              "crop"
+            ],
+            "properties": {
+              "cue_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "asset_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "local_asset_path": {
+                "$ref": "#/$defs/repo_path"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              },
+              "crop": {
+                "type": "array",
+                "minItems": 4,
+                "maxItems": 4,
+                "items": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "episode_execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "manifest_path",
+        "manifest_sha256",
+        "manifest_schema",
+        "planned_run_id",
+        "project_filename",
+        "mp4_filename",
+        "render_settings_sha256"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.episode_execution.v2.1"
+        },
+        "manifest_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "manifest_schema": {
+          "type": "string",
+          "minLength": 1
+        },
+        "planned_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_filename": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mp4_filename": {
+          "type": "string",
+          "minLength": 1
+        },
+        "render_settings_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "source_project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "state",
+        "strategy",
+        "path",
+        "sha256",
+        "identity_source",
+        "live_required_for_contract"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.source_project.v2.1"
+        },
+        "state": {
+          "enum": ["planned", "ready"]
+        },
+        "strategy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": ["string", "null"]
+        },
+        "sha256": {
+          "type": ["string", "null"]
+        },
+        "identity_source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "live_required_for_contract": {
+          "type": "boolean"
+        }
+      }
+    },
+    "generated_project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "path",
+        "sha256",
+        "identity_source",
+        "availability_claim"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.generated_project.v2.1"
+        },
+        "path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "identity_source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "availability_claim": {
+          "const": "receipt_identity_only"
+        }
+      }
+    },
+    "render_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "technical_receipt_path",
+        "technical_receipt_sha256",
+        "technical_status",
+        "mp4_path",
+        "mp4_sha256",
+        "availability_claim"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.render_validation.v2.1"
+        },
+        "technical_receipt_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "technical_receipt_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "technical_status": {
+          "const": "passed"
+        },
+        "mp4_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "mp4_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "availability_claim": {
+          "const": "receipt_identity_only"
+        }
+      }
+    },
+    "identities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "protected_input_policy",
+        "content_identity_policy",
+        "content_identity_sha256",
+        "content_identity_excludes"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.identities.v2.1"
+        },
+        "protected_input_policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_identity_policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_identity_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "content_identity_excludes": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "resume_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "policy",
+        "completed_run_observed",
+        "semantic_drift_fail_closed"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.resume_identity.v2.1"
+        },
+        "policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "completed_run_observed": {
+          "type": "boolean"
+        },
+        "semantic_drift_fail_closed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "human_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "state",
+        "receipt_path",
+        "receipt_sha256",
+        "artifact_sha256"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.human_decision.v2.1"
+        },
+        "state": {
+          "const": "accepted_exact_artifact"
+        },
+        "receipt_path": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "receipt_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "artifact_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "rights",
+        "production",
+        "publication",
+        "upload",
+        "release"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.authority.v2.1"
+        },
+        "rights": {
+          "$ref": "#/$defs/authority_clock"
+        },
+        "production": {
+          "$ref": "#/$defs/authority_clock"
+        },
+        "publication": {
+          "$ref": "#/$defs/authority_clock"
+        },
+        "upload": {
+          "$ref": "#/$defs/authority_clock"
+        },
+        "release": {
+          "$ref": "#/$defs/authority_clock"
+        }
+      }
+    },
+    "authority_clock": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["approved", "record"],
+          "properties": {
+            "approved": {
+              "const": false
+            },
+            "record": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["approved", "record"],
+          "properties": {
+            "approved": {
+              "const": true
+            },
+            "record": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256", "artifact_sha256"],
+              "properties": {
+                "path": {
+                  "$ref": "#/$defs/repo_path"
+                },
+                "sha256": {
+                  "$ref": "#/$defs/sha256"
+                },
+                "artifact_sha256": {
+                  "$ref": "#/$defs/sha256"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "values"],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_package.extensions.v2.1"
+        },
+        "values": {
+          "type": "object"
+        }
+      }
+    },
+    "cue_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^cue_[0-9]{3}$"
+      }
+    }
+  }
+}

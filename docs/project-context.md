@@ -1,5 +1,49 @@
 # Project Context — NLMYTGen
 
+## 現在の監修AIハンドオフ（2026-07-26 JST・Factory Contract v2.1 lifecycle）
+
+この節だけが現在の再開地点である。Factory Contract v2 checkpoint
+`ab960978ab1c29fc8ea5d59d69dc185ddc0d257a`から
+`codex/nlmytgen-factory-contract-v2-lifecycle-v1`を作成し、pre-render packageを
+真のevidence状態で扱う後方互換v2.1を実装した。
+
+- **lifecycle**: `package_prepared`、`source_project_ready`、`rendered`、
+  `human_accepted`。generated project、render validation、human decisionは
+  conditional sectionであり、存在しない段階のdummy evidenceを拒否する。
+- **v2.0 preservation**: schema、50-row inventory、3 descriptorsはbyte exact。
+  read-only normalizerでnew-banknoteは`human_accepted`、REINS / AI-monitoringは
+  `rendered`へ写像し、3/3 tracked-only pass。
+- **fourth package**: fixed topic「賞味期限と消費期限の違い」。4 cues、1 scene、
+  霊夢4、official source 2、real raster 2、4/4 mappings、assetごとの異なるcrop、
+  planned 1440 frames / 24.0秒。
+- **source / claim**: 消費者庁と農林水産省九州農政局のofficial PDF 2 surface。
+  factual cues 4/4 supported、unsupported 0。PDF / extract / rasterはignored。
+- **lifecycle state**: `package_prepared`。source projectはplanned / absent。
+  generated project、render receipt、MP4、human decisionはabsent。
+- **identity**: descriptor `18e078...f329`、normalized `5bfebe...234`、
+  content `27165f...5c6`。2 repeatsで3/3 exact。
+- **profiles**: live raster 2/2 exact。tracked-onlyはGit metadata /
+  `node_modules`なしでv2.1 1/1、v2.0 3/3 passし、rasterはreceipt-only。
+- **stage plan**: existing CLI pathでsource-project generation前に正常停止。
+  completed video dry-run false、YMM4 / Electron / render / encode / playback /
+  volume / writeは0。
+- **tests**: v2.1 23/23、v2.0 24/24、episode込みfocused 66/66。
+- **authority**: human acceptance、rights、production、publication、upload、
+  releaseはfalse。技術lifecycleから継承しない。
+- **current state**:
+  `lifecycle-aware-factory-contract-with-real-prerender-out-of-sample-package`。
+  Product-Gateは`bounded-multi-episode-queue-and-render-on-change-policy`。
+- **next action**: v2.0 / v2.1を読むbounded queueを作り、normalized lifecycleと
+  content identityから次stageを決める。complete packageを再renderしない。
+- **residual blocker**: `FACTORY_CONTRACT_POST_RENDER_LIFECYCLE_OVERFIT`。
+  fourth packageの後続lifecycleはowner許可とexact evidenceを待つ。
+- **boundary**: source-project generation、render、fifth topic、universal claim、
+  PR、merge、master、deployment、public actionは未実施・未承認。
+- **詳細**:
+  `docs/verification/FACTORY_CONTRACT_V2_1_LIFECYCLE_VALIDATION_2026-07-26.md`
+  と`.json`。通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md`。
+
 ## 現在の監修AIハンドオフ（2026-07-26 JST・Factory Contract v2）
 
 この節だけが現在の再開地点である。第3実トピックcheckpoint

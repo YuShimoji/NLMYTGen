@@ -1,0 +1,119 @@
+{
+  "schema": "nlmytgen.package_prepared_validation_receipt.v1",
+  "date": "2026-07-26",
+  "package_id": "food_expiry_labels_001",
+  "topic": "賞味期限と消費期限の違い",
+  "lifecycle": {
+    "state": "package_prepared",
+    "contract_valid": true,
+    "tracked_package_ready": true,
+    "source_project_ready": false,
+    "render_ready": false,
+    "human_accepted": false
+  },
+  "contract": {
+    "schema": "nlmytgen.factory_package.v2.1",
+    "descriptor_path": "production_pilots/factory_canaries/food_expiry_labels_001/factory_package_v2_1.json",
+    "descriptor_sha256": "18e078f6f6c5b6e17808ec9378d8476a9cd8ce426cd1281563c833ae21acf329",
+    "normalized_sha256": "5bfebe8c93d18dc546a8fe675de7ad303219ff5654b362c0950e371a6093a234",
+    "content_identity_sha256": "27165fad6fadaee2e5c247a86758a505c7f5f5797eb7b386d174585622a585c6",
+    "json_schema_sha256": "5f9e84c115ac8a7618f57714a8df3722b2cdb83371711c40efb77caf2bd12d44",
+    "field_inventory_sha256": "fdf17bac964941c8c879595b8ec2003fcd9c959f1dbe105b4b1a13b1276b35f3",
+    "validation_repeat_count": 2,
+    "descriptor_repeat_exact": true,
+    "normalized_repeat_exact": true,
+    "content_identity_repeat_exact": true
+  },
+  "v2_0_preservation": {
+    "schema_sha256": "d0e831c60ceba17a83c6fe106bf1fa574cfa3881976934c3fb4571a59bb8dfbb",
+    "field_inventory_sha256": "8bc3a669e0b77b2dcc68f59f0f5bcf03fe6eaaaaf8aec3bad4fb3b814f6490d4",
+    "new_banknote_descriptor_sha256": "80f1130711a46c3f3a77f2ec1da391fd338569d9aaf0385deeb96a2a698333f7",
+    "reins_descriptor_sha256": "21e0052011b1d55f7ff27bf63af5c4f79dbc3932762df86375cdca86e59d63db",
+    "ai_monitoring_descriptor_sha256": "866f03c7cff7570e1ad9d1b22525598a99084e9aa0b5227c4c2d31cea528eeb4",
+    "byte_exact": true,
+    "normalizer_results": {
+      "new_banknote_security_notebooklm_001": "human_accepted",
+      "real_estate_reins_transparency_001": "rendered",
+      "ai_monitoring_labor_001": "rendered"
+    }
+  },
+  "package_shape": {
+    "cue_count": 4,
+    "scene_count": 1,
+    "speaker_counts": {
+      "ゆっくり霊夢赤縁": 4
+    },
+    "source_count": 2,
+    "asset_count": 2,
+    "cue_media_mapping_count": 4,
+    "asset_reuse_with_materially_distinct_crops": true,
+    "planned_duration_seconds": 24.0,
+    "planned_duration_range_seconds": {
+      "minimum": 18,
+      "maximum": 30
+    },
+    "timing_basis": "planned_not_observed"
+  },
+  "source_evidence": {
+    "official_primary_source_count": 2,
+    "spoken_factual_cue_count": 4,
+    "supported_spoken_factual_cue_count": 4,
+    "unsupported_spoken_factual_units": 0,
+    "live_media_assets_exact": 2,
+    "live_media_assets_total": 2,
+    "raw_source_bytes_tracked": false
+  },
+  "tracked_only_profile": {
+    "isolated_file_count": 2970,
+    "git_metadata_present": false,
+    "node_modules_present": false,
+    "package_passed": true,
+    "v2_0_packages_passed": 3,
+    "media_availability": "receipt_only_no_live_file",
+    "source_project_availability": "planned_not_generated"
+  },
+  "pre_render_stage_plan": {
+    "status": "pre_render_plan_complete",
+    "completed_video_dry_run": false,
+    "successful_stop_before": "source_project_generation",
+    "protected_inputs_exact": 9,
+    "source_project_generated": false,
+    "generated_project_created": false,
+    "rendered_media_created": false,
+    "tracked_write": false,
+    "yymm4_launch_count": 0,
+    "electron_launch_count": 0,
+    "render_driver_launch_count": 0,
+    "ffmpeg_encode_count": 0,
+    "playback_count": 0,
+    "system_volume_operation_count": 0
+  },
+  "focused_validation": {
+    "factory_contract_v2_1_tests_passed": 23,
+    "factory_contract_v2_0_tests_passed": 24,
+    "combined_v2_v2_1_episode_tests_passed": 66,
+    "expanded_python_regression_passed": 82,
+    "standard_loop_node_tests_passed": 7,
+    "failed": 0
+  },
+  "absent_evidence": {
+    "source_project": true,
+    "generated_project": true,
+    "render_receipt": true,
+    "mp4": true,
+    "human_acceptance": true
+  },
+  "authority": {
+    "rights_approved": false,
+    "production_approved": false,
+    "publication_approved": false,
+    "upload_approved": false,
+    "release_approved": false
+  },
+  "claims": {
+    "fourth_package_pre_render_out_of_sample_validated": true,
+    "post_render_lifecycle_compatibility_proved": false,
+    "universal_arbitrary_topic_compatibility": false,
+    "production_ready": false
+  }
+}

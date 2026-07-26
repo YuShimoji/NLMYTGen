@@ -1,0 +1,84 @@
+{
+  "schema": "nlmytgen.real_media_provenance.v1",
+  "episode_id": "food_expiry_labels_001_internal_review",
+  "purpose": "fourth-topic pre-render factory-contract canary only",
+  "sources": [
+    {
+      "source_id": "CAA-EXPIRATION-DATE-2025",
+      "exact_title": "期限表示（消費期限・賞味期限）",
+      "publisher": "消費者庁",
+      "canonical_url": "https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/expiration_date/",
+      "pdf_sha256": "41a9d687177f2056e9d47e228869ed3891ef86ff6b7ac2256d47446538764e48"
+    },
+    {
+      "source_id": "MAFF-EXPIRY-DIFFERENCE-2025",
+      "exact_title": "賞味期限と消費期限の違い",
+      "publisher": "農林水産省九州農政局",
+      "canonical_url": "https://www.maff.go.jp/kyusyu/seiryuu/syokuhin/recycle/attach/pdf/251023-4.pdf",
+      "pdf_sha256": "e19545e3535eb93e41d3d5b381eb834ccf4278de51267a4f312eafcc673b7ad8"
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "fel_caa_expiration_definitions",
+      "cue_ids": ["cue_001", "cue_002"],
+      "source_id": "CAA-EXPIRATION-DATE-2025",
+      "local_asset_path": "production_pilots/factory_canaries/food_expiry_labels_001/local_media/caa_expiration_date_page1.png",
+      "sha256": "2c06e90c629a3be96b2ce973e81900f128ea63d3a07124714607232166f04517",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login official PDF retrieval and page render 2026-07-26",
+      "capture_basis": "CAA PDF page 1 full-page raster at 180 dpi; visually inspected",
+      "cue_views": [
+        {
+          "cue_id": "cue_001",
+          "crop": [0.04, 0.14, 0.62, 0.18],
+          "section": "消費期限の定義"
+        },
+        {
+          "cue_id": "cue_002",
+          "crop": [0.04, 0.34, 0.62, 0.23],
+          "section": "賞味期限の定義"
+        }
+      ],
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface rendered for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    },
+    {
+      "asset_id": "fel_maff_expiry_conditions",
+      "cue_ids": ["cue_003", "cue_004"],
+      "source_id": "MAFF-EXPIRY-DIFFERENCE-2025",
+      "local_asset_path": "production_pilots/factory_canaries/food_expiry_labels_001/local_media/maff_expiry_difference_page1.png",
+      "sha256": "931b2232c9ff611a1ce2d793b98687d606c422c4627e8a76b0acba22afa05e79",
+      "media_type": "image",
+      "retrieval_or_capture": "bounded no-login official PDF retrieval and page render 2026-07-26",
+      "capture_basis": "MAFF PDF page 1 full-page raster at 180 dpi; visually inspected",
+      "cue_views": [
+        {
+          "cue_id": "cue_003",
+          "crop": [0.05, 0.08, 0.9, 0.35],
+          "section": "未開封・保存方法の共通条件"
+        },
+        {
+          "cue_id": "cue_004",
+          "crop": [0.05, 0.84, 0.9, 0.14],
+          "section": "開封後は期限に関係なく早めに食べる注意"
+        }
+      ],
+      "usage_classification": "internal_review_only",
+      "rights_state": "official public surface rendered for internal technical review; reuse permission remains unresolved",
+      "production_allowed": false,
+      "publication_allowed": false
+    }
+  ],
+  "boundary": {
+    "internal_review_only": true,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "release": false,
+    "source_media_tracked": false
+  }
+}

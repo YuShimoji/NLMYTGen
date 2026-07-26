@@ -1,0 +1,51 @@
+{
+  "schema": "nlmytgen.canonical_script.v1",
+  "episode_id": "food_expiry_labels_001_internal_review",
+  "title": "賞味期限と消費期限の違い",
+  "cue_count": 4,
+  "scene_count": 1,
+  "speaker_distribution": {
+    "れいむ": 4
+  },
+  "target_duration_seconds": {
+    "min": 18,
+    "max": 30,
+    "planned": 24
+  },
+  "unsupported_spoken_factual_units": 0,
+  "human_creative_acceptance": false,
+  "cues": [
+    {
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "text": "消費期限は、傷みやすい食品を安全に食べられる期限です。過ぎたら食べるのは控えます。",
+      "spoken_factual_unit": true,
+      "claim_ids": ["FEL-C01"]
+    },
+    {
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "text": "賞味期限は、比較的傷みにくい食品をおいしく食べられる期限です。過ぎてもすぐ食べられなくなるとは限りません。",
+      "spoken_factual_unit": true,
+      "claim_ids": ["FEL-C02"]
+    },
+    {
+      "cue_id": "cue_003",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "text": "どちらも、未開封で表示どおりに保存した場合の期限です。",
+      "spoken_factual_unit": true,
+      "claim_ids": ["FEL-C03"]
+    },
+    {
+      "cue_id": "cue_004",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "text": "開封した食品は、期限に関係なく早めに食べるのが基本です。",
+      "spoken_factual_unit": true,
+      "claim_ids": ["FEL-C04"]
+    }
+  ]
+}

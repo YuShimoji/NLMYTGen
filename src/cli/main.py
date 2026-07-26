@@ -11,7 +11,7 @@ Usage:
     python -m src.cli.main inspect <input> [--speaker-map K1=V1,K2=V2]
     python -m src.cli.main diagnose-script <input> [--speaker-map ...] [--format text|json] [--strict]
     python -m src.cli.main doctor-runtime [--profile code|review|render|regenerate|all] [--require-profile PROFILE] [--artifact-root PATH] [--deep] [--format text|json]
-    python -m src.cli.main validate-factory-package --package factory_package_v2.json [--check-live] [--format text|json]
+    python -m src.cli.main validate-factory-package --package factory_package.json [--require-lifecycle STATE] [--check-live] [--format text|json]
     python -m src.cli.main build-episode-video --factory-package factory_package_v2.json --dry-run
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
     python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown] [--with-fetch-report]
@@ -1744,6 +1744,16 @@ def main(argv: list[str] | None = None) -> int:
         "--check-live",
         action="store_true",
         help="Read-only hash check for declared live/private artifacts when present",
+    )
+    p_factory_validate.add_argument(
+        "--require-lifecycle",
+        choices=[
+            "package_prepared",
+            "source_project_ready",
+            "rendered",
+            "human_accepted",
+        ],
+        help="Require the normalized package lifecycle to have reached this state",
     )
     p_factory_validate.add_argument(
         "--format",
@@ -6533,9 +6543,10 @@ def _cmd_build_episode_video(args: argparse.Namespace) -> int:
     factory_validation: dict[str, Any] | None = None
     manifest_path: Path
     if args.factory_package:
-        from src.pipeline.factory_contract_v2 import (
+        from src.pipeline.factory_contract_v2_1 import (
             FactoryContractError,
-            validate_factory_package,
+            build_pre_render_stage_plan,
+            validate_factory_package_lifecycle,
         )
 
         if (
@@ -6562,7 +6573,7 @@ def _cmd_build_episode_video(args: argparse.Namespace) -> int:
             )
             return 1
         try:
-            factory_validation = validate_factory_package(
+            factory_validation = validate_factory_package_lifecycle(
                 repo_root=Path.cwd(),
                 descriptor_path=Path(args.factory_package),
                 check_live=True,
@@ -6578,6 +6589,27 @@ def _cmd_build_episode_video(args: argparse.Namespace) -> int:
                 file=sys.stderr,
             )
             return 1
+        lifecycle_state = factory_validation["normalized_lifecycle"]["state"]
+        if lifecycle_state in {"package_prepared", "source_project_ready"}:
+            try:
+                plan = build_pre_render_stage_plan(
+                    repo_root=Path.cwd(),
+                    descriptor_path=Path(args.factory_package),
+                    validation_result=factory_validation,
+                )
+            except FactoryContractError as exc:
+                print(
+                    json.dumps(
+                        exc.as_payload(),
+                        ensure_ascii=False,
+                        indent=2,
+                        sort_keys=True,
+                    ),
+                    file=sys.stderr,
+                )
+                return 1
+            print(json.dumps(plan, ensure_ascii=False, indent=2))
+            return 0
         manifest_path = Path(
             factory_validation["normalized"]["episode_manifest_path"]
         )
@@ -6638,16 +6670,17 @@ def _cmd_build_episode_video(args: argparse.Namespace) -> int:
 
 
 def _cmd_validate_factory_package(args: argparse.Namespace) -> int:
-    from src.pipeline.factory_contract_v2 import (
+    from src.pipeline.factory_contract_v2_1 import (
         FactoryContractError,
-        validate_factory_package,
+        validate_factory_package_lifecycle,
     )
 
     try:
-        result = validate_factory_package(
+        result = validate_factory_package_lifecycle(
             repo_root=Path.cwd(),
             descriptor_path=args.package,
             check_live=bool(args.check_live),
+            require_lifecycle=args.require_lifecycle,
         )
     except FactoryContractError as exc:
         payload = exc.as_payload()
@@ -6683,6 +6716,7 @@ def _cmd_validate_factory_package(args: argparse.Namespace) -> int:
         )
         print(
             f"{result['status']}: {result['package_id']} "
+            f"lifecycle={result['normalized_lifecycle']['state']} "
             f"cues={result['normalized']['cue_count']} "
             f"scenes={result['normalized']['scene_count']} "
             f"availability[{availability}]"

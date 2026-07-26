@@ -1,0 +1,60 @@
+{
+  "schema": "nlmytgen.source_registry.v1",
+  "topic": "賞味期限と消費期限の違い",
+  "retrieval_policy": {
+    "official_primary_surfaces_only": true,
+    "login_used": false,
+    "credentials_used": false,
+    "playback_used": false,
+    "source_count": 2,
+    "acquisition_stopped_when_supported": true
+  },
+  "sources": [
+    {
+      "source_id": "CAA-EXPIRATION-DATE-2025",
+      "exact_title": "期限表示（消費期限・賞味期限）",
+      "publisher": "消費者庁",
+      "publication_year": 2025,
+      "primary_source": true,
+      "surface_type": "official_explanatory_pdf",
+      "canonical_url": "https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/expiration_date/",
+      "pdf_url": "https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/expiration_date/assets/food_labeling_cms204_250331_01.pdf",
+      "local_ignored_path": "production_pilots/factory_canaries/food_expiry_labels_001/source_cache/caa_expiration_date_2025.pdf",
+      "sha256": "41a9d687177f2056e9d47e228869ed3891ef86ff6b7ac2256d47446538764e48",
+      "pages_used": [
+        {
+          "pdf_page": 1,
+          "support": "食品表示基準に沿う消費期限と賞味期限の定義、食品例、期限経過後の違いを示す。"
+        }
+      ]
+    },
+    {
+      "source_id": "MAFF-EXPIRY-DIFFERENCE-2025",
+      "exact_title": "賞味期限と消費期限の違い",
+      "publisher": "農林水産省九州農政局",
+      "publication_year": 2025,
+      "primary_source": true,
+      "surface_type": "official_explanatory_pdf",
+      "canonical_url": "https://www.maff.go.jp/kyusyu/seiryuu/syokuhin/recycle/attach/pdf/251023-4.pdf",
+      "pdf_url": "https://www.maff.go.jp/kyusyu/seiryuu/syokuhin/recycle/attach/pdf/251023-4.pdf",
+      "local_ignored_path": "production_pilots/factory_canaries/food_expiry_labels_001/source_cache/maff_expiry_difference_2025.pdf",
+      "sha256": "e19545e3535eb93e41d3d5b381eb834ccf4278de51267a4f312eafcc673b7ad8",
+      "pages_used": [
+        {
+          "pdf_page": 1,
+          "support": "賞味期限と消費期限の違い、未開封かつ表示どおりの保存条件、開封後は期限に関係なく早めに食べる扱いを示す。"
+        }
+      ]
+    }
+  ],
+  "boundaries": {
+    "raw_source_bytes_tracked": false,
+    "internal_technical_review_only": true,
+    "human_creative_acceptance": false,
+    "rights_approved": false,
+    "production": false,
+    "publication": false,
+    "external_upload": false,
+    "release": false
+  }
+}
