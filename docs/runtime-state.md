@@ -1,107 +1,117 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: nlmytgen-factory-contract-v2-1-prerender-out-of-sample-validated-v1
-State-Revision: 2026-07-26.4
+Project-State-ID: nlmytgen-bounded-factory-queue-render-on-change-validated-v1
+State-Revision: 2026-07-26.5
 Updated: 2026-07-26 JST
-Product-State: lifecycle-aware-factory-contract-with-real-prerender-out-of-sample-package
-Product-Gate: bounded-multi-episode-queue-and-render-on-change-policy
-Recommended-Next: build-queue-over-v2-lifecycle-without-rerendering-complete-packages
+Product-State: lifecycle-aware-four-package-queue-with-complete-package-no-rerender-policy
+Product-Gate: advance-prepared-package-to-source-project-ready
+Recommended-Next: advance-food-expiry-package-to-source-project-ready-through-queue
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
-Handoff-Branch: codex/nlmytgen-factory-contract-v2-lifecycle-v1
+Handoff-Branch: codex/nlmytgen-bounded-factory-queue-v1
 Handoff-PR: none
-Required-Base: ab960978ab1c29fc8ea5d59d69dc185ddc0d257a
-Implementation-Checkpoint: ab960978ab1c29fc8ea5d59d69dc185ddc0d257a
+Required-Base: 88db8b84e8863aed366fd1683ddcfcc548a0b2a6
+Implementation-Checkpoint: 88db8b84e8863aed366fd1683ddcfcc548a0b2a6
 Outcome-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 required after handoff push
 Tracked-Worktree: tracked clean required after handoff; protected and ignored artifacts preserved
 
 ## Current Slice
 
-- Factory Contract v2を後方互換v2.1へ拡張した。
-  `package_prepared`、`source_project_ready`、`rendered`、
-  `human_accepted`の4 lifecycleを明示する。
-- v2.1 schema / inventoryはgenerated project、render evidence、human decisionを
-  lifecycle条件付きにし、存在しない証拠のdummy objectを許容しない。
-- v2.0 schema / inventory / 3 descriptorsはbyte exact。read-only normalizerで
-  new-banknoteを`human_accepted`、REINSとAI-monitoringを`rendered`へ写像する。
-- fixed fourth topic「賞味期限と消費期限の違い」をtracked
-  `package_prepared` packageとして追加した。
-- fourth shapeは4 cues、1 scene、霊夢4、official source 2、real raster 2、
-  4/4 media mapping、同一assetの異なるcrop再利用、planned 24.0秒。
-- source projectはplanned / absent。generated project、render receipt、MP4、
-  human decisionはabsent。rights / production / publication / upload /
-  releaseはfalse。
-- live profileはraster 2/2 exact。tracked-only profileはv2.1 1/1とv2.0
-  3/3 passし、ignored rasterは`receipt_only_no_live_file`。
-- descriptor / normalized / content identityは2 repeatでexact。
-- existing CLIのpre-render planは`source_project_generation`前に正常停止。
-  YMM4 / Electron / render driver / ffmpeg encode / playback / volume / writeは0。
-- focused Pythonはv2.1 23/23、v2.0 24/24、episode込み66/66 pass。
+- `nlmytgen.factory_queue.v1`とhard maximum 32を追加した。実queueは
+  explicit maximum 4、4 entries、priority-descending / order-ascendingで安定する。
+- queue entryはrepo-relative descriptor、expected package / content /
+  render-settings / completed-output identityを保持する。
+- mixed v2.0 / v2.1を同じlifecycle-aware validatorでnormalizeする。
+- duplicate package ID、unmarked duplicate content、target collision、
+  private/absolute path、unknown version、unstable orderをfail closedにする。
+- pure render-on-change policyはrun-local fieldsを除外し、technical decision、
+  live availability、recorded identity、semantic drift、owner authorityを分離する。
+- live queueではnew-banknote / REINS / AI-monitoringが`verified_noop`、
+  food-expiryだけが`source_project_generation_required`。
+- live countsはno-op 3、source-project candidate 1、render candidate 0、
+  blocked / invalid 0、render schedule / execution set 0。
+- tracked-onlyでは完了3件が`recorded_complete_no_live_file`。
+  private output不在から`render_required`を推論しない。
+- safe-stage modeはexisting dry-run 3、pre-render plan 1、identity 4/4 exact。
+  YMM4 / Electron / render / encode / playback / volume / product writeは0。
+- deterministic live / tracked-only / safe-stageは各2 runs raw exact。
+- queue固有31/31、v2.0 / v2.1 / queue / episode focused 97/97 pass。
 
 ## Product Position
 
-実在するsource / claims / media provenanceを持つpre-render packageを、
-render evidenceを捏造せずversioned contractへ入れられる。observed 3 completed
-packagesは変更せず同じlifecycle viewから扱える。
+4 package queueは実行可能なread-only planning surfaceである。completed packageは
+live exactなら`verified_noop`、live fileが別端末で無ければ
+`recorded_complete_no_live_file`となり、automatic rerender対象にならない。
 
-これはfourth topicの`package_prepared` out-of-sample evidenceである。
-post-render lifecycle fit、universal arbitrary-topic compatibility、
-human acceptance、rights、production、publication、upload、releaseは未証明・
-未承認である。
+food-expiryは唯一のsource-project candidateだが、technical next stageと
+execution authorityは別である。今回のqueueはsource-project generationやrenderの
+権限を持たない。
+
+これはbounded four-package compatibilityである。generic distributed scheduler、
+universal scheduling compatibility、production readinessを証明しない。
 
 ## Exact Next Action
 
-v2.0 / v2.1 packageを混在して読むbounded multi-episode queueを作る。
-normalized lifecycleとcontent identityから必要な次stageだけを返し、
-`rendered` / `human_accepted` packageを再render対象にしない。
+ownerの明示許可後、queueで選ばれたfood-expiry 1件だけを同じcontent identityから
+source projectへmaterializeし、exact repository-relative locator / SHAを追加して
+`source_project_ready`へ進める。
 
 開始条件:
 
-- bounded input、stable ordering、duplicate identity rejection
-- planning phaseはread-only、YMM4 / Electron / render / playback 0
-- `package_prepared`と`source_project_ready`だけを未完了候補にする
-- run-local差を除外しsemantic driftをfail closedにする
-- owner許可前はsource-project generationとrenderを行わない
-- fourth packageを進める場合も同じcontent identityを保持する
+- queue evaluationが4 contracts valid、source candidate 1、render candidate 0
+- new-banknote / REINS / AI-monitoringはno-opのまま
+- content / render-settings / queue baseline identity exact
+- source-project generation authorityを1 packageへ明示
+- YMM4 render、playback、public actionはまだ行わない
+- semantic drift時は既存artifactを変更せず停止する
 
 ## Residual Work
 
-`FACTORY_CONTRACT_POST_RENDER_LIFECYCLE_OVERFIT`
+### Food-expiry source-project promotion
 
-- Purpose: 同じfourth packageが後続lifecycleでもidentityを保つか確認する。
-- Effect: 現在利用できる範囲はqueue intake / pre-render planningまで。
-- Requirements: owner許可、exact project / render evidence、独立human decision。
-- State: open。今回の正常停止点は`package_prepared`。
+- Purpose: prepared packageを最初の実materialization stageへ進める。
+- Effect: queue decisionを`source_project_generation_required`から
+  `render_required` planへ進められる。
+- Requirements: owner許可、同じcontent identity、exact project readback / SHA。
+- State: ready for separately authorized execution。
+- Owner: production operator。
+- Next move: food-expiry 1件だけをsource-project-readyへ進める。
+
+### Post-render and external gates
+
+- Purpose: rendered / accepted lifecycleとpublic authorityを実証する。
+- Effect: technical render validity、human decision、rights/public clocksを分離できる。
+- Requirements: render許可、exact render receipt、human review、各owner record。
+- State: open。`FACTORY_CONTRACT_POST_RENDER_LIFECYCLE_OVERFIT` remains。
 - Owner: production owner / human reviewer / rights and public authority owners。
-- Next move: queueとrender-on-change decision layerを先に実装する。
+- Next move: source-project gate完了後に別missionで判断する。
 
 ## Evidence and Re-entry
 
-- Schema: `schemas/factory_contract_v2_1/factory_package_v2_1.schema.json`
-- Inventory: `schemas/factory_contract_v2_1/field_inventory.json`
-- Validator: `src/pipeline/factory_contract_v2_1.py`
-- Fourth descriptor:
-  `production_pilots/factory_canaries/food_expiry_labels_001/factory_package_v2_1.json`
+- Queue schema: `schemas/factory_queue_v1/factory_queue_v1.schema.json`
+- Queue engine: `src/pipeline/factory_queue.py`
+- Queue descriptor:
+  `production_pilots/factory_queues/four_package_lifecycle_queue_v1.json`
 - Report:
-  `docs/verification/FACTORY_CONTRACT_V2_1_LIFECYCLE_VALIDATION_2026-07-26.md`
+  `docs/verification/BOUNDED_FACTORY_QUEUE_VALIDATION_2026-07-26.md`
 - Machine receipt:
-  `docs/verification/FACTORY_CONTRACT_V2_1_LIFECYCLE_VALIDATION_2026-07-26.json`
+  `docs/verification/BOUNDED_FACTORY_QUEUE_VALIDATION_2026-07-26.json`
 
 Re-enter by fetching the handoff branch, requiring `HEAD...@{upstream}=0/0` and
 tracked clean, then reading `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → this file.
-Restore with `uv sync --extra dev --locked`. Validate the fourth descriptor with
-`validate-factory-package --require-lifecycle package_prepared --check-live`;
-the tracked contract also passes when ignored media is absent.
+Restore with `uv sync --extra dev --locked`. Evaluate with
+`evaluate-factory-queue --queue <descriptor> --check-live --format json`.
 
 ## Active Boundaries
 
-- v2.0 schema、inventory、descriptors、prior rendered artifacts remain immutable.
-- A receipt proves recorded identity; it does not prove current live availability.
-- Technical lifecycle state cannot grant human, rights, production, or public clocks.
-- GUI、YMM4、source-project generation、render、playback、fifth topic、PR、merge、
-  master mutation、deployment、publication、upload、release、access change、
-  public exposure were not performed.
+- Existing v2.0 / v2.1 schemas, descriptors, manifests, projects, MP4s,
+  receipts, decisions, media, run directories, locks, and ignored evidence are immutable.
+- Receipt-only completion is historical identity evidence, not live availability.
+- Technical next stage cannot grant execution, human, rights, production, or public authority.
+- Source-project generation、YMM4、Electron、render、encode、playback、fifth topic、
+  PR、merge、master mutation、deployment、publication、upload、release、
+  access change、public exposure were not performed.
 
 ## Maintenance Note
 

@@ -12,6 +12,7 @@ Usage:
     python -m src.cli.main diagnose-script <input> [--speaker-map ...] [--format text|json] [--strict]
     python -m src.cli.main doctor-runtime [--profile code|review|render|regenerate|all] [--require-profile PROFILE] [--artifact-root PATH] [--deep] [--format text|json]
     python -m src.cli.main validate-factory-package --package factory_package.json [--require-lifecycle STATE] [--check-live] [--format text|json]
+    python -m src.cli.main evaluate-factory-queue --queue factory_queue.json [--check-live] [--execute-safe-stages] --format json
     python -m src.cli.main build-episode-video --factory-package factory_package_v2.json --dry-run
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
     python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown] [--with-fetch-report]
@@ -1763,6 +1764,34 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (default: json)",
     )
 
+    p_factory_queue = subparsers.add_parser(
+        "evaluate-factory-queue",
+        help="Evaluate a bounded mixed-version Factory Package queue",
+    )
+    p_factory_queue.add_argument(
+        "--queue",
+        required=True,
+        type=Path,
+        help="Repository-relative Factory Queue v1 descriptor",
+    )
+    p_factory_queue.add_argument(
+        "--check-live",
+        action="store_true",
+        help="Read-only hash check for declared live/private artifacts when present",
+    )
+    p_factory_queue.add_argument(
+        "--execute-safe-stages",
+        action="store_true",
+        help="Run validation-only package dry-runs without product writes",
+    )
+    p_factory_queue.add_argument(
+        "--format",
+        choices=["json"],
+        default="json",
+        dest="factory_queue_format",
+        help="Output format (json only)",
+    )
+
     # build-csv
     p_build = subparsers.add_parser("build-csv", help="Build YMM4 CSV from input")
     p_build.add_argument("input", nargs="+", help="Input file path(s) (.txt or .csv)")
@@ -3375,6 +3404,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_episode_video(args)
         elif args.command == "validate-factory-package":
             return _cmd_validate_factory_package(args)
+        elif args.command == "evaluate-factory-queue":
+            return _cmd_evaluate_factory_queue(args)
         elif args.command == "build-csv":
             return _cmd_build_csv(args)
         elif args.command == "validate":
@@ -6722,6 +6753,39 @@ def _cmd_validate_factory_package(args: argparse.Namespace) -> int:
             f"availability[{availability}]"
         )
     return 0
+
+
+def _cmd_evaluate_factory_queue(args: argparse.Namespace) -> int:
+    from src.pipeline.factory_queue import (
+        FactoryQueueError,
+        evaluate_factory_queue,
+        execute_safe_queue_stages,
+    )
+
+    try:
+        result = evaluate_factory_queue(
+            repo_root=Path.cwd(),
+            queue_path=args.queue,
+            check_live=bool(args.check_live),
+        )
+        if args.execute_safe_stages:
+            result["safe_stage_execution"] = execute_safe_queue_stages(
+                repo_root=Path.cwd(),
+                evaluation=result,
+            )
+    except FactoryQueueError as exc:
+        print(
+            json.dumps(
+                exc.as_payload(),
+                ensure_ascii=False,
+                indent=2,
+                sort_keys=True,
+            ),
+            file=sys.stderr,
+        )
+        return 1
+    print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0 if result["status"] == "passed" else 1
 
 
 def _cmd_doctor_runtime(args: argparse.Namespace) -> int:

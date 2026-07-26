@@ -1,0 +1,185 @@
+{
+  "schema": "nlmytgen.bounded_factory_queue_validation_receipt.v1",
+  "date": "2026-07-26",
+  "launch_set_id": "nlmytgen-bounded-factory-queue-2026-07-26",
+  "mission_id": "bounded-factory-queue-render-on-change-v1",
+  "source": {
+    "branch": "codex/nlmytgen-factory-contract-v2-lifecycle-v1",
+    "head": "88db8b84e8863aed366fd1683ddcfcc548a0b2a6",
+    "target_branch": "codex/nlmytgen-bounded-factory-queue-v1",
+    "source_parity": "0/0",
+    "tracked_source_clean": true,
+    "target_remote_absent_at_start": true
+  },
+  "queue_contract": {
+    "schema": "nlmytgen.factory_queue.v1",
+    "schema_version": "1.0",
+    "schema_path": "schemas/factory_queue_v1/factory_queue_v1.schema.json",
+    "schema_sha256": "2266c033463be721827d82746483d9008dac48a36224e5c8d0a5a932eff81e36",
+    "descriptor_path": "production_pilots/factory_queues/four_package_lifecycle_queue_v1.json",
+    "descriptor_sha256": "2cfbdab4bf3bfb765afa8909b54212311155ba85c3838078a1e0aac77a11375f",
+    "queue_id": "four_package_lifecycle_queue_v1",
+    "declared_maximum": 4,
+    "hard_maximum": 32,
+    "observed_count": 4,
+    "ordering": "priority_descending_then_order_ascending",
+    "stable_order": true,
+    "duplicate_package_id": "reject",
+    "duplicate_content_identity": "reject_unless_same_immutable_artifact_reference",
+    "target_collision": "reject",
+    "run_local_fields_excluded": [
+      "elapsed_time",
+      "local_directory",
+      "machine_path",
+      "pid",
+      "run_id",
+      "timestamp"
+    ]
+  },
+  "live_evaluation": {
+    "status": "passed",
+    "evaluation_sha256": "52149bc8f1f3793586bc1d59dd31839d3dabb79266b7f7023339b9582a826229",
+    "packages": [
+      {
+        "package_id": "new_banknote_security_notebooklm_001",
+        "normalized_lifecycle": "human_accepted",
+        "technical_decision": "verified_noop",
+        "execution_eligible": false
+      },
+      {
+        "package_id": "real_estate_reins_transparency_001",
+        "normalized_lifecycle": "rendered",
+        "technical_decision": "verified_noop",
+        "execution_eligible": false
+      },
+      {
+        "package_id": "ai_monitoring_labor_001",
+        "normalized_lifecycle": "rendered",
+        "technical_decision": "verified_noop",
+        "execution_eligible": false
+      },
+      {
+        "package_id": "food_expiry_labels_001",
+        "normalized_lifecycle": "package_prepared",
+        "technical_decision": "source_project_generation_required",
+        "execution_gate_decision": "blocked_authority",
+        "execution_eligible": false
+      }
+    ],
+    "counts": {
+      "total_packages": 4,
+      "verified_noop": 3,
+      "recorded_complete_no_live_file": 0,
+      "source_project_candidates": 1,
+      "render_candidates": 0,
+      "human_review_candidates": 0,
+      "blocked_packages": 0,
+      "invalid_packages": 0,
+      "scheduled_for_render": 0,
+      "execution_set_size": 0
+    }
+  },
+  "tracked_only_evaluation": {
+    "status": "passed",
+    "isolated_file_count": 2977,
+    "git_metadata_present": false,
+    "node_modules_present": false,
+    "private_mp4_count": 0,
+    "private_absolute_path_in_receipt": false,
+    "evaluation_sha256": "8a7e88e63ba064b3ddb51080e165cadc8851e24ed3ee4a4fc68852cb6482a7a1",
+    "package_contracts_valid": 4,
+    "recorded_complete_no_live_file": 3,
+    "source_project_candidates": 1,
+    "render_candidates": 0,
+    "scheduled_for_render": 0,
+    "execution_set_size": 0
+  },
+  "safe_stage_execution": {
+    "status": "passed",
+    "safe_stage_sha256": "12ba7071c8a41095023b4cbeb548b77b40efcfcf363aec203f953168dac8be58",
+    "repeat_count": 2,
+    "raw_repeat_exact": true,
+    "packages_validated": 4,
+    "existing_pipeline_dry_runs": 3,
+    "pre_render_stage_plans": 1,
+    "identity_exact": 4,
+    "source_project_generated": false,
+    "yymm4_launch_count": 0,
+    "electron_launch_count": 0,
+    "render_driver_launch_count": 0,
+    "ffmpeg_encode_count": 0,
+    "playback_count": 0,
+    "system_volume_operation_count": 0,
+    "product_write_count": 0,
+    "private_copy_count": 0
+  },
+  "determinism": {
+    "live_evaluation_repeat_count": 2,
+    "live_raw_repeat_exact": true,
+    "tracked_only_repeat_count": 2,
+    "tracked_only_raw_repeat_exact": true,
+    "run_local_only_difference_ignored": true
+  },
+  "focused_validation": {
+    "factory_queue_tests_passed": 31,
+    "combined_factory_contract_and_episode_tests_passed": 97,
+    "failed": 0,
+    "negative_coverage": [
+      "duplicate_package_id",
+      "duplicate_content_identity",
+      "queue_maximum_exceeded",
+      "unstable_ordering",
+      "private_absolute_descriptor_path",
+      "unknown_queue_version",
+      "unknown_package_schema",
+      "contradictory_lifecycle_evidence",
+      "accepted_artifact_semantic_drift",
+      "rendered_output_hash_mismatch",
+      "run_local_only_difference",
+      "package_prepared_direct_render_promotion",
+      "receipt_only_completed_rerender",
+      "technical_action_without_execution_authority",
+      "known_topic_id_coupling",
+      "noop_in_execution_set",
+      "safe_stage_product_write"
+    ]
+  },
+  "preservation": {
+    "v2_0_schema_sha256": "d0e831c60ceba17a83c6fe106bf1fa574cfa3881976934c3fb4571a59bb8dfbb",
+    "v2_0_inventory_sha256": "8bc3a669e0b77b2dcc68f59f0f5bcf03fe6eaaaaf8aec3bad4fb3b814f6490d4",
+    "v2_1_schema_sha256": "5f9e84c115ac8a7618f57714a8df3722b2cdb83371711c40efb77caf2bd12d44",
+    "v2_1_inventory_sha256": "fdf17bac964941c8c879595b8ec2003fcd9c959f1dbe105b4b1a13b1276b35f3",
+    "new_banknote_descriptor_sha256": "80f1130711a46c3f3a77f2ec1da391fd338569d9aaf0385deeb96a2a698333f7",
+    "reins_descriptor_sha256": "21e0052011b1d55f7ff27bf63af5c4f79dbc3932762df86375cdca86e59d63db",
+    "ai_monitoring_descriptor_sha256": "866f03c7cff7570e1ad9d1b22525598a99084e9aa0b5227c4c2d31cea528eeb4",
+    "food_expiry_descriptor_sha256": "18e078f6f6c5b6e17808ec9378d8476a9cd8ce426cd1281563c833ae21acf329",
+    "existing_contracts_and_descriptors_byte_exact": true,
+    "existing_product_artifacts_mutated": false,
+    "protected_untracked_or_ignored_artifacts_mutated": false,
+    "development_audio_policy": "silent_by_default"
+  },
+  "claims": {
+    "mixed_v2_0_v2_1_queue_validated": true,
+    "completed_packages_never_automatically_rerendered": true,
+    "fourth_package_only_source_project_candidate": true,
+    "technical_decision_and_execution_authority_separate": true,
+    "generic_distributed_scheduler": false,
+    "universal_scheduling_compatibility": false,
+    "production_ready": false,
+    "human_acceptance_granted": false,
+    "rights_approved": false,
+    "publication_approved": false,
+    "release_approved": false
+  },
+  "post_commit_gate": {
+    "runner": "canonical_regression_integrity",
+    "required_runs": 1,
+    "result_owner": "final_supervising_handoff"
+  },
+  "next": {
+    "project_state_id": "nlmytgen-bounded-factory-queue-render-on-change-validated-v1",
+    "product_state": "lifecycle-aware-four-package-queue-with-complete-package-no-rerender-policy",
+    "product_gate": "advance-prepared-package-to-source-project-ready",
+    "recommended_next": "advance-food-expiry-package-to-source-project-ready-through-queue"
+  }
+}

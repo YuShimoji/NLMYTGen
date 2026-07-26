@@ -1,5 +1,44 @@
 # Project Context — NLMYTGen
 
+## 現在の監修AIハンドオフ（2026-07-26 JST・Bounded Factory Queue）
+
+この節だけが現在の再開地点である。Factory Contract v2.1 checkpoint
+`88db8b84e8863aed366fd1683ddcfcc548a0b2a6`から
+`codex/nlmytgen-bounded-factory-queue-v1`を作成し、mixed v2.0 / v2.1
+4-package queueとpure render-on-change policyを実装した。
+
+- **queue contract**: `nlmytgen.factory_queue.v1`。declared maximum 4、
+  hard maximum 32。priority-descending / explicit order-ascending。
+- **identity baseline**: entryごとにpackage ID、content identity、
+  render-settings identity、completed-output identityを固定。
+- **fail closed**: duplicate package / unmarked content、target collision、
+  maximum、unstable order、private path、unknown version/schema、semantic drift、
+  corrupt outputを拒否する。shared engine内known topic IDは0。
+- **live decisions**: new-banknote `human_accepted` / `verified_noop`、
+  REINSとAI-monitoring `rendered` / `verified_noop`、food-expiry
+  `package_prepared` / `source_project_generation_required`。
+- **live counts**: no-op 3、source candidate 1、render candidate 0、
+  blocked / invalid 0、render schedule / execution set 0。
+- **tracked-only**: 4/4 contract valid。complete 3件は
+  `recorded_complete_no_live_file`、food-expiryはprepared。render 0。
+- **safe-stage**: existing dry-run 3、pre-render plan 1、identity 4/4 exact。
+  YMM4 / Electron / render / encode / playback / volume / product write 0。
+- **determinism**: live、tracked-only、safe-stageを各2回、raw exact。
+- **negative / tests**: queue 31/31、v2.0 / v2.1 / queue / episode 97/97。
+- **authority**: food-expiryのtechnical next stageは明示するがexecution false。
+  human、rights、production、publication、upload、releaseへ継承しない。
+- **current state**:
+  `lifecycle-aware-four-package-queue-with-complete-package-no-rerender-policy`。
+  Product-Gateは`advance-prepared-package-to-source-project-ready`。
+- **next action**: owner許可後、food-expiry 1件だけを同じcontent identityで
+  source projectへmaterializeし、exact locator / SHAを追加する。
+- **boundary**: fifth topic、queue再設計、render、PR、merge、master、
+  deployment、public actionは今回のnext stageではない。
+- **詳細**:
+  `docs/verification/BOUNDED_FACTORY_QUEUE_VALIDATION_2026-07-26.md`と`.json`。
+  通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/runtime-state.md`。
+
 ## 現在の監修AIハンドオフ（2026-07-26 JST・Factory Contract v2.1 lifecycle）
 
 この節だけが現在の再開地点である。Factory Contract v2 checkpoint
