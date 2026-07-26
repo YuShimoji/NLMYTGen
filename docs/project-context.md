@@ -1,50 +1,57 @@
 # Project Context — NLMYTGen
 
-## 現在の監修AIハンドオフ（2026-07-27 JST・Standard GUI Batch Observability）
+## 現在の監修AIハンドオフ（2026-07-27 JST・Queue-derived Review Packet）
 
-この節だけが現在の再開地点である。bounded executor checkpoint
-`8896bbfa34bfb89febf6e7847738ac2527a4493a`から
-`codex/nlmytgen-standard-gui-batch-observability-v1`を作成し、CLI-onlyだった
-queue batch stateを既存standard Electron GUIへ接続した。
+この節だけが現在の再開地点である。standard GUI batch checkpoint
+`8a78eb2c6c33c9638dcfb7f8517ccea9f953478a`から
+`codex/nlmytgen-derived-review-packet-batch-v1`を作成し、content-thread完了から
+独立した最初のreal derived-artifact effectをbounded executorへ追加した。
 
-- **route / layout**: 既定`自動動画生成`を維持し、secondary `バッチ実行`を追加。
-  Queue / Change Set → Plan → Package → Authority → Journal → Resultの縦順。
-- **actual bridge**: safe dialog selection tokenからrepo-relative locatorだけを
-  `execute-factory-queue`へ渡す。arbitrary shell inputは持たない。
-- **actual real queue**: queue-v3 + zero-change setをGUIでplan/executeし、
-  4件`verified_noop`、mutation / authority / dispatch / generation / render /
-  writeが0。direct resultは`変更はありません`。
-- **visible state**: package ID、lifecycle、technical decision、operation、
-  authority、execution、reason、resume effectを表示。exact status IDはtechnical
-  detailsに保持する。
-- **authority**: plan/no-opは未消費。mutating actionはqueue/change-set/package/
-  descriptor/edge/operation/constraintsをexact preflightし、failed resumeは
-  replacement authorityを要求する。
-- **failure / unknown**: known failureと`skipped_after_failure`を区別。
-  `effect_unknown`はblockedでnormal resumeと自動retryを無効化する。
-- **journal / restart**: local append-only journalはevent 4、prefix exact。
-  runtime reset + renderer reload後、planを再確認して明示openし、`execute`
-  read modelと同じprefixを復元。auto-resumeとredispatchは0。
-- **job ownership**: standard/batch間でone-active-jobを共有。240-line log、
-  elapsed、owned-process cancelのみ。daemon/pool/schedulerは追加していない。
-- **tracked-only**: ordinary detached worktree + independent `.venv`でactual
-  plan/zero-change executeをGUI read modelへ通し、4 no-op、private/untracked
-  media 0。一時worktreeは回収済み。
-- **runtime / tests**: Electron 43 hiddenで1280×720 / 1920×1080、keyboard、
-  overflow、console/preload/securityを確認。JavaScript 22、Python 173 pass。
-  canonical regressionとstandard hidden smokeのclean checkはoutcome commit後。
-- **preservation**: 16 descriptors、queue-v1/v2/v3、102 project/MP4、dependency
-  locks、protected ignored/untracked/private evidenceをstage・変更していない。
-- **current state**:
-  `standard-production-gui-with-authority-bound-recoverable-batch-read-model`。
-  Product-Gateは`owner-approved-real-change-set-through-gui`。
-- **next action**: owner-approved real change-set一件をGUI plan-onlyで確認し、
-  exact one-shot authorityでexecute後、journal/backend/lifecycleを照合する。
-  追加GUI polishやfifth topicへ進まない。
-- **boundary**: real mutating batch、content/visual、YMM4、render、playback、
-  human/rights/production/public、PR、merge、masterは未実施。
+- **contract**: `effect_class=derived_artifact` /
+  `operation=review_packet_generation`。edgeは`rendered → rendered`で、
+  lifecycle、content identity、generated project、source MP4は不変。
+- **exact change-set**:
+  `food_expiry_cue002_review_packet_change_set_v1.json`、entry 1。
+  Food Expiryだけをqueue/descriptor/content/project/MP4/cue/source/outputへ束縛。
+- **cue binding**: `cue_002`、scene `S1`、frame `[373,816)`、60 fps。
+  canonical text、unique VoiceItem、ImageItem、cue readback、run receipt、
+  source provenance、crop `[0.04,0.34,0.62,0.23]` / `cover`を相互照合。
+- **authority**:
+  `supervisor-food-expiry-cue002-review-packet-generation-2026-07-27`を
+  effect直前に一度だけ消費。standing authority、overwrite、lifecycle/content
+  authorityは持たない。
+- **actual GUI effect**: Electron 43.2.0のstandard `バッチ実行`でplan /
+  preflight / execute。mutating 1、authority 1、dispatch 1、succeeded 1、
+  other 3 packageは`verified_noop`。
+- **packet**:
+  `.../content_review_packets/cue_002_queue_derivative_v1/`へexcerpt MP4、
+  render frame、materialized source view、README、manifestの5 filesを生成。
+  H.264/AAC 1920×1080 60 fps、video/audio/PNG decode pass。
+- **non-render boundary**: final MP4からcueだけをextractし、generated projectの
+  materialized PNGをbyte-preserving copy。YMM4、render driver、full render、
+  playback、volume operationは0。
+- **restart / resume**: runtime restart後にsame planとjournalを明示open。
+  prior successを維持し、dispatch delta 0、authority delta 0、packet SHA /
+  size / mtime mismatch 0、rewrite 0。
+- **tracked-only**: staged treeだけのcheckoutは
+  `derived_artifact_source_unavailable`。dispatch、YMM4、render、private copy 0。
+- **content packet**: 既存`cue_002_content_review_v1`はread-only。package、cue、
+  interval、project、MP4、source、crop/fitがcompatibleで、変更0。human open /
+  acceptanceは推論していない。
+- **tests**: Python focused 144、JavaScript batch/standard 23、compile/syntax、
+  deterministic manifest、media/image decode pass。canonical Regression
+  Integrityはoutcome commit後に一度だけ実行する。
+- **state**:
+  `content-independent-technical-factory-with-real-derived-artifact-change-set`。
+  technical developmentはcontent-thread completionを待たず、content decisionは
+  optional asynchronous successor input。
+- **next action**: current packetを再生成せず、versioned portable review bundle
+  とrecipient-open contractを作る。delivery/portabilityが次gateであり、content
+  reviewやanother topicは次のtechnical sliceにしない。
+- **boundary**: content/visual revision、human acceptance、rights、production、
+  publication、upload、release、PR、merge、master、deploymentは未実施。
 - **詳細**:
-  `docs/verification/STANDARD_GUI_BATCH_OBSERVABILITY_2026-07-27.md`
+  `docs/verification/QUEUE_DERIVED_REVIEW_PACKET_VALIDATION_2026-07-27.md`
   と`.json`。通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
   `docs/runtime-state.md`。
 

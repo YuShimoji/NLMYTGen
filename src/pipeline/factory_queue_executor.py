@@ -15,11 +15,25 @@ from src.pipeline.factory_queue import (
     sha256_json,
 )
 from src.pipeline.factory_source_project_promotion import advance_factory_package
+from src.pipeline.cue_review_packet import (
+    CueReviewPacketError,
+    generate_cue_review_packet,
+    inspect_cue_review_packet,
+)
 
 
 CHANGE_SET_SCHEMA = "nlmytgen.factory_queue.change_set.v1"
+DERIVED_CHANGE_SET_SCHEMA = (
+    "nlmytgen.factory_queue.change_set.derived_artifact.v1"
+)
 AUTHORITY_SET_SCHEMA = "nlmytgen.factory_queue.execution_authority_set.v1"
+DERIVED_AUTHORITY_SET_SCHEMA = (
+    "nlmytgen.factory_queue.execution_authority_set.derived_artifact.v1"
+)
 AUTHORITY_RECORD_SCHEMA = "nlmytgen.factory_queue.execution_authority.v1"
+DERIVED_AUTHORITY_RECORD_SCHEMA = (
+    "nlmytgen.factory_queue.execution_authority.derived_artifact.v1"
+)
 JOURNAL_SCHEMA = "nlmytgen.factory_queue.execution_journal.v1"
 EXECUTION_RESULT_SCHEMA = "nlmytgen.factory_queue.execution_result.v1"
 EXECUTOR_SCHEMA = "nlmytgen.factory_queue.executor.v1"
@@ -33,6 +47,18 @@ AUTHORITY_SCHEMA_PATH = Path(
     "schemas/factory_queue_execution_v1/"
     "factory_queue_execution_authority_v1.schema.json"
 )
+DERIVED_CHANGE_SET_SCHEMA_PATH = Path(
+    "schemas/factory_queue_execution_v1/"
+    "factory_queue_derived_artifact_change_set_v1.schema.json"
+)
+DERIVED_AUTHORITY_SCHEMA_PATH = Path(
+    "schemas/factory_queue_execution_v1/"
+    "factory_queue_derived_artifact_authority_v1.schema.json"
+)
+DERIVED_JOURNAL_SCHEMA_PATH = Path(
+    "schemas/factory_queue_execution_v1/"
+    "factory_queue_derived_artifact_journal_v1.schema.json"
+)
 JOURNAL_SCHEMA_PATH = Path(
     "schemas/factory_queue_execution_v1/"
     "factory_queue_execution_journal_v1.schema.json"
@@ -44,10 +70,12 @@ NOOP_DECISIONS = frozenset(
 OPERATION_DECISIONS = {
     "source_project_generation": "source_project_generation_required",
     "render": "render_required",
+    "review_packet_generation": "verified_noop",
 }
 OPERATION_EDGES = {
     "source_project_generation": ("package_prepared", "source_project_ready"),
     "render": ("source_project_ready", "rendered"),
+    "review_packet_generation": ("rendered", "rendered"),
 }
 JOURNAL_STATES = frozenset(
     {
@@ -116,6 +144,8 @@ _ENTRY_FIELDS = frozenset(
         "expected_current_lifecycle",
         "requested_target_lifecycle",
         "operation",
+        "effect_class",
+        "derived_artifact",
         "authority_id",
         "immutable_artifact_reference",
     }
@@ -147,6 +177,8 @@ _AUTHORITY_FIELDS = frozenset(
         "from_lifecycle",
         "to_lifecycle",
         "operation",
+        "effect_class",
+        "derived_artifact",
         "maximum_use_count",
         "status",
         "constraints",
@@ -167,6 +199,10 @@ _AUTHORITY_CONSTRAINT_FIELDS = frozenset(
         "publication",
         "upload",
         "release",
+        "derived_artifact_generation",
+        "no_overwrite",
+        "lifecycle_transition",
+        "content_change",
     }
 )
 _JOURNAL_FIELDS = frozenset(
@@ -277,6 +313,7 @@ class FactoryQueueExecutorError(RuntimeError):
 
 QueueEvaluator = Callable[..., dict[str, Any]]
 AdvancementBackend = Callable[..., Mapping[str, Any]]
+DerivedArtifactBackend = Callable[..., Mapping[str, Any]]
 
 
 def _fail(
@@ -465,7 +502,8 @@ def _validate_schema_contract(
     repo_root: Path,
     contract: Mapping[str, Any],
 ) -> dict[str, dict[str, Any]]:
-    expected = {
+    contract_schema = contract.get("schema")
+    base_expected = {
         "change_set": (
             CHANGE_SET_SCHEMA_PATH,
             CHANGE_SET_SCHEMA,
@@ -479,6 +517,34 @@ def _validate_schema_contract(
             JOURNAL_SCHEMA,
         ),
     }
+    derived_expected = {
+        "change_set": (
+            DERIVED_CHANGE_SET_SCHEMA_PATH,
+            DERIVED_CHANGE_SET_SCHEMA,
+        ),
+        "authority": (
+            DERIVED_AUTHORITY_SCHEMA_PATH,
+            DERIVED_AUTHORITY_SET_SCHEMA,
+        ),
+        "journal": (
+            DERIVED_JOURNAL_SCHEMA_PATH,
+            JOURNAL_SCHEMA,
+        ),
+    }
+    if contract_schema == "nlmytgen.factory_queue.execution_contract.v1":
+        expected = base_expected
+    elif (
+        contract_schema
+        == "nlmytgen.factory_queue.execution_contract.derived_artifact.v1"
+    ):
+        expected = derived_expected
+    else:
+        _fail(
+            "executor contract schema is unsupported",
+            code="execution_schema_identity_invalid",
+            field_path="$.contract.schema",
+            consumer_effect="the execution contract version is not exact",
+        )
     result: dict[str, dict[str, Any]] = {}
     for name, (expected_path, expected_id) in expected.items():
         path_field = f"{name}_schema_path"
@@ -540,7 +606,17 @@ def _validate_change_set(
         required=_CHANGE_SET_FIELDS,
         allowed=_CHANGE_SET_FIELDS,
     )
-    _require_exact(payload["schema"], CHANGE_SET_SCHEMA, field_path="$.schema")
+    change_set_schema = payload["schema"]
+    if change_set_schema not in {
+        CHANGE_SET_SCHEMA,
+        DERIVED_CHANGE_SET_SCHEMA,
+    }:
+        _fail(
+            "change-set schema is unsupported",
+            code="execution_schema_identity_invalid",
+            field_path="$.schema",
+            consumer_effect="the execution contract version is not exact",
+        )
     _require_exact(
         payload["schema_version"],
         SCHEMA_VERSION,
@@ -557,9 +633,14 @@ def _validate_change_set(
         required=_CONTRACT_FIELDS,
         allowed=_CONTRACT_FIELDS,
     )
+    expected_contract_schema = (
+        "nlmytgen.factory_queue.execution_contract.derived_artifact.v1"
+        if change_set_schema == DERIVED_CHANGE_SET_SCHEMA
+        else "nlmytgen.factory_queue.execution_contract.v1"
+    )
     _require_exact(
         contract["schema"],
-        "nlmytgen.factory_queue.execution_contract.v1",
+        expected_contract_schema,
         field_path="$.contract.schema",
     )
     schemas = _validate_schema_contract(root, contract)
@@ -630,10 +711,21 @@ def _validate_change_set(
     observed_orders: list[int] = []
     for index, raw_entry in enumerate(entries):
         field_path = f"$.entries[{index}]"
+        derived_change_set = change_set_schema == DERIVED_CHANGE_SET_SCHEMA
+        required_entry_fields = (
+            _ENTRY_FIELDS - {"immutable_artifact_reference"}
+            if derived_change_set
+            else _ENTRY_FIELDS
+            - {
+                "immutable_artifact_reference",
+                "effect_class",
+                "derived_artifact",
+            }
+        )
         entry = _require_mapping(
             raw_entry,
             field_path=field_path,
-            required=_ENTRY_FIELDS - {"immutable_artifact_reference"},
+            required=required_entry_fields,
             allowed=_ENTRY_FIELDS,
         )
         order = entry["order"]
@@ -710,6 +802,28 @@ def _validate_change_set(
                 field_path=field_path,
                 consumer_effect="the backend operation must remain exact",
             )
+        effect_class = entry.get("effect_class")
+        derived_artifact = entry.get("derived_artifact")
+        if operation == "review_packet_generation":
+            _require_exact(
+                effect_class,
+                "derived_artifact",
+                field_path=f"{field_path}.effect_class",
+            )
+            if not isinstance(derived_artifact, Mapping):
+                _fail(
+                    "review packet generation requires an exact artifact binding",
+                    code="derived_artifact_contract_invalid",
+                    field_path=f"{field_path}.derived_artifact",
+                    consumer_effect="the derived effect remains undispatched",
+                )
+        elif effect_class is not None or derived_artifact is not None:
+            _fail(
+                "lifecycle operations cannot smuggle a derived artifact effect",
+                code="derived_artifact_lifecycle_smuggling",
+                field_path=field_path,
+                consumer_effect="the lifecycle backend remains exact",
+            )
         authority_id = _require_stable_id(
             entry["authority_id"],
             field_path=f"{field_path}.authority_id",
@@ -768,6 +882,12 @@ def _validate_change_set(
                 "expected_current_lifecycle": actual_edge[0],
                 "requested_target_lifecycle": actual_edge[1],
                 "operation": operation,
+                "effect_class": effect_class,
+                "derived_artifact": (
+                    copy.deepcopy(derived_artifact)
+                    if derived_artifact is not None
+                    else None
+                ),
                 "authority_id": authority_id,
                 "immutable_artifact_reference": immutable_reference,
             }
@@ -987,12 +1107,6 @@ def _build_plan(
                 "expected_current_lifecycle",
                 "change_set_lifecycle_edge_mismatch",
             ),
-            (
-                row.get("technical_decision"),
-                OPERATION_DECISIONS[entry["operation"]],
-                "operation",
-                "change_set_noop_or_decision_mismatch",
-            ),
         )
         for actual, expected, field, code in comparisons:
             if actual != expected:
@@ -1002,6 +1116,48 @@ def _build_plan(
                     field_path=f"{field_path}.{field}",
                     consumer_effect="drift or no-op selection must stop before dispatch",
                 )
+        if entry["operation"] == "review_packet_generation":
+            if row.get("technical_decision") not in NOOP_DECISIONS:
+                _fail(
+                    "derived artifact source must be an immutable completed package",
+                    code="change_set_noop_or_decision_mismatch",
+                    field_path=f"{field_path}.operation",
+                    consumer_effect="the derived effect remains undispatched",
+                )
+            try:
+                artifact_status = inspect_cue_review_packet(
+                    repo_root=root,
+                    package_id=entry["package_id"],
+                    descriptor_path=entry["descriptor_path"],
+                    descriptor_sha256=entry["descriptor_sha256"],
+                    authority_id=entry["authority_id"],
+                    contract=entry["derived_artifact"],
+                )
+            except CueReviewPacketError as exc:
+                _fail(
+                    str(exc),
+                    code=exc.code,
+                    field_path=exc.field_path,
+                    consumer_effect="no derived artifact effect is dispatched",
+                )
+            if artifact_status["status"] == "source_artifact_unavailable":
+                unavailable = ",".join(artifact_status["unavailable_roles"])
+                _fail(
+                    "required rendered source artifact is unavailable",
+                    code="derived_artifact_source_unavailable",
+                    field_path=f"{field_path}.derived_artifact:{unavailable}",
+                    consumer_effect=(
+                        "tracked-only planning preserves recorded identity and "
+                        "dispatches no render or derived effect"
+                    ),
+                )
+        elif row.get("technical_decision") != OPERATION_DECISIONS[entry["operation"]]:
+            _fail(
+                "change-set entry no longer matches its queue decision",
+                code="change_set_noop_or_decision_mismatch",
+                field_path=f"{field_path}.operation",
+                consumer_effect="drift or no-op selection must stop before dispatch",
+            )
 
     plan_packages: list[dict[str, Any]] = []
     for row in rows:
@@ -1010,7 +1166,12 @@ def _build_plan(
         package_id = str(row["package_id"])
         selected = selected_by_id.get(package_id)
         decision = str(row["technical_decision"])
-        if decision in NOOP_DECISIONS:
+        if (
+            selected is not None
+            and selected["operation"] == "review_packet_generation"
+        ):
+            state = "planned"
+        elif decision in NOOP_DECISIONS:
             state = "verified_noop"
         elif selected is not None:
             state = "planned"
@@ -1032,6 +1193,9 @@ def _build_plan(
                 "initial_state": state,
                 "requested_operation": (
                     selected["operation"] if selected is not None else None
+                ),
+                "effect_class": (
+                    selected["effect_class"] if selected is not None else None
                 ),
                 "requested_target_lifecycle": (
                     selected["requested_target_lifecycle"]
@@ -1063,6 +1227,7 @@ def _build_plan(
                 "target_identity_sha256": row["target_identity_sha256"],
                 "normalized_lifecycle": row["normalized_lifecycle"],
                 "requested_operation": row["requested_operation"],
+                "effect_class": row["effect_class"],
                 "requested_target_lifecycle": row[
                     "requested_target_lifecycle"
                 ],
@@ -1507,11 +1672,19 @@ def _load_authorities(
         required=_AUTHORITY_SET_FIELDS,
         allowed=_AUTHORITY_SET_FIELDS,
     )
-    _require_exact(
-        payload["schema"],
+    authority_set_schema = payload["schema"]
+    if authority_set_schema not in {
         AUTHORITY_SET_SCHEMA,
-        field_path="$.authority_file.schema",
-        code="authority_schema_mismatch",
+        DERIVED_AUTHORITY_SET_SCHEMA,
+    }:
+        _fail(
+            "authority set schema is unsupported",
+            code="authority_schema_mismatch",
+            field_path="$.authority_file.schema",
+            consumer_effect="one-shot authorities cannot be selected",
+        )
+    derived_authority_set = (
+        authority_set_schema == DERIVED_AUTHORITY_SET_SCHEMA
     )
     _require_exact(
         payload["schema_version"],
@@ -1535,15 +1708,25 @@ def _load_authorities(
     seen: set[str] = set()
     for index, raw_record in enumerate(records):
         field_path = f"$.authority_file.authorities[{index}]"
+        required_authority_fields = (
+            _AUTHORITY_FIELDS
+            if derived_authority_set
+            else _AUTHORITY_FIELDS - {"effect_class", "derived_artifact"}
+        )
         record = _require_mapping(
             raw_record,
             field_path=field_path,
-            required=_AUTHORITY_FIELDS,
+            required=required_authority_fields,
             allowed=_AUTHORITY_FIELDS,
+        )
+        expected_record_schema = (
+            DERIVED_AUTHORITY_RECORD_SCHEMA
+            if derived_authority_set
+            else AUTHORITY_RECORD_SCHEMA
         )
         _require_exact(
             record["schema"],
-            AUTHORITY_RECORD_SCHEMA,
+            expected_record_schema,
             field_path=f"{field_path}.schema",
             code="authority_schema_mismatch",
         )
@@ -1613,16 +1796,27 @@ def _load_authorities(
             package["descriptor_sha256"],
             field_path=f"{field_path}.package.descriptor_sha256",
         )
+        base_constraint_fields = _AUTHORITY_CONSTRAINT_FIELDS - {
+            "derived_artifact_generation",
+            "no_overwrite",
+            "lifecycle_transition",
+            "content_change",
+        }
+        required_constraint_fields = (
+            _AUTHORITY_CONSTRAINT_FIELDS
+            if derived_authority_set
+            else base_constraint_fields
+        )
         constraints = _require_mapping(
             record["constraints"],
             field_path=f"{field_path}.constraints",
-            required=_AUTHORITY_CONSTRAINT_FIELDS,
+            required=required_constraint_fields,
             allowed=_AUTHORITY_CONSTRAINT_FIELDS,
         )
-        expected_constraints = {
+        expected_constraints: dict[str, Any] = {
             "serial_only": True,
             "exact_identity_recheck": True,
-            "private_artifact_copy": False,
+            "private_artifact_copy": derived_authority_set,
             "human_acceptance": False,
             "rights": False,
             "production": False,
@@ -1630,12 +1824,90 @@ def _load_authorities(
             "upload": False,
             "release": False,
         }
+        if derived_authority_set:
+            expected_constraints.update(
+                {
+                    "derived_artifact_generation": True,
+                    "no_overwrite": True,
+                    "lifecycle_transition": False,
+                    "content_change": False,
+                }
+            )
         if dict(constraints) != expected_constraints:
             _fail(
                 "authority constraints exceed the technical executor boundary",
                 code="authority_constraints_invalid",
                 field_path=f"{field_path}.constraints",
                 consumer_effect="external or private effects remain forbidden",
+            )
+        if derived_authority_set:
+            _require_exact(
+                record["effect_class"],
+                "derived_artifact",
+                field_path=f"{field_path}.effect_class",
+            )
+            _require_exact(
+                record["operation"],
+                "review_packet_generation",
+                field_path=f"{field_path}.operation",
+            )
+            artifact = _require_mapping(
+                record["derived_artifact"],
+                field_path=f"{field_path}.derived_artifact",
+                required=frozenset(
+                    {
+                        "cue_id",
+                        "output_root",
+                        "generated_project_sha256",
+                        "source_mp4_sha256",
+                    }
+                ),
+                allowed=frozenset(
+                    {
+                        "cue_id",
+                        "output_root",
+                        "generated_project_sha256",
+                        "source_mp4_sha256",
+                    }
+                ),
+            )
+            _require_stable_id(
+                artifact["cue_id"],
+                field_path=f"{field_path}.derived_artifact.cue_id",
+            )
+            output_root = artifact["output_root"]
+            output_pure = (
+                PurePosixPath(output_root)
+                if isinstance(output_root, str)
+                else PurePosixPath("/")
+            )
+            if (
+                not isinstance(output_root, str)
+                or not output_root
+                or "\\" in output_root
+                or ":" in output_root
+                or output_pure.is_absolute()
+                or any(
+                    part in {"", ".", ".."} for part in output_pure.parts
+                )
+            ):
+                _fail(
+                    "authority output root is not safe and repo-relative",
+                    code="execution_locator_escape",
+                    field_path=(
+                        f"{field_path}.derived_artifact.output_root"
+                    ),
+                    consumer_effect="the derived effect remains undispatched",
+                )
+            _require_sha256(
+                artifact["generated_project_sha256"],
+                field_path=(
+                    f"{field_path}.derived_artifact.generated_project_sha256"
+                ),
+            )
+            _require_sha256(
+                artifact["source_mp4_sha256"],
+                field_path=f"{field_path}.derived_artifact.source_mp4_sha256",
             )
         result.append(
             {
@@ -1728,6 +2000,21 @@ def _select_authority(
         "maximum_use_count": 1,
         "status": "available",
     }
+    if change_entry["operation"] == "review_packet_generation":
+        artifact = change_entry["derived_artifact"]
+        expected.update(
+            {
+                "effect_class": "derived_artifact",
+                "derived_artifact": {
+                    "cue_id": artifact["cue_id"],
+                    "output_root": artifact["output_root"],
+                    "generated_project_sha256": artifact[
+                        "generated_project"
+                    ]["sha256"],
+                    "source_mp4_sha256": artifact["source_mp4"]["sha256"],
+                },
+            }
+        )
     for key, value in expected.items():
         if record[key] != value:
             _fail(
@@ -1831,6 +2118,30 @@ def _default_advancement_backend(
         authority_id=authority_id,
         execute=execute,
         persist_failure=True,
+    )
+
+
+def _default_derived_artifact_backend(
+    *,
+    repo_root: Path,
+    change_entry: Mapping[str, Any],
+    authority_id: str,
+    execute: bool,
+) -> Mapping[str, Any]:
+    if not execute:
+        _fail(
+            "derived artifact backend requires explicit execute mode",
+            code="derived_artifact_execute_required",
+            field_path="$.execute",
+            consumer_effect="the review packet remains unwritten",
+        )
+    return generate_cue_review_packet(
+        repo_root=repo_root,
+        package_id=change_entry["package_id"],
+        descriptor_path=change_entry["descriptor_path"],
+        descriptor_sha256=change_entry["descriptor_sha256"],
+        authority_id=authority_id,
+        contract=change_entry["derived_artifact"],
     )
 
 
@@ -1971,6 +2282,9 @@ def execute_factory_queue(
     resume_journal_path: Path | None = None,
     queue_evaluator: QueueEvaluator = evaluate_factory_queue,
     advancement_backend: AdvancementBackend = _default_advancement_backend,
+    derived_artifact_backend: DerivedArtifactBackend = (
+        _default_derived_artifact_backend
+    ),
 ) -> dict[str, Any]:
     """Plan or execute one exact, bounded, serial queue change set."""
 
@@ -2078,14 +2392,22 @@ def execute_factory_queue(
             consumer_effect="authority consumed immediately before backend dispatch",
         )
         try:
-            backend_result = advancement_backend(
-                repo_root=root,
-                queue_path=queue_path,
-                package_id=change_entry["package_id"],
-                to_lifecycle=change_entry["requested_target_lifecycle"],
-                authority_id=authority["authority_id"],
-                execute=True,
-            )
+            if change_entry["operation"] == "review_packet_generation":
+                backend_result = derived_artifact_backend(
+                    repo_root=root,
+                    change_entry=change_entry,
+                    authority_id=authority["authority_id"],
+                    execute=True,
+                )
+            else:
+                backend_result = advancement_backend(
+                    repo_root=root,
+                    queue_path=queue_path,
+                    package_id=change_entry["package_id"],
+                    to_lifecycle=change_entry["requested_target_lifecycle"],
+                    authority_id=authority["authority_id"],
+                    execute=True,
+                )
         except Exception:
             _append_event(
                 journal_entry,

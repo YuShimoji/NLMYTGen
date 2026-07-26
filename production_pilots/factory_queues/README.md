@@ -42,3 +42,10 @@ lifecycle edge、operation、one-shot authorityをexactに束縛する。executo
 直列実行し、各effect直前に全identityを再確認する。既知failureでは後続を
 `skipped_after_failure`にし、結果不明は`effect_unknown`として自動再試行しない。
 resumeは同じplan identityのappend-only journalだけを受理する。
+
+`food_expiry_cue002_review_packet_change_set_v1.json`はqueue-v3内の
+`food_expiry_labels_001`だけを選ぶderived-artifact change-setである。
+`review_packet_generation`は`rendered → rendered`を維持し、canonical content、
+generated project、source MP4を変更せず、exact cueのversioned review packetを
+one-shot生成する。private sourceが無い環境では
+`derived_artifact_source_unavailable`で停止し、renderをscheduleしない。

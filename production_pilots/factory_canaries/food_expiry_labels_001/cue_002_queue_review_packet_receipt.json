@@ -1,0 +1,195 @@
+{
+  "schema": "nlmytgen.queue_derived_review_packet_receipt.v1",
+  "schema_version": "1.0",
+  "status": "passed",
+  "project_state_id": "nlmytgen-derived-review-packet-batch-execution-validated-v1",
+  "source_commit": "8a78eb2c6c33c9638dcfb7f8517ccea9f953478a",
+  "outcome_commit": "resolved-by-current-branch-tip",
+  "branch": "codex/nlmytgen-derived-review-packet-batch-v1",
+  "contract": {
+    "effect_class": "derived_artifact",
+    "operation": "review_packet_generation",
+    "from_lifecycle": "rendered",
+    "to_lifecycle": "rendered",
+    "content_identity_changed": false,
+    "generated_project_changed": false,
+    "source_mp4_changed": false,
+    "no_overwrite": true
+  },
+  "queue": {
+    "path": "production_pilots/factory_queues/four_package_lifecycle_queue_v3.json",
+    "sha256": "214d5e99b3a201c0afc216753410d16a52ef8ec6994e854e2fee2473405bd927"
+  },
+  "change_set": {
+    "path": "production_pilots/factory_queues/food_expiry_cue002_review_packet_change_set_v1.json",
+    "sha256": "9a99f40ef21152c44ff107fcd62509f4ac5fc29961f76c4d56783c88f1e30f18",
+    "entry_count": 1
+  },
+  "authority": {
+    "authority_id": "supervisor-food-expiry-cue002-review-packet-generation-2026-07-27",
+    "maximum_use_count": 1,
+    "consumption_count": 1,
+    "status": "consumed",
+    "standing_authority": false
+  },
+  "source_identities": {
+    "descriptor": {
+      "path": "production_pilots/factory_canaries/food_expiry_labels_001/factory_package_v2_1_rendered.json",
+      "sha256": "bcbafe344f7a6efbbb03b4ace7a83e955c71d8d235381d4acafc861cd7b5975f",
+      "size_bytes": 9012
+    },
+    "content_identity_sha256": "27165fad6fadaee2e5c247a86758a505c7f5f5797eb7b386d174585622a585c6",
+    "source_project_identity_sha256": "4f8dc13976cb4ef56ea582d75e1ff92ae9d2780fff4cf53c13923d561955bdbf",
+    "generated_project": {
+      "sha256": "f0b03e67565bbe340fad7e689c30b519184735ac10e701cbd5da344f4c014f88",
+      "size_bytes": 726654
+    },
+    "source_mp4": {
+      "sha256": "95558db7488a882b4d22a9ea68f302bcc81e23800dfed9687274fe8944d3daec",
+      "size_bytes": 28023236
+    },
+    "materialized_source": {
+      "source_id": "CAA-EXPIRATION-DATE-2025",
+      "source_sha256": "2c06e90c629a3be96b2ce973e81900f128ea63d3a07124714607232166f04517",
+      "materialized_visual_id": "fel_caa_expiration_definitions__cue_002",
+      "sha256": "62a5e9daecd79e048df4bed8ced3a4880ee871ce862965a6a19f8a5c0d5b6163",
+      "crop": [
+        0.04,
+        0.34,
+        0.62,
+        0.23
+      ],
+      "fit_mode": "cover"
+    }
+  },
+  "cue": {
+    "cue_id": "cue_002",
+    "scene_id": "S1",
+    "canonical_text_sha256": "edea41f9987bd8f6a689e341473eeadfd37cb3a510df69b83a01d6a165267c0c",
+    "start_frame_inclusive": 373,
+    "end_frame_exclusive": 816,
+    "length_frames": 443,
+    "fps": 60,
+    "start_seconds": 6.2166666667,
+    "end_seconds": 13.6,
+    "context_handle_frames": 0
+  },
+  "packet": {
+    "path": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_runs/food_expiry_labels_internal_review_v4/content_review_packets/cue_002_queue_derivative_v1",
+    "manifest_sha256": "e06cdbd49d2e954850359aebb090c30eea8a103e43258dab72e0ac836fca83a1",
+    "outputs": [
+      {
+        "role": "review_excerpt",
+        "name": "cue_002_review_excerpt.mp4",
+        "sha256": "2703e4e881baea3958310194e3700678e54552705c66eddc007494e881c3977d",
+        "size_bytes": 361665
+      },
+      {
+        "role": "rendered_frame",
+        "name": "cue_002_render_frame.png",
+        "sha256": "686e76e7b204cac56fd9427e6458f32b5f676e8ea75a3a85b08bd4c89dacfa20",
+        "size_bytes": 485008
+      },
+      {
+        "role": "materialized_source_view",
+        "name": "cue_002_materialized_source_view.png",
+        "sha256": "62a5e9daecd79e048df4bed8ced3a4880ee871ce862965a6a19f8a5c0d5b6163",
+        "size_bytes": 413062
+      },
+      {
+        "role": "review_readme",
+        "name": "README_REVIEW.md",
+        "sha256": "ccdd8e0b18db06ff4625fbed58338fafff4686376aa7838bd20fee05e14b8b44",
+        "size_bytes": 821
+      }
+    ],
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": "60/1",
+    "full_video_decode": "passed",
+    "full_audio_decode": "passed",
+    "png_decode_count": 2,
+    "deterministic_validation_repeats": 2
+  },
+  "actual_gui": {
+    "runtime": "Electron 43.2.0",
+    "plan_identity_sha256": "63684cd0039b885fcd8578d96d2be1f6a021c3df1e611244a722ad4dedd19bd9",
+    "execution_result_identity_sha256": "ed37e9e6d5c122053fefaea63657ee932e5f49936243f8b83910f9e47324006a",
+    "journal_identity_sha256": "c4b75b3f4a58e868ca92513fc7083db086e046c147acb691ecdc0dce139045c8",
+    "journal_prefix_identity_sha256": "365fce6127aa10bd0128c893aae23eb64cd2d88b7a8a364a27bde98a4ca8bd09",
+    "journal_event_count": 7,
+    "mutating_entries": 1,
+    "succeeded": 1,
+    "verified_noop": 3,
+    "authority_consumptions": 1,
+    "backend_dispatch_count": 1,
+    "other_package_dispatch_count": 0
+  },
+  "resume": {
+    "runtime_restart": true,
+    "journal_reopened": true,
+    "status": "succeeded",
+    "backend_dispatch_delta": 0,
+    "authority_consumption_delta": 0,
+    "packet_sha_size_mtime_mismatch_count": 0,
+    "packet_rewrite_count": 0,
+    "replacement_authority_count": 0
+  },
+  "tracked_only": {
+    "status": "failed_closed",
+    "error_code": "derived_artifact_source_unavailable",
+    "missing_roles": [
+      "cue_visual_readback",
+      "generated_project",
+      "materialized_source",
+      "run_receipt",
+      "source_mp4"
+    ],
+    "backend_dispatch_count": 0,
+    "yymm4_launch_count": 0,
+    "render_driver_launch_count": 0,
+    "private_artifact_copy_count": 0
+  },
+  "existing_content_thread_packet": {
+    "present": true,
+    "inspected_read_only": true,
+    "identity_compatible": true,
+    "byte_equality_required": false,
+    "before_after_mismatch_count": 0,
+    "human_opened_inferred": false,
+    "human_accepted_inferred": false
+  },
+  "focused_validation": {
+    "review_queue_and_gui_python_tests_passed": 97,
+    "factory_contract_python_tests_passed": 47,
+    "python_tests_passed_total": 144,
+    "batch_gui_javascript_tests_passed": 16,
+    "standard_loop_javascript_tests_passed": 7,
+    "javascript_tests_passed_total": 23,
+    "modified_compile_and_syntax": "passed"
+  },
+  "boundaries": {
+    "yymm4_launch_count": 0,
+    "render_driver_launch_count": 0,
+    "full_video_render_count": 0,
+    "playback_count": 0,
+    "system_volume_operation_count": 0,
+    "package_lifecycle_transition_count": 0,
+    "canonical_content_change_count": 0,
+    "human_or_rights_action_count": 0,
+    "public_action_count": 0,
+    "project_owned_process_residue": 0
+  },
+  "states": {
+    "technical_generation": true,
+    "recipient_open_status": "unverified",
+    "human_creative_acceptance": false,
+    "rights_approved": false,
+    "production_approved": false,
+    "publication_approved": false,
+    "upload_performed": false,
+    "release_performed": false
+  }
+}

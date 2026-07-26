@@ -337,7 +337,7 @@ function validateJournalAgainstPlan(planResult, journal) {
   };
 }
 
-function inspectAuthoritySet(planResult, authoritySet) {
+function inspectAuthoritySet(planResult, authoritySet, changeSet = null) {
   const entries = planResult?.journal?.entries || [];
   const mutating = entries.filter((entry) => (
     Boolean(entry.requested_operation)
@@ -351,8 +351,12 @@ function inspectAuthoritySet(planResult, authoritySet) {
       error: 'EFFECT_RECONCILIATION_REQUIRED',
     };
   }
+  const authoritySetSchemas = new Set([
+    'nlmytgen.factory_queue.execution_authority_set.v1',
+    'nlmytgen.factory_queue.execution_authority_set.derived_artifact.v1',
+  ]);
   if (
-    authoritySet?.schema !== 'nlmytgen.factory_queue.execution_authority_set.v1'
+    !authoritySetSchemas.has(authoritySet?.schema)
     || authoritySet?.schema_version !== '1.0'
     || !Array.isArray(authoritySet.authorities)
   ) {
@@ -365,10 +369,25 @@ function inspectAuthoritySet(planResult, authoritySet) {
   ) {
     return { status: 'invalid', exact: false, error: 'AUTHORITY_SET_ID_INVALID' };
   }
-  const constraints = {
+  const baseConstraints = {
     serial_only: true,
     exact_identity_recheck: true,
     private_artifact_copy: false,
+    human_acceptance: false,
+    rights: false,
+    production: false,
+    publication: false,
+    upload: false,
+    release: false,
+  };
+  const derivedConstraints = {
+    serial_only: true,
+    exact_identity_recheck: true,
+    derived_artifact_generation: true,
+    no_overwrite: true,
+    lifecycle_transition: false,
+    content_change: false,
+    private_artifact_copy: true,
     human_acceptance: false,
     rights: false,
     production: false,
@@ -415,8 +434,29 @@ function inspectAuthoritySet(planResult, authoritySet) {
       };
     }
     const [record] = candidates;
+    const derivedEntry = entry.requested_operation === 'review_packet_generation';
+    const changeEntry = (changeSet?.entries || []).find((candidate) => (
+      candidate?.package_id === entry.package_id
+      && candidate?.operation === entry.requested_operation
+    ));
+    const expectedRecordSchema = derivedEntry
+      ? 'nlmytgen.factory_queue.execution_authority.derived_artifact.v1'
+      : 'nlmytgen.factory_queue.execution_authority.v1';
+    const expectedConstraints = derivedEntry ? derivedConstraints : baseConstraints;
+    const artifact = changeEntry?.derived_artifact;
+    const derivedExact = !derivedEntry || (
+      authoritySet.schema
+        === 'nlmytgen.factory_queue.execution_authority_set.derived_artifact.v1'
+      && changeSet?.schema === 'nlmytgen.factory_queue.change_set.derived_artifact.v1'
+      && record.effect_class === 'derived_artifact'
+      && record.derived_artifact?.cue_id === artifact?.cue_id
+      && record.derived_artifact?.output_root === artifact?.output_root
+      && record.derived_artifact?.generated_project_sha256
+        === artifact?.generated_project?.sha256
+      && record.derived_artifact?.source_mp4_sha256 === artifact?.source_mp4?.sha256
+    );
     const exact = (
-      record.schema === 'nlmytgen.factory_queue.execution_authority.v1'
+      record.schema === expectedRecordSchema
       && record.queue?.path === planResult.journal.queue.path
       && record.queue?.sha256 === planResult.journal.queue.sha256
       && record.change_set?.change_set_id === planResult.journal.change_set.change_set_id
@@ -428,7 +468,8 @@ function inspectAuthoritySet(planResult, authoritySet) {
       && record.to_lifecycle === entry.to_lifecycle
       && record.operation === entry.requested_operation
       && record.maximum_use_count === 1
-      && identitySha256(record.constraints) === identitySha256(constraints)
+      && identitySha256(record.constraints) === identitySha256(expectedConstraints)
+      && derivedExact
     );
     if (!exact) return { status: 'invalid', exact: false, error: 'AUTHORITY_IDENTITY_MISMATCH' };
     if (record.status !== 'available') {

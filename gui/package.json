@@ -18,7 +18,8 @@
     "smoke:three-run-repeatability": "electron three_run_operator_repeatability_smoke.js",
     "test:standard-production-loop": "node --test standard_production_loop.test.js",
     "test:batch-observability": "node --test batch_observability.test.js",
-    "smoke:batch-observability": "electron batch_observability_smoke.js"
+    "smoke:batch-observability": "electron batch_observability_smoke.js",
+    "smoke:derived-review-packet": "electron derived_review_packet_smoke.js"
   },
   "devDependencies": {
     "electron": "^43.2.0"

@@ -238,6 +238,7 @@ const standardLoopJobs = new PipelineJobController({
 const batchSelections = new Map();
 let batchLastExecutionResult = null;
 let batchLastAuthoritySummary = null;
+let batchLastChangeSet = null;
 let batchJournalStore = null;
 
 function currentBatchJournalStore() {
@@ -260,13 +261,16 @@ function displayLocator(fullPath) {
 
 function validateBatchSelectionPayload(kind, fullPath) {
   const contracts = {
-    queue: 'nlmytgen.factory_queue.v1',
-    change_set: 'nlmytgen.factory_queue.change_set.v1',
+    queue: new Set(['nlmytgen.factory_queue.v1']),
+    change_set: new Set([
+      'nlmytgen.factory_queue.change_set.v1',
+      'nlmytgen.factory_queue.change_set.derived_artifact.v1',
+    ]),
   };
-  const expectedSchema = contracts[kind];
-  if (!expectedSchema) return;
+  const expectedSchemas = contracts[kind];
+  if (!expectedSchemas) return;
   const payload = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
-  if (payload?.schema !== expectedSchema || payload?.schema_version !== '1.0') {
+  if (!expectedSchemas.has(payload?.schema) || payload?.schema_version !== '1.0') {
     throw new Error(`BATCH_${kind.toUpperCase()}_SCHEMA_INVALID`);
   }
 }
@@ -655,15 +659,33 @@ ipcMain.handle('standard-loop-open-output', async (_event, relPath) => {
 // --- Bounded factory queue batch observability ---
 
 ipcMain.handle('batch-default-selections', async () => {
-  const queue = registerBatchSelection('queue', path.join(REPO_ROOT, DEFAULT_QUEUE_PATH));
+  const queuePath = process.env.NLMYTGEN_BATCH_DEFAULT_QUEUE_PATH || DEFAULT_QUEUE_PATH;
+  const changeSetPath = (
+    process.env.NLMYTGEN_BATCH_DEFAULT_CHANGE_SET_PATH || DEFAULT_CHANGE_SET_PATH
+  );
+  const queue = registerBatchSelection(
+    'queue',
+    path.join(REPO_ROOT, queuePath),
+    { repoOnly: true },
+  );
   const changeSet = registerBatchSelection(
     'change_set',
-    path.join(REPO_ROOT, DEFAULT_CHANGE_SET_PATH),
+    path.join(REPO_ROOT, changeSetPath),
+    { repoOnly: true },
   );
+  const authorityPath = process.env.NLMYTGEN_BATCH_DEFAULT_AUTHORITY_PATH || null;
+  const authority = authorityPath
+    ? registerBatchSelection(
+      'authority',
+      path.join(REPO_ROOT, authorityPath),
+      { repoOnly: true },
+    )
+    : null;
   return {
     ok: true,
     queue,
     change_set: changeSet,
+    authority,
     plan_status: batchLastExecutionResult ? 'available' : 'not_run',
   };
 });
@@ -689,7 +711,11 @@ ipcMain.handle('batch-select-file', async (_event, kind) => {
     if (kind === 'authority') {
       const authority = JSON.parse(fs.readFileSync(result.filePaths[0], 'utf8'));
       batchLastAuthoritySummary = batchLastExecutionResult
-        ? inspectAuthoritySet(batchLastExecutionResult, authority)
+        ? inspectAuthoritySet(
+          batchLastExecutionResult,
+          authority,
+          batchLastChangeSet,
+        )
         : { status: 'required', exact: false, error: 'PLAN_REQUIRED_FOR_AUTHORITY_PREFLIGHT' };
       return { ok: true, selection: selected, authority: batchLastAuthoritySummary };
     }
@@ -788,6 +814,8 @@ ipcMain.handle('batch-start', async (_event, request) => {
       'change_set',
       { repoOnly: true },
     );
+    const changeSetJson = JSON.parse(fs.readFileSync(changeSet.fullPath, 'utf8'));
+    batchLastChangeSet = changeSetJson;
     let authority = null;
     let journal = null;
     if (request?.authoritySelectionId) {
@@ -797,7 +825,6 @@ ipcMain.handle('batch-start', async (_event, request) => {
       journal = batchSelection(request.journalSelectionId, 'journal');
     }
     if (mode === 'execute') {
-      const changeSetJson = JSON.parse(fs.readFileSync(changeSet.fullPath, 'utf8'));
       const mutatingEntries = Array.isArray(changeSetJson.entries)
         ? changeSetJson.entries.length
         : -1;
@@ -806,8 +833,15 @@ ipcMain.handle('batch-start', async (_event, request) => {
         if (!authority) return { ok: false, error: 'EXACT_AUTHORITY_REQUIRED' };
         if (!batchLastExecutionResult) return { ok: false, error: 'SUCCESSFUL_PLAN_REQUIRED' };
         const authorityJson = JSON.parse(fs.readFileSync(authority.fullPath, 'utf8'));
-        batchLastAuthoritySummary = inspectAuthoritySet(batchLastExecutionResult, authorityJson);
-        if (batchLastAuthoritySummary.status !== 'available' || !batchLastAuthoritySummary.exact) {
+        batchLastAuthoritySummary = inspectAuthoritySet(
+          batchLastExecutionResult,
+          authorityJson,
+          changeSetJson,
+        );
+        if (
+          !['available', 'not_required'].includes(batchLastAuthoritySummary.status)
+          || !batchLastAuthoritySummary.exact
+        ) {
           return { ok: false, error: 'EXACT_AUTHORITY_PREFLIGHT_FAILED' };
         }
       } else {
@@ -844,6 +878,7 @@ if (batchObservabilityProbeMode) {
     batchSelections.clear();
     batchLastExecutionResult = null;
     batchLastAuthoritySummary = null;
+    batchLastChangeSet = null;
     return { ok: true };
   });
 }

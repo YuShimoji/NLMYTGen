@@ -1,0 +1,373 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nlmytgen.factory_queue.change_set.derived_artifact.v1",
+  "title": "NLMYTGen Bounded Derived Artifact Change Set v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "contract",
+    "change_set_id",
+    "queue",
+    "maximum_mutating_entries",
+    "execution_policy",
+    "entries",
+    "receipt_policy"
+  ],
+  "properties": {
+    "schema": {
+      "const": "nlmytgen.factory_queue.change_set.derived_artifact.v1"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "change_set_schema_path",
+        "change_set_schema_sha256",
+        "authority_schema_path",
+        "authority_schema_sha256",
+        "journal_schema_path",
+        "journal_schema_sha256"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_queue.execution_contract.derived_artifact.v1"
+        },
+        "change_set_schema_path": {
+          "const": "schemas/factory_queue_execution_v1/factory_queue_derived_artifact_change_set_v1.schema.json"
+        },
+        "change_set_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "authority_schema_path": {
+          "const": "schemas/factory_queue_execution_v1/factory_queue_derived_artifact_authority_v1.schema.json"
+        },
+        "authority_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "journal_schema_path": {
+          "const": "schemas/factory_queue_execution_v1/factory_queue_derived_artifact_journal_v1.schema.json"
+        },
+        "journal_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "change_set_id": {
+      "$ref": "#/$defs/stableId"
+    },
+    "queue": {
+      "$ref": "#/$defs/boundFile"
+    },
+    "maximum_mutating_entries": {
+      "const": 1
+    },
+    "execution_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "ordering",
+        "serial",
+        "plan_only_default",
+        "noop_elision",
+        "stop_on_first_mutating_failure",
+        "drift_policy",
+        "unknown_effect_policy"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_queue.change_set_execution_policy.v1"
+        },
+        "ordering": {
+          "const": "queue_order"
+        },
+        "serial": {
+          "const": true
+        },
+        "plan_only_default": {
+          "const": true
+        },
+        "noop_elision": {
+          "const": true
+        },
+        "stop_on_first_mutating_failure": {
+          "const": true
+        },
+        "drift_policy": {
+          "const": "recheck_queue_descriptor_content_render_and_output_before_every_effect"
+        },
+        "unknown_effect_policy": {
+          "const": "read_only_reconciliation_required_before_retry"
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "order",
+          "package_id",
+          "descriptor_path",
+          "descriptor_sha256",
+          "expected_content_identity_sha256",
+          "expected_render_settings_identity_sha256",
+          "expected_completed_output_sha256",
+          "expected_target_identity_sha256",
+          "expected_current_lifecycle",
+          "requested_target_lifecycle",
+          "effect_class",
+          "operation",
+          "authority_id",
+          "derived_artifact"
+        ],
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "package_id": {
+            "$ref": "#/$defs/stableId"
+          },
+          "descriptor_path": {
+            "$ref": "#/$defs/repoLocator"
+          },
+          "descriptor_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "expected_content_identity_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "expected_render_settings_identity_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "expected_completed_output_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "expected_target_identity_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "expected_current_lifecycle": {
+            "const": "rendered"
+          },
+          "requested_target_lifecycle": {
+            "const": "rendered"
+          },
+          "effect_class": {
+            "const": "derived_artifact"
+          },
+          "operation": {
+            "const": "review_packet_generation"
+          },
+          "authority_id": {
+            "$ref": "#/$defs/stableId"
+          },
+          "derived_artifact": {
+            "$ref": "#/$defs/derivedArtifact"
+          }
+        }
+      }
+    },
+    "receipt_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "deterministic",
+        "append_only_journal",
+        "include_usernames",
+        "include_drive_letters",
+        "include_private_absolute_paths",
+        "include_credentials",
+        "include_private_media",
+        "include_process_command_lines"
+      ],
+      "properties": {
+        "schema": {
+          "const": "nlmytgen.factory_queue.execution_receipt_policy.v1"
+        },
+        "deterministic": {
+          "const": true
+        },
+        "append_only_journal": {
+          "const": true
+        },
+        "include_usernames": {
+          "const": false
+        },
+        "include_drive_letters": {
+          "const": false
+        },
+        "include_private_absolute_paths": {
+          "const": false
+        },
+        "include_credentials": {
+          "const": false
+        },
+        "include_private_media": {
+          "const": false
+        },
+        "include_process_command_lines": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "stableId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z0-9]+(?:[a-z0-9_.-]*[a-z0-9])?$"
+    },
+    "repoLocator": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[^\\\\:]+$"
+    },
+    "boundFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repoLocator"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "crop": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
+    },
+    "derivedArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "packet_id",
+        "cue_id",
+        "canonical_text_sha256",
+        "canonical_script",
+        "generated_project",
+        "source_mp4",
+        "cue_visual_readback",
+        "run_receipt",
+        "materialized_source",
+        "output_root",
+        "expected"
+      ],
+      "properties": {
+        "packet_id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "cue_id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "canonical_text_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "canonical_script": {
+          "$ref": "#/$defs/boundFile"
+        },
+        "generated_project": {
+          "$ref": "#/$defs/boundFile"
+        },
+        "source_mp4": {
+          "$ref": "#/$defs/boundFile"
+        },
+        "cue_visual_readback": {
+          "$ref": "#/$defs/boundFile"
+        },
+        "run_receipt": {
+          "$ref": "#/$defs/boundFile"
+        },
+        "materialized_source": {
+          "$ref": "#/$defs/boundFile"
+        },
+        "output_root": {
+          "$ref": "#/$defs/repoLocator"
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scene_id",
+            "start_frame",
+            "end_frame",
+            "fps",
+            "materialized_visual_id",
+            "source_id",
+            "source_sha256",
+            "crop",
+            "fit_mode"
+          ],
+          "properties": {
+            "scene_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9_.-]+$"
+            },
+            "start_frame": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "end_frame": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "fps": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "materialized_visual_id": {
+              "$ref": "#/$defs/stableId"
+            },
+            "source_id": {
+              "$ref": "#/$defs/stableId"
+            },
+            "source_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "crop": {
+              "$ref": "#/$defs/crop"
+            },
+            "fit_mode": {
+              "enum": [
+                "cover",
+                "contain",
+                "stretch"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

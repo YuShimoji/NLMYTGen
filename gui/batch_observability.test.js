@@ -417,6 +417,82 @@ test('no-op plan does not request or consume authority', () => {
   assert.equal(model.counts.authority_consumptions, 0);
 });
 
+test('derived review authority binds cue output and immutable rendered sources', () => {
+  const planned = entry('food_expiry_labels_001', 'planned', 4, {
+    requested_operation: 'review_packet_generation',
+    from_lifecycle: 'rendered',
+    to_lifecycle: 'rendered',
+    events: [event('planned', {
+      authority_id: 'supervisor-derived-review',
+      authority_status: 'not_consumed',
+    })],
+  });
+  const planResult = resultFor([planned]);
+  const artifact = {
+    cue_id: 'cue_002',
+    output_root: 'production_pilots/review/cue_002',
+    generated_project: { sha256: 'a'.repeat(64) },
+    source_mp4: { sha256: 'b'.repeat(64) },
+  };
+  const changeSet = {
+    schema: 'nlmytgen.factory_queue.change_set.derived_artifact.v1',
+    entries: [{
+      package_id: planned.package_id,
+      operation: planned.requested_operation,
+      derived_artifact: artifact,
+    }],
+  };
+  const authority = {
+    schema: 'nlmytgen.factory_queue.execution_authority_set.derived_artifact.v1',
+    schema_version: '1.0',
+    authorities: [{
+      schema: 'nlmytgen.factory_queue.execution_authority.derived_artifact.v1',
+      authority_id: 'supervisor-derived-review',
+      replaces_authority_id: null,
+      queue: structuredClone(planResult.journal.queue),
+      change_set: structuredClone(planResult.journal.change_set),
+      package: {
+        package_id: planned.package_id,
+        descriptor_path: planned.descriptor_path,
+        descriptor_sha256: planned.descriptor_sha256,
+      },
+      from_lifecycle: 'rendered',
+      to_lifecycle: 'rendered',
+      effect_class: 'derived_artifact',
+      operation: 'review_packet_generation',
+      derived_artifact: {
+        cue_id: artifact.cue_id,
+        output_root: artifact.output_root,
+        generated_project_sha256: artifact.generated_project.sha256,
+        source_mp4_sha256: artifact.source_mp4.sha256,
+      },
+      maximum_use_count: 1,
+      status: 'available',
+      constraints: {
+        serial_only: true,
+        exact_identity_recheck: true,
+        derived_artifact_generation: true,
+        no_overwrite: true,
+        lifecycle_transition: false,
+        content_change: false,
+        private_artifact_copy: true,
+        human_acceptance: false,
+        rights: false,
+        production: false,
+        publication: false,
+        upload: false,
+        release: false,
+      },
+    }],
+  };
+  assert.equal(inspectAuthoritySet(planResult, authority, changeSet).status, 'available');
+  authority.authorities[0].derived_artifact.cue_id = 'cue_003';
+  assert.equal(
+    inspectAuthoritySet(planResult, authority, changeSet).error,
+    'AUTHORITY_IDENTITY_MISMATCH',
+  );
+});
+
 test('long package IDs and Japanese errors remain sanitized and bounded', () => {
   const longId = `package_${'x'.repeat(180)}`;
   const longError = `処理に失敗しました。${'詳細'.repeat(5000)} C:\\Users\\private-user\\secret`;

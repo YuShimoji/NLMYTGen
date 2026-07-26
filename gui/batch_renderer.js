@@ -259,6 +259,7 @@
     }
     state.queue = result.queue;
     state.changeSet = result.change_set;
+    state.authority = result.authority || null;
     renderInputSelections();
     clearPlan('未確認');
   }

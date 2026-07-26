@@ -249,7 +249,238 @@ function syntheticModel(base, variant) {
   return model;
 }
 
+function packetSnapshot(outputRoot) {
+  const names = [
+    'cue_002_review_excerpt.mp4',
+    'cue_002_render_frame.png',
+    'cue_002_materialized_source_view.png',
+    'README_REVIEW.md',
+    'packet_manifest.json',
+  ];
+  return Object.fromEntries(names.map((name) => {
+    const target = path.join(outputRoot, name);
+    const stat = fs.statSync(target);
+    return [name, {
+      sha256: crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex'),
+      size_bytes: stat.size,
+      mtime_ms: stat.mtimeMs,
+    }];
+  }));
+}
+
+async function runDerivedReviewPacket(win, observations) {
+  const outputRoot = path.resolve(
+    __dirname,
+    '..',
+    'production_pilots',
+    'factory_canaries',
+    'food_expiry_labels_001',
+    'auto_video_runs',
+    'food_expiry_labels_internal_review_v4',
+    'content_review_packets',
+    'cue_002_queue_derivative_v1',
+  );
+  const first = await withTimeout(win.webContents.executeJavaScript(`
+    (async () => {
+      const waitFor = async (predicate, label, timeoutMs = 180000) => {
+        const started = Date.now();
+        while (!predicate()) {
+          if (Date.now() - started > timeoutMs) throw new Error(label + ' timed out');
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
+      };
+      await waitFor(
+        () => document.readyState === 'complete'
+          && window.__nlmytgenBatchProbe
+          && document.getElementById('btn-batch-plan'),
+        'derived batch DOM'
+      );
+      document.querySelector('[data-tab="batch"]').click();
+      await waitFor(
+        () => document.getElementById('batch-change-set-path').textContent
+          .includes('food_expiry_cue002_review_packet_change_set_v1'),
+        'derived default change set'
+      );
+      const defaults = await window.nlmytgen.batchDefaultSelections();
+      if (!defaults.ok || !defaults.authority) throw new Error('derived defaults unavailable');
+      document.getElementById('btn-batch-plan').click();
+      await waitFor(
+        () => !window.__nlmytgenBatchProbe.snapshot().active
+          && window.__nlmytgenBatchProbe.snapshot().readModel?.execution_mode === 'plan_only',
+        'derived actual plan'
+      );
+      const planJob = await window.nlmytgen.batchJob();
+      const planModel = structuredClone(window.__nlmytgenBatchProbe.snapshot().readModel);
+      const started = await window.nlmytgen.batchStart({
+        queueSelectionId: defaults.queue.selection_id,
+        changeSetSelectionId: defaults.change_set.selection_id,
+        authoritySelectionId: defaults.authority.selection_id,
+        journalSelectionId: null,
+        execute: true,
+      });
+      if (!started?.ok) throw new Error('derived execute start failed: ' + started?.error);
+      await waitFor(
+        () => window.__nlmytgenBatchProbe.snapshot().active,
+        'derived execute active'
+      );
+      await waitFor(
+        () => !window.__nlmytgenBatchProbe.snapshot().active
+          && window.__nlmytgenBatchProbe.snapshot().readModel?.execution_mode === 'execute',
+        'derived execute complete'
+      );
+      return {
+        defaults,
+        plan_job: planJob,
+        plan_model: planModel,
+        execute_job: await window.nlmytgen.batchJob(),
+        execute_model: structuredClone(window.__nlmytgenBatchProbe.snapshot().readModel),
+      };
+    })()
+  `), 300000, 'derived review packet GUI execution');
+  const beforeResume = packetSnapshot(outputRoot);
+
+  const reset = await win.webContents.executeJavaScript(
+    'window.nlmytgen.batchProbeResetRuntime()',
+  );
+  if (!reset?.ok) throw new Error(`derived runtime reset failed: ${reset?.error}`);
+  const reloaded = new Promise((resolve) => win.webContents.once('did-finish-load', resolve));
+  win.webContents.reload();
+  await withTimeout(reloaded, 30000, 'derived application surface restart');
+  const resumed = await withTimeout(win.webContents.executeJavaScript(`
+    (async () => {
+      const waitFor = async (predicate, label, timeoutMs = 180000) => {
+        const started = Date.now();
+        while (!predicate()) {
+          if (Date.now() - started > timeoutMs) throw new Error(label + ' timed out');
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
+      };
+      await waitFor(
+        () => document.readyState === 'complete'
+          && window.__nlmytgenBatchProbe
+          && document.getElementById('btn-batch-plan'),
+        'derived restarted DOM'
+      );
+      document.querySelector('[data-tab="batch"]').click();
+      const defaults = await window.nlmytgen.batchDefaultSelections();
+      document.getElementById('btn-batch-plan').click();
+      await waitFor(
+        () => !window.__nlmytgenBatchProbe.snapshot().active
+          && window.__nlmytgenBatchProbe.snapshot().readModel?.execution_mode === 'plan_only',
+        'derived restarted plan'
+      );
+      const planIdentity = window.__nlmytgenBatchProbe.snapshot()
+        .readModel?.plan_identity_sha256;
+      const recent = await window.nlmytgen.batchOpenRecentJournal();
+      if (!recent?.ok || !recent.journal?.validation?.ok) {
+        throw new Error('derived recent journal validation failed: ' + recent?.error);
+      }
+      window.__nlmytgenBatchProbe.renderReadModel(
+        recent.journal.read_model,
+        {
+          validation: recent.journal.validation,
+          authoritySummary: recent.journal.authority,
+        }
+      );
+      const started = await window.nlmytgen.batchStart({
+        queueSelectionId: defaults.queue.selection_id,
+        changeSetSelectionId: defaults.change_set.selection_id,
+        authoritySelectionId: defaults.authority.selection_id,
+        journalSelectionId: recent.selection.selection_id,
+        execute: true,
+      });
+      if (!started?.ok) throw new Error('derived resume start failed: ' + started?.error);
+      await waitFor(
+        () => window.__nlmytgenBatchProbe.snapshot().active,
+        'derived resume active'
+      );
+      await waitFor(
+        () => !window.__nlmytgenBatchProbe.snapshot().active
+          && window.__nlmytgenBatchProbe.snapshot().readModel?.execution_mode === 'execute',
+        'derived resume complete'
+      );
+      return {
+        plan_identity: planIdentity,
+        recent_validation: recent.journal.validation,
+        recent_prefix_identity_sha256: recent.journal.prefix_identity_sha256,
+        resume_job: await window.nlmytgen.batchJob(),
+        resume_model: structuredClone(window.__nlmytgenBatchProbe.snapshot().readModel),
+      };
+    })()
+  `), 240000, 'derived review packet GUI resume');
+  const afterResume = packetSnapshot(outputRoot);
+  const executeBoundaries = first.execute_model.boundaries || {};
+  const resumeBoundaries = resumed.resume_model.boundaries || {};
+  const foodRows = first.execute_model.rows.filter(
+    (row) => row.package_id === 'food_expiry_labels_001',
+  );
+  const checks = {
+    electron_exact_43_2_0: process.versions.electron === '43.2.0',
+    plan_one_mutating_entry: first.plan_model.mutating_entry_count === 1,
+    exact_operation_visible: (
+      foodRows.length === 1
+      && foodRows[0].requested_operation === 'review_packet_generation'
+    ),
+    execute_completed: (
+      first.execute_job.state === 'completed'
+      && first.execute_model.counts.succeeded === 1
+    ),
+    authority_consumed_once: first.execute_model.counts.authority_consumptions === 1,
+    backend_dispatched_once: executeBoundaries.backend_dispatch_count === 1,
+    no_other_package_dispatch: (
+      first.execute_model.rows.filter((row) => row.execution_state === 'succeeded').length === 1
+    ),
+    no_yymm4_launch: executeBoundaries.yymm4_launch_count === 0,
+    no_render_driver_launch: executeBoundaries.render_driver_launch_count === 0,
+    no_lifecycle_render: executeBoundaries.render_count === 0,
+    no_playback: executeBoundaries.playback_count === 0,
+    output_packet_complete: Object.keys(beforeResume).length === 5,
+    restart_plan_identity_exact: resumed.plan_identity === first.execute_model.plan_identity_sha256,
+    restart_journal_valid: resumed.recent_validation.ok === true,
+    resume_completed: resumed.resume_job.state === 'completed',
+    resume_success_preserved: resumed.resume_model.counts.succeeded === 1,
+    resume_authority_count_still_one: resumed.resume_model.counts.authority_consumptions === 1,
+    resume_dispatch_count_still_one: resumeBoundaries.backend_dispatch_count === 1,
+    resume_no_packet_rewrite: (
+      JSON.stringify(beforeResume) === JSON.stringify(afterResume)
+    ),
+    hidden_probe_did_not_show_window: win.isVisible() === false,
+    audio_policy_silent: process.env.NLMYTGEN_AUDIO_POLICY === 'silent',
+    mute_audio_switch_enabled: app.commandLine.hasSwitch('mute-audio'),
+    no_console_errors: observations.console_errors.length === 0,
+    no_security_warnings: observations.security_warnings.length === 0,
+    no_load_failures: observations.load_failures.length === 0,
+    no_renderer_crash: observations.render_process_gone.length === 0,
+    no_preload_errors: observations.preload_errors.length === 0,
+    no_unhandled_renderer_errors: observations.renderer_unhandled_errors.length === 0,
+  };
+  const status = Object.values(checks).every(Boolean) ? 'passed' : 'failed';
+  writeReceipt({
+    schema: 'nlmytgen.queue_derived_review_packet_gui_probe.v1',
+    status,
+    runtime: {
+      electron: process.versions.electron,
+      chrome: process.versions.chrome,
+      node: process.versions.node,
+      audio_policy: process.env.NLMYTGEN_AUDIO_POLICY,
+    },
+    checks,
+    first,
+    resumed,
+    packet_before_resume: beforeResume,
+    packet_after_resume: afterResume,
+    observations,
+  });
+  observations.dispose();
+  win.destroy();
+  setImmediate(() => app.exit(status === 'passed' ? 0 : 1));
+}
+
 async function run(win, observations) {
+  if (process.env.NLMYTGEN_BATCH_DERIVED_REVIEW_PROBE === '1') {
+    await runDerivedReviewPacket(win, observations);
+    return;
+  }
   const runRoot = path.dirname(receiptPath());
   const workflow = await withTimeout(win.webContents.executeJavaScript(`
     (async () => {

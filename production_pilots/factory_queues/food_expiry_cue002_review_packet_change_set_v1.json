@@ -1,0 +1,103 @@
+{
+  "schema": "nlmytgen.factory_queue.change_set.derived_artifact.v1",
+  "schema_version": "1.0",
+  "contract": {
+    "schema": "nlmytgen.factory_queue.execution_contract.derived_artifact.v1",
+    "change_set_schema_path": "schemas/factory_queue_execution_v1/factory_queue_derived_artifact_change_set_v1.schema.json",
+    "change_set_schema_sha256": "ab7b0e6faccdd8b9804f658a1ab0247009c03ceee6a9aeef78088a427c01d3c0",
+    "authority_schema_path": "schemas/factory_queue_execution_v1/factory_queue_derived_artifact_authority_v1.schema.json",
+    "authority_schema_sha256": "853a8a3ecb3f2a093b06b48a02a47b6c94345618e41a57477a0706373b62fcfb",
+    "journal_schema_path": "schemas/factory_queue_execution_v1/factory_queue_derived_artifact_journal_v1.schema.json",
+    "journal_schema_sha256": "5ef68693b296bacc36927d7f793be34a744b0dcbd48b8fdc15dfa6724547ffa7"
+  },
+  "change_set_id": "food_expiry_cue002_review_packet_change_set_v1",
+  "queue": {
+    "path": "production_pilots/factory_queues/four_package_lifecycle_queue_v3.json",
+    "sha256": "214d5e99b3a201c0afc216753410d16a52ef8ec6994e854e2fee2473405bd927"
+  },
+  "maximum_mutating_entries": 1,
+  "execution_policy": {
+    "schema": "nlmytgen.factory_queue.change_set_execution_policy.v1",
+    "ordering": "queue_order",
+    "serial": true,
+    "plan_only_default": true,
+    "noop_elision": true,
+    "stop_on_first_mutating_failure": true,
+    "drift_policy": "recheck_queue_descriptor_content_render_and_output_before_every_effect",
+    "unknown_effect_policy": "read_only_reconciliation_required_before_retry"
+  },
+  "entries": [
+    {
+      "order": 4,
+      "package_id": "food_expiry_labels_001",
+      "descriptor_path": "production_pilots/factory_canaries/food_expiry_labels_001/factory_package_v2_1_rendered.json",
+      "descriptor_sha256": "bcbafe344f7a6efbbb03b4ace7a83e955c71d8d235381d4acafc861cd7b5975f",
+      "expected_content_identity_sha256": "27165fad6fadaee2e5c247a86758a505c7f5f5797eb7b386d174585622a585c6",
+      "expected_render_settings_identity_sha256": "2270ad92c6941d5d887715d95589bd5168d67c3fdc92fd12a722604ded33e0e2",
+      "expected_completed_output_sha256": "95558db7488a882b4d22a9ea68f302bcc81e23800dfed9687274fe8944d3daec",
+      "expected_target_identity_sha256": "37056adb59799fca39caa683f41d1c6ea330a58383e0f8b6a4525831242df250",
+      "expected_current_lifecycle": "rendered",
+      "requested_target_lifecycle": "rendered",
+      "effect_class": "derived_artifact",
+      "operation": "review_packet_generation",
+      "authority_id": "supervisor-food-expiry-cue002-review-packet-generation-2026-07-27",
+      "derived_artifact": {
+        "packet_id": "food_expiry_labels_001_cue_002_queue_derivative_v1",
+        "cue_id": "cue_002",
+        "canonical_text_sha256": "edea41f9987bd8f6a689e341473eeadfd37cb3a510df69b83a01d6a165267c0c",
+        "canonical_script": {
+          "path": "production_pilots/factory_canaries/food_expiry_labels_001/canonical_script.json",
+          "sha256": "989312b58c31ad538b4ca622cba5a9dfebec1f9288ccb1312199fdb83aec0e9e"
+        },
+        "generated_project": {
+          "path": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_runs/food_expiry_labels_internal_review_v4/generated_project.local.ymmp",
+          "sha256": "f0b03e67565bbe340fad7e689c30b519184735ac10e701cbd5da344f4c014f88"
+        },
+        "source_mp4": {
+          "path": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_runs/food_expiry_labels_internal_review_v4/internal_review_food_expiry_labels.mp4",
+          "sha256": "95558db7488a882b4d22a9ea68f302bcc81e23800dfed9687274fe8944d3daec"
+        },
+        "cue_visual_readback": {
+          "path": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_runs/food_expiry_labels_internal_review_v4/cue_visual_readback.json",
+          "sha256": "6dbee39ea1f0e1e7d29742238ec3aaa8521f2f13d135f51929974f266d7e33df"
+        },
+        "run_receipt": {
+          "path": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_runs/food_expiry_labels_internal_review_v4/pipeline_run_receipt.json",
+          "sha256": "89d266df2debcefe342b31be187fc05415e75d24dee0ec7bdfe4ab5e51e9726c"
+        },
+        "materialized_source": {
+          "path": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_runs/food_expiry_labels_internal_review_v4/generated_assets/fel_caa_expiration_definitions__cue_002.png",
+          "sha256": "62a5e9daecd79e048df4bed8ced3a4880ee871ce862965a6a19f8a5c0d5b6163"
+        },
+        "output_root": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_runs/food_expiry_labels_internal_review_v4/content_review_packets/cue_002_queue_derivative_v1",
+        "expected": {
+          "scene_id": "S1",
+          "start_frame": 373,
+          "end_frame": 816,
+          "fps": 60,
+          "materialized_visual_id": "fel_caa_expiration_definitions__cue_002",
+          "source_id": "CAA-EXPIRATION-DATE-2025",
+          "source_sha256": "2c06e90c629a3be96b2ce973e81900f128ea63d3a07124714607232166f04517",
+          "crop": [
+            0.04,
+            0.34,
+            0.62,
+            0.23
+          ],
+          "fit_mode": "cover"
+        }
+      }
+    }
+  ],
+  "receipt_policy": {
+    "schema": "nlmytgen.factory_queue.execution_receipt_policy.v1",
+    "deterministic": true,
+    "append_only_journal": true,
+    "include_usernames": false,
+    "include_drive_letters": false,
+    "include_private_absolute_paths": false,
+    "include_credentials": false,
+    "include_private_media": false,
+    "include_process_command_lines": false
+  }
+}
