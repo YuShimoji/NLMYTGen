@@ -1034,9 +1034,28 @@ def materialize_visuals(
     resume: bool,
     repo_root: Path | None = None,
 ) -> tuple[dict[str, Path], dict[str, Any]]:
-    unique_sources: dict[str, CueTiming] = {}
+    grouped: dict[str, list[CueTiming]] = {}
     for timing in timings:
-        unique_sources.setdefault(timing.asset_id, timing)
+        grouped.setdefault(timing.asset_id, []).append(timing)
+    materializations: dict[str, tuple[CueTiming, list[str]]] = {}
+    for asset_id, rows in grouped.items():
+        view_signatures = {
+            (
+                tuple(timing.crop) if timing.crop is not None else None,
+                timing.fit_mode,
+                timing.source_start_seconds,
+                timing.source_end_seconds,
+            )
+            for timing in rows
+        }
+        if len(view_signatures) == 1:
+            materializations[asset_id] = (rows[0], [row.cue_id for row in rows])
+        else:
+            for timing in rows:
+                materializations[f"{asset_id}__{timing.cue_id}"] = (
+                    timing,
+                    [timing.cue_id],
+                )
     paths.generated_assets.mkdir(parents=True, exist_ok=True)
     browser = find_browser() if any(timing.asset_type == "svg" for timing in timings) else None
     existing_records: dict[str, Mapping[str, Any]] = {}
@@ -1046,7 +1065,7 @@ def materialize_visuals(
                 paths.real_media_asset_manifest.read_text(encoding="utf-8")
             )
             existing_records = {
-                str(row["asset_id"]): row
+                str(row.get("materialization_id") or row["asset_id"]): row
                 for row in existing_payload.get("records", [])
                 if isinstance(row, dict) and row.get("asset_id")
             }
@@ -1057,17 +1076,18 @@ def materialize_visuals(
             ) from exc
     records: list[dict[str, Any]] = []
     outputs: dict[str, Path] = {}
-    for asset_id in sorted(unique_sources):
-        timing = unique_sources[asset_id]
+    for materialization_id in sorted(materializations):
+        timing, cue_ids = materializations[materialization_id]
+        asset_id = timing.asset_id
         source = timing.visual_source
-        output = paths.generated_assets / f"{asset_id}.png"
+        output = paths.generated_assets / f"{materialization_id}.png"
         if output.exists() and resume:
             width, height = png_dimensions(output)
             if (width, height) != (1920, 1080):
                 raise EpisodeVideoError(
                     f"cached visual has wrong dimensions: {asset_id}", code="cached_visual_invalid"
                 )
-            prior_record = existing_records.get(asset_id)
+            prior_record = existing_records.get(materialization_id)
             prior_process = (
                 prior_record.get("materialization_process")
                 if isinstance(prior_record, Mapping)
@@ -1102,6 +1122,8 @@ def materialize_visuals(
         records.append(
             {
                 "asset_id": asset_id,
+                "materialization_id": materialization_id,
+                "cue_ids": cue_ids,
                 "asset_type": timing.asset_type,
                 "source_provenance_id": timing.source_provenance_id,
                 "source_path": (
@@ -1127,10 +1149,13 @@ def materialize_visuals(
                 "materialization_process": process_receipt,
             }
         )
-        outputs[asset_id] = output
+        for cue_id in cue_ids:
+            outputs[cue_id] = output
+        if len(grouped[asset_id]) == len(cue_ids):
+            outputs[asset_id] = output
     receipt = {
         "status": "passed",
-        "unique_visual_count": len(outputs),
+        "unique_visual_count": len(records),
         "records": records,
         "real_media_asset_count": sum(
             row["asset_type"] in REAL_MEDIA_ASSET_TYPES for row in records
@@ -1147,6 +1172,15 @@ def materialize_visuals(
         resume=resume,
     )
     return outputs, receipt
+
+
+def _visual_output_for_timing(
+    visual_outputs: Mapping[str, Path], timing: CueTiming
+) -> Path:
+    output = visual_outputs.get(timing.cue_id)
+    if output is not None:
+        return output
+    return visual_outputs[timing.asset_id]
 
 
 def build_yymm4_project(
@@ -1174,7 +1208,7 @@ def build_yymm4_project(
     timeline["MaxLayer"] = max(2, int(timeline.get("MaxLayer", 0)))
     image_items = [
         _image_item(
-            asset_path=visual_outputs[timing.asset_id],
+            asset_path=_visual_output_for_timing(visual_outputs, timing),
             cue_id=timing.cue_id,
             frame=timing.frame,
             length=timing.length_frames,
@@ -1300,7 +1334,7 @@ def build_cue_visual_readback(
 ) -> dict[str, Any]:
     rows = []
     for timing in timings:
-        asset = visual_outputs[timing.asset_id]
+        asset = _visual_output_for_timing(visual_outputs, timing)
         rows.append(
             {
                 "cue_id": timing.cue_id,
@@ -1310,7 +1344,7 @@ def build_cue_visual_readback(
                 "length_frames": timing.length_frames,
                 "end_frame": timing.end_frame,
                 "visual_id": timing.visual_id,
-                "materialized_visual_id": timing.asset_id,
+                "materialized_visual_id": asset.stem,
                 "asset_type": timing.asset_type,
                 "source_provenance_id": timing.source_provenance_id,
                 "internal_review_only": timing.internal_review_only,
@@ -1758,7 +1792,7 @@ def extract_review_frames(
     targets.extend(
         (
             timing.cue_id,
-            timing.frame / fps + min(0.25, timing.length_frames / fps / 2),
+            timing.frame / fps + timing.length_frames / fps / 2,
         )
         for timing in timings
     )
@@ -1770,10 +1804,10 @@ def extract_review_frames(
             "-hide_banner",
             "-loglevel",
             "error",
-            "-ss",
-            f"{seconds:.6f}",
             "-i",
             str(mp4),
+            "-ss",
+            f"{seconds:.6f}",
             "-frames:v",
             "1",
             "-threads",

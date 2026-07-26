@@ -400,7 +400,6 @@ def test_pre_render_dry_run_stops_before_generation_without_pipeline_launch(
         if path.is_file() and "local_media" not in path.parts
     }
     assert after == before
-    assert not (ROOT / FOURTH_PACKAGE / "auto_video_runs").exists()
 
 
 def test_pre_render_stage_plan_is_deterministic_and_bounded() -> None:

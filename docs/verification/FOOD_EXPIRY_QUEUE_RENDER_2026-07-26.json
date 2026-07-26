@@ -1,0 +1,166 @@
+{
+  "schema": "nlmytgen.food_expiry_queue_render_verification.v1",
+  "status": "passed",
+  "project_state_id": "nlmytgen-food-expiry-queue-rendered-v1",
+  "source_commit": "f6c088a6c7f0af22f06b44a6a509743d6ff9cc3f",
+  "outcome_commit": "resolved-by-current-branch-tip",
+  "branch": "codex/nlmytgen-food-expiry-queue-rendered-v1",
+  "authority": {
+    "authority_id": "supervisor-food-expiry-single-render-2026-07-26",
+    "package_id": "food_expiry_labels_001",
+    "operation": "single_internal_review_render",
+    "human_creative_acceptance": false,
+    "rights_approval": false,
+    "production_approval": false,
+    "publication": false,
+    "upload": false,
+    "release": false
+  },
+  "predecessor": {
+    "queue_path": "production_pilots/factory_queues/four_package_lifecycle_queue_v2.json",
+    "queue_sha256": "4f0fe080a56697720409791e68c922655428f2832a604525e276bd3ee156554d",
+    "descriptor_path": "production_pilots/factory_canaries/food_expiry_labels_001/factory_package_v2_1_source_project_ready.json",
+    "descriptor_sha256": "4017f7d1591dc229f1163aecaf85f91e14d1d0eb919b03a3d1945e29d604688c",
+    "manifest_sha256": "31bd6788a1bca8cbb631bcee9b3391e5a0a04912a65db8c40c0e93f66b814cb9",
+    "content_identity_sha256": "27165fad6fadaee2e5c247a86758a505c7f5f5797eb7b386d174585622a585c6",
+    "source_project_sha256": "4f8dc13976cb4ef56ea582d75e1ff92ae9d2780fff4cf53c13923d561955bdbf",
+    "source_project_structural_identity_sha256": "10fa9fefac7ebc68ba3ace7af9f24e47a74eedf55be853fa05d5a4fb674183ff"
+  },
+  "execution": {
+    "selected_run_id": "food_expiry_labels_internal_review_v4",
+    "preserved_attempts": [
+      {
+        "run_id": "food_expiry_labels_internal_review_v1",
+        "stage": "preflight",
+        "cause": "v2.1 reusable-crop provenance required a runtime adapter",
+        "yymm4_launch_count": 0
+      },
+      {
+        "run_id": "food_expiry_labels_internal_review_v2",
+        "stage": "cue_frame_visual_inspection",
+        "cause": "early representative frame retained a preceding subtitle transition",
+        "yymm4_launch_count": 1
+      },
+      {
+        "run_id": "food_expiry_labels_internal_review_v3",
+        "stage": "cue_frame_visual_inspection",
+        "cause": "shared asset_id collapsed distinct cue crops and input seek selected a keyframe",
+        "yymm4_launch_count": 1
+      }
+    ],
+    "final_valid_render_count": 1,
+    "total_yymm4_launch_count": 3,
+    "total_render_driver_launch_count": 3,
+    "manual_intervention_count": 0,
+    "computer_use_count": 0,
+    "sendkeys_count": 0,
+    "input_injection_count": 0,
+    "preview_playback_count": 0,
+    "system_volume_operation_count": 0,
+    "project_owned_process_residue": 0,
+    "audio_policy": "silent"
+  },
+  "generated_project": {
+    "path": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_runs/food_expiry_labels_internal_review_v4/generated_project.local.ymmp",
+    "sha256": "f0b03e67565bbe340fad7e689c30b519184735ac10e701cbd5da344f4c014f88",
+    "size_bytes": 726654,
+    "normalized_structural_identity_sha256": "4993bb5f5f025927a6b7c94f1c3bdfcf2d0bdc68f9ea49c30dd9222bd72ece88",
+    "voice_item_count": 4,
+    "image_item_count": 4,
+    "speaker_counts": {
+      "ゆっくり霊夢赤縁": 4
+    },
+    "scene_count": 1,
+    "timeline_frames": 1335,
+    "fps": 60,
+    "source_voice_items_unchanged": true,
+    "svg_reference_count": 0,
+    "private_path_leaks": 0
+  },
+  "media": {
+    "path": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_runs/food_expiry_labels_internal_review_v4/internal_review_food_expiry_labels.mp4",
+    "sha256": "95558db7488a882b4d22a9ea68f302bcc81e23800dfed9687274fe8944d3daec",
+    "size_bytes": 28023236,
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60.0,
+    "duration_seconds": 22.25,
+    "overall_bitrate_bps": 10075770,
+    "iso_bmff": true,
+    "full_file_decode": true,
+    "failed_media_checks": 0
+  },
+  "frame_inspection": {
+    "status": "passed",
+    "actual_images_inspected": true,
+    "frame_count": 7,
+    "cue_frame_count": 4,
+    "unique_frame_hash_count": 7,
+    "black_or_missing_frames": 0,
+    "subtitle_or_crop_mismatches": 0,
+    "records": [
+      {
+        "cue_id": "cue_001",
+        "sha256": "c07b74467fd4765f5ffd3eab26e8a664bd245bab7b0a58ee618ffcfc919608e9"
+      },
+      {
+        "cue_id": "cue_002",
+        "sha256": "bcff17e14e7bab199ca7eb1131395b99ae41dd28cafc2eca39d5f36148d06c04"
+      },
+      {
+        "cue_id": "cue_003",
+        "sha256": "b480928235729074affebe7892c5fc21848f315129d1345c07d581192611330f"
+      },
+      {
+        "cue_id": "cue_004",
+        "sha256": "53141e32d431ce4b85f787c3506360fb82748622ce398209ec54cdfe95ae0c81"
+      }
+    ]
+  },
+  "rendered_evidence": {
+    "render_readback_sha256": "418d005da188c349db6690354138ab7579f7003af368c05773c92b85144f0549",
+    "render_promotion_receipt_sha256": "c385378da53bae5bb64f40bbc105dff80cfff3a6416c2a6a558d99a459baca49",
+    "resume_observation_sha256": "4fa91ddb0070720351cc7cd625978449e6434ac41fb61808da25b4c31accc386",
+    "descriptor_sha256": "bcbafe344f7a6efbbb03b4ace7a83e955c71d8d235381d4acafc861cd7b5975f",
+    "queue_v3_sha256": "214d5e99b3a201c0afc216753410d16a52ef8ec6994e854e2fee2473405bd927"
+  },
+  "queue_v3": {
+    "live_evaluation_sha256": "cc8a5ca43e7bee2767a8c24716892a477d930362c71b625219d942cda5b1eb9c",
+    "live_verified_noop": 4,
+    "live_render_candidates": 0,
+    "live_execution_set_size": 0,
+    "tracked_only_evaluation_sha256": "bf0efc5977338eb2c2bff7ad4750f9f8f52b7bd00f13024e2b222d91df8ace31",
+    "tracked_only_recorded_complete": 4,
+    "tracked_only_render_candidates": 0,
+    "tracked_only_private_artifacts_present": 0
+  },
+  "resume": {
+    "status": "verified_noop",
+    "sha_size_mtime_mismatch_count": 0,
+    "outputs_rewritten": false,
+    "yymm4_launch_count": 0,
+    "render_driver_launch_count": 0,
+    "ffmpeg_encode_count": 0
+  },
+  "focused_validation": {
+    "render_promotion_negative_and_contract_tests": 23,
+    "focused_regression_before_render": 136,
+    "focused_regression_after_render": 170,
+    "distinct_crop_and_accurate_seek_tests_added": 2,
+    "canonical_regression_integrity": "pending_outcome_commit"
+  },
+  "boundaries": {
+    "human_creative_acceptance": false,
+    "rights_approval": false,
+    "production_approval": false,
+    "publication": false,
+    "upload": false,
+    "release": false,
+    "pull_request": false,
+    "merge": false,
+    "master_mutation": false
+  }
+}

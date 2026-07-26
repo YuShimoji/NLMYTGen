@@ -1110,9 +1110,22 @@ def advance_factory_package(
     builder: Builder | None = None,
     persist_failure: bool = True,
 ) -> dict[str, Any]:
-    """Plan or execute one exact source-project promotion."""
+    """Plan or execute one exact queue-selected lifecycle promotion."""
 
     root = repo_root.resolve()
+    if to_lifecycle == "rendered":
+        from src.pipeline.factory_render_promotion import advance_factory_render
+
+        return advance_factory_render(
+            repo_root=root,
+            queue_path=queue_path,
+            package_id=package_id,
+            to_lifecycle=to_lifecycle,
+            authority_id=authority_id,
+            execute=execute,
+            render_authority_id=render_authority_id,
+            persist_failure=persist_failure,
+        )
     try:
         evaluation = evaluate_factory_queue(
             repo_root=root,

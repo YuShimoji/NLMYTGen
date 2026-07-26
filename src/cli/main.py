@@ -13,7 +13,7 @@ Usage:
     python -m src.cli.main doctor-runtime [--profile code|review|render|regenerate|all] [--require-profile PROFILE] [--artifact-root PATH] [--deep] [--format text|json]
     python -m src.cli.main validate-factory-package --package factory_package.json [--require-lifecycle STATE] [--check-live] [--format text|json]
     python -m src.cli.main evaluate-factory-queue --queue factory_queue.json [--check-live] [--execute-safe-stages] --format json
-    python -m src.cli.main advance-factory-package --queue factory_queue.json --package-id ID --to-lifecycle source_project_ready --authority-id ID [--execute] --format json
+    python -m src.cli.main advance-factory-package --queue factory_queue.json --package-id ID --to-lifecycle source_project_ready|rendered --authority-id ID [--execute] --format json
     python -m src.cli.main build-episode-video --factory-package factory_package_v2.json --dry-run
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
     python -m src.cli.main fetch-topics [URL...] [--opml feeds.opml] [--reader opml|inoreader] [-n 20] [--after YYYY-MM-DD] [--format text|json|markdown] [--with-fetch-report]
@@ -1795,7 +1795,7 @@ def main(argv: list[str] | None = None) -> int:
 
     p_factory_advance = subparsers.add_parser(
         "advance-factory-package",
-        help="Plan or execute one queue-selected source-project promotion",
+        help="Plan or execute one bounded queue-selected lifecycle promotion",
     )
     p_factory_advance.add_argument(
         "--queue",
@@ -1811,22 +1811,22 @@ def main(argv: list[str] | None = None) -> int:
     p_factory_advance.add_argument(
         "--to-lifecycle",
         required=True,
-        help="Requested lifecycle; this command supports source_project_ready only",
+        help="Requested lifecycle: source_project_ready or rendered",
     )
     p_factory_advance.add_argument(
         "--authority-id",
         required=True,
-        help="Exact supervisor source-project authority ID",
+        help="Exact supervisor authority ID for the requested lifecycle edge",
     )
     p_factory_advance.add_argument(
         "--render-authority-id",
         default=None,
-        help="Rejected: render authority is outside this source-only command",
+        help="Deprecated duplicate authority field; rejected by bounded operations",
     )
     p_factory_advance.add_argument(
         "--execute",
         action="store_true",
-        help="Materialize the source project; default behavior is plan-only",
+        help="Execute the exact bounded lifecycle edge; default is plan-only",
     )
     p_factory_advance.add_argument(
         "--format",

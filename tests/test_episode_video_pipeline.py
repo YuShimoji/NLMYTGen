@@ -1111,3 +1111,125 @@ def test_review_normalization_is_lossless_faststart_remux(
     assert captured[captured.index("-movflags") + 1] == "+faststart"
     assert "libx264" not in captured
     assert output.read_bytes() == source.read_bytes()
+
+
+def test_distinct_crops_reusing_one_asset_materialize_per_cue(
+    tmp_path: Path, monkeypatch
+) -> None:
+    source = tmp_path / "source.png"
+    source.write_bytes(b"source")
+    run = tmp_path / "run"
+    paths = episode_video.PipelinePaths(
+        run_directory=run,
+        generated_assets=run / "generated_assets",
+        generated_project=run / "generated_project.local.ymmp",
+        yymm4_render=run / "render.local.mp4",
+        review_mp4=run / "review.mp4",
+        extracted_frames=run / "frames",
+        resolved_manifest=run / "resolved_manifest.json",
+        real_media_asset_manifest=run / "real_media_asset_manifest.local.json",
+        run_receipt=run / "pipeline_run_receipt.json",
+        media_validation=run / "media_validation.json",
+        cue_visual_readback=run / "cue_visual_readback.json",
+        run_log=run / "run.log",
+    )
+    timings = [
+        episode_video.CueTiming(
+            cue_id=f"cue_{index:03d}",
+            scene_id="S1",
+            speaker="reimu",
+            text=f"text-{index}",
+            frame=(index - 1) * 60,
+            length_frames=60,
+            end_frame=index * 60,
+            visual_id="shared",
+            asset_id="shared",
+            visual_source=source,
+            asset_type="image",
+            source_provenance_id="source",
+            fit_mode="cover",
+            crop=crop,
+            internal_review_only=True,
+            subtitle_lines=(f"subtitle-{index}",),
+        )
+        for index, crop in enumerate(
+            ((0.0, 0.0, 0.5, 0.5), (0.5, 0.5, 0.5, 0.5)),
+            start=1,
+        )
+    ]
+
+    def materialize(timing, output):
+        output.write_bytes(timing.cue_id.encode("utf-8"))
+        return {
+            "status": "passed",
+            "cleanup_verified": True,
+            "speaker_playback": False,
+            "preview_playback": False,
+        }
+
+    monkeypatch.setattr(episode_video, "_materialize_real_media_frame", materialize)
+    monkeypatch.setattr(episode_video, "png_dimensions", lambda path: (1920, 1080))
+    outputs, receipt = episode_video.materialize_visuals(
+        timings,
+        paths,
+        resume=False,
+        repo_root=tmp_path,
+    )
+    assert outputs["cue_001"] != outputs["cue_002"]
+    assert outputs["cue_001"].name == "shared__cue_001.png"
+    assert outputs["cue_002"].name == "shared__cue_002.png"
+    assert receipt["unique_visual_count"] == 2
+    assert [row["crop"] for row in receipt["records"]] == [
+        [0.0, 0.0, 0.5, 0.5],
+        [0.5, 0.5, 0.5, 0.5],
+    ]
+
+
+def test_review_frame_extraction_uses_accurate_output_seek(
+    tmp_path: Path, monkeypatch
+) -> None:
+    mp4 = tmp_path / "review.mp4"
+    mp4.write_bytes(b"mp4")
+    run = tmp_path / "run"
+    paths = episode_video.PipelinePaths(
+        run_directory=run,
+        generated_assets=run / "generated_assets",
+        generated_project=run / "generated_project.local.ymmp",
+        yymm4_render=run / "render.local.mp4",
+        review_mp4=mp4,
+        extracted_frames=run / "frames",
+        resolved_manifest=run / "resolved_manifest.json",
+        real_media_asset_manifest=run / "real_media_asset_manifest.local.json",
+        run_receipt=run / "pipeline_run_receipt.json",
+        media_validation=run / "media_validation.json",
+        cue_visual_readback=run / "cue_visual_readback.json",
+        run_log=run / "run.log",
+    )
+    timing = episode_video.CueTiming(
+        cue_id="cue_001",
+        scene_id="S1",
+        speaker="reimu",
+        text="text",
+        frame=60,
+        length_frames=120,
+        end_frame=180,
+        visual_id="visual",
+        asset_id="visual",
+        visual_source=tmp_path / "source.png",
+    )
+    commands: list[list[str]] = []
+
+    def run(command, **kwargs):
+        commands.append(command)
+        Path(command[-1]).write_bytes(str(command).encode("utf-8"))
+        return subprocess.CompletedProcess(command, 0)
+
+    monkeypatch.setattr(episode_video.shutil, "which", lambda name: "ffmpeg")
+    monkeypatch.setattr(episode_video.subprocess, "run", run)
+    monkeypatch.setattr(episode_video, "png_dimensions", lambda path: (1920, 1080))
+    receipt = episode_video.extract_review_frames(mp4, [timing], paths)
+    assert receipt["cue_frame_count"] == 1
+    assert commands
+    assert all(command.index("-i") < command.index("-ss") for command in commands)
+    cue = [row for row in receipt["records"] if row["label"] == "cue_001"][0]
+    assert cue["seconds"] == 2.0

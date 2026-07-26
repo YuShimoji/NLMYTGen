@@ -1,118 +1,109 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: nlmytgen-food-expiry-source-project-ready-v1
-State-Revision: 2026-07-26.6
+Project-State-ID: nlmytgen-food-expiry-queue-rendered-v1
+State-Revision: 2026-07-26.7
 Updated: 2026-07-26 JST
-Product-State: four-package-queue-with-single-prepared-package-promoted-to-source-project-ready
-Product-Gate: authorize-food-expiry-single-render
-Recommended-Next: render-food-expiry-only-through-queue-after-explicit-render-authority
+Product-State: four-package-lifecycle-queue-with-v2-1-post-render-evidence-and-complete-noop-policy
+Product-Gate: bounded-queue-execution-and-change-only-batch
+Recommended-Next: add-bounded-queue-executor-that-runs-only-explicitly-authorized-change-set
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
-Handoff-Branch: codex/nlmytgen-food-expiry-source-project-ready-v1
+Handoff-Branch: codex/nlmytgen-food-expiry-queue-rendered-v1
 Handoff-PR: none
-Required-Base: 7c9ee4a9879e855911434b72105c04bb216d7088
-Implementation-Checkpoint: 7c9ee4a9879e855911434b72105c04bb216d7088
+Required-Base: f6c088a6c7f0af22f06b44a6a509743d6ff9cc3f
+Implementation-Checkpoint: f6c088a6c7f0af22f06b44a6a509743d6ff9cc3f
 Outcome-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 required after handoff push
 Tracked-Worktree: tracked clean required after handoff; protected and ignored artifacts preserved
 
 ## Current Slice
 
-- `advance-factory-package`はplan-onlyが既定で、queue唯一候補、exact package、
-  lifecycle、authority ID、predecessor/content/CSV/shape identityを検査してからだけ
-  source-project generationを許可する。
-- food-expiry source projectはpackage-local ignored locatorに1件存在する。
-  SHA `4f8dc1...bdbf`、449,804 bytes、VoiceItems 4、霊夢4、1 scene、
-  1335 frames / 60fps / 22.25秒、canonical text/order 4/4 exact。
-- ToolStates、LayoutXml、private absolute path、unrelated project itemは0。
-  YMM4 `4.54.0.1`。2 attempts中1 success、repairable UIA failure 1、
-  owned process residue 0。
-- package-prepared descriptorとqueue-v1はbyte-exact。successor descriptorと
-  queue-v2はappend-onlyで、content identity `27165f...5c6`を保持する。
-- live queue-v2はcompleted 3件`verified_noop`、food-expiry
-  `source_project_live_exact` / `render_required`。render candidate 1はplanのみで、
-  scheduled / execution set / blocked / invalidは0。
-- tracked-onlyはcompleted 3件`recorded_complete_no_live_file`、food-expiry
-  `source_project_recorded_only` / `render_required`。private absenceからdemotion、
-  regeneration、render executionを推論しない。
-- 同一promotionは`verified_noop`、YMM4/build launch 0、project SHA/size/mtime、
-  successor descriptor不変。追加2 runsもtracked/local identities exact。
-- focused 137/137、dotnet 0 warning / 0 error。
+- queue-v2の唯一候補`food_expiry_labels_001`をexact authority
+  `supervisor-food-expiry-single-render-2026-07-26`で`rendered`へ進めた。
+- final runはignored `food_expiry_labels_internal_review_v4`。generated projectは
+  Voice 4 / Image 4 / Reimu 4 / scene 1 / 1335 frames、source Voice semantic exact。
+- MP4はSHA `95558d...daec`、28,023,236 bytes、H.264/AAC、
+  1920x1080 / 60fps / 22.25秒。ISO-BMFF、full decode、7/7 distinct frames pass。
+- cue_001..004を実画像検査し、exact subtitle、4 distinct crop mappings、
+  black/missing/clipping/SVG proxy 0を確認した。
+- v1 preflight、v2/v3 visual inspection failureは上書きせずignored evidenceへ保存。
+  reusable-crop provenance、cue別materialization、accurate seekをcausal repairした。
+- append-only rendered descriptor SHA `bcbafe...975f`、queue-v3 SHA
+  `214d5e...927`。content identity `27165f...5c6`は前後同一。
+- live queue-v3は4件`verified_noop`、candidate / scheduled / execution /
+  blocked / invalid 0。tracked-onlyは4件`recorded_complete_no_live_file`、
+  private artifact 0、automatic regeneration/render 0。
+- 同一render requestは`verified_noop`、SHA/size/mtime mismatch 0、
+  YMM4/render-driver/ffmpeg encode/output rewrite 0。
 
 ## Product Position
 
-4 package queueはsource-project lifecycleまで進んだ。completed packageは
-live exactなら`verified_noop`、別端末でprivate fileが無ければ
-`recorded_complete_no_live_file`となり、automatic rerender対象にならない。
+4 package queueはFactory Contract v2.1 post-render lifecycleを実証した。
+live exact outputはcomplete no-op、private fileの無いtracked-only checkoutでも
+recorded lifecycle identityを保持し、再生成を予定しない。
 
-food-expiryのtechnical next stageはrenderだが、queue-v2はexecution authorityを
-持たない。source-project readinessはrender、human、rights、public authorityを
-付与しない。
-
-これはbounded four-package compatibilityである。generic distributed scheduler、
-universal scheduling compatibility、production readinessを証明しない。
+これはbounded four-package technical evidenceである。generic scheduler、
+distributed worker pool、production readiness、human acceptance、rights/public
+authorityを証明しない。
 
 ## Exact Next Action
 
-別missionのexplicit render authority後、queue-v2でfood-expiry 1件だけをrenderし、
-generated project、technical render receipt、MP4 identityを
-`rendered` successorへappend-onlyで記録する。
+queue evaluatorのplanとone-shot authority consumptionを使い、明示された
+change-setだけを順番に実行するbounded queue executorを追加する。
 
 開始条件:
 
-- queue-v2 evaluationが4 contracts valid、source candidate 0、render candidate 1
-- new-banknote / REINS / AI-monitoringはno-opのまま
-- source project / content / render-settings / queue baseline identity exact
-- render authorityをfood-expiry 1 packageへ明示
-- playback、human decision、rights/public actionはまだ行わない
-- semantic drift時は既存artifactを変更せず停止する
+- input queueと全descriptor identity exact
+- explicit authorityがpackage ID、lifecycle edge、最大件数を限定
+- default plan-only、completed packageはvalidation-only no-op
+- collision、semantic drift、private absenceはfail closed
+- execution後にauthorityを残さず、resumeとtracked-only portabilityを保持
+- human/rights/production/public actionをexecutorへ含めない
 
 ## Residual Work
 
-### Food-expiry single render
+### Bounded queue executor
 
-- Purpose: exact source projectをtechnical rendered lifecycleへ進める。
-- Effect: generated project / MP4 / technical receiptをexact identityへ束縛する。
-- Requirements: separate render authority、queue-v2 live exact、silent policy。
-- State: plan-only candidate。execution authority false。
-- Owner: production operator。
-- Next move: food-expiry 1件だけをqueue経由でrenderする。
+- Purpose: explicit change-setだけを既存advancement commandへ渡す。
+- Effect: completed no-opを保持しつつ、authorized packageだけを逐次実行できる。
+- Requirements: bounded batch authority、stable order、per-package receipt、
+  stop-on-drift、no generic worker pool。
+- State: queue planningとsingle-package executionは実証済み。batch loopは未実装。
+- Owner: pipeline maintainer / supervising AI。
+- Next move: maximum件数とexact package setを持つplan-only executorを薄く追加する。
 
-### Post-render and external gates
+### Creative and external gates
 
-- Purpose: rendered / accepted lifecycleとpublic authorityを実証する。
-- Effect: technical render validity、human decision、rights/public clocksを分離できる。
-- Requirements: render許可、exact render receipt、human review、各owner record。
-- State: open。`FACTORY_CONTRACT_POST_RENDER_LIFECYCLE_OVERFIT` remains。
-- Owner: production owner / human reviewer / rights and public authority owners。
-- Next move: source-project gate完了後に別missionで判断する。
+- Purpose: technical outputからcreative、rights、production、public判断を分離する。
+- Effect: artifact SHAごとの人間判断とauthority clockを安全に記録できる。
+- Requirements: independent human review、rights record、各owner authorization。
+- State: Food Expiryはtechnical `rendered`。human decisionと全public clockはfalse。
+- Owner: human reviewer / rights / production / publication owners。
+- Next move: 各ownerが別missionでexact MP4 identityに判断を束縛する。
 
 ## Evidence and Re-entry
 
-- Queue schema: `schemas/factory_queue_v1/factory_queue_v1.schema.json`
-- Queue engine: `src/pipeline/factory_queue.py`
-- Queue descriptor:
-  `production_pilots/factory_queues/four_package_lifecycle_queue_v2.json`
-- Report:
-  `docs/verification/FOOD_EXPIRY_SOURCE_PROJECT_PROMOTION_2026-07-26.md`
-- Machine receipt:
-  `docs/verification/FOOD_EXPIRY_SOURCE_PROJECT_PROMOTION_2026-07-26.json`
+- Queue: `production_pilots/factory_queues/four_package_lifecycle_queue_v3.json`
+- Descriptor:
+  `production_pilots/factory_canaries/food_expiry_labels_001/factory_package_v2_1_rendered.json`
+- Render readback:
+  `production_pilots/factory_canaries/food_expiry_labels_001/render_readback.json`
+- Report: `docs/verification/FOOD_EXPIRY_QUEUE_RENDER_2026-07-26.md`
+- Machine receipt: `docs/verification/FOOD_EXPIRY_QUEUE_RENDER_2026-07-26.json`
 
 Re-enter by fetching the handoff branch, requiring `HEAD...@{upstream}=0/0` and
 tracked clean, then reading `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → this file.
-Restore with `uv sync --extra dev --locked`. Evaluate with
+Restore with `uv sync --extra dev --locked`. Evaluate queue-v3 with
 `evaluate-factory-queue --queue <descriptor> --check-live --format json`.
 
 ## Active Boundaries
 
-- Existing v2.0 / v2.1 schemas, descriptors, manifests, projects, MP4s,
-  receipts, decisions, media, run directories, locks, and ignored evidence are immutable.
-- Receipt-only completion is historical identity evidence, not live availability.
-- Technical next stage cannot grant execution, human, rights, production, or public authority.
-- Source-project generationだけをexplicit authorityで実施した。render、
-  generated project、MP4、encode、playback、human decision、fifth topic、PR、
-  merge、master mutation、deployment、publication、upload、release、access change、
-  public exposureは未実施。
+- package_prepared、source_project_ready、queue-v1/v2、source project、prior topics、
+  schemas、inventories、locks、ignored failed runs are immutable.
+- Technical rendered evidence cannot grant human, rights, production, publication,
+  upload, or release authority.
+- Playback、system volume、Computer Use、SendKeys、manual YMM4、fifth topic、PR、
+  merge、master mutation、deployment、publication、upload、releaseは未実施。
 
 ## Maintenance Note
 
