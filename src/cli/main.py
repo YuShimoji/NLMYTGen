@@ -14,6 +14,8 @@ Usage:
     python -m src.cli.main validate-factory-package --package factory_package.json [--require-lifecycle STATE] [--check-live] [--format text|json]
     python -m src.cli.main evaluate-factory-queue --queue factory_queue.json [--check-live] [--execute-safe-stages] --format json
     python -m src.cli.main execute-factory-queue --queue factory_queue.json --change-set change_set.json [--authority-file authorities.json] [--execute] [--resume-journal journal.json] --format json
+    python -m src.cli.main build-portable-review-bundle --packet packet-dir --output bundle-dir --archive bundle.zip [--descriptor descriptor.json] --format json
+    python -m src.cli.main validate-portable-review-bundle --bundle bundle-dir-or.zip [--check-machine-open] --format json
     python -m src.cli.main advance-factory-package --queue factory_queue.json --package-id ID --to-lifecycle source_project_ready|rendered --authority-id ID [--execute] --format json
     python -m src.cli.main build-episode-video --factory-package factory_package_v2.json --dry-run
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
@@ -1835,6 +1837,65 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (json only)",
     )
 
+    p_portable_build = subparsers.add_parser(
+        "build-portable-review-bundle",
+        help="Build one immutable offline review bundle and deterministic ZIP",
+    )
+    p_portable_build.add_argument(
+        "--packet",
+        required=True,
+        type=Path,
+        help="Exact repository-relative queue-derived review packet directory",
+    )
+    p_portable_build.add_argument(
+        "--output",
+        required=True,
+        type=Path,
+        help="New versioned repository-relative bundle directory",
+    )
+    p_portable_build.add_argument(
+        "--archive",
+        required=True,
+        type=Path,
+        help="New versioned repository-relative ZIP archive",
+    )
+    p_portable_build.add_argument(
+        "--descriptor",
+        type=Path,
+        default=None,
+        help="Exact tracked bundle descriptor; auto-resolved when omitted",
+    )
+    p_portable_build.add_argument(
+        "--format",
+        choices=["json"],
+        default="json",
+        dest="portable_build_format",
+        help="Output format (json only)",
+    )
+
+    p_portable_validate = subparsers.add_parser(
+        "validate-portable-review-bundle",
+        help="Validate a portable review bundle directory or ZIP without playback",
+    )
+    p_portable_validate.add_argument(
+        "--bundle",
+        required=True,
+        type=Path,
+        help="Portable review bundle directory or ZIP",
+    )
+    p_portable_validate.add_argument(
+        "--check-machine-open",
+        action="store_true",
+        help="Decode bundled media and check offline-open prerequisites silently",
+    )
+    p_portable_validate.add_argument(
+        "--format",
+        choices=["json"],
+        default="json",
+        dest="portable_validate_format",
+        help="Output format (json only)",
+    )
+
     p_factory_advance = subparsers.add_parser(
         "advance-factory-package",
         help="Plan or execute one bounded queue-selected lifecycle promotion",
@@ -3494,6 +3555,10 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_evaluate_factory_queue(args)
         elif args.command == "execute-factory-queue":
             return _cmd_execute_factory_queue(args)
+        elif args.command == "build-portable-review-bundle":
+            return _cmd_build_portable_review_bundle(args)
+        elif args.command == "validate-portable-review-bundle":
+            return _cmd_validate_portable_review_bundle(args)
         elif args.command == "advance-factory-package":
             return _cmd_advance_factory_package(args)
         elif args.command == "build-csv":
@@ -6906,6 +6971,61 @@ def _cmd_execute_factory_queue(args: argparse.Namespace) -> int:
         return 1
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0 if result["status"] in {"planned", "succeeded"} else 1
+
+
+def _cmd_build_portable_review_bundle(args: argparse.Namespace) -> int:
+    from src.pipeline.portable_review_bundle import (
+        PortableReviewBundleError,
+        build_portable_review_bundle,
+    )
+
+    try:
+        result = build_portable_review_bundle(
+            repo_root=Path.cwd(),
+            packet_path=args.packet,
+            output_path=args.output,
+            archive_path=args.archive,
+            descriptor_path=args.descriptor,
+        )
+    except PortableReviewBundleError as exc:
+        print(
+            json.dumps(
+                exc.as_payload(),
+                ensure_ascii=False,
+                indent=2,
+                sort_keys=True,
+            ),
+            file=sys.stderr,
+        )
+        return 1
+    print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0
+
+
+def _cmd_validate_portable_review_bundle(args: argparse.Namespace) -> int:
+    from src.pipeline.portable_review_bundle import (
+        PortableReviewBundleError,
+        validate_portable_review_bundle,
+    )
+
+    try:
+        result = validate_portable_review_bundle(
+            bundle_path=args.bundle,
+            check_machine_open=bool(args.check_machine_open),
+        )
+    except PortableReviewBundleError as exc:
+        print(
+            json.dumps(
+                exc.as_payload(),
+                ensure_ascii=False,
+                indent=2,
+                sort_keys=True,
+            ),
+            file=sys.stderr,
+        )
+        return 1
+    print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0
 
 
 def _cmd_advance_factory_package(args: argparse.Namespace) -> int:

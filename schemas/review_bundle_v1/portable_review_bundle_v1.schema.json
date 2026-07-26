@@ -1,0 +1,376 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nlmytgen.portable_review_bundle.v1",
+  "title": "NLMYTGen Portable Review Bundle v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "bundle_id",
+    "bundle_version",
+    "source_packet",
+    "package",
+    "cue",
+    "source_identities",
+    "payload_files",
+    "control_files",
+    "bundle_files",
+    "offline_entrypoint",
+    "states",
+    "retention_policy",
+    "archive_policy"
+  ],
+  "properties": {
+    "schema": {
+      "const": "nlmytgen.portable_review_bundle.v1"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "bundle_id": {
+      "$ref": "#/$defs/stableId"
+    },
+    "bundle_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "source_packet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "packet_id",
+        "packet_schema",
+        "manifest_sha256",
+        "tracked_receipt_sha256",
+        "portable_root"
+      ],
+      "properties": {
+        "packet_id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "packet_schema": {
+          "const": "nlmytgen.cue_review_packet.v1"
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "tracked_receipt_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "portable_root": {
+          "const": "packet"
+        }
+      }
+    },
+    "package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package_id",
+        "descriptor_sha256",
+        "content_identity_sha256"
+      ],
+      "properties": {
+        "package_id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "descriptor_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "content_identity_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "cue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cue_id",
+        "scene_id",
+        "canonical_text_sha256",
+        "start_frame_inclusive",
+        "end_frame_exclusive",
+        "length_frames",
+        "fps",
+        "start_seconds",
+        "end_seconds",
+        "context_handle_frames"
+      ],
+      "properties": {
+        "cue_id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "scene_id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "canonical_text_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "start_frame_inclusive": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_frame_exclusive": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "length_frames": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "context_handle_frames": {
+          "type": "integer",
+          "const": 0
+        }
+      }
+    },
+    "source_identities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_project_sha256",
+        "generated_project_sha256",
+        "source_mp4_sha256",
+        "source_id",
+        "source_sha256",
+        "materialized_source_sha256",
+        "crop",
+        "fit_mode"
+      ],
+      "properties": {
+        "source_project_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "generated_project_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_mp4_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "source_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "materialized_source_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "crop": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "fit_mode": {
+          "enum": [
+            "cover",
+            "contain",
+            "stretch"
+          ]
+        }
+      }
+    },
+    "payload_files": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 32,
+      "items": {
+        "$ref": "#/$defs/fileIdentity"
+      }
+    },
+    "control_files": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "$ref": "#/$defs/portablePath"
+      },
+      "uniqueItems": true
+    },
+    "bundle_files": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 34,
+      "items": {
+        "$ref": "#/$defs/portablePath"
+      },
+      "uniqueItems": true
+    },
+    "offline_entrypoint": {
+      "const": "index.html"
+    },
+    "states": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transport",
+        "identity_check",
+        "machine_open",
+        "human_open",
+        "content_decision",
+        "delivery_complete",
+        "rights_approved",
+        "production_approved",
+        "publication_approved"
+      ],
+      "properties": {
+        "transport": {
+          "const": "not_started"
+        },
+        "identity_check": {
+          "const": "valid"
+        },
+        "machine_open": {
+          "const": "unverified"
+        },
+        "human_open": {
+          "const": "unverified"
+        },
+        "content_decision": {
+          "const": "none"
+        },
+        "delivery_complete": {
+          "const": false
+        },
+        "rights_approved": {
+          "const": false
+        },
+        "production_approved": {
+          "const": false
+        },
+        "publication_approved": {
+          "const": false
+        }
+      }
+    },
+    "retention_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "immutable",
+        "no_overwrite",
+        "versioned_successor_required"
+      ],
+      "properties": {
+        "immutable": {
+          "const": true
+        },
+        "no_overwrite": {
+          "const": true
+        },
+        "versioned_successor_required": {
+          "const": true
+        }
+      }
+    },
+    "archive_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "compression",
+        "normalized_timestamp",
+        "encrypted",
+        "symlinks",
+        "hardlinks",
+        "nested_archives",
+        "executables"
+      ],
+      "properties": {
+        "format": {
+          "const": "zip"
+        },
+        "compression": {
+          "const": "stored"
+        },
+        "normalized_timestamp": {
+          "const": "1980-01-01T00:00:00Z"
+        },
+        "encrypted": {
+          "const": false
+        },
+        "symlinks": {
+          "const": false
+        },
+        "hardlinks": {
+          "const": false
+        },
+        "nested_archives": {
+          "const": false
+        },
+        "executables": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "stableId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9]+(?:[A-Za-z0-9_.:-]*[A-Za-z0-9])?$"
+    },
+    "portablePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*$"
+    },
+    "fileIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "path",
+        "mime_type",
+        "sha256",
+        "size_bytes"
+      ],
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/stableId"
+        },
+        "path": {
+          "$ref": "#/$defs/portablePath"
+        },
+        "mime_type": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 134217728
+        }
+      }
+    }
+  }
+}

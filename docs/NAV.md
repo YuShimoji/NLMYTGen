@@ -59,6 +59,7 @@ GitHub 上で現在地だけを読む場合は [PROJECT_COCKPIT.md](PROJECT_COCK
 `docs/verification` 直下の個別ファイルが多いときは、先に次の **索引表**だけ読む。
 
 - [verification/README.md](verification/README.md) — 証跡ディレクトリの読み方（現行判断の索引ではない）
+- [verification/PORTABLE_REVIEW_BUNDLE_VALIDATION_2026-07-27.md](verification/PORTABLE_REVIEW_BUNDLE_VALIDATION_2026-07-27.md) — **現行delivery frontier**: exact `cue_002` packetからself-contained directory/ZIP、recipient-open contract、isolated machine-open、tracked-only fail-closedまでのtechnical proof。human/named delivery/rights gateは含めない
 
 ---
 

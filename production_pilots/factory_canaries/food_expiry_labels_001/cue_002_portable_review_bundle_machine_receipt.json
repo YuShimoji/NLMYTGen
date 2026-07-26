@@ -1,0 +1,327 @@
+{
+  "schema": "nlmytgen.portable_review_bundle_machine_delivery_receipt.v1",
+  "schema_version": "1.0",
+  "status": "passed",
+  "project_state_id": "nlmytgen-portable-review-bundle-machine-open-validated-v1",
+  "source_commit": "3556c8b73e635f87d867a0003cf4187b19075e88",
+  "outcome_commit": "resolved-by-current-branch-tip",
+  "branch": "codex/nlmytgen-portable-review-bundle-v1",
+  "authority_id": "supervisor-cue002-portable-review-bundle-machine-delivery-2026-07-27",
+  "descriptor": {
+    "path": "production_pilots/factory_canaries/food_expiry_labels_001/cue_002_portable_review_bundle_descriptor.json",
+    "sha256": "78b2f735e3b4dcaf51744a6ecf8a94c5dfe0712550db6a5412a663d3d95bb365"
+  },
+  "contracts": {
+    "portable_bundle": {
+      "schema": "nlmytgen.portable_review_bundle.v1",
+      "path": "schemas/review_bundle_v1/portable_review_bundle_v1.schema.json",
+      "sha256": "9fd16c048397bca2b1d38c3d19d3880d8b3347bcce0540c012a44777c794c400"
+    },
+    "recipient_open": {
+      "schema": "nlmytgen.review_bundle_recipient_open.v1",
+      "path": "schemas/review_bundle_v1/recipient_open_receipt_v1.schema.json",
+      "sha256": "1a96e1cc6e1d24fd9c93a0fb8a6bbcac5df84c3a55a608a7626758c3e27104ed"
+    }
+  },
+  "source_packet": {
+    "path": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_runs/food_expiry_labels_internal_review_v4/content_review_packets/cue_002_queue_derivative_v1",
+    "tracked_receipt_path": "production_pilots/factory_canaries/food_expiry_labels_001/cue_002_queue_review_packet_receipt.json",
+    "tracked_receipt_sha256": "f45957e4c0fe8ac13125fd31a4b4eb01b53f641212ba0742e4601fd8ff509363",
+    "packet_id": "food_expiry_labels_001_cue_002_queue_derivative_v1",
+    "packet_schema": "nlmytgen.cue_review_packet.v1",
+    "package_id": "food_expiry_labels_001",
+    "cue_id": "cue_002",
+    "scene_id": "S1",
+    "canonical_text_sha256": "edea41f9987bd8f6a689e341473eeadfd37cb3a510df69b83a01d6a165267c0c",
+    "frame_interval": {
+      "start_inclusive": 373,
+      "end_exclusive": 816,
+      "length": 443,
+      "fps": 60,
+      "start_seconds": 6.2166666667,
+      "end_seconds": 13.6,
+      "context_handle_frames": 0
+    },
+    "identities": {
+      "descriptor_sha256": "bcbafe344f7a6efbbb03b4ace7a83e955c71d8d235381d4acafc861cd7b5975f",
+      "content_identity_sha256": "27165fad6fadaee2e5c247a86758a505c7f5f5797eb7b386d174585622a585c6",
+      "source_project_identity_sha256": "4f8dc13976cb4ef56ea582d75e1ff92ae9d2780fff4cf53c13923d561955bdbf",
+      "generated_project_sha256": "f0b03e67565bbe340fad7e689c30b519184735ac10e701cbd5da344f4c014f88",
+      "source_mp4_sha256": "95558db7488a882b4d22a9ea68f302bcc81e23800dfed9687274fe8944d3daec",
+      "source_id": "CAA-EXPIRATION-DATE-2025",
+      "source_sha256": "2c06e90c629a3be96b2ce973e81900f128ea63d3a07124714607232166f04517",
+      "materialized_source_sha256": "62a5e9daecd79e048df4bed8ced3a4880ee871ce862965a6a19f8a5c0d5b6163",
+      "crop": [
+        0.04,
+        0.34,
+        0.62,
+        0.23
+      ],
+      "fit_mode": "cover"
+    },
+    "manifest_sha256": "e06cdbd49d2e954850359aebb090c30eea8a103e43258dab72e0ac836fca83a1",
+    "files": [
+      {
+        "path": "README_REVIEW.md",
+        "sha256": "ccdd8e0b18db06ff4625fbed58338fafff4686376aa7838bd20fee05e14b8b44",
+        "size_bytes": 821
+      },
+      {
+        "path": "cue_002_materialized_source_view.png",
+        "sha256": "62a5e9daecd79e048df4bed8ced3a4880ee871ce862965a6a19f8a5c0d5b6163",
+        "size_bytes": 413062
+      },
+      {
+        "path": "cue_002_render_frame.png",
+        "sha256": "686e76e7b204cac56fd9427e6458f32b5f676e8ea75a3a85b08bd4c89dacfa20",
+        "size_bytes": 485008
+      },
+      {
+        "path": "cue_002_review_excerpt.mp4",
+        "sha256": "2703e4e881baea3958310194e3700678e54552705c66eddc007494e881c3977d",
+        "size_bytes": 361665
+      },
+      {
+        "path": "packet_manifest.json",
+        "sha256": "e06cdbd49d2e954850359aebb090c30eea8a103e43258dab72e0ac836fca83a1",
+        "size_bytes": 5221
+      }
+    ],
+    "before_after_sha_size_mtime_mismatch_count": 0,
+    "regenerated": false,
+    "modified": false
+  },
+  "bundle": {
+    "bundle_id": "food_expiry_labels_001_cue_002_portable_review_bundle_v1",
+    "bundle_version": 1,
+    "directory": "production_pilots/factory_canaries/food_expiry_labels_001/review_delivery_bundles/cue_002_portable_review_bundle_v1",
+    "archive": "production_pilots/factory_canaries/food_expiry_labels_001/review_delivery_bundles/cue_002_portable_review_bundle_v1.zip",
+    "archive_sha256": "cba54b31c510e8b35ab57a1fd188ea5ff466bd229aaeee3c100bb75168c528ca",
+    "archive_size_bytes": 1275584,
+    "manifest_sha256": "24037ea26a79cdbb49d6347002fd33fe89fb578d1f1800de1357b0807008c106",
+    "semantic_identity_sha256": "5bdb52e0abf4bff420e69ca847edd8ac870e5ee0c40ce20777b7f24d26d63287",
+    "offline_entrypoint": "index.html",
+    "file_count": 10,
+    "total_uncompressed_bytes": 1274278,
+    "inventory": [
+      {
+        "path": "README_OPEN.md",
+        "sha256": "0e949c356bfb2c0dd10c65d3268ee0eeac3eee10e7f390c00f4bcfa3d6430f0c",
+        "size_bytes": 636
+      },
+      {
+        "path": "checksums.sha256",
+        "sha256": "284bdb39b0b430ffd5accaed71bcb03c8748fad1f75cd448749884b00958c150",
+        "size_bytes": 849
+      },
+      {
+        "path": "index.html",
+        "sha256": "9b7c8727fd04c89ebb9694eae26c49a20feaf2afe65b3d95c3c1b12b3ada26b0",
+        "size_bytes": 2403
+      },
+      {
+        "path": "packet/README_REVIEW.md",
+        "sha256": "ccdd8e0b18db06ff4625fbed58338fafff4686376aa7838bd20fee05e14b8b44",
+        "size_bytes": 821
+      },
+      {
+        "path": "packet/cue_002_materialized_source_view.png",
+        "sha256": "62a5e9daecd79e048df4bed8ced3a4880ee871ce862965a6a19f8a5c0d5b6163",
+        "size_bytes": 413062
+      },
+      {
+        "path": "packet/cue_002_render_frame.png",
+        "sha256": "686e76e7b204cac56fd9427e6458f32b5f676e8ea75a3a85b08bd4c89dacfa20",
+        "size_bytes": 485008
+      },
+      {
+        "path": "packet/cue_002_review_excerpt.mp4",
+        "sha256": "2703e4e881baea3958310194e3700678e54552705c66eddc007494e881c3977d",
+        "size_bytes": 361665
+      },
+      {
+        "path": "packet/packet_manifest.json",
+        "sha256": "e06cdbd49d2e954850359aebb090c30eea8a103e43258dab72e0ac836fca83a1",
+        "size_bytes": 5221
+      },
+      {
+        "path": "portable_bundle_manifest.json",
+        "sha256": "24037ea26a79cdbb49d6347002fd33fe89fb578d1f1800de1357b0807008c106",
+        "size_bytes": 3899
+      },
+      {
+        "path": "recipient_open_receipt.template.json",
+        "sha256": "0b0af76e11f38aae83a26f9ab73eb9e774fd1cd634ba7689e47e740bdb98032c",
+        "size_bytes": 714
+      }
+    ],
+    "determinism": {
+      "independent_assembly_count": 2,
+      "directory_payload_byte_identical": true,
+      "archive_byte_identical": true,
+      "normalized_zip_timestamp": "1980-01-01T00:00:00Z"
+    },
+    "path_safety": {
+      "absolute_paths": 0,
+      "traversal_paths": 0,
+      "duplicate_normalized_paths": 0,
+      "symlinks": 0,
+      "hardlinks": 0,
+      "encrypted_files": 0,
+      "executables": 0,
+      "nested_archives": 0
+    },
+    "media_decode": {
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "width": 1920,
+      "height": 1080,
+      "fps": "60/1",
+      "sample_rate": "48000",
+      "channels": 2,
+      "full_video_decode": "passed",
+      "full_audio_decode": "passed",
+      "png_decode_count": 2
+    }
+  },
+  "transport": {
+    "recipient_id": "isolated-machine-recipient-v1",
+    "destination_absent_before": true,
+    "status": "completed",
+    "source_archive_sha256": "cba54b31c510e8b35ab57a1fd188ea5ff466bd229aaeee3c100bb75168c528ca",
+    "copied_archive_sha256": "cba54b31c510e8b35ab57a1fd188ea5ff466bd229aaeee3c100bb75168c528ca",
+    "archive_copy_mismatch_count": 0,
+    "extracted_semantic_identity_sha256": "5bdb52e0abf4bff420e69ca847edd8ac870e5ee0c40ce20777b7f24d26d63287",
+    "extracted_file_count": 10,
+    "repository_lookup_count": 0,
+    "private_source_copy_count": 0,
+    "overwrite_count": 0,
+    "external_transfer_count": 0,
+    "recipient_root_path_recorded": false,
+    "recipient_root_removed_after_evidence_capture": true
+  },
+  "machine_open": {
+    "status": "verified",
+    "evidence_id": "food-expiry-cue002-portable-review-bundle-electron43-machine-open-2026-07-27",
+    "runtime": {
+      "electron": "43.2.0",
+      "chromium": "150.0.7871.129",
+      "node": "24.18.0",
+      "hidden_window": true,
+      "viewport": "1280x720"
+    },
+    "page_title": "Review bundle: cue_002",
+    "loaded_png_count": 2,
+    "video_count": 1,
+    "video_metadata_ready_state": 4,
+    "video_duration_seconds": 7.383333,
+    "video_paused": true,
+    "video_current_time_seconds": 0,
+    "autoplay": false,
+    "muted_default": true,
+    "controls": true,
+    "focusable_surface_count": 10,
+    "all_focusable_surfaces_reached": true,
+    "local_reference_count": 12,
+    "external_reference_count": 0,
+    "external_request_count": 0,
+    "console_error_count": 0,
+    "load_error_count": 0,
+    "playback_event_count": 0,
+    "audio_output_count": 0,
+    "window_open_count": 0,
+    "horizontal_overflow_pixels": 0,
+    "process_residue_count": 0,
+    "profile_residue_count": 0
+  },
+  "recipient_open_receipt": {
+    "schema": "nlmytgen.review_bundle_recipient_open.v1",
+    "schema_version": "1.0",
+    "bundle": {
+      "bundle_id": "food_expiry_labels_001_cue_002_portable_review_bundle_v1",
+      "bundle_version": 1,
+      "manifest_sha256": "24037ea26a79cdbb49d6347002fd33fe89fb578d1f1800de1357b0807008c106",
+      "archive_sha256": "cba54b31c510e8b35ab57a1fd188ea5ff466bd229aaeee3c100bb75168c528ca"
+    },
+    "recipient_id": "isolated-machine-recipient-v1",
+    "transport": "completed",
+    "identity_check": "valid",
+    "machine_open": "verified",
+    "machine_open_evidence_id": "food-expiry-cue002-portable-review-bundle-electron43-machine-open-2026-07-27",
+    "human_open": "unverified",
+    "human_open_evidence_id": null,
+    "content_decision": "none",
+    "content_decision_receipt_id": null,
+    "rights": {
+      "approved": false,
+      "authority_id": null
+    },
+    "production": {
+      "approved": false,
+      "authority_id": null
+    },
+    "publication": {
+      "approved": false,
+      "authority_id": null
+    },
+    "delivery_complete": false
+  },
+  "tracked_only": {
+    "tracked_tree": "resolved-by-precommit-index",
+    "private_packet_present": false,
+    "bundle_present": false,
+    "contracts_descriptor_and_builder_present": true,
+    "status": "failed_closed",
+    "exit_code": 1,
+    "error_code": "source_bundle_unavailable",
+    "output_created": false,
+    "source_packet_regeneration_count": 0,
+    "yymm4_launch_count": 0,
+    "render_driver_launch_count": 0,
+    "network_request_count": 0,
+    "private_copy_count": 0
+  },
+  "pre_acceptance_repair": {
+    "failed_candidate_count": 1,
+    "failure": "nested fallback link prevented one logical keyboard focus surface",
+    "resolution": "removed the nested interactive fallback while retaining the separate MP4 link",
+    "source_packet_changed": false,
+    "accepted_output_overwrite_count": 0
+  },
+  "preservation": {
+    "source_packet_mismatch_count": 0,
+    "content_thread_packet_changed": false,
+    "canonical_descriptor_changed": false,
+    "canonical_queue_changed": false,
+    "canonical_content_changed": false,
+    "generated_project_changed": false,
+    "source_mp4_changed": false,
+    "dependency_lock_changed": false,
+    "private_packet_bytes_tracked": false,
+    "protected_ignored_artifacts_preserved": true
+  },
+  "boundaries": {
+    "source_packet_regeneration_count": 0,
+    "source_packet_mutation_count": 0,
+    "yymm4_launch_count": 0,
+    "render_driver_launch_count": 0,
+    "full_render_count": 0,
+    "transcode_count": 0,
+    "playback_count": 0,
+    "audio_output_count": 0,
+    "system_volume_operation_count": 0,
+    "network_request_count": 0,
+    "external_transfer_count": 0,
+    "cloud_upload_count": 0,
+    "human_open": false,
+    "creative_acceptance": false,
+    "rights_approval": false,
+    "production_approval": false,
+    "publication_approval": false,
+    "release": false,
+    "pull_request": false,
+    "merge": false,
+    "master_mutation": false,
+    "deployment": false
+  }
+}

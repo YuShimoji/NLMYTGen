@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nlmytgen.review_bundle_recipient_open.v1",
+  "title": "NLMYTGen Review Bundle Recipient Open v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "bundle",
+    "recipient_id",
+    "transport",
+    "identity_check",
+    "machine_open",
+    "human_open",
+    "content_decision",
+    "rights",
+    "production",
+    "publication",
+    "delivery_complete"
+  ],
+  "properties": {
+    "schema": {
+      "const": "nlmytgen.review_bundle_recipient_open.v1"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "bundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bundle_id",
+        "bundle_version",
+        "manifest_sha256",
+        "archive_sha256"
+      ],
+      "properties": {
+        "bundle_id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "bundle_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "archive_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "recipient_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/stableId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "transport": {
+      "enum": [
+        "not_started",
+        "completed",
+        "failed"
+      ]
+    },
+    "identity_check": {
+      "enum": [
+        "unknown",
+        "valid",
+        "invalid"
+      ]
+    },
+    "machine_open": {
+      "enum": [
+        "unverified",
+        "verified",
+        "failed"
+      ]
+    },
+    "machine_open_evidence_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/stableId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "human_open": {
+      "enum": [
+        "unverified",
+        "verified",
+        "failed"
+      ]
+    },
+    "human_open_evidence_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/stableId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "content_decision": {
+      "enum": [
+        "none",
+        "pending",
+        "recorded"
+      ]
+    },
+    "content_decision_receipt_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/stableId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "rights": {
+      "$ref": "#/$defs/approvalAxis"
+    },
+    "production": {
+      "$ref": "#/$defs/approvalAxis"
+    },
+    "publication": {
+      "$ref": "#/$defs/approvalAxis"
+    },
+    "delivery_complete": {
+      "type": "boolean"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "stableId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9]+(?:[A-Za-z0-9_.:-]*[A-Za-z0-9])?$"
+    },
+    "approvalAxis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approved",
+        "authority_id"
+      ],
+      "properties": {
+        "approved": {
+          "type": "boolean"
+        },
+        "authority_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/stableId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

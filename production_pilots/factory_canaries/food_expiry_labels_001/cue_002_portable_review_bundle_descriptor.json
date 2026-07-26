@@ -1,0 +1,46 @@
+{
+  "schema": "nlmytgen.portable_review_bundle_descriptor.v1",
+  "schema_version": "1.0",
+  "bundle_id": "food_expiry_labels_001_cue_002_portable_review_bundle_v1",
+  "bundle_version": 1,
+  "authority_id": "supervisor-cue002-portable-review-bundle-machine-delivery-2026-07-27",
+  "contract": {
+    "bundle_schema": {
+      "path": "schemas/review_bundle_v1/portable_review_bundle_v1.schema.json",
+      "sha256": "9fd16c048397bca2b1d38c3d19d3880d8b3347bcce0540c012a44777c794c400"
+    },
+    "recipient_open_schema": {
+      "path": "schemas/review_bundle_v1/recipient_open_receipt_v1.schema.json",
+      "sha256": "1a96e1cc6e1d24fd9c93a0fb8a6bbcac5df84c3a55a608a7626758c3e27104ed"
+    }
+  },
+  "source_packet": {
+    "path": "production_pilots/factory_canaries/food_expiry_labels_001/auto_video_runs/food_expiry_labels_internal_review_v4/content_review_packets/cue_002_queue_derivative_v1",
+    "tracked_receipt_path": "production_pilots/factory_canaries/food_expiry_labels_001/cue_002_queue_review_packet_receipt.json",
+    "tracked_receipt_sha256": "f45957e4c0fe8ac13125fd31a4b4eb01b53f641212ba0742e4601fd8ff509363",
+    "packet_id": "food_expiry_labels_001_cue_002_queue_derivative_v1",
+    "manifest_sha256": "e06cdbd49d2e954850359aebb090c30eea8a103e43258dab72e0ac836fca83a1"
+  },
+  "output": {
+    "directory": "production_pilots/factory_canaries/food_expiry_labels_001/review_delivery_bundles/cue_002_portable_review_bundle_v1",
+    "archive": "production_pilots/factory_canaries/food_expiry_labels_001/review_delivery_bundles/cue_002_portable_review_bundle_v1.zip"
+  },
+  "recipient_test": {
+    "recipient_id": "isolated-machine-recipient-v1"
+  },
+  "constraints": {
+    "no_overwrite": true,
+    "source_packet_regeneration": false,
+    "source_packet_mutation": false,
+    "network": false,
+    "playback": false,
+    "yymm4": false,
+    "render": false,
+    "external_transfer": false,
+    "human_open": false,
+    "content_decision": false,
+    "rights": false,
+    "production": false,
+    "publication": false
+  }
+}

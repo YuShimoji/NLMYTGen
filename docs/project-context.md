@@ -1,58 +1,53 @@
 # Project Context — NLMYTGen
 
-## 現在の監修AIハンドオフ（2026-07-27 JST・Queue-derived Review Packet）
+## 現在の監修AIハンドオフ（2026-07-27 JST・Portable Review Bundle）
 
-この節だけが現在の再開地点である。standard GUI batch checkpoint
-`8a78eb2c6c33c9638dcfb7f8517ccea9f953478a`から
-`codex/nlmytgen-derived-review-packet-batch-v1`を作成し、content-thread完了から
-独立した最初のreal derived-artifact effectをbounded executorへ追加した。
+この節だけが現在の再開地点である。exact source
+`3556c8b73e635f87d867a0003cf4187b19075e88`から
+`codex/nlmytgen-portable-review-bundle-v1`を作成し、ignored repo-local packetを
+repository-independent review artifactへ変換した。
 
-- **contract**: `effect_class=derived_artifact` /
-  `operation=review_packet_generation`。edgeは`rendered → rendered`で、
-  lifecycle、content identity、generated project、source MP4は不変。
-- **exact change-set**:
-  `food_expiry_cue002_review_packet_change_set_v1.json`、entry 1。
-  Food Expiryだけをqueue/descriptor/content/project/MP4/cue/source/outputへ束縛。
-- **cue binding**: `cue_002`、scene `S1`、frame `[373,816)`、60 fps。
-  canonical text、unique VoiceItem、ImageItem、cue readback、run receipt、
-  source provenance、crop `[0.04,0.34,0.62,0.23]` / `cover`を相互照合。
-- **authority**:
-  `supervisor-food-expiry-cue002-review-packet-generation-2026-07-27`を
-  effect直前に一度だけ消費。standing authority、overwrite、lifecycle/content
-  authorityは持たない。
-- **actual GUI effect**: Electron 43.2.0のstandard `バッチ実行`でplan /
-  preflight / execute。mutating 1、authority 1、dispatch 1、succeeded 1、
-  other 3 packageは`verified_noop`。
-- **packet**:
-  `.../content_review_packets/cue_002_queue_derivative_v1/`へexcerpt MP4、
-  render frame、materialized source view、README、manifestの5 filesを生成。
-  H.264/AAC 1920×1080 60 fps、video/audio/PNG decode pass。
-- **non-render boundary**: final MP4からcueだけをextractし、generated projectの
-  materialized PNGをbyte-preserving copy。YMM4、render driver、full render、
-  playback、volume operationは0。
-- **restart / resume**: runtime restart後にsame planとjournalを明示open。
-  prior successを維持し、dispatch delta 0、authority delta 0、packet SHA /
-  size / mtime mismatch 0、rewrite 0。
-- **tracked-only**: staged treeだけのcheckoutは
-  `derived_artifact_source_unavailable`。dispatch、YMM4、render、private copy 0。
-- **content packet**: 既存`cue_002_content_review_v1`はread-only。package、cue、
-  interval、project、MP4、source、crop/fitがcompatibleで、変更0。human open /
-  acceptanceは推論していない。
-- **tests**: Python focused 144、JavaScript batch/standard 23、compile/syntax、
-  deterministic manifest、media/image decode pass。canonical Regression
-  Integrityはoutcome commit後に一度だけ実行する。
+- **source preservation**: Food Expiry `cue_002` packet 5 filesをtracked receipt /
+  manifestへexactに束縛。SHA / size / mtime mismatch 0、regeneration / mutation 0。
+- **contracts**: `nlmytgen.portable_review_bundle.v1`と
+  `nlmytgen.review_bundle_recipient_open.v1`。transport、identity、machine-open、
+  human-open、content decision、rights/production/publicationを別clockにした。
+- **accepted bundle**: 10 files、offline `index.html`、directory / ZIP semantic
+  identity `5bdb52e0...63287`、archive SHA `cba54b31...28ca`。
+  independent assembly 2回とZIP bytesは一致。
+- **path/media**: absolute/traversal/duplicate/symlink/hardlink/encrypted/
+  executable/nested archive 0。H.264/AAC full decodeとPNG 2/2 decode pass。
+- **isolated transport**: absent destinationへZIPをbyte-exact copy/extract。
+  archive mismatch 0、repository lookup/private source copy/overwrite/external
+  transfer 0。tracked evidenceはsanitized recipient IDだけ。
+- **machine-open**: Electron 43.2.0 hidden 1280×720。PNG 2/2、video metadata、
+  10/10 focus、external reference/request 0、console/load error 0、playback/
+  audio output 0、overflow 0。temporary recipient/profileとowned process residue 0。
+- **state clocks**: `transport=completed`、`identity_check=valid`、
+  `machine_open=verified`、`human_open=unverified`、
+  `content_decision=none`、`delivery_complete=false`。
+- **tracked-only**: schemas、builder、descriptor、machine receiptはvalidate。
+  private packet/bundle不在のbuildはexit 1 / `source_bundle_unavailable`で、
+  regeneration、YMM4、render、network、private copy 0。
+- **tests**: portable 18、cue-review regression 21、compile、directory/ZIP、
+  media/image、transport、machine-open、tracked-only、JSON/Markdown/HTML、
+  state sync、diff check pass。canonical Regression Integrityはoutcome commit後
+  に一度だけ実行する。
 - **state**:
-  `content-independent-technical-factory-with-real-derived-artifact-change-set`。
-  technical developmentはcontent-thread completionを待たず、content decisionは
-  optional asynchronous successor input。
-- **next action**: current packetを再生成せず、versioned portable review bundle
-  とrecipient-open contractを作る。delivery/portabilityが次gateであり、content
-  reviewやanother topicは次のtechnical sliceにしない。
-- **boundary**: content/visual revision、human acceptance、rights、production、
-  publication、upload、release、PR、merge、master、deploymentは未実施。
+  `repository-independent-versioned-review-bundle-with-recipient-open-contract`。
+  content-thread completionから独立したtechnical deliveryを維持する。
+- **next action**: multi-bundle recipient registry/ingestを作り、
+  `bundle_id + version + archive SHA + recipient ID`のconflict/supersession/
+  resumeをfail closedにする。named terminalが実在しauthorityがある場合だけ
+  independent delivery validationへ進む。
+- **future clocks**: named delivery後もhuman-open receipt、artifact-bound content
+  decision、creative、rights、production、publicationを独立に処理する。
+- **boundary**: named cross-terminal delivery、human open、creative acceptance、
+  rights、production、publication、upload、release、PR、merge、master、
+  deploymentは未実施。
 - **詳細**:
-  `docs/verification/QUEUE_DERIVED_REVIEW_PACKET_VALIDATION_2026-07-27.md`
-  と`.json`。通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
+  `docs/verification/PORTABLE_REVIEW_BUNDLE_VALIDATION_2026-07-27.md`と`.json`。
+  通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
   `docs/runtime-state.md`。
 
 ## 現在の監修AIハンドオフ（2026-07-26 JST・Factory Contract v2.1 lifecycle）
