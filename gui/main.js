@@ -4,6 +4,20 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 const electronCompatibility = require('./electron_compatibility_probe');
 const standardLoopProbe = require('./standard_production_loop_probe');
+const batchObservabilityProbe = require('./batch_observability_probe');
+const {
+  BatchJobController,
+  DEFAULT_CHANGE_SET_PATH,
+  DEFAULT_QUEUE_PATH,
+  LocalJournalStore,
+  buildExecutorArgs,
+  fileSha256,
+  identitySha256,
+  inspectAuthoritySet,
+  normalizeExecutionResult,
+  sanitizeOperatorText,
+  validateJournalAgainstPlan,
+} = require('./batch_observability');
 const {
   ACCEPTED_MANIFEST_RELATIVE_PATH,
   PipelineJobController,
@@ -23,39 +37,58 @@ let mainWindow;
 
 const compatibilityMode = electronCompatibility.isEnabled();
 const standardLoopProbeMode = standardLoopProbe.isEnabled();
+const batchObservabilityProbeMode = batchObservabilityProbe.isEnabled();
 
 if (compatibilityMode) {
   app.setPath('userData', electronCompatibility.profilePath());
 } else if (standardLoopProbeMode) {
   app.setPath('userData', standardLoopProbe.profilePath());
+} else if (batchObservabilityProbeMode) {
+  app.setPath('userData', batchObservabilityProbe.profilePath());
 }
 
 async function createWindow() {
-  const probeWidth = Number.parseInt(process.env.NLMYTGEN_STANDARD_LOOP_WIDTH || '', 10);
-  const probeHeight = Number.parseInt(process.env.NLMYTGEN_STANDARD_LOOP_HEIGHT || '', 10);
+  const probeWidth = Number.parseInt(
+    process.env.NLMYTGEN_BATCH_OBSERVABILITY_WIDTH
+      || process.env.NLMYTGEN_STANDARD_LOOP_WIDTH
+      || '',
+    10,
+  );
+  const probeHeight = Number.parseInt(
+    process.env.NLMYTGEN_BATCH_OBSERVABILITY_HEIGHT
+      || process.env.NLMYTGEN_STANDARD_LOOP_HEIGHT
+      || '',
+    10,
+  );
   mainWindow = new BrowserWindow({
     width: Number.isFinite(probeWidth) ? probeWidth : 900,
     height: Number.isFinite(probeHeight) ? probeHeight : 700,
     minWidth: 600,
     minHeight: 500,
-    show: !(compatibilityMode || standardLoopProbeMode),
+    show: !(compatibilityMode || standardLoopProbeMode || batchObservabilityProbeMode),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
-      offscreen: compatibilityMode || standardLoopProbeMode,
+      offscreen: compatibilityMode || standardLoopProbeMode || batchObservabilityProbeMode,
     },
     title: 'NLMYTGen',
   });
 
   const observations = compatibilityMode
     ? electronCompatibility.observe(mainWindow)
-    : (standardLoopProbeMode ? standardLoopProbe.observe(mainWindow) : null);
+    : (standardLoopProbeMode
+      ? standardLoopProbe.observe(mainWindow)
+      : (batchObservabilityProbeMode
+        ? batchObservabilityProbe.observe(mainWindow)
+        : null));
   await mainWindow.loadFile(path.join(__dirname, 'index.html'));
   if (compatibilityMode) {
     await electronCompatibility.run(mainWindow, observations);
   } else if (standardLoopProbeMode) {
     await standardLoopProbe.run(mainWindow, observations);
+  } else if (batchObservabilityProbeMode) {
+    await batchObservabilityProbe.run(mainWindow, observations);
   }
 }
 
@@ -70,11 +103,18 @@ app.whenReady().then(createWindow).catch((err) => {
     app.quit();
     return;
   }
+  if (batchObservabilityProbeMode) {
+    batchObservabilityProbe.fail(err);
+    app.quit();
+    return;
+  }
   console.error(err);
 });
 app.on('window-all-closed', async () => {
   const job = standardLoopJobs.snapshot();
   if (job.active) await standardLoopJobs.cancel(job.id);
+  const batchJob = batchJobs.snapshot();
+  if (batchJob.active) await batchJobs.cancel(batchJob.id);
   app.quit();
 });
 
@@ -192,6 +232,159 @@ const standardLoopJobs = new PipelineJobController({
   emit: (type, payload) => {
     if (mainWindow && !mainWindow.isDestroyed()) {
       mainWindow.webContents.send('standard-loop-job-event', { type, ...payload });
+    }
+  },
+});
+const batchSelections = new Map();
+let batchLastExecutionResult = null;
+let batchLastAuthoritySummary = null;
+let batchJournalStore = null;
+
+function currentBatchJournalStore() {
+  if (!batchJournalStore) {
+    const journalRoot = batchObservabilityProbeMode
+      ? path.join(app.getPath('userData'), 'batch-journals')
+      : path.join(REPO_ROOT, '_tmp', 'gui-batch-journals');
+    batchJournalStore = new LocalJournalStore(journalRoot);
+  }
+  return batchJournalStore;
+}
+
+function displayLocator(fullPath) {
+  const relative = path.relative(REPO_ROOT, fullPath);
+  if (!relative.startsWith('..') && !path.isAbsolute(relative)) {
+    return relative.replace(/\\/g, '/');
+  }
+  return `local/${path.basename(fullPath)}`;
+}
+
+function validateBatchSelectionPayload(kind, fullPath) {
+  const contracts = {
+    queue: 'nlmytgen.factory_queue.v1',
+    change_set: 'nlmytgen.factory_queue.change_set.v1',
+  };
+  const expectedSchema = contracts[kind];
+  if (!expectedSchema) return;
+  const payload = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
+  if (payload?.schema !== expectedSchema || payload?.schema_version !== '1.0') {
+    throw new Error(`BATCH_${kind.toUpperCase()}_SCHEMA_INVALID`);
+  }
+}
+
+function registerBatchSelection(kind, fullPath, { repoOnly = false } = {}) {
+  const resolved = path.resolve(fullPath);
+  const relative = path.relative(REPO_ROOT, resolved);
+  if (repoOnly && (relative.startsWith('..') || path.isAbsolute(relative))) {
+    throw new Error(`BATCH_${kind.toUpperCase()}_OUTSIDE_REPOSITORY`);
+  }
+  validateBatchSelectionPayload(kind, resolved);
+  const selectionId = `${kind}-${identitySha256({
+    path: resolved,
+    sha256: fileSha256(resolved),
+  }).slice(0, 24)}`;
+  const value = {
+    selectionId,
+    kind,
+    fullPath: resolved,
+    displayPath: displayLocator(resolved),
+    sha256: fileSha256(resolved),
+  };
+  batchSelections.set(selectionId, value);
+  return {
+    selection_id: selectionId,
+    kind,
+    display_path: value.displayPath,
+    sha256: value.sha256,
+  };
+}
+
+function batchSelection(selectionId, kind, { repoOnly = false } = {}) {
+  const selected = batchSelections.get(selectionId);
+  if (!selected || selected.kind !== kind || !fs.existsSync(selected.fullPath)) {
+    throw new Error(`BATCH_${kind.toUpperCase()}_SELECTION_INVALID`);
+  }
+  if (repoOnly) {
+    const relative = path.relative(REPO_ROOT, selected.fullPath);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
+      throw new Error(`BATCH_${kind.toUpperCase()}_OUTSIDE_REPOSITORY`);
+    }
+  }
+  return selected;
+}
+
+function descriptorLoader(relativePath) {
+  const resolved = resolveRepoRelativePath(relativePath);
+  if (!resolved.ok) throw new Error('BATCH_DESCRIPTOR_PATH_INVALID');
+  return JSON.parse(fs.readFileSync(resolved.full, 'utf8'));
+}
+
+function executionResultFromJournal(journal) {
+  return {
+    schema: 'nlmytgen.factory_queue.execution_result.v1',
+    schema_version: '1.0',
+    status: journal.status,
+    plan: {
+      schema: 'nlmytgen.factory_queue.executor.v1',
+      schema_version: '1.0',
+      package_count: (journal.entries || []).length,
+      mutating_entry_count: (journal.entries || []).filter(
+        (entry) => Boolean(entry.requested_operation),
+      ).length,
+      plan_identity_sha256: journal.plan_identity_sha256,
+      queue: journal.queue,
+      change_set: journal.change_set,
+    },
+    journal,
+    execution_receipt: {
+      schema: 'nlmytgen.factory_queue.execution_receipt.v1',
+      journal_sha256: identitySha256(journal),
+    },
+  };
+}
+
+function completedBatchResult({ code, cancelled, stdout, stderr }) {
+  if (cancelled) return { ok: false, cancelled: true, error: 'BATCH_JOB_CANCELLED' };
+  const json = parseJsonLine(stdout);
+  if (!json) {
+    return {
+      ok: false,
+      error: 'BATCH_EXECUTOR_JSON_MISSING',
+      detail: sanitizeOperatorText(stderr || stdout, 2000),
+    };
+  }
+  if (code !== 0) {
+    return {
+      ok: false,
+      error: 'BATCH_EXECUTOR_FAILED',
+      detail: sanitizeOperatorText(stderr || json.error || stdout, 2000),
+    };
+  }
+  batchLastExecutionResult = json;
+  const persisted = json.journal?.execution_mode !== 'plan_only';
+  const saved = persisted ? currentBatchJournalStore().persist(json) : null;
+  const journalSelection = saved
+    ? registerBatchSelection('journal', saved.path, { repoOnly: true })
+    : null;
+  const readModel = normalizeExecutionResult(json, {
+    descriptorLoader,
+    authoritySummary: batchLastAuthoritySummary,
+    journalLocator: journalSelection?.display_path || 'plan-only/current',
+  });
+  return {
+    ok: true,
+    read_model: readModel,
+    execution_result_identity_sha256: identitySha256(json),
+    journal_selection_id: journalSelection?.selection_id || null,
+  };
+}
+
+const batchJobs = new BatchJobController({
+  startProcess: spawnStandardLoopProcess,
+  cancelProcess: cancelOwnedProcessTree,
+  isOtherJobActive: () => standardLoopJobs.snapshot().active,
+  emit: (type, payload) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('batch-job-event', { type, ...payload });
     }
   },
 });
@@ -404,6 +597,9 @@ ipcMain.handle('standard-loop-start', async (_event, opts) => {
   if (DEVELOPMENT_AUDIO_POLICY !== 'silent') {
     return { ok: false, error: 'SILENT_POLICY_REQUIRED' };
   }
+  if (batchJobs.snapshot().active) {
+    return { ok: false, error: 'PIPELINE_JOB_ALREADY_ACTIVE' };
+  }
   const resolved = resolveStandardLoopPath(REPO_ROOT, opts?.manifestPath);
   if (!resolved.ok) return { ok: false, error: resolved.error };
   const validatedRunId = validateRunId(opts?.runId);
@@ -455,6 +651,202 @@ ipcMain.handle('standard-loop-open-output', async (_event, relPath) => {
   const error = await shell.openPath(resolved.full);
   return error ? { ok: false, error } : { ok: true, path: resolved.rel };
 });
+
+// --- Bounded factory queue batch observability ---
+
+ipcMain.handle('batch-default-selections', async () => {
+  const queue = registerBatchSelection('queue', path.join(REPO_ROOT, DEFAULT_QUEUE_PATH));
+  const changeSet = registerBatchSelection(
+    'change_set',
+    path.join(REPO_ROOT, DEFAULT_CHANGE_SET_PATH),
+  );
+  return {
+    ok: true,
+    queue,
+    change_set: changeSet,
+    plan_status: batchLastExecutionResult ? 'available' : 'not_run',
+  };
+});
+
+ipcMain.handle('batch-select-file', async (_event, kind) => {
+  const supported = new Set(['queue', 'change_set', 'authority', 'journal']);
+  if (!supported.has(kind)) return { ok: false, error: 'BATCH_SELECTION_KIND_INVALID' };
+  const titles = {
+    queue: 'Factory Queue を選択',
+    change_set: 'Change Set を選択',
+    authority: 'Execution Authority を選択',
+    journal: 'Execution Journal を選択',
+  };
+  const result = await dialog.showOpenDialog(mainWindow, {
+    title: titles[kind],
+    filters: [{ name: 'JSON', extensions: ['json'] }],
+    properties: ['openFile'],
+  });
+  if (result.canceled) return { ok: false, canceled: true };
+  try {
+    const selected = registerBatchSelection(kind, result.filePaths[0], { repoOnly: true });
+    batchSelection(selected.selection_id, kind, { repoOnly: true });
+    if (kind === 'authority') {
+      const authority = JSON.parse(fs.readFileSync(result.filePaths[0], 'utf8'));
+      batchLastAuthoritySummary = batchLastExecutionResult
+        ? inspectAuthoritySet(batchLastExecutionResult, authority)
+        : { status: 'required', exact: false, error: 'PLAN_REQUIRED_FOR_AUTHORITY_PREFLIGHT' };
+      return { ok: true, selection: selected, authority: batchLastAuthoritySummary };
+    }
+    if (kind === 'journal') {
+      const loaded = currentBatchJournalStore().load(result.filePaths[0]);
+      const validation = batchLastExecutionResult
+        ? validateJournalAgainstPlan(batchLastExecutionResult, loaded.journal)
+        : { ok: false, error: 'PLAN_REQUIRED_FOR_RESUME' };
+      if (validation.ok) {
+        batchLastExecutionResult = executionResultFromJournal(loaded.journal);
+        batchLastAuthoritySummary = null;
+      }
+      const readModel = normalizeExecutionResult(
+        executionResultFromJournal(loaded.journal),
+        {
+          descriptorLoader,
+          authoritySummary: batchLastAuthoritySummary,
+          journalLocator: selected.display_path,
+        },
+      );
+      return {
+        ok: true,
+        selection: selected,
+        journal: {
+          identity_sha256: loaded.file_sha256,
+          prefix_identity_sha256: loaded.prefix_identity_sha256,
+          event_count: loaded.event_count,
+          validation,
+          authority: {
+            status: readModel.authority.state,
+            exact: readModel.authority.state === 'not_required',
+          },
+          read_model: readModel,
+        },
+      };
+    }
+    return { ok: true, selection: selected };
+  } catch (error) {
+    return { ok: false, error: sanitizeOperatorText(error.message, 1000) };
+  }
+});
+
+ipcMain.handle('batch-open-recent-journal', async () => {
+  try {
+    const loaded = currentBatchJournalStore().loadRecent();
+    if (!loaded) return { ok: false, error: 'RECENT_JOURNAL_NOT_FOUND' };
+    const selected = registerBatchSelection(
+      'journal',
+      loaded.path,
+      { repoOnly: true },
+    );
+    const validation = batchLastExecutionResult
+      ? validateJournalAgainstPlan(batchLastExecutionResult, loaded.journal)
+      : { ok: false, error: 'PLAN_REQUIRED_FOR_RESUME' };
+    if (validation.ok) {
+      batchLastExecutionResult = executionResultFromJournal(loaded.journal);
+      batchLastAuthoritySummary = null;
+    }
+    const readModel = normalizeExecutionResult(
+      executionResultFromJournal(loaded.journal),
+      {
+        descriptorLoader,
+        authoritySummary: batchLastAuthoritySummary,
+        journalLocator: selected.display_path,
+      },
+    );
+    return {
+      ok: true,
+      selection: selected,
+      journal: {
+        identity_sha256: loaded.file_sha256,
+        prefix_identity_sha256: loaded.prefix_identity_sha256,
+        event_count: loaded.event_count,
+        validation,
+        authority: {
+          status: readModel.authority.state,
+          exact: readModel.authority.state === 'not_required',
+        },
+        read_model: readModel,
+      },
+    };
+  } catch (error) {
+    return { ok: false, error: sanitizeOperatorText(error.message, 1000) };
+  }
+});
+
+ipcMain.handle('batch-start', async (_event, request) => {
+  try {
+    if (DEVELOPMENT_AUDIO_POLICY !== 'silent') {
+      return { ok: false, error: 'SILENT_POLICY_REQUIRED' };
+    }
+    const mode = request?.execute === true ? 'execute' : 'plan';
+    const queue = batchSelection(request?.queueSelectionId, 'queue', { repoOnly: true });
+    const changeSet = batchSelection(
+      request?.changeSetSelectionId,
+      'change_set',
+      { repoOnly: true },
+    );
+    let authority = null;
+    let journal = null;
+    if (request?.authoritySelectionId) {
+      authority = batchSelection(request.authoritySelectionId, 'authority');
+    }
+    if (request?.journalSelectionId) {
+      journal = batchSelection(request.journalSelectionId, 'journal');
+    }
+    if (mode === 'execute') {
+      const changeSetJson = JSON.parse(fs.readFileSync(changeSet.fullPath, 'utf8'));
+      const mutatingEntries = Array.isArray(changeSetJson.entries)
+        ? changeSetJson.entries.length
+        : -1;
+      if (mutatingEntries < 0) return { ok: false, error: 'CHANGE_SET_ENTRIES_INVALID' };
+      if (mutatingEntries > 0) {
+        if (!authority) return { ok: false, error: 'EXACT_AUTHORITY_REQUIRED' };
+        if (!batchLastExecutionResult) return { ok: false, error: 'SUCCESSFUL_PLAN_REQUIRED' };
+        const authorityJson = JSON.parse(fs.readFileSync(authority.fullPath, 'utf8'));
+        batchLastAuthoritySummary = inspectAuthoritySet(batchLastExecutionResult, authorityJson);
+        if (batchLastAuthoritySummary.status !== 'available' || !batchLastAuthoritySummary.exact) {
+          return { ok: false, error: 'EXACT_AUTHORITY_PREFLIGHT_FAILED' };
+        }
+      } else {
+        batchLastAuthoritySummary = { status: 'not_required', exact: true, records: [] };
+      }
+    } else {
+      batchLastAuthoritySummary = null;
+    }
+    const args = buildExecutorArgs({
+      queuePath: queue.displayPath,
+      changeSetPath: changeSet.displayPath,
+      authorityPath: mode === 'execute' ? (authority?.displayPath || null) : null,
+      journalPath: mode === 'execute' ? (journal?.displayPath || null) : null,
+      execute: mode === 'execute',
+    });
+    return batchJobs.start({
+      kind: 'batch',
+      mode,
+      args,
+      complete: completedBatchResult,
+    });
+  } catch (error) {
+    return { ok: false, error: sanitizeOperatorText(error.message, 1000) };
+  }
+});
+
+ipcMain.handle('batch-cancel', async (_event, jobId) => batchJobs.cancel(jobId));
+ipcMain.handle('batch-job', async () => batchJobs.snapshot());
+if (batchObservabilityProbeMode) {
+  ipcMain.handle('batch-probe-reset-runtime-state', async () => {
+    if (batchJobs.snapshot().active || standardLoopJobs.snapshot().active) {
+      return { ok: false, error: 'PIPELINE_JOB_ALREADY_ACTIVE' };
+    }
+    batchSelections.clear();
+    batchLastExecutionResult = null;
+    batchLastAuthoritySummary = null;
+    return { ok: true };
+  });
+}
 
 // --- Settings persistence ---
 

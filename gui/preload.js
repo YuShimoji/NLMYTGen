@@ -1,9 +1,10 @@
 const { contextBridge, ipcRenderer, webUtils } = require('electron');
 
-contextBridge.exposeInMainWorld('nlmytgen', {
+const nlmytgenApi = {
   runtimeMode: {
     electronCompatibility: process.env.NLMYTGEN_ELECTRON_COMPATIBILITY_SMOKE === '1',
     standardLoopProbe: process.env.NLMYTGEN_STANDARD_LOOP_PROBE === '1',
+    batchProbe: process.env.NLMYTGEN_BATCH_OBSERVABILITY_PROBE === '1',
   },
   /** Electron 32+ ではレンダラの File に path が無い。DnD / file input 共通で実パスを得る */
   getPathForFile: (file) => {
@@ -46,22 +47,44 @@ contextBridge.exposeInMainWorld('nlmytgen', {
   standardLoopCancel: (jobId) => ipcRenderer.invoke('standard-loop-cancel', jobId),
   standardLoopJob: () => ipcRenderer.invoke('standard-loop-job'),
   standardLoopOpenOutput: (relPath) => ipcRenderer.invoke('standard-loop-open-output', relPath),
+  batchDefaultSelections: () => ipcRenderer.invoke('batch-default-selections'),
+  batchSelectFile: (kind) => ipcRenderer.invoke('batch-select-file', kind),
+  batchOpenRecentJournal: () => ipcRenderer.invoke('batch-open-recent-journal'),
+  batchStart: (request) => ipcRenderer.invoke('batch-start', request),
+  batchCancel: (jobId) => ipcRenderer.invoke('batch-cancel', jobId),
+  batchJob: () => ipcRenderer.invoke('batch-job'),
+  onBatchJobEvent: (callback) => {
+    const listener = (_event, payload) => callback(payload);
+    ipcRenderer.on('batch-job-event', listener);
+    return () => ipcRenderer.removeListener('batch-job-event', listener);
+  },
   onStandardLoopJobEvent: (callback) => {
     const listener = (_event, payload) => callback(payload);
     ipcRenderer.on('standard-loop-job-event', listener);
     return () => ipcRenderer.removeListener('standard-loop-job-event', listener);
   },
-});
+};
+
+if (process.env.NLMYTGEN_BATCH_OBSERVABILITY_PROBE === '1') {
+  nlmytgenApi.batchProbeResetRuntime = () => (
+    ipcRenderer.invoke('batch-probe-reset-runtime-state')
+  );
+}
+
+contextBridge.exposeInMainWorld('nlmytgen', nlmytgenApi);
 
 if (
   process.env.NLMYTGEN_ELECTRON_COMPATIBILITY_SMOKE === '1'
   || process.env.NLMYTGEN_STANDARD_LOOP_PROBE === '1'
+  || process.env.NLMYTGEN_BATCH_OBSERVABILITY_PROBE === '1'
 ) {
   window.addEventListener('error', (event) => {
     ipcRenderer.send(
       process.env.NLMYTGEN_STANDARD_LOOP_PROBE === '1'
         ? 'nlmytgen-standard-loop-renderer-error'
-        : 'nlmytgen-electron-compatibility-renderer-error',
+        : (process.env.NLMYTGEN_BATCH_OBSERVABILITY_PROBE === '1'
+          ? 'nlmytgen-batch-observability-renderer-error'
+          : 'nlmytgen-electron-compatibility-renderer-error'),
       {
       kind: 'error',
       message: String(event.error?.stack || event.message || 'renderer error'),
@@ -72,7 +95,9 @@ if (
     ipcRenderer.send(
       process.env.NLMYTGEN_STANDARD_LOOP_PROBE === '1'
         ? 'nlmytgen-standard-loop-renderer-error'
-        : 'nlmytgen-electron-compatibility-renderer-error',
+        : (process.env.NLMYTGEN_BATCH_OBSERVABILITY_PROBE === '1'
+          ? 'nlmytgen-batch-observability-renderer-error'
+          : 'nlmytgen-electron-compatibility-renderer-error'),
       {
       kind: 'unhandledrejection',
       message: String(event.reason?.stack || event.reason || 'unhandled rejection'),

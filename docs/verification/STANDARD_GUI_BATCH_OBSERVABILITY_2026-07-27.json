@@ -1,0 +1,221 @@
+{
+  "schema": "nlmytgen.standard_gui_batch_observability_validation.v1",
+  "status": "passed",
+  "project_state_id": "nlmytgen-standard-gui-batch-observability-validated-v1",
+  "source_commit": "8896bbfa34bfb89febf6e7847738ac2527a4493a",
+  "outcome_commit": "resolved-by-current-branch-tip",
+  "branch": "codex/nlmytgen-standard-gui-batch-observability-v1",
+  "operator_capability": {
+    "before": "bounded queue execution required terminal JSON interpretation",
+    "after": "the standard Electron GUI exposes an operator-complete bounded batch read model and control surface",
+    "default_route": "自動動画生成",
+    "secondary_route": "バッチ実行",
+    "startup_command": "cd gui && npm start",
+    "information_order": [
+      "Queue / Change Set",
+      "Execution Plan",
+      "Package States",
+      "Authority and Start",
+      "Journal / Recovery",
+      "Result"
+    ]
+  },
+  "identities": {
+    "queue": {
+      "path": "production_pilots/factory_queues/four_package_lifecycle_queue_v3.json",
+      "sha256": "214d5e99b3a201c0afc216753410d16a52ef8ec6994e854e2fee2473405bd927"
+    },
+    "change_set": {
+      "path": "production_pilots/factory_queues/four_package_zero_change_set_v1.json",
+      "sha256": "0d8468173c843aa47286124b6fbcdad2d0bb58465e1a7094b87d66a19181f724"
+    },
+    "queue_evaluation_sha256": "cc8a5ca43e7bee2767a8c24716892a477d930362c71b625219d942cda5b1eb9c",
+    "plan_identity_sha256": "0d07e9bb40dce6f9daa27496f6bac53e787a736cf72c8c151ca6f63d8f5561fa",
+    "plan_execution_receipt_sha256": "50d4737ba348fb8bbcedeea0479aaaff2e416409719e587f4dfd41ff32d06c8c",
+    "zero_change_execution_receipt_sha256": "56f26d1bb62a43b2986846d69412797f5afd0629762f8f0ecc594e370fcd1217",
+    "gui_execution_result_identity_sha256": "cf7d21bc868053f10bbb3e71a46928e83dbf629d2cdc2052ba63a1407c2d75bf",
+    "journal_identity_sha256": "da8b8a54316ea8fd1e6bbf2a8fac464ed28dacab397d40fe7ee891474d769cbc",
+    "journal_prefix_identity_sha256": "e1dc3a2b41588b36d3761f89c39f255fe286c8cd104cdf5a215ae74b12e67b5d"
+  },
+  "actual_gui_execution": {
+    "plan_only_status": "planned",
+    "execute_status": "succeeded",
+    "execution_mode": "execute",
+    "result_message": "変更はありません",
+    "packages_validated": 4,
+    "verified_noop": 4,
+    "mutating_entries": 0,
+    "authority_consumptions": 0,
+    "backend_dispatch_count": 0,
+    "source_project_generation_count": 0,
+    "render_count": 0,
+    "render_driver_launch_count": 0,
+    "yymm4_launch_count": 0,
+    "ffmpeg_encode_count": 0,
+    "playback_count": 0,
+    "system_volume_operation_count": 0,
+    "private_artifact_copy_count": 0,
+    "product_write_count": 0,
+    "public_action_count": 0
+  },
+  "visible_packages": [
+    {
+      "order": 1,
+      "package_id": "new_banknote_security_notebooklm_001",
+      "descriptor_sha256": "80f1130711a46c3f3a77f2ec1da391fd338569d9aaf0385deeb96a2a698333f7",
+      "lifecycle": "human_accepted",
+      "technical_decision": "verified_noop",
+      "authority": "not_required",
+      "execution": "verified_noop",
+      "resume_effect": "再実行しない"
+    },
+    {
+      "order": 2,
+      "package_id": "real_estate_reins_transparency_001",
+      "descriptor_sha256": "21e0052011b1d55f7ff27bf63af5c4f79dbc3932762df86375cdca86e59d63db",
+      "lifecycle": "rendered",
+      "technical_decision": "verified_noop",
+      "authority": "not_required",
+      "execution": "verified_noop",
+      "resume_effect": "再実行しない"
+    },
+    {
+      "order": 3,
+      "package_id": "ai_monitoring_labor_001",
+      "descriptor_sha256": "866f03c7cff7570e1ad9d1b22525598a99084e9aa0b5227c4c2d31cea528eeb4",
+      "lifecycle": "rendered",
+      "technical_decision": "verified_noop",
+      "authority": "not_required",
+      "execution": "verified_noop",
+      "resume_effect": "再実行しない"
+    },
+    {
+      "order": 4,
+      "package_id": "food_expiry_labels_001",
+      "descriptor_sha256": "bcbafe344f7a6efbbb03b4ace7a83e955c71d8d235381d4acafc861cd7b5975f",
+      "lifecycle": "rendered",
+      "technical_decision": "verified_noop",
+      "authority": "not_required",
+      "execution": "verified_noop",
+      "resume_effect": "再実行しない"
+    }
+  ],
+  "authority_and_recovery": {
+    "states_visible": [
+      "not_required",
+      "required",
+      "absent",
+      "invalid",
+      "available",
+      "consumed",
+      "replacement_required",
+      "reconciliation_required"
+    ],
+    "authority_preflight_exact": true,
+    "authority_and_journal_cli_locators_repo_relative": true,
+    "plan_only_consumes_authority": false,
+    "noop_consumes_authority": false,
+    "failed_resume_requires_exact_replacement_authority": true,
+    "effect_unknown_auto_retry": false,
+    "journal_event_count": 4,
+    "explicit_reopen_required": true,
+    "auto_resume_on_startup": false,
+    "application_restart_read_model_mode": "execute",
+    "application_restart_prefix_preserved": true,
+    "prior_success_or_noop_redispatch": false
+  },
+  "synthetic_isolated_states": {
+    "authority_wait": "passed",
+    "running": "passed",
+    "succeeded": "passed",
+    "failed": "passed",
+    "skipped_after_failure": "passed",
+    "effect_unknown": "passed",
+    "safe_resume": "passed",
+    "journal_identity_mismatch_rejected": true,
+    "long_package_id_contained": true,
+    "long_japanese_error_contained": true,
+    "real_package_modified": false
+  },
+  "tracked_only_readback": {
+    "ordinary_detached_worktree": true,
+    "independent_python_environment": true,
+    "untracked_or_private_project_and_media_files": 0,
+    "actual_plan_invoked": true,
+    "actual_zero_change_execute_invoked": true,
+    "gui_read_model_packages": 4,
+    "gui_read_model_verified_noop": 4,
+    "gui_read_model_mutations": 0,
+    "gui_read_model_message": "変更はありません",
+    "temporary_worktree_removed": true
+  },
+  "hidden_electron": {
+    "status": "passed",
+    "electron": "43.2.0",
+    "chrome": "150.0.7871.129",
+    "node": "24.18.0",
+    "audio_policy": "silent",
+    "window_visible": false,
+    "context_isolation": true,
+    "node_integration": false,
+    "sandbox": true,
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 720,
+        "screenshot_sha256": "db3dc574be3333d3633556729a6ec53650c000b73de975416af3197e9a3ecce3"
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "screenshot_sha256": "c61356ce61989660449fa1190b255ab2157f32ca42c63a6f64b4ce3ede8f051f"
+      }
+    ],
+    "first_viewport_required_context": true,
+    "keyboard_order_valid": true,
+    "horizontal_overflow": false,
+    "console_errors": 0,
+    "security_warnings": 0,
+    "load_failures": 0,
+    "preload_errors": 0,
+    "renderer_crashes": 0,
+    "unhandled_renderer_errors": 0,
+    "project_owned_job_active_after_completion": false,
+    "project_owned_process_residue": 0
+  },
+  "focused_validation": {
+    "javascript_tests": 22,
+    "python_tests": 173,
+    "batch_hidden_electron": "passed",
+    "electron_43_compatibility": "passed",
+    "standard_production_loop_hidden_smoke": "clean_outcome_commit_recheck_required",
+    "modified_syntax_checks": "passed",
+    "json_and_markdown_parse": "passed",
+    "canonical_regression_integrity": "pending_outcome_commit"
+  },
+  "preservation": {
+    "factory_package_descriptor_count": 16,
+    "factory_package_descriptor_aggregate_sha256": "91964bdccfedd184de80c5a346bb6f32d5a304247ab07a0cb93bef1f8fdacc57",
+    "predecessor_queue_count": 3,
+    "predecessor_queue_aggregate_sha256": "9e12d2c0d4a7fe1e8a6905545f3e87666ae8e7d36aeef2442f79ffc7a29ac7a2",
+    "project_and_mp4_count": 102,
+    "project_and_mp4_aggregate_sha256": "07f73dde921dbef5bccaeb8ab1d00b7d5b53bd96b81d6e2b774cceb69bf57987",
+    "uv_lock_sha256": "40e64f793775f0b0181f5ba8972c17842717dbe14bc8c0a6c0cabd14442435d0",
+    "gui_package_lock_sha256": "095706aba72687058863d8bca16c5a9a9f7d4e45cde3397dda3197a528d0f047",
+    "protected_untracked_or_ignored_artifacts_preserved": true
+  },
+  "boundaries": {
+    "real_mutating_batch": false,
+    "content_or_visual_change": false,
+    "fifth_topic": false,
+    "yymm4_or_render": false,
+    "media_generation_or_playback": false,
+    "human_creative_acceptance": false,
+    "rights_or_legal_action": false,
+    "production_or_publication": false,
+    "upload_or_release": false,
+    "pull_request_or_merge": false,
+    "master_mutation": false,
+    "deployment": false
+  }
+}

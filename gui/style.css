@@ -90,12 +90,14 @@ nav { display: flex; gap: 4px; }
 }
 
 .body-content.review-workbench-active main,
-.body-content.standard-loop-active main {
+.body-content.standard-loop-active main,
+.body-content.batch-loop-active main {
   width: 100%;
   padding: 14px 18px 18px;
 }
 
-.body-content.standard-loop-active .wizard-bar {
+.body-content.standard-loop-active .wizard-bar,
+.body-content.batch-loop-active .wizard-bar {
   display: none;
 }
 
@@ -632,6 +634,188 @@ main .hint strong {
   font-family: Consolas, 'Yu Gothic UI', monospace;
   font-size: 11px;
   line-height: 1.45;
+}
+
+/* Bounded batch: existing production-loop vocabulary in a denser operator table. */
+.batch-loop {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding-bottom: 24px;
+}
+
+.batch-loop-heading {
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.batch-loop-heading h2 {
+  font-size: 20px;
+  margin-bottom: 3px;
+}
+
+.batch-loop-heading p,
+.batch-step p {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}
+
+.batch-step {
+  padding: 9px 0 10px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.batch-step h3 {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--color-text);
+}
+
+.batch-step h3 span {
+  color: var(--color-accent);
+}
+
+.batch-source-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.batch-source-row > div {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.batch-source-row strong,
+.batch-plan-facts dd,
+.batch-table td {
+  overflow-wrap: anywhere;
+}
+
+.batch-field-label,
+.batch-plan-facts dt {
+  color: var(--color-text-dim);
+  font-size: 12px;
+}
+
+.batch-source-row strong {
+  color: var(--color-text);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.batch-source-row button {
+  padding: 6px 12px;
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border-hover);
+  border-radius: 4px;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.batch-plan-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px 16px;
+  margin-top: 7px;
+}
+
+.batch-plan-facts div {
+  min-width: 0;
+}
+
+.batch-plan-facts dd {
+  margin-top: 2px;
+  font-family: Consolas, 'Yu Gothic UI', monospace;
+  font-size: 11px;
+  color: var(--color-text);
+}
+
+.batch-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+}
+
+.batch-table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 11px;
+}
+
+.batch-table th,
+.batch-table td {
+  padding: 6px 7px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-border);
+  line-height: 1.4;
+}
+
+.batch-table th {
+  color: var(--color-text-muted);
+  background: var(--color-bg-panel);
+  font-weight: 600;
+}
+
+.batch-table th:first-child { width: 18%; }
+.batch-table th:nth-child(2) { width: 10%; }
+.batch-table th:nth-child(3) { width: 12%; }
+.batch-table th:nth-child(4) { width: 12%; }
+.batch-table th:nth-child(5) { width: 12%; }
+.batch-table th:nth-child(6) { width: 11%; }
+.batch-table th:nth-child(7) { width: 25%; }
+
+.batch-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.batch-table [data-tone="success"] { color: var(--color-success-text); }
+.batch-table [data-tone="active"] { color: #93c5fd; }
+.batch-table [data-tone="pending"] { color: #fde68a; }
+.batch-table [data-tone="error"],
+.batch-table [data-tone="blocked"] { color: #fca5a5; }
+.batch-table [data-tone="muted"] { color: var(--color-text-muted); }
+
+.batch-reason {
+  display: block;
+  color: var(--color-text-muted);
+}
+
+.batch-resume-effect {
+  display: block;
+  margin-top: 3px;
+  color: var(--color-text-hint);
+}
+
+.batch-technical-details {
+  margin-top: 6px;
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.batch-technical-details summary {
+  cursor: pointer;
+  width: fit-content;
+}
+
+#batch-plan-status[data-state="ready"],
+#batch-authority-status[data-state="ready"],
+#batch-result-summary[data-state="ready"] {
+  color: var(--color-success-text);
+}
+
+#batch-plan-status[data-state="failed"],
+#batch-authority-status[data-state="failed"],
+#batch-result-summary[data-state="failed"],
+#batch-resume-state[data-state="blocked"] {
+  color: #fca5a5;
 }
 
 /* Drop zone */
@@ -1748,6 +1932,10 @@ main .hint strong {
 }
 
 @media (max-width: 1100px) {
+  .batch-plan-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .review-workbench-grid {
     grid-template-columns: 1fr;
   }
@@ -1767,6 +1955,20 @@ main .hint strong {
 
   .review-proof-summary {
     justify-items: start;
+  }
+}
+
+@media (max-width: 760px) {
+  .batch-source-row {
+    grid-template-columns: 1fr;
+  }
+
+  .batch-source-row button {
+    width: fit-content;
+  }
+
+  .batch-plan-facts {
+    grid-template-columns: 1fr;
   }
 }
 

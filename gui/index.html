@@ -11,6 +11,7 @@
     <h1>NLMYTGen</h1>
     <nav>
       <button class="tab active" data-tab="standard">自動動画生成</button>
+      <button class="tab" data-tab="batch">バッチ実行</button>
       <button class="tab" data-tab="csv">CSV 変換</button>
       <button class="tab" data-tab="production">演出適用</button>
       <button class="tab" data-tab="review">デザインレビュー</button>
@@ -140,6 +141,114 @@
             <button type="button" id="btn-standard-open-receipt" disabled>検証結果を開く</button>
           </div>
           <pre id="standard-result-details" class="standard-log">—</pre>
+        </section>
+      </div>
+    </section>
+
+    <!-- Bounded factory queue batch -->
+    <section id="tab-batch" class="tab-content" aria-labelledby="batch-loop-title">
+      <div class="batch-loop">
+        <div class="batch-loop-heading">
+          <h2 id="batch-loop-title">バッチ実行</h2>
+          <p id="batch-primary-guidance" role="status">Queue と Change Set を確認し、実行計画を作成してください。</p>
+        </div>
+
+        <section class="batch-step" id="batch-step-inputs">
+          <h3><span aria-hidden="true">1.</span> Queue / Change Set</h3>
+          <div class="batch-source-row">
+            <div>
+              <span class="batch-field-label">Queue</span>
+              <strong id="batch-queue-path">未読込</strong>
+            </div>
+            <button type="button" id="btn-batch-select-queue">Queue を選択</button>
+          </div>
+          <div class="batch-source-row">
+            <div>
+              <span class="batch-field-label">Change Set</span>
+              <strong id="batch-change-set-path">未読込</strong>
+            </div>
+            <button type="button" id="btn-batch-select-change-set">Change Set を選択</button>
+          </div>
+          <details class="batch-technical-details">
+            <summary>入力 identity</summary>
+            <pre id="batch-input-identities" class="standard-log">未読込</pre>
+          </details>
+        </section>
+
+        <section class="batch-step" id="batch-step-plan">
+          <h3><span aria-hidden="true">2.</span> Execution Plan</h3>
+          <div class="standard-control-row">
+            <button type="button" id="btn-batch-plan" class="primary">実行計画を確認</button>
+            <span id="batch-plan-status" role="status">未確認</span>
+          </div>
+          <dl class="batch-plan-facts">
+            <div><dt>Plan</dt><dd id="batch-plan-identity">—</dd></div>
+            <div><dt>Package</dt><dd id="batch-package-count">—</dd></div>
+            <div><dt>変更対象</dt><dd id="batch-mutation-count">—</dd></div>
+            <div><dt>次の操作</dt><dd id="batch-next-action">実行計画を確認</dd></div>
+          </dl>
+        </section>
+
+        <section class="batch-step" id="batch-step-packages">
+          <h3><span aria-hidden="true">3.</span> Package States</h3>
+          <div class="batch-table-wrap">
+            <table class="batch-table">
+              <thead>
+                <tr>
+                  <th scope="col">Package</th>
+                  <th scope="col">Lifecycle</th>
+                  <th scope="col">Decision</th>
+                  <th scope="col">Operation</th>
+                  <th scope="col">Authority</th>
+                  <th scope="col">Execution</th>
+                  <th scope="col">理由 / 再開</th>
+                </tr>
+              </thead>
+              <tbody id="batch-package-rows">
+                <tr><td colspan="7">実行計画は未確認です。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="batch-step" id="batch-step-authority">
+          <h3><span aria-hidden="true">4.</span> Authority and Start</h3>
+          <p id="batch-authority-status">権限状態は実行計画の確認後に表示します。</p>
+          <div class="standard-control-row">
+            <button type="button" id="btn-batch-execute" class="primary" disabled>バッチを実行</button>
+            <button type="button" id="btn-batch-select-authority">Authority を選択</button>
+            <span id="batch-authority-path">未選択</span>
+          </div>
+          <details class="batch-technical-details">
+            <summary>権限と実行境界</summary>
+            <pre id="batch-authority-details" class="standard-log">plan-only と no-op は authority を消費しません。</pre>
+          </details>
+        </section>
+
+        <section class="batch-step" id="batch-step-journal">
+          <h3><span aria-hidden="true">5.</span> Journal / Recovery</h3>
+          <p id="batch-journal-status">Journal は未選択です。</p>
+          <div class="standard-control-row">
+            <button type="button" id="btn-batch-select-journal">Journal を開く</button>
+            <button type="button" id="btn-batch-open-recent">直近の Journal を開く</button>
+            <button type="button" id="btn-batch-resume" disabled>安全な位置から再開</button>
+            <button type="button" id="btn-batch-cancel" disabled>実行を取り消す</button>
+          </div>
+          <dl class="batch-plan-facts">
+            <div><dt>Prefix</dt><dd id="batch-journal-prefix">—</dd></div>
+            <div><dt>Events</dt><dd id="batch-journal-events">—</dd></div>
+            <div><dt>Resume</dt><dd id="batch-resume-state">—</dd></div>
+          </dl>
+          <pre id="batch-job-log" class="standard-log" aria-label="バッチ実行ログ">ログはまだありません。</pre>
+        </section>
+
+        <section class="batch-step" id="batch-step-result">
+          <h3><span aria-hidden="true">6.</span> Result</h3>
+          <p id="batch-result-summary" role="status">結果は未確認です。</p>
+          <details class="batch-technical-details" id="batch-result-action">
+            <summary id="btn-batch-result-details">実行結果の詳細</summary>
+            <pre id="batch-result-details" class="standard-log">—</pre>
+          </details>
         </section>
       </div>
     </section>
@@ -535,6 +644,7 @@
     <span id="status">Ready</span>
   </footer>
 
+  <script src="batch_renderer.js"></script>
   <script src="renderer.js"></script>
 </body>
 </html>

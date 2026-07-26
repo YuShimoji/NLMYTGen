@@ -1,42 +1,50 @@
 # Project Context — NLMYTGen
 
-## 現在の監修AIハンドオフ（2026-07-27 JST・Bounded Queue Executor）
+## 現在の監修AIハンドオフ（2026-07-27 JST・Standard GUI Batch Observability）
 
-この節だけが現在の再開地点である。rendered queue checkpoint
-`995728f8e04c25b702d628a95e73e2801964f964`から
-`codex/nlmytgen-bounded-factory-queue-executor-v1`を作成し、queue decisionを
-exact change-setへ限定して実行するbounded serial executorを追加した。
+この節だけが現在の再開地点である。bounded executor checkpoint
+`8896bbfa34bfb89febf6e7847738ac2527a4493a`から
+`codex/nlmytgen-standard-gui-batch-observability-v1`を作成し、CLI-onlyだった
+queue batch stateを既存standard Electron GUIへ接続した。
 
-- **contracts**: change-set、one-shot authority set/record、append-only journalを
-  version 1.0で固定。operationはsource project generationとrenderだけ。
-- **public CLI**: `execute-factory-queue`。既定plan-only、`--execute`でexact
-  change-setだけをqueue orderで一件ずつ処理する。
-- **pre-effect recheck**: queue、descriptor、content、render settings、completed
-  output、target、lifecycle、authorityをbackend呼出し直前に再hashする。
-- **authority**: plan/no-opは未消費。mutating entryはbackend直前に一回だけ
-  consumed。package / edge / operation / queue / change-set間の横流しを拒否する。
-- **failure/resume**: known non-effect failureで後続を`skipped_after_failure`。
-  resumeは同じplanとevent prefixを要求し、prior successをskipする。failed
-  entryはreplacement authority、effect-unknownはread-only reconciliationを要求。
-- **real queue**: queue-v3 + zero-change setをexecuteし4件`verified_noop`。
-  mutation / authority / dispatch / generation / render / writeは0。2回同一receipt。
-- **tracked-only**: private directory / MP4 0、4件
-  `recorded_complete_no_live_file`、mutation / dispatch / copy 0。
-- **synthetic**: authorized dispatch 1、no-op dispatch 0、failure後later dispatch 0、
-  resumeでprior success skipとappend-only historyを確認。real package変更0。
-- **validation**: executor 35、factory focused 153 pass。canonical regressionは
-  outcome commit後に一度だけ実行する。
-- **preservation**: 16 descriptors、queue-v1/v2/v3、102 project/MP4 identityを
-  scope外として維持。未追跡/ignored/private evidenceもstageしない。
+- **route / layout**: 既定`自動動画生成`を維持し、secondary `バッチ実行`を追加。
+  Queue / Change Set → Plan → Package → Authority → Journal → Resultの縦順。
+- **actual bridge**: safe dialog selection tokenからrepo-relative locatorだけを
+  `execute-factory-queue`へ渡す。arbitrary shell inputは持たない。
+- **actual real queue**: queue-v3 + zero-change setをGUIでplan/executeし、
+  4件`verified_noop`、mutation / authority / dispatch / generation / render /
+  writeが0。direct resultは`変更はありません`。
+- **visible state**: package ID、lifecycle、technical decision、operation、
+  authority、execution、reason、resume effectを表示。exact status IDはtechnical
+  detailsに保持する。
+- **authority**: plan/no-opは未消費。mutating actionはqueue/change-set/package/
+  descriptor/edge/operation/constraintsをexact preflightし、failed resumeは
+  replacement authorityを要求する。
+- **failure / unknown**: known failureと`skipped_after_failure`を区別。
+  `effect_unknown`はblockedでnormal resumeと自動retryを無効化する。
+- **journal / restart**: local append-only journalはevent 4、prefix exact。
+  runtime reset + renderer reload後、planを再確認して明示openし、`execute`
+  read modelと同じprefixを復元。auto-resumeとredispatchは0。
+- **job ownership**: standard/batch間でone-active-jobを共有。240-line log、
+  elapsed、owned-process cancelのみ。daemon/pool/schedulerは追加していない。
+- **tracked-only**: ordinary detached worktree + independent `.venv`でactual
+  plan/zero-change executeをGUI read modelへ通し、4 no-op、private/untracked
+  media 0。一時worktreeは回収済み。
+- **runtime / tests**: Electron 43 hiddenで1280×720 / 1920×1080、keyboard、
+  overflow、console/preload/securityを確認。JavaScript 22、Python 173 pass。
+  canonical regressionとstandard hidden smokeのclean checkはoutcome commit後。
+- **preservation**: 16 descriptors、queue-v1/v2/v3、102 project/MP4、dependency
+  locks、protected ignored/untracked/private evidenceをstage・変更していない。
 - **current state**:
-  `four-package-authority-bound-change-only-executor-with-noop-elision-and-resumable-journal`。
-  Product-Gateは`standard-gui-queue-batch-observability`。
-- **next action**: standard production GUIへjournal read modelを接続し、
-  recoverable batch stateを表示する。topic/render追加は行わない。
+  `standard-production-gui-with-authority-bound-recoverable-batch-read-model`。
+  Product-Gateは`owner-approved-real-change-set-through-gui`。
+- **next action**: owner-approved real change-set一件をGUI plan-onlyで確認し、
+  exact one-shot authorityでexecute後、journal/backend/lifecycleを照合する。
+  追加GUI polishやfifth topicへ進まない。
 - **boundary**: real mutating batch、content/visual、YMM4、render、playback、
-  human/rights/production/public、fifth topic、PR、merge、masterは未実施。
+  human/rights/production/public、PR、merge、masterは未実施。
 - **詳細**:
-  `docs/verification/BOUNDED_FACTORY_QUEUE_EXECUTOR_VALIDATION_2026-07-27.md`
+  `docs/verification/STANDARD_GUI_BATCH_OBSERVABILITY_2026-07-27.md`
   と`.json`。通常再開は`AGENTS.md` → `docs/REPO_LOCAL_RULES.md` →
   `docs/runtime-state.md`。
 

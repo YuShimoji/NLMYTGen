@@ -1,116 +1,120 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: nlmytgen-bounded-factory-queue-executor-validated-v1
-State-Revision: 2026-07-27.1
+Project-State-ID: nlmytgen-standard-gui-batch-observability-validated-v1
+State-Revision: 2026-07-27.2
 Updated: 2026-07-27 JST
-Product-State: four-package-authority-bound-change-only-executor-with-noop-elision-and-resumable-journal
-Product-Gate: standard-gui-queue-batch-observability
-Recommended-Next: connect-bounded-executor-to-standard-production-loop-gui-with-recoverable-batch-state
+Product-State: standard-production-gui-with-authority-bound-recoverable-batch-read-model
+Product-Gate: owner-approved-real-change-set-through-gui
+Recommended-Next: execute-one-owner-approved-change-set-through-gui-and-reconcile-effect
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
-Handoff-Branch: codex/nlmytgen-bounded-factory-queue-executor-v1
+Handoff-Branch: codex/nlmytgen-standard-gui-batch-observability-v1
 Handoff-PR: none
-Required-Base: 995728f8e04c25b702d628a95e73e2801964f964
-Implementation-Checkpoint: 995728f8e04c25b702d628a95e73e2801964f964
+Required-Base: 8896bbfa34bfb89febf6e7847738ac2527a4493a
+Implementation-Checkpoint: resolved-by-current-branch-tip
 Outcome-Commit: resolved-by-current-branch-tip
 Remote-Parity: 0/0 required after handoff push
 Tracked-Worktree: tracked clean required after handoff; protected and ignored artifacts preserved
 
 ## Current Slice
 
-- `execute-factory-queue`はversioned change-setをplan-only既定で読み、
-  queue orderに沿ってbounded serial executionを行う。
-- change-setはqueue、descriptor、content、render settings、completed output、
-  target、lifecycle edge、operation、authority IDをexactに束縛する。
-- mutating effect直前にqueueと全identityを再読込・再hashし、drift時は
-  authorityを消費せず停止する。
-- one-shot authorityはbackend invocation直前にlocal control recordを原子的に
-  consumedへ更新する。plan-onlyとcompleted/no-op validationは消費しない。
-- journalはpackageごとのplanned / validated / started / succeeded / failed /
-  effect_unknown / skipped historyをappend-onlyで保持する。
-- known non-effect failureは後続を停止する。resumeはprior successをskipし、
-  failed entryへreplacement authorityを要求する。effect_unknownは自動再試行しない。
-- queue-v3のzero-change executeは4件`verified_noop`、mutating entry、
-  authority consumption、backend dispatch、product/private writeがすべて0。
-- tracked-onlyは4件`recorded_complete_no_live_file`。private欠落から
-  source generationやrenderを予定しない。
+- 既定`自動動画生成`を維持し、secondary route `バッチ実行`へbounded executorを
+  接続した。
+- Queue / Change Set → Execution Plan → Package States → Authority and Start →
+  Journal / Recovery → Resultの一画面でoperator stateを表示する。
+- queue-v3 + zero-change setのactual planとexecuteは4件`verified_noop`、
+  mutating entry / authority consumption / backend dispatch / writeが0。
+- package rowはlifecycle、technical decision、operation、authority、execution、
+  reason、resume effectをexact status ID付きで表示する。
+- plan-onlyとno-opはauthority不要。mutating executeはexact one-shot authority
+  preflight成功までdisabled。failed resumeはreplacement authorityを要求する。
+- `effect_unknown`はblockedで、自動retryとnormal resumeを許可しない。
+- journalは明示的にopenし、application restart後も同じplanとevent prefixから
+  `execute` read modelを復元する。auto-resumeはしない。
+- standard loopとbatchは同じone-active-job boundaryを共有し、240行log、
+  elapsed、project-owned process cancellationを維持する。
 
 ## Product Position
 
-4 package queueはtechnical decisionからbounded executionまで接続された。
-completed packageとreceipt-only packageはadvancement backendへ渡らず、
-明示されたchange-set内のmutating entryだけがexact one-shot authorityで進める。
+CLIだけにあったbounded serial executorがstandard production GUIでoperator
+observableになった。現在のreal four-package queueは`変更はありません`として
+安全に完了し、completed packageをbackendへdispatchしない。
 
-executorは直列、有限、append-only、resumableである。worker pool、daemon、
-database、background scheduler、arbitrary command、external/public actionを
-実行契約に含めない。
+operatorはno-op、authority wait、running、known failure、
+`skipped_after_failure`、`effect_unknown`、safe resume位置をterminal JSONの
+手動解釈なしで区別できる。GUIはpackage、operation、authority recordを生成せず、
+executorのrepo-relative locator、exact identity、serial、append-only、
+no-hidden-worker契約を維持する。
 
-実mutating multi-package executionは未実施。contentとvisual workは別の
-Web supervision threadが所有し、technical queue stateからhuman acceptance、
-rights、production、publication authorityは継承しない。
+content、source、claims、canonical script、images、crops、subtitles、creative
+review、rights reviewは別Web supervision threadが所有する。technical GUI stateは
+human acceptance、rights、production、publication authorityを付与しない。
 
 ## Exact Next Action
 
-bounded executorをstandard production loop GUIへ接続し、recoverable batch
-stateを観測可能にする。
+owner-approved real change-setを一件だけGUIへ読み込み、plan-onlyでqueue、
+change-set、descriptor、lifecycle edge、operation、plan identityを確認する。
+対応するexact one-shot authorityを選択し、mutating execute後にjournal、
+backend result、package lifecycleをreadbackしてeffectを照合する。
 
 開始条件:
 
-- GUIはplan identity、queue/change-set identity、package stateを表示する
-- no-op / not-selected / authority-wait / running / failed / effect-unknown /
-  resumable位置をjournalから表示する
-- GUIから任意packageやoperationを追加しない
-- execute前にexact authority fileとchange-setを再確認する
-- restart後も同じjournal prefixを保持し、prior successを再実行しない
-- render、playback、public actionは別authority gateに残す
+- package ownerがreal change-setとexpected effectを明示している
+- queue / descriptor / content / render / output identityがplanとexact
+- authorityは対象package / edge / operation / queue / change-setにone-shot束縛
+- content、rights、production、publicationの各owner判断をtechnical authorityへ
+  混ぜない
+- failure時はserial stop、replacement authority、same journal prefixを維持
+- `effect_unknown`時は自動retryせずread-only reconciliationへ移る
 
 ## Residual Work
 
-### GUI batch observability
+### Owner-approved real change-set through GUI
 
-- Purpose: operatorがserial batchの現在位置と安全なresume地点を一画面で把握する。
-- Effect: terminal JSONを手で解釈せず、no-op、authority待ち、failureを区別できる。
-- Requirements: journal read-only ingest、exact plan display、recoverable state、
-  execute confirmation、no hidden worker。
-- State: executorとjournal contractはvalidated。GUI接続は未実装。
-- Owner: standard production GUI maintainer / supervising AI。
-- Next move: synthetic journalとreal zero-change receiptをGUI read modelへ接続する。
+- Purpose: validated GUI→executor pathで最初のreal package effectを一件に限定する。
+- Effect: technical lifecycleをowner指定edgeへ進め、resultとjournalを照合できる。
+- Requirements: exact change-set、one-shot authority、package owner承認、
+  pre/post identity readback。
+- State: GUI、plan、zero-change、authority/recovery read modelはvalidated。
+  real mutating batchは未実施。
+- Owner: package owner / supervising AI / technical executor operator。
+- Next move: ownerが指定した一件をplan-onlyで確認し、authority発行後に実行する。
 
-### Real change-set and external gates
+### Content, rights, and public gates
 
-- Purpose:将来のowner-approved package changeをtechnical batchへ安全に渡す。
-- Effect: exact一件または有限batchをchange-onlyで進められる。
-- Requirements: real package用change-set、one-shot authority、content/rights/
-  production owner判断、effect後readback。
-- State: synthetic mutationだけを実行。real mutating batchは未実施。
-- Owner: package owner / human reviewer / rights / production owners。
-- Next move: owner-approved changeが発生した時点でexact identityへauthorityを発行する。
+- Purpose:technical executionとeditorial/creative/legal/public判断を分離する。
+- Effect: lifecycle stateから未承認の採用・公開判断が暗黙継承されない。
+- Requirements: separate Web supervision result、human acceptance、rights、
+  production/publication owner判断。
+- State:今回のcontent/visual変更、human acceptance、rights/public actionは0。
+- Owner: content supervisor / human reviewer / rights / production owners。
+- Next move: technical changeがcontent/visual identityへ触れる場合だけ各ownerへ戻す。
 
 ## Evidence and Re-entry
 
+- GUI module: `gui/batch_observability.js`
+- Renderer: `gui/batch_renderer.js`
 - Queue: `production_pilots/factory_queues/four_package_lifecycle_queue_v3.json`
 - Change set:
   `production_pilots/factory_queues/four_package_zero_change_set_v1.json`
-- Executor: `src/pipeline/factory_queue_executor.py`
 - Report:
-  `docs/verification/BOUNDED_FACTORY_QUEUE_EXECUTOR_VALIDATION_2026-07-27.md`
+  `docs/verification/STANDARD_GUI_BATCH_OBSERVABILITY_2026-07-27.md`
 - Machine receipt:
-  `docs/verification/BOUNDED_FACTORY_QUEUE_EXECUTOR_VALIDATION_2026-07-27.json`
+  `docs/verification/STANDARD_GUI_BATCH_OBSERVABILITY_2026-07-27.json`
 
 Re-enter by fetching the handoff branch, requiring `HEAD...@{upstream}=0/0` and
 tracked clean, then reading `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → this file。
-Restore with `uv sync --extra dev --locked`。Use `execute-factory-queue` without
-`--execute` for the first read-only plan。
+Restore with `uv sync --extra dev --locked` and `cd gui; npm ci` if dependencies
+are absent。Start with `npm start` → `バッチ実行` → plan-only。
 
 ## Active Boundaries
 
 - 既存package descriptors、queue-v1/v2/v3、contracts、projects、MP4、receipts、
   media、locks、ignored failed runsはimmutable。
-- current zero-change executionはreal mutation authorityを付与しない。
-- YMM4、Electron、render driver、ffmpeg encode、playback、volume、product write、
-  private copyは今回0。
-- human acceptance、rights、production、publication、upload、release、fifth topic、
-  PR、merge、master mutation、tag、deploymentは未実施。
+- real package mutation、YMM4、render driver、ffmpeg encode、media generation、
+  playback、volume、private copyは今回0。
+- fifth topic、content/visual revision、human acceptance、rights、production、
+  publication、upload、release、PR、merge、master mutation、tag、deploymentは未実施。
 
 ## Maintenance Note
 

@@ -17,11 +17,19 @@ function switchMainTab(tabName, { alignWizard = true } = {}) {
   });
   const reviewWorkbenchOn = tabName === 'review';
   const standardLoopOn = tabName === 'standard';
+  const batchLoopOn = tabName === 'batch';
   document.body.classList.toggle('review-workbench-active', reviewWorkbenchOn);
   document.body.classList.toggle('standard-loop-active', standardLoopOn);
+  document.body.classList.toggle('batch-loop-active', batchLoopOn);
   document.querySelector('.body-content')?.classList.toggle('review-workbench-active', reviewWorkbenchOn);
   document.querySelector('.body-content')?.classList.toggle('standard-loop-active', standardLoopOn);
-  if (tabName === 'scoring' || tabName === 'review' || tabName === 'standard') {
+  document.querySelector('.body-content')?.classList.toggle('batch-loop-active', batchLoopOn);
+  if (
+    tabName === 'scoring'
+    || tabName === 'review'
+    || tabName === 'standard'
+    || tabName === 'batch'
+  ) {
     clearWizardMainFocus();
   }
   if (alignWizard) {
@@ -405,7 +413,7 @@ function initStandardProductionLoop() {
   });
   switchMainTab('standard', { alignWizard: false });
   const mode = window.nlmytgen.runtimeMode || {};
-  if (!mode.electronCompatibility && !mode.standardLoopProbe) {
+  if (!mode.electronCompatibility && !mode.standardLoopProbe && !mode.batchProbe) {
     standardLoadAcceptedManifest();
     standardRunDoctor();
   }
@@ -440,7 +448,8 @@ function refreshWizardMainContextStrip() {
   const scoringOn = document.getElementById('tab-scoring')?.classList.contains('active');
   const reviewOn = document.getElementById('tab-review')?.classList.contains('active');
   const standardOn = document.getElementById('tab-standard')?.classList.contains('active');
-  if (scoringOn || reviewOn || standardOn) {
+  const batchOn = document.getElementById('tab-batch')?.classList.contains('active');
+  if (scoringOn || reviewOn || standardOn || batchOn) {
     strip.classList.add('hidden');
     body.textContent = '';
     stepEl.textContent = '';
