@@ -1,8 +1,8 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: nlmytgen-portable-review-bundle-machine-open-validated-v1
-State-Revision: 2026-07-27.4
-Updated: 2026-07-27 JST
+State-Revision: 2026-07-28.1
+Updated: 2026-07-28 JST
 Product-State: repository-independent-versioned-review-bundle-with-recipient-open-contract
 Product-Gate: multi-bundle-recipient-registry-and-named-delivery
 Recommended-Next: build-recipient-side-review-bundle-registry-and-validate-named-terminal-delivery
@@ -41,8 +41,18 @@ Electron machine-openまで無通信・無再生で検証した。
 | Machine open | Electron 43 / 10 focus / error 0 | hidden/muted/no network |
 | Human open | unverified | machine-openから推論しない |
 | Content decision | none | human-openから推論しない |
+| Full-episode background | active quarantine | exact ZIP/MP4 human reviewに束縛 |
 | Rights / production / publication | false | technical successから継承しない |
 | Tracked-only | `source_bundle_unavailable` | fallback/regeneration 0 |
+
+## Active design quarantine
+
+`food_expiry_full_episode_review_bundle_v1`の背景systemは
+`NLMYTGEN-FEL-FULL-DQ-ALL-TEXT-RAPID-SWITCH-20260728-01`でactive quarantine。
+4 cueすべてがreadable document text中心で、短い切替とsubtitleが同時reading
+taskを作るため、全編がaudiovisual explanationではなくtext surfaceの連続になる。
+release / supersession evidenceはない。cue_002 portable bundle、canonical content、
+rights、production、publicationの判断とは別clock。
 
 ## 次の入口
 

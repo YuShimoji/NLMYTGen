@@ -1,0 +1,35 @@
+{
+  "candidate_identity_and_render_context": {
+    "bundle_id": "food_expiry_full_episode_review_bundle_v1",
+    "cue_count": 4,
+    "duration_seconds": 22.25,
+    "mp4_sha256": "4eafcaa4c05e07e33d34ff0cbe79a1a141a82a59bf71bf1606fa4a5a4ebbb710",
+    "zip_sha256": "978cdb791a8c34900749bfcb8157547edc3eb070c8127d0fda11e601a9364140"
+  },
+  "local_identity_verification": {
+    "mp4_sha256_match": true,
+    "verified_on": "2026-07-28",
+    "zip_sha256_match": true
+  },
+  "quarantine_id": "NLMYTGEN-FEL-FULL-DQ-ALL-TEXT-RAPID-SWITCH-20260728-01",
+  "quarantine_status": "active",
+  "quarantined_signature": [
+    "all four cue backgrounds are dominated by readable official-document text",
+    "the document background changes at short cue intervals",
+    "subtitles and background paragraphs create simultaneous independent reading tasks",
+    "the sequence becomes a succession of text surfaces rather than an audiovisual explanation"
+  ],
+  "rejection_evidence_and_timepoint": {
+    "date": "2026-07-28",
+    "evidence": "human full-episode review in the current conversation"
+  },
+  "release_or_supersession_evidence": null,
+  "schema": "nlmytgen.design_direction_quarantine.v1",
+  "schema_version": "1.0",
+  "scope_boundary": "No decision outside target_scope is inferred from this receipt.",
+  "target_scope": {
+    "artifact_scope": "full_episode",
+    "design_surface": "background_visual_system",
+    "package_id": "food_expiry_labels_001"
+  }
+}

@@ -60,3 +60,9 @@ rendered lifecycleの正本:
 queue-v3はliveで4件`verified_noop`、tracked-onlyで4件
 `recorded_complete_no_live_file`となる。private artifactの不在は再render理由に
 ならない。human decisionとrights/production/public authorityは別gateである。
+
+full-episode review bundle v1の`background_visual_system`には、2026-07-28の
+human full-episode reviewによるactive design quarantineがある。exact identity、
+拒否signature、scope boundaryは
+`design_direction_quarantines/NLMYTGEN-FEL-FULL-DQ-ALL-TEXT-RAPID-SWITCH-20260728-01.json`
+を正本とし、release / supersession evidenceなしに通常候補へ戻さない。

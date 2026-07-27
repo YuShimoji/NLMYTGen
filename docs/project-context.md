@@ -1585,6 +1585,26 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Food Expiry full-episode background visual design quarantine (2026-07-28 JST):
+human full-episode review of exact bundle
+`food_expiry_full_episode_review_bundle_v1` (ZIP SHA-256
+`978cdb791a8c34900749bfcb8157547edc3eb070c8127d0fda11e601a9364140`,
+MP4 SHA-256
+`4eafcaa4c05e07e33d34ff0cbe79a1a141a82a59bf71bf1606fa4a5a4ebbb710`)
+activated
+`NLMYTGEN-FEL-FULL-DQ-ALL-TEXT-RAPID-SWITCH-20260728-01`.
+All four cue backgrounds are dominated by readable official-document text;
+short-interval document switching plus subtitles creates simultaneous
+independent reading tasks, so the sequence reads as successive text surfaces
+rather than an audiovisual explanation. This quarantines only
+`food_expiry_labels_001 / full_episode / background_visual_system`; it does not
+infer a decision for canonical text, claims, source identity, audio, the
+separate cue_002 portable bundle, rights, production, or publication. A
+cue-local machine non-match to an earlier quarantine does not release this
+episode-level human quarantine. Release / supersession evidence is absent.
+根拠:
+`production_pilots/factory_canaries/food_expiry_labels_001/design_direction_quarantines/NLMYTGEN-FEL-FULL-DQ-ALL-TEXT-RAPID-SWITCH-20260728-01.json`
+
 Latest Episode 002 Output / Video Layer handoff decision (2026-07-08 JST):
 `episode_002_output_video_layer_proof_v1` is the current cross-terminal
 restart focus on branch `codex/episode-002-output-video-layer-proof-v1`. The

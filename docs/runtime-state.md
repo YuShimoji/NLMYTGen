@@ -1,8 +1,8 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: nlmytgen-portable-review-bundle-machine-open-validated-v1
-State-Revision: 2026-07-27.4
-Updated: 2026-07-27 JST
+State-Revision: 2026-07-28.1
+Updated: 2026-07-28 JST
 Product-State: repository-independent-versioned-review-bundle-with-recipient-open-contract
 Product-Gate: multi-bundle-recipient-registry-and-named-delivery
 Recommended-Next: build-recipient-side-review-bundle-registry-and-validate-named-terminal-delivery
@@ -41,6 +41,13 @@ rights/production/publicationは別clockである。
 production assetでもない。isolated local transportはnamed cross-terminal
 deliveryではない。actual human-open、content decision、rights、production、
 publicationはunverified / falseのまま。
+
+## Active Design Quarantine
+
+exact full-episode bundle v1の背景systemは、human reviewでquarantine
+`NLMYTGEN-FEL-FULL-DQ-ALL-TEXT-RAPID-SWITCH-20260728-01`がactive。全4 cueの
+readable document text、短い切替、subtitleとの同時reading taskが対象。release /
+supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播しない。
 
 ## Exact Next Action
 
@@ -101,9 +108,12 @@ registry/ingestのtechnical workは進められ、human/owner clockを待たな�
 - Purpose:機械openと人間によるopen/採否を分離する。
 - Effect:レビュー状態をexact bundle SHAへ束縛し、誤ったaccept推論を防ぐ。
 - Requirements: named recipient、human-open receipt、artifact-bound decision。
-- State: `human_open=unverified`、`content_decision=none`。
+- State: cue_002 portable bundleは`human_open=unverified`、
+  `content_decision=none`。別identityのfull-episode background quarantineはactive。
 - Owner: recipient / content supervisor / human reviewer。
-- Next move: named delivery後、必要な人間が独立receiptを返す。
+- Next move: portable bundleはnamed delivery後に独立receiptを返す。full-episode
+  successorを作る場合はversioned identityで両quarantineへのnon-matchを示し、
+  全編human reviewを再実施する。
 
 ### Creative, rights, production, and publication
 
@@ -140,6 +150,8 @@ dependencies are absent。Do not rebuild the accepted v1 output in place。
 - named recipient delivery、human open、content/creative decision、rights、
   production、publication、upload、release、PR、merge、master mutation、tag、
   deploymentは未実施。
+- full-episode background quarantineはmachine check、cue-local acceptance、
+  technical deliveryからreleaseしない。
 
 ## Maintenance Note
 
