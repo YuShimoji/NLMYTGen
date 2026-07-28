@@ -11,9 +11,9 @@ if errorlevel 1 (
   exit /b 1
 )
 
-where npx >nul 2>&1
+where npm >nul 2>&1
 if errorlevel 1 (
-  echo [NLMYTGen] npx not found. Reinstall Node.js with npm.
+  echo [NLMYTGen] npm not found. Reinstall Node.js with npm.
   pause
   exit /b 1
 )
@@ -26,7 +26,7 @@ if exist "%~dp0.venv\Scripts\python.exe" goto UvSkipped
 
 :RunUvSync
 echo [NLMYTGen] uv sync...
-uv sync
+uv sync --locked
 if errorlevel 1 (
   echo [NLMYTGen] uv sync failed. Check repo root.
   pause
@@ -49,12 +49,16 @@ if not exist "package.json" (
   exit /b 1
 )
 
-REM Local electron is fast; npx resolves each time (slower). One-time: cd gui ^&^& npm install
-if exist "node_modules\.bin\electron.cmd" (
-  call node_modules\.bin\electron.cmd .
-) else (
-  npx --yes electron .
+if not exist "node_modules\.bin\electron.cmd" (
+  echo [NLMYTGen] npm ci...
+  call npm ci --no-audit --no-fund
+  if errorlevel 1 (
+    echo [NLMYTGen] npm ci failed. Check gui\package-lock.json.
+    pause
+    exit /b 1
+  )
 )
+call node_modules\.bin\electron.cmd .
 if errorlevel 1 (
   echo [NLMYTGen] Electron exited with error.
   pause

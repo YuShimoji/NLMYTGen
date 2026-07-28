@@ -2,7 +2,7 @@
 
 NotebookLM の出力を YMM4 (ゆっくりMovieMaker4) 用 CSV に変換し、演出 IR (中間表現) で S-6 (背景・演出設定) の半自動化を目指すパイプライン。
 
-**GUI**: リポジトリ直下の [`start-gui.bat`](start-gui.bat) は **Shift_JIS (CP932) で保存**すること（UTF-8 / UTF-8-BOM にすると cmd で壊れる場合があります）。起動の速さのため、**`.venv` が既にあるときは `uv sync` をスキップ**します（強制したいときは `set NLMYTGEN_FORCE_UV_SYNC=1` のうえで実行）。`gui` で **1 回だけ** `npm install` しておくと `node_modules\.bin\electron` が使われ、`npx` より起動が速くなります（未インストール時は従来どおり `npx --yes electron`）。
+**GUI**: リポジトリ直下の [`start-gui.bat`](start-gui.bat) は **Shift_JIS (CP932) で保存**すること（UTF-8 / UTF-8-BOM にすると cmd で壊れる場合があります）。起動の速さのため、**`.venv` が既にあるときは `uv sync --locked` をスキップ**します（強制したいときは `set NLMYTGEN_FORCE_UV_SYNC=1` のうえで実行）。GUI 依存が未導入なら起動スクリプトが `npm ci` で追跡済み lock を導入し、lock が固定するローカル Electron を起動します。
 
 ## ドキュメント最短経路（初日）
 
@@ -171,13 +171,20 @@ python -m src.cli.main build-csv file1.txt file2.txt file3.txt --speaker-map Hos
 ## 開発環境とテスト
 
 このリポジトリは `uv` を推奨する。`pytest` は `pyproject.toml` の
-optional `dev` にあるため、開発 checkout では extra を明示する。`uv.lock` は
-repo 非追跡なので、fresh clone でも動く既定コマンドに `--locked` は付けない。
+optional `dev` にあるため、開発 checkout では extra を明示する。`uv.lock` と
+`gui/package-lock.json` は依存集合の追跡正本であり、通常の導入では更新しない。
 
 ```bash
-uv sync --extra dev
+uv sync --extra dev --locked
+(cd gui && npm ci --no-audit --no-fund)
 uv run python scripts/check_project_state_sync.py
 ```
+
+manifest を意図的に変更する slice だけが対応する lock を更新し、manifest と lock を
+同じ commit で review する。通常の drift check は `uv lock --check` と
+`cd gui && npm ci --dry-run --ignore-scripts --no-audit --no-fund` を使う。
+後者の readback で Electron は 35.7.5 のままでなければならず、major 更新は別の
+互換性検証 slice とする。
 
 状態面を変更したときは上記 checker を明示的に実行すると、runtime と cockpit の
 共有フィールド、更新日、README からの導線を検査できる。自動 Stop hook ではない。

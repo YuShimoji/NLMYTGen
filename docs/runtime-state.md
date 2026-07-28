@@ -1,102 +1,65 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: new-banknote-stable-internal-cut-regression-integrity-green-v1
-State-Revision: 2026-07-24.5
-Updated: 2026-07-24 JST
-Product-State: accepted-real-media-internal-cut-with-evidence-safe-regression-gate
-Product-Gate: dependency-portability-and-gui-security
-Recommended-Next: restart-dependency-lock-authority-from-current-remote-tip
+Project-State-ID: new-banknote-portable-dependency-lock-authority-v1
+State-Revision: 2026-07-28.1
+Updated: 2026-07-28 JST
+Product-State: accepted-real-media-internal-cut-with-portable-dependency-authority
+Product-Gate: gui-security-major-compatibility
+Recommended-Next: audit-electron-43-2-0-compatibility-in-isolated-successor
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
-Handoff-Branch: codex/nlmytgen-accepted-cut-regression-integrity-v1
+Handoff-Branch: codex/nlmytgen-dependency-lock-authority-v1
 Handoff-PR: none
-Required-Base: c77a89b8db15d5c0b286afc322dd6842a016a606
+Required-Base: c9c5f4bd50b86edd72cd3dc92254dc7ea02bee7e
 Outcome-Commit: resolved-by-current-branch-tip
-Remote-Parity: 0/0 verified after handoff push on 2026-07-24 JST
-Tracked-Worktree: tracked state clean; local ignored development environments preserved
+Remote-Parity: 0/0 required after handoff push on 2026-07-28 JST
+Tracked-Worktree: tracked state clean after handoff; ignored development environments preserved
 
 ## Current Slice
 
-- The accepted real-media review carrier is now the stable internal cut.
-  `human_real_media_cut_acceptance_receipt.json` binds run
-  `new_banknote_real_media_review_v1` to MP4 SHA-256
-  `423553e0aff40619ffb0fd88bcc80344417788aa6128f0a8778aefbdd19ca476`
-  and generated-project SHA-256
-  `244c05ae6fe6179e9dace4b569cd5f3f9f496cfe70d46ac16ac459e787712611`.
-- Speech, wording/order, cue timing, subtitle timing, subtitle line breaks, and
-  real-media visual treatment are accepted. Status is `stable_internal_cut`;
-  rerender is not required.
-- The predecessor visual-rejection receipt remains unchanged and is referenced
-  only as the decision for the rejected proxy artifact.
-- Rights clearance, production, publication, upload, release, PR merge, and
-  master integration remain false. The MP4 and generated project remain ignored
-  same-machine evidence and are not remotely portable.
-- The canonical Regression Integrity selection remains 16 modules / 170 tests.
-  Independent clean-room passed 161 with 9 declared-locator skips;
-  evidence-rich same-machine passed 166 with 4 declared-locator skips;
-  tracked-only linked worktree passed 161 with 9 declared-locator skips.
-  Every mode had 0 failures / 0 errors.
-- In every mode, `git status --porcelain`, `git diff --no-ext-diff`, and
-  `git diff --cached --no-ext-diff` were byte-exact before/after. JUnit and
-  project-owned temporary workspaces were removed after successful inspection.
-- Regression fixtures materialize only committed Git-object subtrees. Ignored
-  media, browser profiles, local outputs, and unrelated evidence are never
-  recursively copied into a temporary workspace.
-- Local/private evidence tests require exact repo-relative locators. Missing
-  locators produce documented `requires_local_evidence` skips; historical
-  receipts alone never count as live availability.
-- Repo-relative ignore probes work when `.git` is a directory or a linked-
-  worktree file. No Thank-terminal path is encoded in the contract.
-- No YMM4, render, media playback, system-volume, dependency-upgrade, or
-  creative-mutation path was executed in this slice.
-- A fresh receiving-terminal audit moved from the obsolete end-to-end handoff
-  branch to this canonical successor at remote parity `0/0`. Its canonical
-  selection passed 165 with 5 declared-locator skips, 0 failures, and 0 errors;
-  workspace status/diff/cached diff remained unchanged.
-- The current Thank-terminal refresh fetched three newer handoff commits and
-  fast-forwarded `e574614` to `739c5a4` without merge, rebase, or history
-  rewrite. The branch was 40 commits ahead of and 0 behind `origin/master`;
-  master remained an ancestor.
-- The current canonical selection passed 166 with 4 declared-locator skips,
-  0 failures, and 0 errors in 95.459 seconds. The skip contract was valid,
-  status/diff/cached diff remained unchanged, and the temporary workspace was
-  removed.
-- Python locked sync, Electron locked install, tracked JavaScript syntax,
-  project-state sync, the focused runner contracts, and the .NET 10 Release
-  build pass on the current terminal. The installed baseline is Python 3.13.3 /
-  uv 0.10.7, Node 24.13.0 / npm 11.6.2 / Electron 35.7.5, .NET SDK 10.0.204,
-  and ffmpeg/ffprobe 8.0.1.
-- The accepted MP4, generated/source YMM4 projects, and all nine real-media
-  files are present on the current terminal and match their tracked SHA-256
-  authority. YMM4 4.54.0.1 is discoverable at a bounded candidate path. Silent
-  real-media `--dry-run` preflight passed 18 protected inputs, 9 cues, 2/4/3
-  scenes, 3/6 speakers, 4415 frames, and 9/9 provenance coverage. No window,
-  playback, render, remux, or media validation stage was run.
-- `uv.lock` and `gui/package-lock.json` remain ignored local authority. Locked
-  sync/install succeeded, but a clean Git checkout still cannot reproduce them.
-  `npm audit` reports one direct high-severity Electron aggregate; the offered
-  fix is Electron 43.2.0 and is a semver-major change.
-- Dependency Lock Authority attempt 1 stopped during preflight without mutation:
-  its launch prompt required exact base `0b29c5a`, while the canonical remote had
-  already advanced to `3869588` through the receiving-terminal supervisor
-  handoff. No mission branch, lock edit, install, render, window, playback,
-  commit, or push was created by that attempt.
+- `uv.lock` and `gui/package-lock.json` are now tracked dependency authority.
+  Their SHA-256 values remain
+  `40e64f793775f0b0181f5ba8972c17842717dbe14bc8c0a6c0cabd14442435d0`
+  and
+  `81b060f37fd2c7c4151fcf6fc402b554476d4ea6785022c8eef01aaaa9ff4a73`.
+- `pyproject.toml` and `gui/package.json` are byte-unchanged from required base
+  `c9c5f4b`. The GUI root range remains `electron: ^35.0.0`, and the tracked npm
+  lock resolves Electron 35.7.5.
+- `.gitignore` no longer excludes either lock. README now defines locked install,
+  manifest-plus-lock review ownership, and non-mutating drift checks.
+- `start-gui.bat` uses `uv sync --locked`. When GUI dependencies are absent it
+  runs `npm ci` and launches only `node_modules\.bin\electron.cmd`; the unlocked
+  `npx --yes electron` fallback is removed.
+- This worktree began without `.venv/` or `gui/node_modules/`. Python 3.11.0 /
+  uv 0.10.0 completed `uv sync --extra dev --locked`; Node 22.19.0 /
+  npm 10.9.3 completed `npm ci`; local Electron read back as 35.7.5.
+- `uv lock --check`, repeated locked sync, `npm ci --dry-run`, exact package-tree
+  readback, lock hash readback, launcher contract inspection, whitespace check,
+  and project-state synchronization passed without lock drift.
+- Live `npm audit` still reports one direct high-severity Electron aggregate
+  with 17 advisory paths. Its offered fix is Electron 43.2.0 and is a semver-major
+  change, so no audit fix, manifest edit, or dependency upgrade was performed.
+- The accepted stable internal cut, its content/timing/visual decision, canonical
+  Regression Integrity results, private artifact boundaries, and all receipts
+  remain unchanged. No YMM4, GUI window, playback, render, media operation,
+  rights decision, publication, PR, merge, or master integration occurred.
 
 ## Product Position
 
-The new-banknote vertical slice now has both an accepted stable internal cut and
-an evidence-safe three-mode regression gate. Accepted creative dimensions are
-closed unless a later explicit successor decision reopens them. This checkpoint
-does not authorize rights, production, publication, upload, release, merge, or
+The new-banknote vertical slice now has an accepted stable internal cut, an
+evidence-safe three-mode regression gate, and Git-portable Python / Electron
+dependency authority. A fresh checkout can install the reviewed dependency set
+without reopening creative review. This checkpoint does not authorize Electron
+major migration, rights, production, publication, upload, release, merge, or
 master integration.
 
 ## Exact Next Action
 
-Restart Dependency Lock Authority from the current remote branch tip, not the
-stale `0b29c5a` launch base. Make `uv.lock` and `gui/package-lock.json`
-reproducible tracked authority without changing either manifest or Electron
-35.7.5. Electron major compatibility remains the separate successor mission.
-Do not open windows, play media, rerender, or reopen creative review.
+Audit Electron 43.2.0 compatibility in an isolated successor before changing
+either manifest or lock. Define startup, IPC, file-dialog, Python bridge,
+capture-script, audio-safety, and rollback checks against the tracked 35.7.5
+baseline; implement the major only after that separate approval. Do not reopen
+accepted creative dimensions, rights, production, or publication.
 
 ## Evidence and Access
 
@@ -108,6 +71,8 @@ Do not open windows, play media, rerender, or reopen creative review.
   `docs/verification/REGRESSION_INTEGRITY_2026-07-24.json`
 - Three-mode explanatory report:
   `docs/verification/REGRESSION_INTEGRITY_2026-07-24.md`
+- Dependency lock authority report:
+  `docs/verification/DEPENDENCY_LOCK_AUTHORITY_2026-07-28.md`
 - Receiving-terminal development and supervisor roadmap:
   `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-24.md`
 - Canonical runner:
@@ -118,11 +83,11 @@ Do not open windows, play media, rerender, or reopen creative review.
 ## Cross-Terminal Re-entry
 
 - Fetch and fast-forward
-  `origin/codex/nlmytgen-accepted-cut-regression-integrity-v1`; verify
+  `origin/codex/nlmytgen-dependency-lock-authority-v1`; verify
   `HEAD...@{upstream}=0/0` and a clean tracked worktree.
 - Read `AGENTS.md` → `docs/REPO_LOCAL_RULES.md` → this file.
-- Resolve a fresh exact launch base from the fetched remote tip. Do not reuse
-  Dependency Lock Authority attempt 1's stale `0b29c5a` base.
+- Run `uv sync --extra dev --locked`, then `npm ci --no-audit --no-fund` in
+  `gui/`. A lock drift or Electron version other than 35.7.5 is a setup failure.
 - Source media, `.local.ymmp`, MP4, frames, profiles, and run archives stay
   ignored. Their absence is an availability boundary, not a regression failure.
 - Preserve `.venv/`, `gui/node_modules/`, and any ignored/private evidence found
@@ -134,10 +99,9 @@ Do not open windows, play media, rerender, or reopen creative review.
 - Rerender: not required.
 - Rights clearance and production asset approval: pending.
 - Publication, upload, release, PR, merge, and master integration: not performed.
-- Dependency portability and Electron security validation: next planned lane.
-- The current Thank terminal is code-development and private-artifact preflight
-  ready. The accepted carrier and YMM4 runtime are locally available, but
-  rerender remains unnecessary and was not authorized by this readiness slice.
+- Dependency portability: complete for the current manifests and locks.
+- Electron 35.7.5 security remediation: pending isolated major-compatibility
+  decision; live audit remains one direct high-severity aggregate.
 - Other receiving terminals may still lack private artifacts or YMM4. Treat that
   as terminal availability, not as loss of the tracked acceptance decision.
 
@@ -145,5 +109,6 @@ Do not open windows, play media, rerender, or reopen creative review.
 
 Keep this capsule within 160 lines. Resolve the outcome commit from the current
 remote branch tip. Exact regression results are in the two 2026-07-24 regression
-artifacts. The current-terminal toolchain, private-artifact availability, and
-far-goal proposal are in the 2026-07-24 supervisor roadmap.
+artifacts. Lock authority details are in the 2026-07-28 dependency report;
+private-artifact availability and the farther roadmap remain in the 2026-07-24
+supervisor roadmap.

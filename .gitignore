@@ -13,11 +13,9 @@ venv/
 .mypy_cache/
 *.csv
 !samples/*.csv
-uv.lock
 .serena/
 samples/_tmp_*
 gui/node_modules/
-gui/package-lock.json
 gui/project-settings.json
 
 # Codex worker orchestration runtime artifacts

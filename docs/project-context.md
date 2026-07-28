@@ -1,9 +1,60 @@
 # Project Context — NLMYTGen
 
-## 現在の監修AIハンドオフ（2026-07-24 JST・Thank端末再同期 / accepted cut / regression green）
+## 現在の監修AIハンドオフ（2026-07-28 JST・portable dependency authority）
 
-この節だけが現在の再開地点である。real-media cutの人間受理、canonical
-Regression Integrityの三モード収束、今回のThank端末live availabilityを分離して固定した。
+この節だけが現在の再開地点である。直前checkpointのaccepted cutとRegression Integrityを
+変更せず、現行manifestに対応するPython / Electron lockをGit-portable authorityへ昇格した。
+
+- **取得先 / 実装base**:
+  `origin/codex/nlmytgen-accepted-cut-regression-integrity-v1`の
+  `c9c5f4bd50b86edd72cd3dc92254dc7ea02bee7e`。fetch後のremote parity `0/0`と
+  tracked cleanを確認し、detached worktreeから
+  `codex/nlmytgen-dependency-lock-authority-v1`を作成した。merge、rebase、
+  history rewrite、master更新、PR作成は行っていない。
+- **portable authority**: `uv.lock`と`gui/package-lock.json`を`.gitignore`から外して
+  追跡した。SHA-256はそれぞれ
+  `40e64f793775f0b0181f5ba8972c17842717dbe14bc8c0a6c0cabd14442435d0`と
+  `81b060f37fd2c7c4151fcf6fc402b554476d4ea6785022c8eef01aaaa9ff4a73`で、
+  直前に記録されたignored local authorityとbyte-identicalである。
+- **manifest / Electron freeze**: `pyproject.toml`と`gui/package.json`はrequired baseから
+  byte不変。GUI manifestの`electron: ^35.0.0`とnpm lockのresolved 35.7.5を保った。
+  transitive refresh、`npm audit fix --force`、major updateは行っていない。
+- **workflow接続**: READMEの既定導入を`uv sync --extra dev --locked`と`npm ci`へ変更し、
+  lock更新はmanifest変更sliceが同commitでownerになる契約とdrift checkを記録した。
+  `start-gui.bat`は`uv sync --locked`を使い、GUI依存がなければ`npm ci`を実行後、
+  local `node_modules\.bin\electron.cmd`だけを起動する。unlocked
+  `npx --yes electron` fallbackは除去した。
+- **fresh environment実測**: 開始時に`.venv/`と`gui/node_modules/`が無いworktreeで、
+  Python 3.11.0 / uv 0.10.0のlocked syncと、Node 22.19.0 / npm 10.9.3の
+  `npm ci`を完了した。pytest 8.4.2、direct Electron 35.7.5、
+  local Electron binary `v35.7.5`をreadbackした。
+- **drift / state検証**: `uv lock --check`、repeated locked sync、
+  `npm ci --dry-run`、manifest-lock readback、4 file hash readback、
+  launcher contract inspection、`git diff --check`、project-state syncをpassした。
+  install / check後もmanifestとlock hashは不変である。
+- **残るsecurity gate**: live `npm audit`はElectronのdirect high 1件、
+  17 advisory pathを報告し、offered fixはsemver-majorの43.2.0。Dependency Lock
+  Authorityは完了したが、security remediationは35.7.5をrollback点にしたisolated
+  compatibility successorで扱う。
+- **保全した境界**: accepted cutのspeech、wording/order、cue/subtitle timing、
+  line breaks、visual treatment、receipt、private mediaは変更していない。YMM4、
+  window、playback、render、media処理、rights、production、publication、upload、
+  release、PR、merge、master integrationは実行していない。
+- **exact next / 根拠**: Electron 43.2.0のstartup、IPC、file dialog、Python bridge、
+  capture scripts、audio-safety、rollbackをisolated successorで監査する。major適用は
+  別判断であり、このhandoffから推論しない。根拠:
+  `docs/verification/DEPENDENCY_LOCK_AUTHORITY_2026-07-28.md` +
+  `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-24.md`
+  の段階1 / 2分離。
+- **handoff条件**: outcome commitはcurrent remote branch tipから解決する。
+  push後にupstream `0/0`、tracked cleanを確認し、`.venv/`、
+  `gui/node_modules/`とprivate ignored artifactsをremote authorityにしない。
+
+## 直前の監修AIハンドオフ（2026-07-24 JST・Thank端末再同期 / accepted cut / regression green）
+
+以下は直前checkpointの判断履歴であり、現在の再開地点として読まない。real-media cutの
+人間受理、canonical Regression Integrityの三モード収束、Thank端末live availabilityを
+分離して固定した。
 
 - **取得先**:
   `origin/codex/nlmytgen-accepted-cut-regression-integrity-v1`。required baseは
