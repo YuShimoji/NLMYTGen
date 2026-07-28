@@ -12,7 +12,7 @@ Handoff-Branch: codex/nlmytgen-dependency-lock-authority-v1
 Handoff-PR: none
 Required-Base: c9c5f4bd50b86edd72cd3dc92254dc7ea02bee7e
 Outcome-Commit: resolved-by-current-branch-tip
-Remote-Parity: 0/0 required after handoff push on 2026-07-28 JST
+Remote-Parity: 0/0 verified after handoff push on 2026-07-28 JST
 Tracked-Worktree: tracked state clean after handoff; ignored development environments preserved
 
 短期正本は [runtime-state.md](runtime-state.md)、判断履歴は

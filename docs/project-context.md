@@ -46,9 +46,13 @@
   `docs/verification/DEPENDENCY_LOCK_AUTHORITY_2026-07-28.md` +
   `docs/verification/REMOTE_SYNC_DEVELOPMENT_READINESS_SUPERVISOR_ROADMAP_2026-07-24.md`
   の段階1 / 2分離。
-- **handoff条件**: outcome commitはcurrent remote branch tipから解決する。
-  push後にupstream `0/0`、tracked cleanを確認し、`.venv/`、
-  `gui/node_modules/`とprivate ignored artifactsをremote authorityにしない。
+- **git follow-through**: implementation commit
+  `afb74eae399fe61023110e2c132ba46485493793`を新規remote branchへpushした。
+  初回pushはGitHub:443の接続timeoutだったが、履歴を変更せず再試行して成功した。
+  implementation tipとupstreamは`0/0`、`origin/master`はcurrent branchの祖先で、
+  42 ahead / 0 behind、tracked worktreeはcleanだった。final handoff outcomeは
+  current remote branch tipから解決する。`.venv/`、`gui/node_modules/`とprivate
+  ignored artifactsはremote authorityにしない。
 
 ## 直前の監修AIハンドオフ（2026-07-24 JST・Thank端末再同期 / accepted cut / regression green）
 
