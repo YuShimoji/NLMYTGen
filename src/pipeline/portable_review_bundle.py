@@ -2687,6 +2687,92 @@ def transport_portable_review_bundle(
 
 
 
+def _reconcile_portable_review_bundle_transport(
+    *,
+    archive_path: Path,
+    destination_root: str | Path,
+    archive_validation: Mapping[str, Any],
+) -> dict[str, Any]:
+    archive = archive_path.resolve()
+    destination_input = Path(destination_root)
+    if destination_input.is_symlink() or not destination_input.is_dir():
+        _fail(
+            "existing recipient transport destination is unavailable or unsafe",
+            code="recipient_resume_destination_invalid",
+            field_path="$.destination",
+            consumer_effect="resume never creates, replaces, or follows a destination",
+        )
+    destination = destination_input.resolve()
+    incoming = destination / "incoming" / archive.name
+    extracted = destination / "extracted" / archive.stem
+    if incoming.is_symlink() or not incoming.is_file() or not extracted.is_dir():
+        _fail(
+            "existing recipient transport layout is incomplete",
+            code="recipient_resume_inventory_mismatch",
+            field_path="$.destination",
+            consumer_effect="only a complete prior transport can be reconciled",
+        )
+
+    actual_files: set[str] = set()
+    for path in sorted(destination.rglob("*")):
+        if path.is_symlink():
+            _fail(
+                "existing recipient transport contains a symlink",
+                code="recipient_resume_destination_invalid",
+                field_path=f"$.destination.{path.relative_to(destination).as_posix()}",
+                consumer_effect="resume never follows redirected evidence",
+            )
+        if path.is_file():
+            actual_files.add(path.relative_to(destination).as_posix())
+        elif not path.is_dir():
+            _fail(
+                "existing recipient transport contains an unsupported filesystem entry",
+                code="recipient_resume_destination_invalid",
+                field_path=f"$.destination.{path.relative_to(destination).as_posix()}",
+                consumer_effect="resume accepts only regular files and directories",
+            )
+
+    source_hash = sha256_file(archive)
+    copied_hash = sha256_file(incoming)
+    _exact(
+        copied_hash,
+        source_hash,
+        code="recipient_resume_archive_copy_mismatch",
+        field_path="$.destination.archive",
+        consumer_effect="resume cannot register changed transport bytes",
+    )
+    incoming_files = _archive_files(incoming)
+    expected_files = {f"incoming/{archive.name}"}
+    expected_files.update(
+        f"extracted/{archive.stem}/{relative_path}"
+        for relative_path in incoming_files
+    )
+    _exact(
+        sorted(actual_files),
+        sorted(expected_files),
+        code="recipient_resume_inventory_mismatch",
+        field_path="$.destination",
+        consumer_effect="resume cannot hide extra or missing transport files",
+    )
+    extracted_validation = validate_portable_review_bundle(
+        bundle_path=extracted,
+        check_machine_open=False,
+    )
+    _exact(
+        extracted_validation["semantic_identity_sha256"],
+        archive_validation["semantic_identity_sha256"],
+        code="recipient_resume_extraction_identity_mismatch",
+        field_path="$.destination.extracted",
+        consumer_effect="resume requires the exact prior extraction",
+    )
+    return {
+        "copied_archive_sha256": copied_hash,
+        "extracted_semantic_identity_sha256": extracted_validation[
+            "semantic_identity_sha256"
+        ],
+        "extracted_file_count": extracted_validation["file_count"],
+    }
+
 REGISTRY_SCHEMA = "nlmytgen.review_bundle_registry.v1"
 INGEST_AUTHORITY_SCHEMA = "nlmytgen.review_bundle_ingest_authority.v1"
 INGEST_RESULT_SCHEMA = "nlmytgen.review_bundle_ingest_result.v1"
@@ -3169,6 +3255,7 @@ def ingest_portable_review_bundle(
     authority: Mapping[str, Any],
     expected_recipient_id: str,
     available_named_terminal_id: str | None = None,
+    resume_existing_transport: bool = False,
 ) -> dict[str, Any]:
     validated_authority = validate_review_bundle_ingest_authority(authority)
     recipient_id = validated_authority["recipient_id"]
@@ -3284,12 +3371,19 @@ def ingest_portable_review_bundle(
             )
         named_terminal_state = "completed"
 
-    transported = transport_portable_review_bundle(
-        archive_path=source,
-        destination_root=destination_root,
-        recipient_id=recipient_id,
-        expected_recipient_id=expected_recipient_id,
-    )
+    if resume_existing_transport:
+        transported = _reconcile_portable_review_bundle_transport(
+            archive_path=source,
+            destination_root=destination_root,
+            archive_validation=validation,
+        )
+    else:
+        transported = transport_portable_review_bundle(
+            archive_path=source,
+            destination_root=destination_root,
+            recipient_id=recipient_id,
+            expected_recipient_id=expected_recipient_id,
+        )
     entry = {
         "registry_key_sha256": _review_bundle_registry_key_sha256(key),
         "bundle_id": artifact["bundle_id"],

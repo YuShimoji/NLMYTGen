@@ -16,7 +16,7 @@ Usage:
     python -m src.cli.main execute-factory-queue --queue factory_queue.json --change-set change_set.json [--authority-file authorities.json] [--execute] [--resume-journal journal.json] --format json
     python -m src.cli.main build-portable-review-bundle --packet packet-dir --output bundle-dir --archive bundle.zip [--descriptor descriptor.json] --format json
     python -m src.cli.main validate-portable-review-bundle --bundle bundle-dir-or.zip [--check-machine-open] --format json
-    python -m src.cli.main ingest-portable-review-bundle --archive bundle.zip --registry registry.json --destination recipient-dir --authority authority.json --recipient-id ID [--available-named-terminal-id ID] --format json
+    python -m src.cli.main ingest-portable-review-bundle --archive bundle.zip --registry registry.json --destination recipient-dir --authority authority.json --recipient-id ID [--available-named-terminal-id ID] [--resume-existing-transport] --format json
     python -m src.cli.main advance-factory-package --queue factory_queue.json --package-id ID --to-lifecycle source_project_ready|rendered --authority-id ID [--execute] --format json
     python -m src.cli.main build-episode-video --factory-package factory_package_v2.json --dry-run
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
@@ -1933,6 +1933,14 @@ def main(argv: list[str] | None = None) -> int:
     p_portable_ingest.add_argument(
         "--available-named-terminal-id",
         help="Exact currently available named-terminal identity",
+    )
+    p_portable_ingest.add_argument(
+        "--resume-existing-transport",
+        action="store_true",
+        help=(
+            "Revalidate and register a complete existing transport after an "
+            "interrupted registry update"
+        ),
     )
     p_portable_ingest.add_argument(
         "--format",
@@ -7091,6 +7099,7 @@ def _cmd_ingest_portable_review_bundle(args: argparse.Namespace) -> int:
             authority=authority,
             expected_recipient_id=args.recipient_id,
             available_named_terminal_id=args.available_named_terminal_id,
+            resume_existing_transport=bool(args.resume_existing_transport),
         )
     except (OSError, UnicodeDecodeError, json.JSONDecodeError):
         print(

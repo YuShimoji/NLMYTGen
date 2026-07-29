@@ -642,6 +642,88 @@ def test_recipient_registry_ingest_is_keyed_path_free_and_duplicate_safe(
     assert transported == [destination]
 
 
+def test_recipient_registry_resume_reconciles_only_exact_existing_transport(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    archive = tmp_path / "bundle.zip"
+    with zipfile.ZipFile(archive, "w") as handle:
+        for name, data in (("index.html", b"review"), ("assets/frame.png", b"frame")):
+            info = zipfile.ZipInfo(name, date_time=module.NORMALIZED_ZIP_TIME)
+            info.compress_type = zipfile.ZIP_STORED
+            handle.writestr(info, data)
+    archive_sha256 = sha256_file(archive)
+    destination = tmp_path / "recipient" / "interrupted-ingest"
+    incoming = destination / "incoming" / archive.name
+    extracted = destination / "extracted" / archive.stem
+    incoming.parent.mkdir(parents=True)
+    extracted.joinpath("assets").mkdir(parents=True)
+    shutil.copyfile(archive, incoming)
+    extracted.joinpath("index.html").write_bytes(b"review")
+    extracted.joinpath("assets", "frame.png").write_bytes(b"frame")
+
+    def validate(*, bundle_path: Path, check_machine_open: bool) -> dict:
+        assert check_machine_open is False
+        assert Path(bundle_path) in {archive.resolve(), extracted.resolve()}
+        return {
+            "bundle_id": "bundle-v1",
+            "bundle_version": 1,
+            "archive_sha256": archive_sha256,
+            "manifest_sha256": "b" * 64,
+            "semantic_identity_sha256": "c" * 64,
+            "file_count": 2,
+        }
+
+    monkeypatch.setattr(module, "validate_portable_review_bundle", validate)
+    registry = tmp_path / "recipient" / "registry.json"
+    with pytest.raises(PortableReviewBundleError) as not_resumed:
+        ingest_portable_review_bundle(
+            archive_path=archive,
+            registry_path=registry,
+            destination_root=destination,
+            authority=_registry_authority(archive_sha256),
+            expected_recipient_id="recipient-a",
+        )
+    assert not_resumed.value.code == "recipient_destination_exists"
+    assert not registry.exists()
+
+    result = ingest_portable_review_bundle(
+        archive_path=archive,
+        registry_path=registry,
+        destination_root=destination,
+        authority=_registry_authority(archive_sha256),
+        expected_recipient_id="recipient-a",
+        resume_existing_transport=True,
+    )
+    assert result["status"] == "succeeded"
+    assert result["copied_archive_sha256"] == archive_sha256
+    assert len(
+        validate_review_bundle_registry(
+            json.loads(registry.read_text(encoding="utf-8")),
+            expected_recipient_id="recipient-a",
+        )["entries"]
+    ) == 1
+
+    tampered_destination = tmp_path / "recipient" / "tampered-ingest"
+    shutil.copytree(destination, tampered_destination)
+    tampered_destination.joinpath("unexpected.txt").write_text(
+        "not part of transport",
+        encoding="utf-8",
+    )
+    tampered_registry = tmp_path / "recipient" / "tampered-registry.json"
+    with pytest.raises(PortableReviewBundleError) as tampered:
+        ingest_portable_review_bundle(
+            archive_path=archive,
+            registry_path=tampered_registry,
+            destination_root=tampered_destination,
+            authority=_registry_authority(archive_sha256),
+            expected_recipient_id="recipient-a",
+            resume_existing_transport=True,
+        )
+    assert tampered.value.code == "recipient_resume_inventory_mismatch"
+    assert not tampered_registry.exists()
+
+
 @pytest.mark.parametrize(
     ("status", "error_code"),
     [
