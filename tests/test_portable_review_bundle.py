@@ -24,6 +24,14 @@ from src.pipeline.portable_review_bundle import (
 )
 
 
+from src.pipeline.portable_review_bundle import (
+    empty_review_bundle_registry,
+    ingest_portable_review_bundle,
+    validate_review_bundle_ingest_authority,
+    validate_review_bundle_registry,
+)
+
+
 ROOT = Path(__file__).resolve().parents[1]
 PACKET = Path(
     "production_pilots/factory_canaries/food_expiry_labels_001/"
@@ -519,6 +527,231 @@ def test_recipient_transport_is_byte_exact_and_recipient_bound() -> None:
         assert transported["states"]["delivery_complete"] is False
     finally:
         shutil.rmtree(root, ignore_errors=True)
+
+
+def _registry_authority(
+    archive_sha256: str,
+    *,
+    status: str = "active",
+    mode: str = "local_ingest",
+    named_terminal_id: str | None = None,
+    named_terminal_available: bool = False,
+) -> dict:
+    return {
+        "schema": "nlmytgen.review_bundle_ingest_authority.v1",
+        "schema_version": "1.0",
+        "authority_id": "authority-recipient-ingest-v1",
+        "recipient_id": "recipient-a",
+        "artifact": {
+            "bundle_id": "bundle-v1",
+            "bundle_version": 1,
+            "archive_sha256": archive_sha256,
+            "status": status,
+        },
+        "transport": {
+            "mode": mode,
+            "named_terminal_id": named_terminal_id,
+            "named_terminal_available": named_terminal_available,
+        },
+    }
+
+
+def _mock_registry_pipeline(
+    monkeypatch: pytest.MonkeyPatch,
+) -> list[Path]:
+    transported: list[Path] = []
+
+    def validate(*, bundle_path: Path, check_machine_open: bool) -> dict:
+        assert check_machine_open is False
+        return {
+            "bundle_id": "bundle-v1",
+            "bundle_version": 1,
+            "archive_sha256": sha256_file(bundle_path),
+            "manifest_sha256": "b" * 64,
+            "semantic_identity_sha256": "c" * 64,
+        }
+
+    def transport(
+        *,
+        archive_path: Path,
+        destination_root: Path,
+        recipient_id: str,
+        expected_recipient_id: str,
+    ) -> dict:
+        assert recipient_id == expected_recipient_id == "recipient-a"
+        destination = Path(destination_root)
+        destination.mkdir(parents=True, exist_ok=False)
+        transported.append(destination)
+        return {
+            "copied_archive_sha256": sha256_file(archive_path),
+            "extracted_semantic_identity_sha256": "c" * 64,
+            "extracted_file_count": 10,
+        }
+
+    monkeypatch.setattr(module, "validate_portable_review_bundle", validate)
+    monkeypatch.setattr(module, "transport_portable_review_bundle", transport)
+    return transported
+
+
+def test_recipient_registry_ingest_is_keyed_path_free_and_duplicate_safe(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    archive = tmp_path / "bundle.zip"
+    archive.write_bytes(b"bundle-v1")
+    archive_sha256 = sha256_file(archive)
+    registry = tmp_path / "recipient" / "registry.json"
+    destination = tmp_path / "recipient" / "first-ingest"
+    transported = _mock_registry_pipeline(monkeypatch)
+
+    result = ingest_portable_review_bundle(
+        archive_path=archive,
+        registry_path=registry,
+        destination_root=destination,
+        authority=_registry_authority(archive_sha256),
+        expected_recipient_id="recipient-a",
+    )
+    assert result["status"] == "succeeded"
+    assert result["named_terminal_transport"] == "not_requested"
+    assert result["states"]["human_open"] == "unverified"
+    payload = json.loads(registry.read_text(encoding="utf-8"))
+    validated = validate_review_bundle_registry(
+        payload,
+        expected_recipient_id="recipient-a",
+    )
+    assert len(validated["entries"]) == 1
+    entry = validated["entries"][0]
+    assert entry["bundle_id"] == "bundle-v1"
+    assert entry["bundle_version"] == 1
+    assert entry["archive_sha256"] == archive_sha256
+    assert entry["recipient_id"] == "recipient-a"
+    assert str(tmp_path) not in registry.read_text(encoding="utf-8")
+    assert all("path" not in field for field in entry)
+
+    duplicate_destination = tmp_path / "recipient" / "duplicate"
+    with pytest.raises(PortableReviewBundleError) as observed:
+        ingest_portable_review_bundle(
+            archive_path=archive,
+            registry_path=registry,
+            destination_root=duplicate_destination,
+            authority=_registry_authority(archive_sha256),
+            expected_recipient_id="recipient-a",
+        )
+    assert observed.value.code == "review_bundle_registry_duplicate"
+    assert not duplicate_destination.exists()
+    assert transported == [destination]
+
+
+@pytest.mark.parametrize(
+    ("status", "error_code"),
+    [
+        ("revoked", "review_bundle_artifact_revoked"),
+        ("superseded", "review_bundle_artifact_superseded"),
+    ],
+)
+def test_recipient_registry_rejects_inactive_artifact_before_transport(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    status: str,
+    error_code: str,
+) -> None:
+    archive = tmp_path / "bundle.zip"
+    archive.write_bytes(b"bundle-v1")
+    transported = _mock_registry_pipeline(monkeypatch)
+    with pytest.raises(PortableReviewBundleError) as observed:
+        ingest_portable_review_bundle(
+            archive_path=archive,
+            registry_path=tmp_path / "registry.json",
+            destination_root=tmp_path / "destination",
+            authority=_registry_authority(
+                sha256_file(archive),
+                status=status,
+            ),
+            expected_recipient_id="recipient-a",
+        )
+    assert observed.value.code == error_code
+    assert transported == []
+    assert not (tmp_path / "registry.json").exists()
+
+
+def test_recipient_registry_rejects_missing_archive_and_version_conflict(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    transported = _mock_registry_pipeline(monkeypatch)
+    with pytest.raises(PortableReviewBundleError) as missing:
+        ingest_portable_review_bundle(
+            archive_path=tmp_path / "missing.zip",
+            registry_path=tmp_path / "registry.json",
+            destination_root=tmp_path / "missing-destination",
+            authority=_registry_authority("a" * 64),
+            expected_recipient_id="recipient-a",
+        )
+    assert missing.value.code == "review_bundle_archive_missing"
+
+    first = tmp_path / "first.zip"
+    first.write_bytes(b"first")
+    registry = tmp_path / "registry.json"
+    ingest_portable_review_bundle(
+        archive_path=first,
+        registry_path=registry,
+        destination_root=tmp_path / "first-destination",
+        authority=_registry_authority(sha256_file(first)),
+        expected_recipient_id="recipient-a",
+    )
+    second = tmp_path / "second.zip"
+    second.write_bytes(b"second")
+    with pytest.raises(PortableReviewBundleError) as conflict:
+        ingest_portable_review_bundle(
+            archive_path=second,
+            registry_path=registry,
+            destination_root=tmp_path / "second-destination",
+            authority=_registry_authority(sha256_file(second)),
+            expected_recipient_id="recipient-a",
+        )
+    assert conflict.value.code == "review_bundle_registry_version_conflict"
+    assert transported == [tmp_path / "first-destination"]
+    assert not (tmp_path / "second-destination").exists()
+
+
+def test_named_terminal_ingest_requires_exact_live_terminal_evidence(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    archive = tmp_path / "bundle.zip"
+    archive.write_bytes(b"bundle-v1")
+    authority = _registry_authority(
+        sha256_file(archive),
+        mode="named_terminal_delivery",
+        named_terminal_id="review-terminal-a",
+        named_terminal_available=True,
+    )
+    assert validate_review_bundle_ingest_authority(authority)["transport"][
+        "named_terminal_id"
+    ] == "review-terminal-a"
+    transported = _mock_registry_pipeline(monkeypatch)
+    with pytest.raises(PortableReviewBundleError) as unavailable:
+        ingest_portable_review_bundle(
+            archive_path=archive,
+            registry_path=tmp_path / "registry.json",
+            destination_root=tmp_path / "unavailable",
+            authority=authority,
+            expected_recipient_id="recipient-a",
+        )
+    assert unavailable.value.code == "review_bundle_named_terminal_unavailable"
+    assert transported == []
+
+    result = ingest_portable_review_bundle(
+        archive_path=archive,
+        registry_path=tmp_path / "registry.json",
+        destination_root=tmp_path / "available",
+        authority=authority,
+        expected_recipient_id="recipient-a",
+        available_named_terminal_id="review-terminal-a",
+    )
+    assert result["named_terminal_transport"] == "completed"
+    assert result["states"]["delivery_complete"] is False
+    assert transported == [tmp_path / "available"]
 
 
 def test_tracked_only_absence_never_falls_back_to_regeneration() -> None:

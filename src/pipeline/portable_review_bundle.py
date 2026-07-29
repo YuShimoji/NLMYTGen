@@ -2686,17 +2686,695 @@ def transport_portable_review_bundle(
     }
 
 
+
+REGISTRY_SCHEMA = "nlmytgen.review_bundle_registry.v1"
+INGEST_AUTHORITY_SCHEMA = "nlmytgen.review_bundle_ingest_authority.v1"
+INGEST_RESULT_SCHEMA = "nlmytgen.review_bundle_ingest_result.v1"
+ARTIFACT_STATUSES = {"active", "revoked", "superseded"}
+TRANSPORT_MODES = {"local_ingest", "named_terminal_delivery"}
+_REGISTRY_FIELDS = {"schema", "schema_version", "recipient_id", "entries"}
+_REGISTRY_ENTRY_FIELDS = {
+    "registry_key_sha256",
+    "bundle_id",
+    "bundle_version",
+    "archive_sha256",
+    "recipient_id",
+    "manifest_sha256",
+    "semantic_identity_sha256",
+    "transport_authority_id",
+    "transport_mode",
+    "artifact_status",
+    "named_terminal_id",
+    "named_terminal_transport",
+    "machine_open",
+    "human_open",
+    "content_decision",
+    "delivery_complete",
+}
+
+
+def _registry_object(
+    value: Any,
+    *,
+    fields: set[str],
+    field_path: str,
+    code: str,
+) -> Mapping[str, Any]:
+    if not isinstance(value, Mapping) or set(value) != fields:
+        _fail(
+            "review bundle recipient-registry object is not exact",
+            code=code,
+            field_path=field_path,
+            consumer_effect="ambiguous recipient state is rejected",
+        )
+    return value
+
+
+def _registry_stable_id(value: Any, *, field_path: str, code: str) -> str:
+    if (
+        not isinstance(value, str)
+        or len(value) > 160
+        or re.fullmatch(
+            r"[A-Za-z0-9]+(?:[A-Za-z0-9_.:-]*[A-Za-z0-9])?",
+            value,
+        )
+        is None
+    ):
+        _fail(
+            "review bundle recipient-registry identity is invalid",
+            code=code,
+            field_path=field_path,
+            consumer_effect="unbound recipient or authority identity is rejected",
+        )
+    return value
+
+
+def _registry_sha256(value: Any, *, field_path: str, code: str) -> str:
+    if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+        _fail(
+            "review bundle recipient-registry SHA-256 is invalid",
+            code=code,
+            field_path=field_path,
+            consumer_effect="unverifiable artifact identity is rejected",
+        )
+    return value
+
+
+def _registry_bundle_version(value: Any, *, field_path: str, code: str) -> int:
+    if not isinstance(value, int) or isinstance(value, bool) or value < 1:
+        _fail(
+            "review bundle recipient-registry version is invalid",
+            code=code,
+            field_path=field_path,
+            consumer_effect="unversioned artifact identity is rejected",
+        )
+    return value
+
+
+def _review_bundle_registry_key(
+    *,
+    bundle_id: str,
+    bundle_version: int,
+    archive_sha256: str,
+    recipient_id: str,
+) -> tuple[str, int, str, str]:
+    return bundle_id, bundle_version, archive_sha256, recipient_id
+
+
+def _review_bundle_registry_key_sha256(
+    key: tuple[str, int, str, str],
+) -> str:
+    return sha256_bytes(
+        canonical_json_bytes(
+            {
+                "bundle_id": key[0],
+                "bundle_version": key[1],
+                "archive_sha256": key[2],
+                "recipient_id": key[3],
+            }
+        )
+    )
+
+
+def empty_review_bundle_registry(*, recipient_id: str) -> dict[str, Any]:
+    recipient = _registry_stable_id(
+        recipient_id,
+        field_path="$.recipient_id",
+        code="review_bundle_registry_invalid",
+    )
+    return {
+        "schema": REGISTRY_SCHEMA,
+        "schema_version": SCHEMA_VERSION,
+        "recipient_id": recipient,
+        "entries": [],
+    }
+
+
+def validate_review_bundle_registry(
+    value: Any,
+    *,
+    expected_recipient_id: str | None = None,
+) -> dict[str, Any]:
+    registry = _registry_object(
+        value,
+        fields=_REGISTRY_FIELDS,
+        field_path="$",
+        code="review_bundle_registry_invalid",
+    )
+    if (
+        registry["schema"] != REGISTRY_SCHEMA
+        or registry["schema_version"] != SCHEMA_VERSION
+    ):
+        _fail(
+            "review bundle recipient-registry schema is unsupported",
+            code="review_bundle_registry_invalid",
+            field_path="$.schema",
+            consumer_effect="unknown recipient state is rejected",
+        )
+    recipient_id = _registry_stable_id(
+        registry["recipient_id"],
+        field_path="$.recipient_id",
+        code="review_bundle_registry_invalid",
+    )
+    if expected_recipient_id is not None and recipient_id != expected_recipient_id:
+        _fail(
+            "review bundle recipient-registry is bound to another recipient",
+            code="recipient_identity_mismatch",
+            field_path="$.recipient_id",
+            consumer_effect="one recipient cannot ingest another recipient's registry",
+        )
+    if not isinstance(registry["entries"], list):
+        _fail(
+            "review bundle recipient-registry entries must be an array",
+            code="review_bundle_registry_invalid",
+            field_path="$.entries",
+            consumer_effect="malformed recipient state is rejected",
+        )
+
+    entries: list[dict[str, Any]] = []
+    seen_keys: set[tuple[str, int, str, str]] = set()
+    seen_versions: dict[tuple[str, int, str], str] = {}
+    for index, raw_entry in enumerate(registry["entries"]):
+        field_path = f"$.entries[{index}]"
+        entry = _registry_object(
+            raw_entry,
+            fields=_REGISTRY_ENTRY_FIELDS,
+            field_path=field_path,
+            code="review_bundle_registry_invalid",
+        )
+        bundle_id = _registry_stable_id(
+            entry["bundle_id"],
+            field_path=f"{field_path}.bundle_id",
+            code="review_bundle_registry_invalid",
+        )
+        bundle_version = _registry_bundle_version(
+            entry["bundle_version"],
+            field_path=f"{field_path}.bundle_version",
+            code="review_bundle_registry_invalid",
+        )
+        archive_sha256 = _registry_sha256(
+            entry["archive_sha256"],
+            field_path=f"{field_path}.archive_sha256",
+            code="review_bundle_registry_invalid",
+        )
+        entry_recipient = _registry_stable_id(
+            entry["recipient_id"],
+            field_path=f"{field_path}.recipient_id",
+            code="review_bundle_registry_invalid",
+        )
+        if entry_recipient != recipient_id:
+            _fail(
+                "review bundle recipient-registry entry has another recipient",
+                code="review_bundle_registry_invalid",
+                field_path=f"{field_path}.recipient_id",
+                consumer_effect="cross-recipient registry state is rejected",
+            )
+        for identity_field in ("manifest_sha256", "semantic_identity_sha256"):
+            _registry_sha256(
+                entry[identity_field],
+                field_path=f"{field_path}.{identity_field}",
+                code="review_bundle_registry_invalid",
+            )
+        _registry_stable_id(
+            entry["transport_authority_id"],
+            field_path=f"{field_path}.transport_authority_id",
+            code="review_bundle_registry_invalid",
+        )
+        if entry["transport_mode"] not in TRANSPORT_MODES:
+            _fail(
+                "review bundle recipient-registry transport mode is invalid",
+                code="review_bundle_registry_invalid",
+                field_path=f"{field_path}.transport_mode",
+                consumer_effect="unknown transport state is rejected",
+            )
+        if entry["artifact_status"] not in ARTIFACT_STATUSES:
+            _fail(
+                "review bundle recipient-registry artifact status is invalid",
+                code="review_bundle_registry_invalid",
+                field_path=f"{field_path}.artifact_status",
+                consumer_effect="unknown artifact disposition is rejected",
+            )
+        terminal_id = entry["named_terminal_id"]
+        if terminal_id is not None:
+            _registry_stable_id(
+                terminal_id,
+                field_path=f"{field_path}.named_terminal_id",
+                code="review_bundle_registry_invalid",
+            )
+        if entry["named_terminal_transport"] not in {
+            "not_requested",
+            "completed",
+        }:
+            _fail(
+                "review bundle named-terminal state is invalid",
+                code="review_bundle_registry_invalid",
+                field_path=f"{field_path}.named_terminal_transport",
+                consumer_effect="unproven named delivery is rejected",
+            )
+        required_states = {
+            "machine_open": "unverified",
+            "human_open": "unverified",
+            "content_decision": "none",
+            "delivery_complete": False,
+        }
+        for state_field, expected in required_states.items():
+            if entry[state_field] != expected:
+                _fail(
+                    "recipient ingest cannot infer later acceptance state",
+                    code="review_bundle_registry_invalid",
+                    field_path=f"{field_path}.{state_field}",
+                    consumer_effect="transport remains separate from acceptance",
+                )
+        key = _review_bundle_registry_key(
+            bundle_id=bundle_id,
+            bundle_version=bundle_version,
+            archive_sha256=archive_sha256,
+            recipient_id=entry_recipient,
+        )
+        if entry["registry_key_sha256"] != _review_bundle_registry_key_sha256(key):
+            _fail(
+                "review bundle recipient-registry key identity is invalid",
+                code="review_bundle_registry_invalid",
+                field_path=f"{field_path}.registry_key_sha256",
+                consumer_effect="mis-keyed recipient state is rejected",
+            )
+        if key in seen_keys:
+            _fail(
+                "review bundle recipient-registry contains a duplicate key",
+                code="review_bundle_registry_invalid",
+                field_path=field_path,
+                consumer_effect="duplicate recipient state is rejected",
+            )
+        seen_keys.add(key)
+        version_key = bundle_id, bundle_version, entry_recipient
+        previous_hash = seen_versions.get(version_key)
+        if previous_hash is not None and previous_hash != archive_sha256:
+            _fail(
+                "review bundle recipient-registry contains a version conflict",
+                code="review_bundle_registry_invalid",
+                field_path=field_path,
+                consumer_effect="one version cannot identify multiple archive bytes",
+            )
+        seen_versions[version_key] = archive_sha256
+        entries.append(dict(entry))
+    return {
+        "schema": REGISTRY_SCHEMA,
+        "schema_version": SCHEMA_VERSION,
+        "recipient_id": recipient_id,
+        "entries": entries,
+    }
+
+
+def validate_review_bundle_ingest_authority(value: Any) -> dict[str, Any]:
+    authority = _registry_object(
+        value,
+        fields={
+            "schema",
+            "schema_version",
+            "authority_id",
+            "recipient_id",
+            "artifact",
+            "transport",
+        },
+        field_path="$",
+        code="review_bundle_ingest_authority_invalid",
+    )
+    if (
+        authority["schema"] != INGEST_AUTHORITY_SCHEMA
+        or authority["schema_version"] != SCHEMA_VERSION
+    ):
+        _fail(
+            "review bundle ingest authority schema is unsupported",
+            code="review_bundle_ingest_authority_invalid",
+            field_path="$.schema",
+            consumer_effect="unknown transport authority is rejected",
+        )
+    authority_id = _registry_stable_id(
+        authority["authority_id"],
+        field_path="$.authority_id",
+        code="review_bundle_ingest_authority_invalid",
+    )
+    recipient_id = _registry_stable_id(
+        authority["recipient_id"],
+        field_path="$.recipient_id",
+        code="review_bundle_ingest_authority_invalid",
+    )
+    artifact = _registry_object(
+        authority["artifact"],
+        fields={"bundle_id", "bundle_version", "archive_sha256", "status"},
+        field_path="$.artifact",
+        code="review_bundle_ingest_authority_invalid",
+    )
+    normalized_artifact = {
+        "bundle_id": _registry_stable_id(
+            artifact["bundle_id"],
+            field_path="$.artifact.bundle_id",
+            code="review_bundle_ingest_authority_invalid",
+        ),
+        "bundle_version": _registry_bundle_version(
+            artifact["bundle_version"],
+            field_path="$.artifact.bundle_version",
+            code="review_bundle_ingest_authority_invalid",
+        ),
+        "archive_sha256": _registry_sha256(
+            artifact["archive_sha256"],
+            field_path="$.artifact.archive_sha256",
+            code="review_bundle_ingest_authority_invalid",
+        ),
+        "status": artifact["status"],
+    }
+    if normalized_artifact["status"] not in ARTIFACT_STATUSES:
+        _fail(
+            "review bundle artifact disposition is invalid",
+            code="review_bundle_ingest_authority_invalid",
+            field_path="$.artifact.status",
+            consumer_effect="unknown artifact disposition is rejected",
+        )
+    transport = _registry_object(
+        authority["transport"],
+        fields={"mode", "named_terminal_id", "named_terminal_available"},
+        field_path="$.transport",
+        code="review_bundle_ingest_authority_invalid",
+    )
+    mode = transport["mode"]
+    if mode not in TRANSPORT_MODES:
+        _fail(
+            "review bundle transport mode is invalid",
+            code="review_bundle_ingest_authority_invalid",
+            field_path="$.transport.mode",
+            consumer_effect="unknown transport route is rejected",
+        )
+    named_terminal_id = transport["named_terminal_id"]
+    if named_terminal_id is not None:
+        named_terminal_id = _registry_stable_id(
+            named_terminal_id,
+            field_path="$.transport.named_terminal_id",
+            code="review_bundle_ingest_authority_invalid",
+        )
+    named_terminal_available = transport["named_terminal_available"]
+    if not isinstance(named_terminal_available, bool):
+        _fail(
+            "named-terminal availability must be boolean",
+            code="review_bundle_ingest_authority_invalid",
+            field_path="$.transport.named_terminal_available",
+            consumer_effect="unproven terminal availability is rejected",
+        )
+    if mode == "local_ingest" and (
+        named_terminal_id is not None or named_terminal_available
+    ):
+        _fail(
+            "local ingest cannot claim a named terminal",
+            code="review_bundle_ingest_authority_invalid",
+            field_path="$.transport",
+            consumer_effect="local ingest remains separate from named delivery",
+        )
+    if mode == "named_terminal_delivery" and named_terminal_id is None:
+        _fail(
+            "named-terminal delivery requires an exact terminal identity",
+            code="review_bundle_ingest_authority_invalid",
+            field_path="$.transport.named_terminal_id",
+            consumer_effect="unnamed delivery is rejected",
+        )
+    return {
+        "schema": INGEST_AUTHORITY_SCHEMA,
+        "schema_version": SCHEMA_VERSION,
+        "authority_id": authority_id,
+        "recipient_id": recipient_id,
+        "artifact": normalized_artifact,
+        "transport": {
+            "mode": mode,
+            "named_terminal_id": named_terminal_id,
+            "named_terminal_available": named_terminal_available,
+        },
+    }
+
+
+def _load_review_bundle_registry(
+    registry_path: Path,
+    *,
+    recipient_id: str,
+) -> dict[str, Any]:
+    if not registry_path.exists():
+        return empty_review_bundle_registry(recipient_id=recipient_id)
+    if registry_path.is_symlink() or not registry_path.is_file():
+        _fail(
+            "review bundle recipient-registry is not a regular local file",
+            code="review_bundle_registry_invalid",
+            field_path="$.registry",
+            consumer_effect="unsafe recipient state is rejected",
+        )
+    try:
+        value = json.loads(registry_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise PortableReviewBundleError(
+            "review bundle recipient-registry cannot be read",
+            code="review_bundle_registry_invalid",
+            field_path="$.registry",
+            consumer_effect="unreadable recipient state is rejected",
+        ) from exc
+    return validate_review_bundle_registry(
+        value,
+        expected_recipient_id=recipient_id,
+    )
+
+
+def _write_review_bundle_registry(
+    registry_path: Path,
+    registry: Mapping[str, Any],
+) -> None:
+    registry_path.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="wb",
+            prefix=f".{registry_path.name}.",
+            suffix=".tmp",
+            dir=registry_path.parent,
+            delete=False,
+        ) as temporary:
+            temporary.write(canonical_json_bytes(registry))
+            temporary_path = Path(temporary.name)
+        os.replace(temporary_path, registry_path)
+        temporary_path = None
+    finally:
+        if temporary_path is not None and temporary_path.exists():
+            temporary_path.unlink()
+
+
+def ingest_portable_review_bundle(
+    *,
+    archive_path: str | Path,
+    registry_path: str | Path,
+    destination_root: str | Path,
+    authority: Mapping[str, Any],
+    expected_recipient_id: str,
+    available_named_terminal_id: str | None = None,
+) -> dict[str, Any]:
+    validated_authority = validate_review_bundle_ingest_authority(authority)
+    recipient_id = validated_authority["recipient_id"]
+    if recipient_id != expected_recipient_id:
+        _fail(
+            "review bundle ingest authority is bound to another recipient",
+            code="recipient_identity_mismatch",
+            field_path="$.authority.recipient_id",
+            consumer_effect="one recipient cannot ingest another recipient's bundle",
+        )
+    artifact = validated_authority["artifact"]
+    if artifact["status"] in {"revoked", "superseded"}:
+        _fail(
+            f"review bundle artifact is {artifact['status']}",
+            code=f"review_bundle_artifact_{artifact['status']}",
+            field_path="$.authority.artifact.status",
+            consumer_effect="inactive artifact bytes are not transported or registered",
+        )
+    source = Path(archive_path)
+    if source.is_symlink() or not source.is_file():
+        _fail(
+            "authorized local review bundle archive is unavailable",
+            code="review_bundle_archive_missing",
+            field_path="$.archive",
+            consumer_effect="absence triggers no network or regeneration fallback",
+        )
+    source = source.resolve()
+    if sha256_file(source) != artifact["archive_sha256"]:
+        _fail(
+            "local review bundle archive does not match ingest authority",
+            code="review_bundle_archive_identity_mismatch",
+            field_path="$.authority.artifact.archive_sha256",
+            consumer_effect="unauthorized archive bytes are rejected",
+        )
+    validation = validate_portable_review_bundle(
+        bundle_path=source,
+        check_machine_open=False,
+    )
+    for field in ("bundle_id", "bundle_version", "archive_sha256"):
+        if validation[field] != artifact[field]:
+            _fail(
+                "validated review bundle identity does not match ingest authority",
+                code="review_bundle_archive_identity_mismatch",
+                field_path=f"$.authority.artifact.{field}",
+                consumer_effect="misbound archive bytes are rejected",
+            )
+
+    registry_file = Path(registry_path)
+    if registry_file.is_symlink():
+        _fail(
+            "review bundle recipient-registry path cannot be a symlink",
+            code="review_bundle_registry_invalid",
+            field_path="$.registry",
+            consumer_effect="unsafe recipient state is rejected",
+        )
+    registry_file = registry_file.resolve()
+    registry = _load_review_bundle_registry(
+        registry_file,
+        recipient_id=recipient_id,
+    )
+    key = _review_bundle_registry_key(
+        bundle_id=artifact["bundle_id"],
+        bundle_version=artifact["bundle_version"],
+        archive_sha256=artifact["archive_sha256"],
+        recipient_id=recipient_id,
+    )
+    for index, entry in enumerate(registry["entries"]):
+        existing_key = _review_bundle_registry_key(
+            bundle_id=entry["bundle_id"],
+            bundle_version=entry["bundle_version"],
+            archive_sha256=entry["archive_sha256"],
+            recipient_id=entry["recipient_id"],
+        )
+        if existing_key == key:
+            if entry["artifact_status"] in {"revoked", "superseded"}:
+                _fail(
+                    f"review bundle registry marks artifact {entry['artifact_status']}",
+                    code=f"review_bundle_artifact_{entry['artifact_status']}",
+                    field_path=f"$.registry.entries[{index}].artifact_status",
+                    consumer_effect="inactive artifact bytes are not transported again",
+                )
+            _fail(
+                "review bundle recipient-registry already contains this ingest key",
+                code="review_bundle_registry_duplicate",
+                field_path=f"$.registry.entries[{index}]",
+                consumer_effect="duplicate ingest is rejected before transport",
+            )
+        if (
+            entry["bundle_id"] == artifact["bundle_id"]
+            and entry["bundle_version"] == artifact["bundle_version"]
+            and entry["recipient_id"] == recipient_id
+            and entry["archive_sha256"] != artifact["archive_sha256"]
+        ):
+            _fail(
+                "review bundle version is bound to different archive bytes",
+                code="review_bundle_registry_version_conflict",
+                field_path=f"$.registry.entries[{index}]",
+                consumer_effect="one bundle version cannot identify multiple archives",
+            )
+
+    transport = validated_authority["transport"]
+    named_terminal_state = "not_requested"
+    if transport["mode"] == "named_terminal_delivery":
+        if (
+            not transport["named_terminal_available"]
+            or available_named_terminal_id != transport["named_terminal_id"]
+        ):
+            _fail(
+                "authorized named terminal is not currently available",
+                code="review_bundle_named_terminal_unavailable",
+                field_path="$.authority.transport.named_terminal_id",
+                consumer_effect="named delivery requires exact live-terminal evidence",
+            )
+        named_terminal_state = "completed"
+
+    transported = transport_portable_review_bundle(
+        archive_path=source,
+        destination_root=destination_root,
+        recipient_id=recipient_id,
+        expected_recipient_id=expected_recipient_id,
+    )
+    entry = {
+        "registry_key_sha256": _review_bundle_registry_key_sha256(key),
+        "bundle_id": artifact["bundle_id"],
+        "bundle_version": artifact["bundle_version"],
+        "archive_sha256": artifact["archive_sha256"],
+        "recipient_id": recipient_id,
+        "manifest_sha256": validation["manifest_sha256"],
+        "semantic_identity_sha256": validation["semantic_identity_sha256"],
+        "transport_authority_id": validated_authority["authority_id"],
+        "transport_mode": transport["mode"],
+        "artifact_status": "active",
+        "named_terminal_id": transport["named_terminal_id"],
+        "named_terminal_transport": named_terminal_state,
+        "machine_open": "unverified",
+        "human_open": "unverified",
+        "content_decision": "none",
+        "delivery_complete": False,
+    }
+    registry["entries"].append(entry)
+    registry["entries"].sort(
+        key=lambda item: (
+            item["bundle_id"],
+            item["bundle_version"],
+            item["archive_sha256"],
+            item["recipient_id"],
+        )
+    )
+    registry = validate_review_bundle_registry(
+        registry,
+        expected_recipient_id=recipient_id,
+    )
+    _write_review_bundle_registry(registry_file, registry)
+    return {
+        "schema": INGEST_RESULT_SCHEMA,
+        "schema_version": SCHEMA_VERSION,
+        "status": "succeeded",
+        "registry_key_sha256": entry["registry_key_sha256"],
+        "bundle_id": entry["bundle_id"],
+        "bundle_version": entry["bundle_version"],
+        "archive_sha256": entry["archive_sha256"],
+        "recipient_id": recipient_id,
+        "transport_authority_id": entry["transport_authority_id"],
+        "transport_mode": entry["transport_mode"],
+        "named_terminal_id": entry["named_terminal_id"],
+        "named_terminal_transport": entry["named_terminal_transport"],
+        "copied_archive_sha256": transported["copied_archive_sha256"],
+        "extracted_semantic_identity_sha256": transported[
+            "extracted_semantic_identity_sha256"
+        ],
+        "extracted_file_count": transported["extracted_file_count"],
+        "states": {
+            "registry": "recorded",
+            "transport": "completed",
+            "machine_open": "unverified",
+            "human_open": "unverified",
+            "content_decision": "none",
+            "delivery_complete": False,
+        },
+        "boundaries": {
+            "overwrite_count": 0,
+            "private_path_registry_field_count": 0,
+            "network_request_count": 0,
+            "regeneration_count": 0,
+            "external_transfer_count": 0,
+        },
+    }
+
 __all__ = [
     "BUNDLE_SCHEMA",
     "DESCRIPTOR_SCHEMA",
     "PortableReviewBundleError",
     "RECIPIENT_OPEN_SCHEMA",
+    "REGISTRY_SCHEMA",
+    "INGEST_AUTHORITY_SCHEMA",
+    "INGEST_RESULT_SCHEMA",
     "build_portable_review_bundle",
+    "empty_review_bundle_registry",
+    "ingest_portable_review_bundle",
     "canonical_json_bytes",
     "inspect_source_packet",
     "sha256_bytes",
     "sha256_file",
     "transport_portable_review_bundle",
     "validate_portable_review_bundle",
+    "validate_review_bundle_ingest_authority",
+    "validate_review_bundle_registry",
     "validate_recipient_open_receipt",
 ]

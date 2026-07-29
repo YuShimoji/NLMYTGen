@@ -16,6 +16,7 @@ Usage:
     python -m src.cli.main execute-factory-queue --queue factory_queue.json --change-set change_set.json [--authority-file authorities.json] [--execute] [--resume-journal journal.json] --format json
     python -m src.cli.main build-portable-review-bundle --packet packet-dir --output bundle-dir --archive bundle.zip [--descriptor descriptor.json] --format json
     python -m src.cli.main validate-portable-review-bundle --bundle bundle-dir-or.zip [--check-machine-open] --format json
+    python -m src.cli.main ingest-portable-review-bundle --archive bundle.zip --registry registry.json --destination recipient-dir --authority authority.json --recipient-id ID [--available-named-terminal-id ID] --format json
     python -m src.cli.main advance-factory-package --queue factory_queue.json --package-id ID --to-lifecycle source_project_ready|rendered --authority-id ID [--execute] --format json
     python -m src.cli.main build-episode-video --factory-package factory_package_v2.json --dry-run
     python -m src.cli.main generate-map <input> [--unlabeled] [--format text|json]
@@ -1896,6 +1897,51 @@ def main(argv: list[str] | None = None) -> int:
         help="Output format (json only)",
     )
 
+    p_portable_ingest = subparsers.add_parser(
+        "ingest-portable-review-bundle",
+        help="Ingest one authorized local review bundle into a recipient registry",
+    )
+    p_portable_ingest.add_argument(
+        "--archive",
+        required=True,
+        type=Path,
+        help="Exact local portable review bundle ZIP",
+    )
+    p_portable_ingest.add_argument(
+        "--registry",
+        required=True,
+        type=Path,
+        help="Recipient-side append-only registry JSON",
+    )
+    p_portable_ingest.add_argument(
+        "--destination",
+        required=True,
+        type=Path,
+        help="New recipient transport destination",
+    )
+    p_portable_ingest.add_argument(
+        "--authority",
+        required=True,
+        type=Path,
+        help="Exact recipient and transport authority JSON",
+    )
+    p_portable_ingest.add_argument(
+        "--recipient-id",
+        required=True,
+        help="Expected recipient identity",
+    )
+    p_portable_ingest.add_argument(
+        "--available-named-terminal-id",
+        help="Exact currently available named-terminal identity",
+    )
+    p_portable_ingest.add_argument(
+        "--format",
+        choices=["json"],
+        default="json",
+        dest="portable_ingest_format",
+        help="Output format (json only)",
+    )
+
     p_factory_advance = subparsers.add_parser(
         "advance-factory-package",
         help="Plan or execute one bounded queue-selected lifecycle promotion",
@@ -3559,6 +3605,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_build_portable_review_bundle(args)
         elif args.command == "validate-portable-review-bundle":
             return _cmd_validate_portable_review_bundle(args)
+        elif args.command == "ingest-portable-review-bundle":
+            return _cmd_ingest_portable_review_bundle(args)
         elif args.command == "advance-factory-package":
             return _cmd_advance_factory_package(args)
         elif args.command == "build-csv":
@@ -7013,6 +7061,56 @@ def _cmd_validate_portable_review_bundle(args: argparse.Namespace) -> int:
             bundle_path=args.bundle,
             check_machine_open=bool(args.check_machine_open),
         )
+    except PortableReviewBundleError as exc:
+        print(
+            json.dumps(
+                exc.as_payload(),
+                ensure_ascii=False,
+                indent=2,
+                sort_keys=True,
+            ),
+            file=sys.stderr,
+        )
+        return 1
+    print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0
+
+
+def _cmd_ingest_portable_review_bundle(args: argparse.Namespace) -> int:
+    from src.pipeline.portable_review_bundle import (
+        PortableReviewBundleError,
+        ingest_portable_review_bundle,
+    )
+
+    try:
+        authority = json.loads(args.authority.read_text(encoding="utf-8"))
+        result = ingest_portable_review_bundle(
+            archive_path=args.archive,
+            registry_path=args.registry,
+            destination_root=args.destination,
+            authority=authority,
+            expected_recipient_id=args.recipient_id,
+            available_named_terminal_id=args.available_named_terminal_id,
+        )
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        print(
+            json.dumps(
+                {
+                    "schema": "nlmytgen.review_bundle_ingest_result.v1",
+                    "schema_version": "1.0",
+                    "status": "failed",
+                    "error_code": "review_bundle_ingest_authority_invalid",
+                    "field_path": "$.authority",
+                    "message": "review bundle ingest authority cannot be read",
+                    "consumer_effect": "unknown transport authority is rejected",
+                },
+                ensure_ascii=False,
+                indent=2,
+                sort_keys=True,
+            ),
+            file=sys.stderr,
+        )
+        return 1
     except PortableReviewBundleError as exc:
         print(
             json.dumps(
