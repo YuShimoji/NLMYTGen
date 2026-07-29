@@ -1,9 +1,9 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: nlmytgen-recipient-registry-ingest-synced-v1
-State-Revision: 2026-07-30.2
+Project-State-ID: nlmytgen-recipient-registry-resume-synced-v1
+State-Revision: 2026-07-30.3
 Updated: 2026-07-30 JST
-Product-State: recipient-registry-ingest-contract-validated-and-pushed
+Product-State: recipient-registry-resume-contract-validated-and-pushed
 Product-Gate: named-terminal-delivery
 Recommended-Next: obtain-authorized-named-terminal-and-validate-one-exact-artifact
 External-State: public-repo-feature-branch
@@ -11,8 +11,8 @@ Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: registry-ingest-validated-by-focused-tests
-Outcome-Commit: d4b706c989183ccf776fa62cc410b58a4c9b17a1
+Implementation-Checkpoint: interrupted-transport-resume-validated-by-focused-tests
+Outcome-Commit: dcd0cbfede633c6a1fbc263b309c7076c44ca100
 Remote-Parity: 0/0 after `git fetch --prune`; HEAD equals origin/codex/nlmytgen-portable-review-bundle-v1
 Tracked-Worktree: tracked clean; existing untracked and ignored artifacts preserved
 
@@ -31,7 +31,8 @@ Tracked-Worktree: tracked clean; existing untracked and ignored artifacts preser
 - `bundle_id + version + archive SHA + recipient ID` registry、exact ingest authority、
   duplicate/version conflict/revoked/superseded/missing archiveのfail-closed APIとCLIを実装した。
 - named-terminal modeはauthorityと同一のlive terminal IDが実行時に渡るまでtransportしない。
-  focused pytestは23 passed、ingest CLI help起動と`git diff --check`も成功。commit d4b706c、push、fetch/readbackも完了。
+  transport後・registry更新前の中断は明示resume時だけ、archive SHA、exact inventory、semantic identity、symlink safetyを再検証して上書きなしでreconcileする。
+  focused pytestは24 passed、CLI help、py_compile、`git diff --check`が成功。commit dcd0cbf、push、fetch/readbackも完了。
 
 ## Product Position
 
@@ -54,7 +55,7 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 ## Exact Next Action
 
-registry/authority/ingest変更とruntime-stateはfocused validation後にcommit・normal push・readback済み。
+interrupted-transport resume/reconcile変更とruntime-stateはfocused validation後にcommit・normal push・readback済み。
 
 その後、実在named terminal、recipient identity、transport authorityが同時に得られた
 場合だけone exact artifactでnamed-terminal pathを検証する。current bundle schema、
@@ -94,9 +95,9 @@ registry/ingestのtechnical workは進められ、human/owner clockを待たな�
 - Effect: exact artifactの所在、attempt、conflict、supersessionを追跡できる。
 - Requirements: registry schema、append-only receipt、recipient authority、
   no-overwrite、tracked-only failure、named terminal。
-- State: registry/authority/ingest API・CLIとfail-closed testsは実装済み。静的診断は
-  23 passed、CLI help、`git diff --check`が成功。commit d4b706c、push、fetch/readbackも完了。
-  実在recipient transportは未実施。
+- State: registry/authority/ingest API・CLI、fail-closed duplicate/conflict、明示resumeが実装済み。
+  exact existing transportだけをreconcileし、extra/missing/tampered/symlinkは登録しない。
+  24 passed、CLI help、py_compile、`git diff --check`成功。commit dcd0cbf、push/readback済み。実在recipient transportは未実施。
 - Owner: Codex runtime owner / technical delivery operator / named recipient。
 - Next move: named terminal、recipient identity、transport authorityが同時に得られた場合だけone exact artifactでnamed deliveryを行う。
 
