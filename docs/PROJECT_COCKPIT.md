@@ -13,8 +13,8 @@ Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
 Implementation-Checkpoint: six-channel-registry-validator-4-focused-tests-pass
 Prior-Outcome-Commit: dcd0cbfede633c6a1fbc263b309c7076c44ca100
-Remote-Parity: pending current-slice normal push and exact readback
-Tracked-Worktree: current slice plus protected untracked and ignored artifacts preserved
+Remote-Parity: 0/0 after fetch; commit dac4589 matched origin by ls-remote readback
+Tracked-Worktree: tracked clean; protected untracked and ignored artifacts preserved
 
 短期正本は[runtime-state.md](runtime-state.md)、6 family contractは
 [benchmark_families.json](../production_pilots/yukkuri_benchmark_families_001/benchmark_families.json)。
