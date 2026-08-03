@@ -1,0 +1,26 @@
+{
+  "archetype_count": 6,
+  "blocked_count": 6,
+  "channel_count": 6,
+  "checks": {
+    "all_passed": true,
+    "automatic_download_disabled": true,
+    "exactly_six_targets": true,
+    "foreground_media_disabled": true,
+    "no_false_ready_claims": true,
+    "quick_win_priorities_are_one_through_six": true,
+    "quick_win_starts_with_compact_profile": true,
+    "silent_policy_preserved": true,
+    "six_unique_archetypes": true,
+    "six_unique_channels": true,
+    "six_unique_videos": true,
+    "static_html_has_no_media_or_iframe_tags": true
+  },
+  "forbidden_tags_found": [],
+  "reproduction_ready_count": 0,
+  "required_dimension_count": 12,
+  "schema_version": "nlmytgen.yukkuri_benchmark_readback.v1",
+  "status": "passed",
+  "target_count": 6,
+  "video_count": 6
+}

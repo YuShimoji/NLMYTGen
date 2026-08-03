@@ -1340,6 +1340,26 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 
 ## DECISION LOG
 
+Latest six-channel reverse benchmark decision (2026-08-03 JST): the user replaced
+the skill-driven visual-generation default with a reverse-engineering and
+quick-win-first route. G-28 is approved as a six-channel benchmark pack: one real
+channel and one representative video per archetype, with a machine gate covering
+script, full timeline, composition, subtitles, characters, assets, motion, audio,
+YMM4 application, and final comparison. The first slice is static-only and must
+not claim complete reproduction while any dimension, rights-cleared replacement,
+YMM4 readback, or render comparison is missing. Public players, YMM4 preview,
+rendered video, media download, and audible output are excluded from ordinary
+implementation and verification. 根拠: USER_REQUEST_LEDGER「6チャンネル・リバースエンジニアリング優先」 +
+INVARIANTS §UX / Algorithmic Invariants + DEVELOPMENT_AUDIO_SAFETY。
+The static slice now exists as
+`production_pilots/yukkuri_benchmark_six_v1/benchmark_registry.json`,
+`src/pipeline/yukkuri_benchmark_reproduction.py`, and the
+`build-yukkuri-benchmark-pack` CLI. It fixes the quick-win queue to B05, B02,
+B03, B01, B04, then B06 and links B01–B05 to prior bounded repository evidence.
+Its readback passes while correctly reporting 0/6 reproduction-ready targets;
+the remaining inputs are complete authorized scripts/timelines, rights-cleared
+assets, YMM4 carriers/readback, final comparison, and human acceptance.
+
 Latest Episode 002 Output / Video Layer handoff decision (2026-07-08 JST):
 `episode_002_output_video_layer_proof_v1` is the current cross-terminal
 restart focus on branch `codex/episode-002-output-video-layer-proof-v1`. The

@@ -11,6 +11,11 @@ There is no audible opt-in in this runtime. A future audio-observation milestone
 requires a separate user-approved operator contract; this document does not grant
 that authority.
 
+Static-first is also mandatory: do not foreground a public player, YMM4 preview,
+or rendered video during ordinary implementation and verification. Prefer static
+HTML, JSON, readback, and unit tests. A guarded browser inspection remains a
+separately authorized exception, not a default validation step.
+
 ## Guarded browser inspection
 
 All project-owned browser/media inspection, including any future public-player

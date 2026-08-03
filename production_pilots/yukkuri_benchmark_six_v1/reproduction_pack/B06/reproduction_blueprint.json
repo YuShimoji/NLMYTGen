@@ -1,0 +1,95 @@
+{
+  "archetype_id": "consumer_risk_citation_board",
+  "benchmark_id": "B06",
+  "boundaries": {
+    "audible_output": false,
+    "automatic_download": false,
+    "foreground_media": false,
+    "python_video_render": false,
+    "source_expression_copy_authorized": false,
+    "static_review_only": true,
+    "ymmp_zero_generation": false
+  },
+  "channel_name": "お金の問題【ゆっくり解説】",
+  "completion_gates": {
+    "human_creative_acceptance": false,
+    "render_comparison_passed": false,
+    "rights_cleared_replacements": false,
+    "yymm4_readback_passed": false
+  },
+  "dimension_requirements": {
+    "assets": "every image, diagram, background, source credit, replacement, and content hash",
+    "audio": "voice, BGM, SE, silence, level, timing, and a separately authorized observation record",
+    "characters": "speaker assets, scale, placement, expression state, persistence, and alternation",
+    "composition": "canvas, safe areas, object bounds, text bounds, and visual hierarchy per state",
+    "identity": "channel, video, title, publication date, and immutable source locator",
+    "motion": "entrance, exit, zoom, pan, emphasis, transition, frequency, easing, and reset policy",
+    "render_comparison": "machine readback, frame-level comparison, duration match, and human creative acceptance",
+    "rights": "approved reusable or replacement assets plus attribution and prohibited-copy decisions",
+    "script": "complete dialogue text, speaker assignment, line order, and approved rewrite boundary",
+    "subtitles": "font family, size, stroke, color, line count, wrapping, position, and timing",
+    "timeline": "full duration, chapters, every visual state interval, and transition anchors",
+    "yymm4_mapping": "existing YMM4 template source, registry labels, IR mapping, and post-import patch plan"
+  },
+  "dimension_status": {
+    "assets": "partial",
+    "audio": "missing",
+    "characters": "missing",
+    "composition": "missing",
+    "identity": "measured",
+    "motion": "missing",
+    "render_comparison": "missing",
+    "rights": "missing",
+    "script": "missing",
+    "subtitles": "missing",
+    "timeline": "missing",
+    "yymm4_mapping": "missing"
+  },
+  "evidence_locators": [
+    "https://www.youtube.com/watch?v=nlUxSs3AU0c"
+  ],
+  "incomplete_dimensions": [
+    "script",
+    "timeline",
+    "composition",
+    "subtitles",
+    "characters",
+    "assets",
+    "motion",
+    "audio",
+    "yymm4_mapping",
+    "rights",
+    "render_comparison"
+  ],
+  "measured_count": 1,
+  "measured_dimensions": [
+    "identity"
+  ],
+  "next_static_action": "record or import evidence for script",
+  "observation": {
+    "coverage": "public_metadata",
+    "known_duration_seconds": null,
+    "observed_surfaces": [
+      "public metadata",
+      "public description source inventory"
+    ],
+    "static_signature": {
+      "motion_claim": "not measured",
+      "primary_surface": "not yet measured",
+      "speaker_layout": "not yet measured",
+      "subtitle_layout": "not yet measured"
+    }
+  },
+  "quick_win_priority": 6,
+  "reproduction_ready": false,
+  "required_count": 12,
+  "schema_version": "nlmytgen.yukkuri_reproduction_blueprint.v1",
+  "selected_reason": "A consumer-risk promise backed by a long source list adds the citation-board archetype missing from the prior five references.",
+  "source_video": {
+    "canonical_url": "https://www.youtube.com/watch?v=nlUxSs3AU0c",
+    "published": "2024-07-03",
+    "title": "【政府が絶対に言わない】これ知らないとヤバい！新紙幣発行でほとんどの人が大損します",
+    "video_id": "nlUxSs3AU0c"
+  },
+  "status": "blocked_by_missing_evidence"
+}

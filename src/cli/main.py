@@ -43,6 +43,7 @@ Usage:
     python -m src.cli.main build-output-template-readiness-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-real-input-intake-readiness-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main build-editing-operations-readiness-pack --package production_pilots/pkg [--output DIR] [--artifact-id ID] [--format text|json]
+    python -m src.cli.main build-yukkuri-benchmark-pack [--registry registry.json] [--output DIR] [--artifact-id ID] [--format text|json]
     python -m src.cli.main audit-thumbnail-template <ymmp> [--format text|json]
     python -m src.cli.main patch-thumbnail-template <ymmp> --patch patch.json [-o patched.ymmp] [--dry-run] [--format text|json]
     python -m src.cli.main probe-ymmp-variations <ymmp> [-o review.ymmp] [--review-seed canvas.ymmp] [--format text|json]
@@ -3220,6 +3221,27 @@ def main(argv: list[str] | None = None) -> int:
         "--format", choices=["text", "json"], default="text"
     )
 
+    p_build_yukkuri_benchmark_pack = subparsers.add_parser(
+        "build-yukkuri-benchmark-pack",
+        help="Build a static, silent six-channel reverse-engineering benchmark pack",
+    )
+    p_build_yukkuri_benchmark_pack.add_argument(
+        "--registry",
+        default="production_pilots/yukkuri_benchmark_six_v1/benchmark_registry.json",
+        help="Six-channel benchmark registry",
+    )
+    p_build_yukkuri_benchmark_pack.add_argument(
+        "--output",
+        default="production_pilots/yukkuri_benchmark_six_v1/reproduction_pack",
+        help="Static reproduction-pack output directory",
+    )
+    p_build_yukkuri_benchmark_pack.add_argument(
+        "--artifact-id", help="Optional manifest artifact id override"
+    )
+    p_build_yukkuri_benchmark_pack.add_argument(
+        "--format", choices=["text", "json"], default="text"
+    )
+
     p_analyze_notebooklm_audio = subparsers.add_parser(
         "analyze-notebooklm-audio-transcript",
         help="Salvage an immutable unlabeled NotebookLM Audio Overview transcript",
@@ -3413,6 +3435,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_generate_verified_local_evidence_project(args)
         elif args.command == "collect-verified-local-evidence-operator-result":
             return _cmd_collect_verified_local_evidence_operator_result(args)
+        elif args.command == "build-yukkuri-benchmark-pack":
+            return _cmd_build_yukkuri_benchmark_pack(args)
         elif args.command == "analyze-notebooklm-audio-transcript":
             return _cmd_analyze_notebooklm_audio_transcript(args)
         elif args.command == "diagnose-script":
@@ -5320,6 +5344,25 @@ def _cmd_build_dashboard_readiness_ingest(args: argparse.Namespace) -> int:
         print(f"primary_human_review: {readback.get('primary_human_review')}")
         print(f"next_action: {readback.get('next_action')}")
     return 0
+
+
+def _cmd_build_yukkuri_benchmark_pack(args: argparse.Namespace) -> int:
+    """Build the static, silent six-channel reverse benchmark pack."""
+    from src.pipeline.yukkuri_benchmark_reproduction import (
+        build_yukkuri_benchmark_pack,
+        render_benchmark_pack_text,
+    )
+
+    result = build_yukkuri_benchmark_pack(
+        registry_path=getattr(args, "registry"),
+        output_dir=getattr(args, "output"),
+        artifact_id=getattr(args, "artifact_id", None),
+    )
+    if getattr(args, "format", "text") == "json":
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        print(render_benchmark_pack_text(result), end="")
+    return 0 if result.get("status") == "passed" else 1
 
 
 def _cmd_build_gui_dashboard_panel(args: argparse.Namespace) -> int:

@@ -1,0 +1,300 @@
+{
+  "schema_version": "nlmytgen.yukkuri_benchmark_registry.v1",
+  "artifact_id": "yukkuri_six_channel_reverse_benchmark_v1",
+  "strategy": "reverse_engineering_quick_win",
+  "controlled_topic": "new_japanese_banknotes",
+  "selection_rationale": "Keep the topic broadly constant so format differences are easier to isolate.",
+  "audio_policy": "silent",
+  "media_foreground_allowed": false,
+  "media_playback_allowed": false,
+  "automatic_media_download_allowed": false,
+  "required_dimensions": [
+    "identity",
+    "script",
+    "timeline",
+    "composition",
+    "subtitles",
+    "characters",
+    "assets",
+    "motion",
+    "audio",
+    "yymm4_mapping",
+    "rights",
+    "render_comparison"
+  ],
+  "targets": [
+    {
+      "benchmark_id": "B01",
+      "archetype_id": "dialogue_source_board",
+      "quick_win_priority": 4,
+      "channel_name": "にゃんだもん",
+      "video_id": "hVx2x3YUIUM",
+      "title": "【20年ぶりになぜ？】ついに新紙幣発行！知らないと損する⁈その狙いとは…【ずんだもん＆ゆっくり解説】",
+      "canonical_url": "https://www.youtube.com/watch?v=hVx2x3YUIUM",
+      "published": "2024-07-29",
+      "selected_reason": "Large edge speakers, a persistent source board, and dialogue treatment form a distinct source-board archetype.",
+      "evidence_locators": [
+        "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/reference_registry.json#Y01",
+        "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/yukkuri_in_video_observation_readback.json#Y01-T0030"
+      ],
+      "observation": {
+        "coverage": "bounded_frames",
+        "known_duration_seconds": 1167.141,
+        "observed_surfaces": ["public metadata", "thumbnail", "bounded in-video frames"],
+        "static_signature": {
+          "primary_surface": "source board or source image",
+          "speaker_layout": "large left/right edge pair",
+          "subtitle_layout": "lower dialogue bubble plus lower subtitle band",
+          "motion_claim": "not measured across full duration"
+        }
+      },
+      "dimension_status": {
+        "identity": "measured",
+        "script": "missing",
+        "timeline": "partial",
+        "composition": "partial",
+        "subtitles": "partial",
+        "characters": "partial",
+        "assets": "partial",
+        "motion": "missing",
+        "audio": "missing",
+        "yymm4_mapping": "missing",
+        "rights": "missing",
+        "render_comparison": "missing"
+      },
+      "completion_gates": {
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false,
+        "render_comparison_passed": false,
+        "human_creative_acceptance": false
+      }
+    },
+    {
+      "benchmark_id": "B02",
+      "archetype_id": "archive_object_grid",
+      "quick_win_priority": 2,
+      "channel_name": "グリム貨幣コレクション",
+      "video_id": "PXI5Q57YXD4",
+      "title": "【ゆっくり解説】新紙幣凄すぎる！",
+      "canonical_url": "https://www.youtube.com/watch?v=PXI5Q57YXD4",
+      "published": "2024-07-08",
+      "selected_reason": "A dense object archive remains primary while compact speakers and subtitles stay secondary.",
+      "evidence_locators": [
+        "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/reference_registry.json#Y02",
+        "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/yukkuri_in_video_observation_readback.json#Y02-T0030"
+      ],
+      "observation": {
+        "coverage": "bounded_frames",
+        "known_duration_seconds": 335.661,
+        "observed_surfaces": ["public metadata", "thumbnail", "bounded in-video frame"],
+        "static_signature": {
+          "primary_surface": "central multi-image object grid",
+          "speaker_layout": "small lower-corner pair",
+          "subtitle_layout": "centered lower two-line band",
+          "motion_claim": "not measured across full duration"
+        }
+      },
+      "dimension_status": {
+        "identity": "measured",
+        "script": "missing",
+        "timeline": "partial",
+        "composition": "partial",
+        "subtitles": "partial",
+        "characters": "partial",
+        "assets": "partial",
+        "motion": "missing",
+        "audio": "missing",
+        "yymm4_mapping": "missing",
+        "rights": "missing",
+        "render_comparison": "missing"
+      },
+      "completion_gates": {
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false,
+        "render_comparison_passed": false,
+        "human_creative_acceptance": false
+      }
+    },
+    {
+      "benchmark_id": "B03",
+      "archetype_id": "scenic_center_stage",
+      "quick_win_priority": 3,
+      "channel_name": "ゆっくりルーザーズ",
+      "video_id": "aCYgLBDrNYk",
+      "title": "【二千円札】誰も使わない紙幣、二千円札が普及しなかった意外な理由【ゆっくり解説】",
+      "canonical_url": "https://www.youtube.com/watch?v=aCYgLBDrNYk",
+      "published": "2021-09-26",
+      "selected_reason": "A central scenic stage and large lower speakers create a narrative explainer silhouette distinct from the object-grid formats.",
+      "evidence_locators": [
+        "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/reference_registry.json#Y03",
+        "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/yukkuri_in_video_observation_readback.json#Y03-T0030"
+      ],
+      "observation": {
+        "coverage": "bounded_frames",
+        "known_duration_seconds": null,
+        "observed_surfaces": ["public metadata", "thumbnail", "bounded in-video frame"],
+        "static_signature": {
+          "primary_surface": "central scenic object stage",
+          "speaker_layout": "large lower-left/lower-right heads",
+          "subtitle_layout": "centered lower two-line band",
+          "motion_claim": "not measured across full duration"
+        }
+      },
+      "dimension_status": {
+        "identity": "measured",
+        "script": "missing",
+        "timeline": "partial",
+        "composition": "partial",
+        "subtitles": "partial",
+        "characters": "partial",
+        "assets": "partial",
+        "motion": "missing",
+        "audio": "missing",
+        "yymm4_mapping": "missing",
+        "rights": "missing",
+        "render_comparison": "missing"
+      },
+      "completion_gates": {
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false,
+        "render_comparison_passed": false,
+        "human_creative_acceptance": false
+      }
+    },
+    {
+      "benchmark_id": "B04",
+      "archetype_id": "biography_four_facets",
+      "quick_win_priority": 5,
+      "channel_name": "【ゆっくり解説】日本の偉人伝",
+      "video_id": "NUjG_XKDYRw",
+      "title": "【ゆっくり解説】日本細菌学のパイオニア。新千円札の「北里柴三郎」の生涯が凄すぎた",
+      "canonical_url": "https://www.youtube.com/watch?v=NUjG_XKDYRw",
+      "published": "2023-08-10",
+      "selected_reason": "One biography subject surrounded by bounded context facets represents a subject-led historical format.",
+      "evidence_locators": [
+        "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/reference_registry.json#Y04"
+      ],
+      "observation": {
+        "coverage": "metadata_and_thumbnail",
+        "known_duration_seconds": null,
+        "observed_surfaces": ["public metadata", "thumbnail"],
+        "static_signature": {
+          "primary_surface": "central biography subject",
+          "speaker_layout": "small lower-corner pair",
+          "subtitle_layout": "not measured in video body",
+          "motion_claim": "not measured"
+        }
+      },
+      "dimension_status": {
+        "identity": "measured",
+        "script": "missing",
+        "timeline": "missing",
+        "composition": "partial",
+        "subtitles": "missing",
+        "characters": "partial",
+        "assets": "partial",
+        "motion": "missing",
+        "audio": "missing",
+        "yymm4_mapping": "missing",
+        "rights": "missing",
+        "render_comparison": "missing"
+      },
+      "completion_gates": {
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false,
+        "render_comparison_passed": false,
+        "human_creative_acceptance": false
+      }
+    },
+    {
+      "benchmark_id": "B05",
+      "archetype_id": "compact_question_overview",
+      "quick_win_priority": 1,
+      "channel_name": "ゆっくりアレコレ",
+      "video_id": "5Uc_e7FHcX8",
+      "title": "【ゆっくり解説】新紙幣の3人をざっくり説明【渋沢栄一/津田梅子/北里柴三郎】",
+      "canonical_url": "https://www.youtube.com/watch?v=5Uc_e7FHcX8",
+      "published": "2019-04-09",
+      "selected_reason": "A single question and compact speaker pair define a low-complexity overview format suitable for an early YMM4 quick win.",
+      "evidence_locators": [
+        "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/reference_registry.json#Y05"
+      ],
+      "observation": {
+        "coverage": "metadata_and_thumbnail",
+        "known_duration_seconds": null,
+        "observed_surfaces": ["public metadata", "thumbnail"],
+        "static_signature": {
+          "primary_surface": "full-frame topic object",
+          "speaker_layout": "compact pair at one lower corner",
+          "subtitle_layout": "not measured in video body",
+          "motion_claim": "not measured"
+        }
+      },
+      "dimension_status": {
+        "identity": "measured",
+        "script": "missing",
+        "timeline": "missing",
+        "composition": "partial",
+        "subtitles": "missing",
+        "characters": "partial",
+        "assets": "partial",
+        "motion": "missing",
+        "audio": "missing",
+        "yymm4_mapping": "missing",
+        "rights": "missing",
+        "render_comparison": "missing"
+      },
+      "completion_gates": {
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false,
+        "render_comparison_passed": false,
+        "human_creative_acceptance": false
+      }
+    },
+    {
+      "benchmark_id": "B06",
+      "archetype_id": "consumer_risk_citation_board",
+      "quick_win_priority": 6,
+      "channel_name": "お金の問題【ゆっくり解説】",
+      "video_id": "nlUxSs3AU0c",
+      "title": "【政府が絶対に言わない】これ知らないとヤバい！新紙幣発行でほとんどの人が大損します",
+      "canonical_url": "https://www.youtube.com/watch?v=nlUxSs3AU0c",
+      "published": "2024-07-03",
+      "selected_reason": "A consumer-risk promise backed by a long source list adds the citation-board archetype missing from the prior five references.",
+      "evidence_locators": [
+        "https://www.youtube.com/watch?v=nlUxSs3AU0c"
+      ],
+      "observation": {
+        "coverage": "public_metadata",
+        "known_duration_seconds": null,
+        "observed_surfaces": ["public metadata", "public description source inventory"],
+        "static_signature": {
+          "primary_surface": "not yet measured",
+          "speaker_layout": "not yet measured",
+          "subtitle_layout": "not yet measured",
+          "motion_claim": "not measured"
+        }
+      },
+      "dimension_status": {
+        "identity": "measured",
+        "script": "missing",
+        "timeline": "missing",
+        "composition": "missing",
+        "subtitles": "missing",
+        "characters": "missing",
+        "assets": "partial",
+        "motion": "missing",
+        "audio": "missing",
+        "yymm4_mapping": "missing",
+        "rights": "missing",
+        "render_comparison": "missing"
+      },
+      "completion_gates": {
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false,
+        "render_comparison_passed": false,
+        "human_creative_acceptance": false
+      }
+    }
+  ]
+}

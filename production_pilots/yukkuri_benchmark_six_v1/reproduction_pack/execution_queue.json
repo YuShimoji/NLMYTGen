@@ -1,0 +1,51 @@
+{
+  "automatic_execution": false,
+  "next_benchmark_id": "B05",
+  "requires_authorized_evidence_before_promotion": true,
+  "schema_version": "nlmytgen.yukkuri_benchmark_execution_queue.v1",
+  "strategy": "lowest_complexity_first_without_media_playback",
+  "targets": [
+    {
+      "archetype_id": "compact_question_overview",
+      "benchmark_id": "B05",
+      "next_static_action": "record or import evidence for script",
+      "quick_win_priority": 1,
+      "status": "blocked_by_missing_evidence"
+    },
+    {
+      "archetype_id": "archive_object_grid",
+      "benchmark_id": "B02",
+      "next_static_action": "record or import evidence for script",
+      "quick_win_priority": 2,
+      "status": "blocked_by_missing_evidence"
+    },
+    {
+      "archetype_id": "scenic_center_stage",
+      "benchmark_id": "B03",
+      "next_static_action": "record or import evidence for script",
+      "quick_win_priority": 3,
+      "status": "blocked_by_missing_evidence"
+    },
+    {
+      "archetype_id": "dialogue_source_board",
+      "benchmark_id": "B01",
+      "next_static_action": "record or import evidence for script",
+      "quick_win_priority": 4,
+      "status": "blocked_by_missing_evidence"
+    },
+    {
+      "archetype_id": "biography_four_facets",
+      "benchmark_id": "B04",
+      "next_static_action": "record or import evidence for script",
+      "quick_win_priority": 5,
+      "status": "blocked_by_missing_evidence"
+    },
+    {
+      "archetype_id": "consumer_risk_citation_board",
+      "benchmark_id": "B06",
+      "next_static_action": "record or import evidence for script",
+      "quick_win_priority": 6,
+      "status": "blocked_by_missing_evidence"
+    }
+  ]
+}

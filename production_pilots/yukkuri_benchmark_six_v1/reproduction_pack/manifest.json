@@ -1,0 +1,42 @@
+{
+  "artifact_id": "yukkuri_six_channel_reverse_benchmark_v1",
+  "audio_policy": "silent",
+  "blocked_count": 6,
+  "file_sha256": {
+    "B01/README.md": "b591157ff70778c1e91a467f6a3a54cef699fb5ade5b5c5c728df84618aa0082",
+    "B01/reproduction_blueprint.json": "7e62550d2b4616fded8588e7ecdb224458dc8f5c842ba210710a724655cca717",
+    "B01/static_review_card.html": "74988f93c26aedf80e153fdf1ceb8a736a4be275da3415a24005817916c0130d",
+    "B02/README.md": "5aea6fd47730f7acc6aff47f3452dbc702c598146e692e873b14a8f48a8a7d88",
+    "B02/reproduction_blueprint.json": "c276504f77a5ebbc2e4d501a88bdab890118ca0c57de80bed7dc2217e812cd8e",
+    "B02/static_review_card.html": "0038f380120343188800bbb8463f3586019c775551ef28f598a8bbd9bd096b5e",
+    "B03/README.md": "671cfa4252a2aaf2aaa70054fa1fc1303b4a4c1be6254c933e3bea7ae5f307b8",
+    "B03/reproduction_blueprint.json": "e1b68bd511b317bf45c153127f70325622d9e8bd264baff68bc7d71130a0af38",
+    "B03/static_review_card.html": "586e6cda1625a2a6476d65a757641e7903c3b90f0618399471812e5fcb2b333d",
+    "B04/README.md": "df8e8b060273bd49ea0c250f8d609e1b56fe17faea4e32893207fd96ad5bccd3",
+    "B04/reproduction_blueprint.json": "a0f95db6902002a4e7e38e883c787baf82f51894d8a486d056df85fc88a9ae3b",
+    "B04/static_review_card.html": "f169a3f3c85c7db7d43547d961f8cabb3311eb32010b89c291a40b02da7f2b14",
+    "B05/README.md": "ca413e0f1308ce3ab5b9e513c59abf663852dad7b24dc31bee657e3611f18f40",
+    "B05/reproduction_blueprint.json": "055f65d0fc2cbdc9f215da4d99b4f0f8a2fd3f3930988852cd48c54de19c6a66",
+    "B05/static_review_card.html": "88b20e3efc1c3591cbfa93c09a0ea28f6c0a2fae8af5a47a9ed90fcd5eab501e",
+    "B06/README.md": "0384a68812840f43034010e1595380c9d37fceedf61e7d69d027b73478ac5a64",
+    "B06/reproduction_blueprint.json": "6a5c7f59e5e332b71582c0512010d605f14bbb27445867f10f75c6424be21975",
+    "B06/static_review_card.html": "9f0cf6e6316eec862857634dd4c46e94852fa8d4ca3fe315956862ef8f52dc45",
+    "execution_queue.json": "79401a92950b54f103f9342c36ffd39dc4c6c06a21955a3221b9a06769207978",
+    "gap_matrix.json": "8fe336ba9185aef6ab0149125905bd67f88be6ec760b6a497e5d67334ef5128e",
+    "index.html": "e56ef975c29e8c83a403bb74320d974a3525b0f9d83859e6f7a197ee61b3ac45",
+    "readback.json": "4ff003de21fc2686d9e6c90bb901b27cfeb815a4f317e6de2685831d760c953f"
+  },
+  "registry": "production_pilots/yukkuri_benchmark_six_v1/benchmark_registry.json",
+  "reproduction_ready_count": 0,
+  "schema_version": "nlmytgen.yukkuri_benchmark_pack.v1",
+  "static_only": true,
+  "strategy": "reverse_engineering_quick_win",
+  "target_ids": [
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06"
+  ]
+}

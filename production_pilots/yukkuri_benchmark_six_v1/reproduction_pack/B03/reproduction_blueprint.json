@@ -1,0 +1,97 @@
+{
+  "archetype_id": "scenic_center_stage",
+  "benchmark_id": "B03",
+  "boundaries": {
+    "audible_output": false,
+    "automatic_download": false,
+    "foreground_media": false,
+    "python_video_render": false,
+    "source_expression_copy_authorized": false,
+    "static_review_only": true,
+    "ymmp_zero_generation": false
+  },
+  "channel_name": "ゆっくりルーザーズ",
+  "completion_gates": {
+    "human_creative_acceptance": false,
+    "render_comparison_passed": false,
+    "rights_cleared_replacements": false,
+    "yymm4_readback_passed": false
+  },
+  "dimension_requirements": {
+    "assets": "every image, diagram, background, source credit, replacement, and content hash",
+    "audio": "voice, BGM, SE, silence, level, timing, and a separately authorized observation record",
+    "characters": "speaker assets, scale, placement, expression state, persistence, and alternation",
+    "composition": "canvas, safe areas, object bounds, text bounds, and visual hierarchy per state",
+    "identity": "channel, video, title, publication date, and immutable source locator",
+    "motion": "entrance, exit, zoom, pan, emphasis, transition, frequency, easing, and reset policy",
+    "render_comparison": "machine readback, frame-level comparison, duration match, and human creative acceptance",
+    "rights": "approved reusable or replacement assets plus attribution and prohibited-copy decisions",
+    "script": "complete dialogue text, speaker assignment, line order, and approved rewrite boundary",
+    "subtitles": "font family, size, stroke, color, line count, wrapping, position, and timing",
+    "timeline": "full duration, chapters, every visual state interval, and transition anchors",
+    "yymm4_mapping": "existing YMM4 template source, registry labels, IR mapping, and post-import patch plan"
+  },
+  "dimension_status": {
+    "assets": "partial",
+    "audio": "missing",
+    "characters": "partial",
+    "composition": "partial",
+    "identity": "measured",
+    "motion": "missing",
+    "render_comparison": "missing",
+    "rights": "missing",
+    "script": "missing",
+    "subtitles": "partial",
+    "timeline": "partial",
+    "yymm4_mapping": "missing"
+  },
+  "evidence_locators": [
+    "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/reference_registry.json#Y03",
+    "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/yukkuri_in_video_observation_readback.json#Y03-T0030"
+  ],
+  "incomplete_dimensions": [
+    "script",
+    "timeline",
+    "composition",
+    "subtitles",
+    "characters",
+    "assets",
+    "motion",
+    "audio",
+    "yymm4_mapping",
+    "rights",
+    "render_comparison"
+  ],
+  "measured_count": 1,
+  "measured_dimensions": [
+    "identity"
+  ],
+  "next_static_action": "record or import evidence for script",
+  "observation": {
+    "coverage": "bounded_frames",
+    "known_duration_seconds": null,
+    "observed_surfaces": [
+      "public metadata",
+      "thumbnail",
+      "bounded in-video frame"
+    ],
+    "static_signature": {
+      "motion_claim": "not measured across full duration",
+      "primary_surface": "central scenic object stage",
+      "speaker_layout": "large lower-left/lower-right heads",
+      "subtitle_layout": "centered lower two-line band"
+    }
+  },
+  "quick_win_priority": 3,
+  "reproduction_ready": false,
+  "required_count": 12,
+  "schema_version": "nlmytgen.yukkuri_reproduction_blueprint.v1",
+  "selected_reason": "A central scenic stage and large lower speakers create a narrative explainer silhouette distinct from the object-grid formats.",
+  "source_video": {
+    "canonical_url": "https://www.youtube.com/watch?v=aCYgLBDrNYk",
+    "published": "2021-09-26",
+    "title": "【二千円札】誰も使わない紙幣、二千円札が普及しなかった意外な理由【ゆっくり解説】",
+    "video_id": "aCYgLBDrNYk"
+  },
+  "status": "blocked_by_missing_evidence"
+}

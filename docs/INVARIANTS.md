@@ -14,6 +14,8 @@
 
 ## UX / Algorithmic Invariants
 - **制作工程は全て GUI で完結させる。** 制作のために CLI を使う必要がある状態は設計の不備であり、GUI 側を改善する対象とする。CLI は開発・デバッグ用。
+- **参照駆動の制作はリバース・エンジニアリングを先に行う。** 既存スキルや汎用プロンプトから見た目を生成して参照へ寄せるのではなく、対象動画ごとに時間軸・画面構成・字幕・立ち絵・素材切替・motion・音の実測契約を作り、その契約を IR / registry / YMM4 template へ接続する。6種類のベンチマークは channel / video / archetype を一意に固定し、必要 dimension、rights-cleared replacement、YMM4 readback、render comparison の全 gate が閉じるまで「完全再現」または `reproduction_ready` と表現しない。根拠: USER_REQUEST_LEDGER「6チャンネル・リバースエンジニアリング優先」
+- **開発中の動画・音声は前面化しない。** 公開プレイヤー、YMM4 preview、rendered video、音声確認を通常の実装・検証へ混ぜず、静的 HTML / JSON / readback を先に使う。media inspection が別途必要になっても `DEVELOPMENT_AUDIO_SAFETY.md` の guarded silent path と明示承認なしに起動せず、可聴出力は常に禁止する。根拠: USER_REQUEST_LEDGER「動画前面化禁止・完全無音」
 - **YMM4 を開くのは 2 つのタイミングだけ**: (1) テンプレ用素材の登録時、(2) 全素材を集め終わって配置・書き出すとき。増分の中間確認で繰り返し開かない。G-24 compact review のような配置済み artifact の creative acceptance は (2) に寄せ、機械 readback で閉じられる確認を人間へ戻さない。
 - **品質ゲートは開発速度を優先して柔軟に運用する。** テストや proof が開発のブロッカーにならないようにする。
 - **具体的な現実の日時をドキュメントの方針・ルール記述に含めない。** 日付固定の宣言（「2026-xx-xx 固定」等）は使わない。

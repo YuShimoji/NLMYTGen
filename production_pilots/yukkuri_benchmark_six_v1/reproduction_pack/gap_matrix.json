@@ -1,0 +1,187 @@
+{
+  "required_dimensions": [
+    "identity",
+    "script",
+    "timeline",
+    "composition",
+    "subtitles",
+    "characters",
+    "assets",
+    "motion",
+    "audio",
+    "yymm4_mapping",
+    "rights",
+    "render_comparison"
+  ],
+  "schema_version": "nlmytgen.yukkuri_benchmark_gap_matrix.v1",
+  "targets": [
+    {
+      "archetype_id": "dialogue_source_board",
+      "benchmark_id": "B01",
+      "channel_name": "にゃんだもん",
+      "completion_gates": {
+        "human_creative_acceptance": false,
+        "render_comparison_passed": false,
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false
+      },
+      "incomplete_dimensions": [
+        "script",
+        "timeline",
+        "composition",
+        "subtitles",
+        "characters",
+        "assets",
+        "motion",
+        "audio",
+        "yymm4_mapping",
+        "rights",
+        "render_comparison"
+      ],
+      "measured_count": 1,
+      "quick_win_priority": 4,
+      "reproduction_ready": false,
+      "required_count": 12
+    },
+    {
+      "archetype_id": "archive_object_grid",
+      "benchmark_id": "B02",
+      "channel_name": "グリム貨幣コレクション",
+      "completion_gates": {
+        "human_creative_acceptance": false,
+        "render_comparison_passed": false,
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false
+      },
+      "incomplete_dimensions": [
+        "script",
+        "timeline",
+        "composition",
+        "subtitles",
+        "characters",
+        "assets",
+        "motion",
+        "audio",
+        "yymm4_mapping",
+        "rights",
+        "render_comparison"
+      ],
+      "measured_count": 1,
+      "quick_win_priority": 2,
+      "reproduction_ready": false,
+      "required_count": 12
+    },
+    {
+      "archetype_id": "scenic_center_stage",
+      "benchmark_id": "B03",
+      "channel_name": "ゆっくりルーザーズ",
+      "completion_gates": {
+        "human_creative_acceptance": false,
+        "render_comparison_passed": false,
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false
+      },
+      "incomplete_dimensions": [
+        "script",
+        "timeline",
+        "composition",
+        "subtitles",
+        "characters",
+        "assets",
+        "motion",
+        "audio",
+        "yymm4_mapping",
+        "rights",
+        "render_comparison"
+      ],
+      "measured_count": 1,
+      "quick_win_priority": 3,
+      "reproduction_ready": false,
+      "required_count": 12
+    },
+    {
+      "archetype_id": "biography_four_facets",
+      "benchmark_id": "B04",
+      "channel_name": "【ゆっくり解説】日本の偉人伝",
+      "completion_gates": {
+        "human_creative_acceptance": false,
+        "render_comparison_passed": false,
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false
+      },
+      "incomplete_dimensions": [
+        "script",
+        "timeline",
+        "composition",
+        "subtitles",
+        "characters",
+        "assets",
+        "motion",
+        "audio",
+        "yymm4_mapping",
+        "rights",
+        "render_comparison"
+      ],
+      "measured_count": 1,
+      "quick_win_priority": 5,
+      "reproduction_ready": false,
+      "required_count": 12
+    },
+    {
+      "archetype_id": "compact_question_overview",
+      "benchmark_id": "B05",
+      "channel_name": "ゆっくりアレコレ",
+      "completion_gates": {
+        "human_creative_acceptance": false,
+        "render_comparison_passed": false,
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false
+      },
+      "incomplete_dimensions": [
+        "script",
+        "timeline",
+        "composition",
+        "subtitles",
+        "characters",
+        "assets",
+        "motion",
+        "audio",
+        "yymm4_mapping",
+        "rights",
+        "render_comparison"
+      ],
+      "measured_count": 1,
+      "quick_win_priority": 1,
+      "reproduction_ready": false,
+      "required_count": 12
+    },
+    {
+      "archetype_id": "consumer_risk_citation_board",
+      "benchmark_id": "B06",
+      "channel_name": "お金の問題【ゆっくり解説】",
+      "completion_gates": {
+        "human_creative_acceptance": false,
+        "render_comparison_passed": false,
+        "rights_cleared_replacements": false,
+        "yymm4_readback_passed": false
+      },
+      "incomplete_dimensions": [
+        "script",
+        "timeline",
+        "composition",
+        "subtitles",
+        "characters",
+        "assets",
+        "motion",
+        "audio",
+        "yymm4_mapping",
+        "rights",
+        "render_comparison"
+      ],
+      "measured_count": 1,
+      "quick_win_priority": 6,
+      "reproduction_ready": false,
+      "required_count": 12
+    }
+  ]
+}

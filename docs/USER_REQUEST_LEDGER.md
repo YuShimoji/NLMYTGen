@@ -5,6 +5,8 @@
 
 ## 現在有効な要求
 
+- ゆっくり解説の生成方針は、既存スキルドリブンの生成から、完成品を観測して仕様へ逆算するリバース・エンジニアリングへ移す。ベンチマークは実在する6種類のチャンネルを一つずつ固定し、各チャンネルの代表動画一本について完全再現に必要な全 dimension と不足入力を明示する。quick win は静的比較面と機械 gate を先に閉じることであり、単一フレームや雰囲気一致だけを完全再現と扱わない。
+- 動画実行を開発中に前面化しない。公開プレイヤー、YMM4 preview、rendered video を通常検証として開かず、音を絶対に出さない。既存の silent policy を弱める opt-in は設けず、別途明示承認された guarded inspection がない限り静的 HTML / JSON / readback / unit test だけで進める。
 - INT-02e must remain `baseline / in_progress` until a real URL operator smoke proves actual fetch, Python `wave` readback of `source.wav`, receipt / sidecar / `material_ledger` readback, `audit-material-ledger`, boundary grep, and scrubbed reporting. URL and rights / terms review are required before assistant-run smoke. Passing INT-02e does not authorize `fetch-source-video`, GUI fetch button, STT URL fetch, cut / concat, subtitle burn-in, render / encode, or Publishing / OAuth.
 - 痛点ドリブンで進める。FEATURE_REGISTRY の候補一覧や done 件数から機械的に次タスクを選ばない。
 - ハンドオフに全コンテキストが本当に残っているか検証し、抜け漏れは明示して報告する。
