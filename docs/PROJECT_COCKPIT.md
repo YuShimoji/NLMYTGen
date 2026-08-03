@@ -13,7 +13,7 @@ Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
 Implementation-Checkpoint: six-channel-registry-validator-4-focused-tests-pass
 Prior-Outcome-Commit: dcd0cbfede633c6a1fbc263b309c7076c44ca100
-Remote-Parity: 0/0 after fetch; commit dac4589 matched origin by ls-remote readback
+Remote-Parity: 0/0 after fetch; HEAD matched origin by ls-remote readback
 Tracked-Worktree: tracked clean; protected untracked and ignored artifacts preserved
 
 短期正本は[runtime-state.md](runtime-state.md)、6 family contractは
