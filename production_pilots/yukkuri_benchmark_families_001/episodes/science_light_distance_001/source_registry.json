@@ -1,0 +1,32 @@
+{
+  "schema_version": "nlmytgen.yukkuri_original_episode_sources.v1",
+  "episode_id": "science-light-distance-001",
+  "sources": [
+    {
+      "source_id": "NIST-SI-LIGHT-SPEED",
+      "title": "SI Brochure: speed of light in vacuum",
+      "url": "https://www.nist.gov/system/files/documents/pml/div684/fcdc/si_brochure_8.pdf",
+      "supports": ["vacuum light speed is exactly 299792458 metres per second"]
+    },
+    {
+      "source_id": "NASA-MOON-FACTS",
+      "title": "Moon Facts",
+      "url": "https://science.nasa.gov/moon/facts/",
+      "supports": ["average Earth-Moon distance is 384400 kilometres"]
+    },
+    {
+      "source_id": "NASA-EARTH-FACTS",
+      "title": "Facts About Earth",
+      "url": "https://science.nasa.gov/earth/facts/",
+      "supports": ["Earth is about one astronomical unit from the Sun"]
+    }
+  ],
+  "claims_policy": "Rounded scale comparisons are educational approximations; orbital distances vary.",
+  "rights": {
+    "benchmark_media_reused": false,
+    "episode_script_original": true,
+    "internal_review_only": true,
+    "production_authorized": true,
+    "publication_authorized": false
+  }
+}

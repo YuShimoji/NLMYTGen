@@ -4622,3 +4622,11 @@ OPERATOR の workflow proof 節から移した観測メモ。現行条件は [OP
   render through the existing local video path, and close MP4 decode,
   manifest/SHA, caption/readback, and review-entrypoint evidence before reusing
   the contract for the other five. Production/publication remains unauthorized.
+- Continuation slice: the science family now has an explicitly limited public
+  surface measurement, original 32-turn script, NIST/NASA source ledger, and
+  92-row YMM4 CSV (54 Reimu / 38 Marisa, SHA-256 `67d533d9...98aa4`). Local
+  production is authorized by the current user direction; publication remains
+  false. YMM4 4.54.0.1 exposed an unrelated unsaved script, so the coordinator
+  preserved it without save/discard/overwrite, created an isolated empty
+  window, and parked before importing. The exact safe resume contract is in
+  `episodes/science_light_distance_001/execution_state.json`.

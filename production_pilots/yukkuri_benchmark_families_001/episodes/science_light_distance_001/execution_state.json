@@ -1,0 +1,52 @@
+{
+  "schema_version": "nlmytgen.yukkuri_episode_execution_state.v1",
+  "episode_id": "science-light-distance-001",
+  "updated_at": "2026-08-04T00:00:00+09:00",
+  "state": "yymm4_import_ready_operator_state_parked",
+  "completed": {
+    "benchmark_surface_measurement": true,
+    "original_script": true,
+    "source_registry": true,
+    "yymm4_import_csv": true,
+    "registry_validation": true,
+    "focused_tests": true
+  },
+  "csv_receipt": {
+    "path": "yymm4_import.csv",
+    "tracked": false,
+    "generation_command": "uv run --offline --no-sync python -m src.cli.main build-csv production_pilots/yukkuri_benchmark_families_001/episodes/science_light_distance_001/script.txt -o production_pilots/yukkuri_benchmark_families_001/episodes/science_light_distance_001/yymm4_import.csv --speaker-map 'スピーカー1=ゆっくり霊夢,スピーカー2=ゆっくり魔理沙' --max-lines 2 --chars-per-line 34 --balance-lines --reflow-v2 --stats",
+    "row_count": 92,
+    "speaker_counts": {
+      "ゆっくり霊夢": 54,
+      "ゆっくり魔理沙": 38
+    },
+    "sha256": "67d533d99beb9a7020b806152ec828c7d5c63af1287e462123c93b3dec098aa4"
+  },
+  "yymm4_observation": {
+    "version": "4.54.0.1",
+    "launched": true,
+    "target_csv_imported": false,
+    "timeline_items_added": false,
+    "playback_started": false,
+    "render_started": false,
+    "pre_existing_unsaved_script_title": "台本編集 / 不動産DX_魔法の鍵とキュレーション_ymm4.csv*",
+    "pre_existing_unsaved_script_saved": false,
+    "pre_existing_unsaved_script_discarded": false,
+    "pre_existing_unsaved_script_overwritten": false,
+    "isolated_empty_window_created": true
+  },
+  "resume_gate": {
+    "status": "CONTINUE",
+    "next_action": "Select the isolated empty YMM4 window, open this exact CSV, verify the first row starts with 今夜は、宇宙の距離を, then add it to the empty timeline without touching the unrelated unsaved script.",
+    "do_not": [
+      "save the unrelated unsaved script",
+      "discard the unrelated unsaved script",
+      "overwrite the unrelated script path",
+      "claim local_viewable_verified before MP4 decode and exact receipt close"
+    ]
+  },
+  "authority": {
+    "local_production_authorized": true,
+    "publication_authorized": false
+  }
+}

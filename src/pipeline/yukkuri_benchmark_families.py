@@ -161,6 +161,21 @@ def validate_registry(
             if no_copy.get(field) is not True:
                 errors.append(f"no_copy_policy.{field} must be true")
 
+    authority = registry.get("authority")
+    if not isinstance(authority, dict):
+        errors.append("authority must be an object")
+        local_production_authorized = False
+        publication_authorized = False
+    else:
+        local_production_authorized = (
+            authority.get("local_production_authorized") is True
+        )
+        publication_authorized = authority.get("publication_authorized") is True
+        if not local_production_authorized:
+            errors.append("authority.local_production_authorized must be true")
+        if publication_authorized:
+            errors.append("authority.publication_authorized must be false")
+
     return {
         "registry_id": registry.get("registry_id"),
         "schema_version": registry.get("schema_version"),
@@ -171,7 +186,8 @@ def validate_registry(
         "unique_format_family_count": len(set(family_ids)),
         "local_viewable_verified_count": local_verified,
         "remaining_local_viewable_count": max(0, 6 - local_verified),
-        "public_release_authorized": False,
+        "local_production_authorized": local_production_authorized,
+        "public_release_authorized": publication_authorized,
     }
 
 

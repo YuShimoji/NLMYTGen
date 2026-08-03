@@ -1,20 +1,20 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-04.1
+State-Revision: 2026-08-04.2
 Updated: 2026-08-04 JST
-Product-State: six-channel-benchmark-registry-validated-first-render-pending
+Product-State: science-family-import-pack-ready-yymm4-operator-state-parked
 Product-Gate: continue
-Recommended-Next: measure-and-render-first-original-family-episode
-External-State: public-repo-feature-branch
+Recommended-Next: resume-isolated-science-family-yymm4-import
+External-State: local-feature-branch-current-slice-not-pushed
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: six-channel-registry-validator-4-focused-tests-pass
+Implementation-Checkpoint: science-family-original-script-source-ledger-and-92-row-yymm4-csv-ready
 Prior-Outcome-Commit: dcd0cbfede633c6a1fbc263b309c7076c44ca100
-Remote-Parity: 0/0 after fetch; HEAD matched origin by ls-remote readback
-Tracked-Worktree: tracked clean; existing untracked and ignored artifacts preserved
+Remote-Parity: prior tip dd97ec2 matched origin; current slice remains local-only because push was not requested
+Tracked-Worktree: current slice checkpointed on its named paths; unrelated untracked and ignored artifacts preserved
 
 ## Current Slice
 
@@ -28,6 +28,13 @@ Tracked-Worktree: tracked clean; existing untracked and ignored artifacts preser
   machine-readable contractにした。
 - validatorはexactly 6、channel/family unique、YouTube identity URL、10観測軸、
   no-copy境界、`local_viewable_verified`時のexact artifact receiptをfail-closedで検証する。
+- science familyは公開channel surfaceのtitle / 09:12 durationを観測し、full-timeline
+  frame/audio未検証を明示した。original 32-turn台本、NIST/NASA source registry、
+  92-row YMM4 CSV（霊夢54 / 魔理沙38、SHA-256 `67d533d9...98aa4`）まで作成した。
+- YMM4 4.54.0.1を起動したが、別案件の未保存台本
+  `不動産DX_魔法の鍵とキュレーション_ymm4.csv*`を検出したため、save/discard/overwrite
+  せず保全した。isolated empty windowは作成済みだが、target CSV import、timeline add、
+  playback、renderは0。exact resume receiptはepisode `execution_state.json`に固定した。
 - focused pytest 4 passed、validator CLI passed、compileall、`git diff --check` passed。
   現時点のfully viewable reproductionは0/6であり、完了とは扱わない。
 
@@ -58,11 +65,11 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 ## Exact Next Action
 
-6 familyのうち最初の1件について、公開動画のobservable mechanicsを測定し、
-benchmark由来のscript・branding・audio・frameを使わないoriginal episodeを既存
-`build-episode-video` pathへ通す。MP4 full decode、manifest、SHA-256、caption/readback、
+isolated empty YMM4 windowを選び、science episodeのexact CSVを開いて先頭行が
+`今夜は、宇宙の距離を`であることを確認してからtimelineへ追加する。別案件の未保存台本は
+save/discard/overwriteしない。その後、YMM4 native voice/subtitleを保持したproduction
+projectとinternal-review MP4を作り、full decode、manifest、SHA-256、caption/readback、
 local review entrypointを同一receiptに閉じた時だけ`local_viewable_verified`へ進める。
-そのcontractを残り5 familyへ繰り返す。upload / production / public releaseは別authority。
 
 ## Parked Prior Exact Next Action
 
@@ -133,8 +140,8 @@ dependencies are absent。Do not rebuild the accepted v1 output in place。
 
 - source packet、content-thread packet、canonical content、package/queue descriptors、
   source/generated projects、source MP4、crops、provenance、dependency locksは不変。
-- YMM4、render driver、full render、transcode、playback、system volume、network、
-  cloud/external transferは0。
+- YMM4 4.54.0.1 launchとisolated empty window作成のみ実施。target import、timeline add、
+  render driver、full render、transcode、playback、system volume、cloud/external transferは0。
 - named recipient delivery、human open、content/creative decision、rights、
   production、publication、upload、release、PR、merge、master mutation、tag、
   deploymentは未実施。

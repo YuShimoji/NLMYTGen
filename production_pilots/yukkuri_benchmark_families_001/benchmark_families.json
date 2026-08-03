@@ -12,6 +12,11 @@
     "creator_video_frames": true,
     "creator_owned_illustrations": true
   },
+  "authority": {
+    "local_production_authorized": true,
+    "publication_authorized": false,
+    "note": "The 2026-08-04 user direction authorizes building all six original local reproductions. It does not authorize public upload or publication."
+  },
   "channels": [
     {
       "channel_id": "@YukkuriFudosan",
@@ -84,18 +89,18 @@
       "identity_checked_at": "2026-08-04",
       "format_family_id": "science_concept_ladder",
       "observable_contract": {
-        "runtime_band_minutes": null,
-        "narration_model": "measure question-and-answer concept explanation",
-        "chapter_model": "measure intuition, mechanism, evidence, and implication ladder",
-        "visual_grammar": "measure astronomical imagery, diagrams, scale comparisons, and labels",
-        "subtitle_grammar": "measure term definitions and numeric emphasis",
-        "asset_switching": "measure concept-step visual cadence",
-        "audio_grammar": "measure narration, effects, and background music balance",
-        "pacing": "measurement_pending",
-        "source_attribution": "measure scientific source and image-credit practice",
-        "intro_outro": "measurement_pending"
+        "runtime_band_minutes": [8, 12],
+        "narration_model": "two-speaker question-and-answer concept ladder",
+        "chapter_model": "hook, unit, near scale, solar scale, interstellar scale, galactic scale, implication, recap",
+        "visual_grammar": "original scale diagrams, labeled cards, and numeric comparisons; no benchmark frames",
+        "subtitle_grammar": "two-line readable subtitles with numeric emphasis",
+        "asset_switching": "one visual thesis per dialogue beat, grouped by scale",
+        "audio_grammar": "YMM4 two-character TTS; no benchmark audio or voice copy",
+        "pacing": "approximately one question-answer beat every 15 to 25 seconds",
+        "source_attribution": "source card and review manifest list primary institutional references",
+        "intro_outro": "question hook, ordered recap, and explicit close"
       },
-      "reproduction": {"status": "channel_identity_locked_measurement_pending", "artifact": null}
+      "reproduction": {"status": "original_episode_building", "artifact": null}
     },
     {
       "channel_id": "@yukkuri_sainan",
@@ -142,8 +147,9 @@
   ],
   "current_gate": {
     "status": "CONTINUE",
-    "completed": "Six channel identities and six distinct format-family contracts are locked and machine validated.",
-    "next_slice": "Measure and render the first original local-viewable episode, then reuse the same receipt contract for the remaining five.",
-    "production_or_public_release_authorized": false
+    "completed": "Six channel identities and six distinct format-family contracts are locked and machine validated. The science family has a surface measurement, original 32-turn script, source registry, and 92-row YMM4 import CSV.",
+    "next_slice": "Resume the science-family YMM4 import only in an isolated window that does not save, discard, or overwrite the pre-existing unsaved unrelated script; then render and close the exact receipt before starting family two.",
+    "local_production_authorized": true,
+    "publication_authorized": false
   }
 }

@@ -31,6 +31,7 @@ def test_registry_locks_six_unique_channels_and_format_families() -> None:
         "unique_format_family_count": 6,
         "local_viewable_verified_count": 0,
         "remaining_local_viewable_count": 6,
+        "local_production_authorized": True,
         "public_release_authorized": False,
     }
 
@@ -40,10 +41,16 @@ def test_registry_preserves_copy_and_release_boundaries() -> None:
 
     assert all(registry["no_copy_policy"].values())
     assert registry["current_gate"]["status"] == "CONTINUE"
-    assert registry["current_gate"]["production_or_public_release_authorized"] is False
+    assert registry["authority"]["local_production_authorized"] is True
+    assert registry["authority"]["publication_authorized"] is False
+    assert registry["current_gate"]["local_production_authorized"] is True
+    assert registry["current_gate"]["publication_authorized"] is False
     assert {
         channel["reproduction"]["status"] for channel in registry["channels"]
-    } == {"channel_identity_locked_measurement_pending"}
+    } == {
+        "channel_identity_locked_measurement_pending",
+        "original_episode_building",
+    }
 
 
 def test_validator_rejects_duplicate_families_and_false_copy_boundary() -> None:

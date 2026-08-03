@@ -1,0 +1,55 @@
+{
+  "schema_version": "nlmytgen.yukkuri_benchmark_measurement.v1",
+  "measurement_id": "science-concept-ladder-surface-measurement-20260804",
+  "format_family_id": "science_concept_ladder",
+  "benchmark_channel": {
+    "name": "ゆっくり宇宙教室",
+    "channel_id": "UCtqkH0qlWFfa06nsxeOeshw",
+    "official_url": "https://www.youtube.com/channel/UCtqkH0qlWFfa06nsxeOeshw"
+  },
+  "representative_video": {
+    "video_id": "orxlHFq_yyM",
+    "url": "https://www.youtube.com/watch?v=orxlHFq_yyM",
+    "title": "【ゆっくり解説】地球を1mmにしたら宇宙の大きさはわかるのか",
+    "duration_seconds": 552,
+    "availability": "public_channel_surface_observed",
+    "observed_at": "2026-08-04T00:00:00+09:00"
+  },
+  "surface_observation": {
+    "channel_page_title_observed": true,
+    "video_title_observed": true,
+    "duration_badge_observed": true,
+    "full_timeline_frame_verified": false,
+    "audio_subject_verified": false,
+    "note": "Current public channel surface establishes identity, title, and 09:12 runtime. Full-timeline form measurement remains a later benchmark-fidelity gate."
+  },
+  "measured_contract": {
+    "runtime_target_seconds": 552,
+    "narration_model": "two-speaker question-and-answer concept ladder",
+    "chapter_model": [
+      "hook",
+      "define_the_unit",
+      "near_scale",
+      "solar_scale",
+      "interstellar_scale",
+      "galactic_scale",
+      "implications",
+      "recap"
+    ],
+    "visual_grammar": "original scale diagrams, labeled cards, and numeric comparisons; no benchmark frames",
+    "subtitle_grammar": "two-line readable subtitles with numeric emphasis",
+    "asset_switching": "one visual thesis per dialogue beat, grouped by scale",
+    "audio_grammar": "YMM4 two-character TTS; no benchmark audio or voice copy",
+    "pacing": "approximately one question-answer beat every 15 to 25 seconds",
+    "source_attribution": "source card and review manifest list primary institutional references",
+    "intro_outro": "question hook, ordered recap, and explicit close"
+  },
+  "copy_boundary": {
+    "benchmark_script_used": false,
+    "benchmark_frames_used": false,
+    "benchmark_audio_used": false,
+    "benchmark_branding_used": false,
+    "original_topic": "宇宙の距離を光の到着時間で読む",
+    "original_script_path": "script.txt"
+  }
+}
