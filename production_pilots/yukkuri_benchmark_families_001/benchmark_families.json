@@ -1,0 +1,149 @@
+{
+  "schema_version": "nlmytgen.yukkuri_benchmark_families.v1",
+  "registry_id": "yukkuri-benchmark-families-v1-20260804",
+  "created_at": "2026-08-04T00:00:00+09:00",
+  "purpose": "Six distinct public yukkuri explainer channels define observable format families for six original, local-only benchmark reproductions.",
+  "selection_rule": "Use only observable mechanics. Each reproduction must use an original script, original or independently licensed assets, and its own artifact identity.",
+  "no_copy_policy": {
+    "scripts": true,
+    "logos_and_branding": true,
+    "thumbnails": true,
+    "creator_audio_and_voice": true,
+    "creator_video_frames": true,
+    "creator_owned_illustrations": true
+  },
+  "channels": [
+    {
+      "channel_id": "@YukkuriFudosan",
+      "channel_name": "ゆっくり不動産",
+      "official_channel_url": "https://www.youtube.com/c/%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E4%B8%8D%E5%8B%95%E7%94%A3",
+      "identity_evidence_url": "https://www.youtube.com/c/%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E4%B8%8D%E5%8B%95%E7%94%A3",
+      "identity_checked_at": "2026-08-04",
+      "format_family_id": "on_site_property_tour",
+      "observable_contract": {
+        "runtime_band_minutes": null,
+        "narration_model": "measure host narration and location-led explanation",
+        "chapter_model": "measure tour-order chapters",
+        "visual_grammar": "measure live property footage, detail inserts, and spatial orientation",
+        "subtitle_grammar": "measure title and explanatory subtitle hierarchy",
+        "asset_switching": "measure room-to-room and detail-cut cadence",
+        "audio_grammar": "measure narration, location sound, and music balance",
+        "pacing": "measurement_pending",
+        "source_attribution": "measure property facts and description-link practice",
+        "intro_outro": "measurement_pending"
+      },
+      "reproduction": {"status": "channel_identity_locked_measurement_pending", "artifact": null}
+    },
+    {
+      "channel_id": "UCrjLP0IHD136hUECbP91RlA",
+      "channel_name": "ゆっくり土建図鑑",
+      "official_channel_url": "https://www.youtube.com/channel/UCrjLP0IHD136hUECbP91RlA",
+      "identity_evidence_url": "https://www.youtube.com/channel/UCrjLP0IHD136hUECbP91RlA",
+      "identity_checked_at": "2026-08-04",
+      "format_family_id": "civil_engineering_case_explainer",
+      "observable_contract": {
+        "runtime_band_minutes": null,
+        "narration_model": "measure dialogue-led technical explanation",
+        "chapter_model": "measure system, history, failure, and consequence ordering",
+        "visual_grammar": "measure maps, diagrams, archival evidence, and structural callouts",
+        "subtitle_grammar": "measure technical term and emphasis treatment",
+        "asset_switching": "measure evidence-to-diagram transition cadence",
+        "audio_grammar": "measure voice, effects, and background music balance",
+        "pacing": "measurement_pending",
+        "source_attribution": "measure cited-source granularity in description and frames",
+        "intro_outro": "measurement_pending"
+      },
+      "reproduction": {"status": "channel_identity_locked_measurement_pending", "artifact": null}
+    },
+    {
+      "channel_id": "UC3IF6Evuf_7ERtPTBz3R80Q",
+      "channel_name": "ゆっくり歴史解説チャンネル",
+      "official_channel_url": "https://www.youtube.com/channel/UC3IF6Evuf_7ERtPTBz3R80Q",
+      "identity_evidence_url": "https://www.youtube.com/channel/UC3IF6Evuf_7ERtPTBz3R80Q",
+      "identity_checked_at": "2026-08-04",
+      "format_family_id": "chronological_history_reconstruction",
+      "observable_contract": {
+        "runtime_band_minutes": null,
+        "narration_model": "measure dialogue-led chronological narration",
+        "chapter_model": "measure setup, chronology, turning point, and aftermath",
+        "visual_grammar": "measure maps, portraits, diagrams, and event labels",
+        "subtitle_grammar": "measure dates, names, and emphasis treatment",
+        "asset_switching": "measure chronology-driven visual cadence",
+        "audio_grammar": "measure narration and background music balance",
+        "pacing": "measurement_pending",
+        "source_attribution": "measure primary and secondary source presentation",
+        "intro_outro": "measurement_pending"
+      },
+      "reproduction": {"status": "channel_identity_locked_measurement_pending", "artifact": null}
+    },
+    {
+      "channel_id": "UCtqkH0qlWFfa06nsxeOeshw",
+      "channel_name": "ゆっくり宇宙教室",
+      "official_channel_url": "https://www.youtube.com/channel/UCtqkH0qlWFfa06nsxeOeshw",
+      "identity_evidence_url": "https://www.youtube.com/channel/UCtqkH0qlWFfa06nsxeOeshw",
+      "identity_checked_at": "2026-08-04",
+      "format_family_id": "science_concept_ladder",
+      "observable_contract": {
+        "runtime_band_minutes": null,
+        "narration_model": "measure question-and-answer concept explanation",
+        "chapter_model": "measure intuition, mechanism, evidence, and implication ladder",
+        "visual_grammar": "measure astronomical imagery, diagrams, scale comparisons, and labels",
+        "subtitle_grammar": "measure term definitions and numeric emphasis",
+        "asset_switching": "measure concept-step visual cadence",
+        "audio_grammar": "measure narration, effects, and background music balance",
+        "pacing": "measurement_pending",
+        "source_attribution": "measure scientific source and image-credit practice",
+        "intro_outro": "measurement_pending"
+      },
+      "reproduction": {"status": "channel_identity_locked_measurement_pending", "artifact": null}
+    },
+    {
+      "channel_id": "@yukkuri_sainan",
+      "channel_name": "ゆっくり災難資料館〖裏〗",
+      "official_channel_url": "https://www.youtube.com/@yukkuri_sainan",
+      "identity_evidence_url": "https://www.youtube.com/@yukkuri_sainan",
+      "identity_checked_at": "2026-08-04",
+      "format_family_id": "incident_reconstruction_and_lessons",
+      "observable_contract": {
+        "runtime_band_minutes": null,
+        "narration_model": "measure dialogue-led incident reconstruction",
+        "chapter_model": "measure conditions, timeline, failure chain, outcome, and lessons",
+        "visual_grammar": "measure route diagrams, object cutaways, chronology cards, and safety summaries",
+        "subtitle_grammar": "measure time, casualty, cause, and lesson emphasis",
+        "asset_switching": "measure tension and evidence transition cadence",
+        "audio_grammar": "measure narration, restrained effects, and background music balance",
+        "pacing": "measurement_pending",
+        "source_attribution": "measure event-source and uncertainty presentation",
+        "intro_outro": "measurement_pending"
+      },
+      "reproduction": {"status": "channel_identity_locked_measurement_pending", "artifact": null}
+    },
+    {
+      "channel_id": "UC_kiSblCnh6A_kFsEcB7JfQ",
+      "channel_name": "三崎律日/Alt F4",
+      "official_channel_url": "https://www.youtube.com/channel/UC_kiSblCnh6A_kFsEcB7JfQ",
+      "identity_evidence_url": "https://www.youtube.com/watch?v=r4kQhsYI6B0",
+      "identity_checked_at": "2026-08-04",
+      "format_family_id": "source_critical_book_document_analysis",
+      "observable_contract": {
+        "runtime_band_minutes": null,
+        "narration_model": "measure dialogue-led source-critical analysis",
+        "chapter_model": "measure document context, contents, claims, critique, and legacy",
+        "visual_grammar": "measure book imagery, quotations, diagrams, and source cards",
+        "subtitle_grammar": "measure quotation, title, author, and caveat hierarchy",
+        "asset_switching": "measure source-to-commentary transition cadence",
+        "audio_grammar": "measure narration and background music balance",
+        "pacing": "measurement_pending",
+        "source_attribution": "measure bibliography, quotation, and correction practice",
+        "intro_outro": "measurement_pending"
+      },
+      "reproduction": {"status": "channel_identity_locked_measurement_pending", "artifact": null}
+    }
+  ],
+  "current_gate": {
+    "status": "CONTINUE",
+    "completed": "Six channel identities and six distinct format-family contracts are locked and machine validated.",
+    "next_slice": "Measure and render the first original local-viewable episode, then reuse the same receipt contract for the remaining five.",
+    "production_or_public_release_authorized": false
+  }
+}

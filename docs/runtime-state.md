@@ -1,38 +1,41 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: nlmytgen-recipient-registry-resume-synced-v1
-State-Revision: 2026-07-30.3
-Updated: 2026-07-30 JST
-Product-State: recipient-registry-resume-contract-validated-and-pushed
-Product-Gate: named-terminal-delivery
-Recommended-Next: obtain-authorized-named-terminal-and-validate-one-exact-artifact
+Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
+State-Revision: 2026-08-04.1
+Updated: 2026-08-04 JST
+Product-State: six-channel-benchmark-registry-validated-first-render-pending
+Product-Gate: continue
+Recommended-Next: measure-and-render-first-original-family-episode
 External-State: public-repo-feature-branch
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: interrupted-transport-resume-validated-by-focused-tests
-Outcome-Commit: dcd0cbfede633c6a1fbc263b309c7076c44ca100
-Remote-Parity: 0/0 after `git fetch --prune`; HEAD equals origin/codex/nlmytgen-portable-review-bundle-v1
-Tracked-Worktree: tracked clean; existing untracked and ignored artifacts preserved
+Implementation-Checkpoint: six-channel-registry-validator-4-focused-tests-pass
+Prior-Outcome-Commit: dcd0cbfede633c6a1fbc263b309c7076c44ca100
+Remote-Parity: pending current-slice normal push and exact readback
+Tracked-Worktree: current slice plus existing untracked and ignored artifacts preserved
 
 ## Current Slice
 
-- exact queue-derived Food Expiry `cue_002` packetを再生成せず、byte-exactな
-  5 packet filesと5 control filesをself-contained directory / deterministic
-  ZIPへまとめた。
-- portable schema、recipient-open schema、descriptor、reusable builder/validator、
-  public build/validate CLI、sanitized machine receiptを追加した。
-- directoryとZIPは10-file semantic inventory一致、archive byte determinism、
-  no-overwrite、path safety、media/image full decodeに合格した。
-- isolated recipientへbyte-exact transport/extractし、Electron 43 hidden runtimeで
-  PNG 2/2、video metadata、10/10 focus、無通信・無再生・横溢れ0を確認した。
-- tracked-onlyはprivate packet不在を`source_bundle_unavailable`で返し、fallback生成を行わない。
-- `bundle_id + version + archive SHA + recipient ID` registry、exact ingest authority、
-  duplicate/version conflict/revoked/superseded/missing archiveのfail-closed APIとCLIを実装した。
-- named-terminal modeはauthorityと同一のlive terminal IDが実行時に渡るまでtransportしない。
-  transport後・registry更新前の中断は明示resume時だけ、archive SHA、exact inventory、semantic identity、symlink safetyを再検証して上書きなしでreconcileする。
-  focused pytestは24 passed、CLI help、py_compile、`git diff --check`が成功。commit dcd0cbf、push、fetch/readbackも完了。
+- user directionにより、既存のnamed-terminal portable bundle laneは破棄せずparkし、
+  別artifact identityで6種類のゆっくり解説benchmark loopを開始した。
+- `yukkuri-benchmark-families-v1-20260804`に、現地物件tour、土木case、
+  歴史chronology、科学concept、事故再構成、奇書・文献批評の6 familyと
+  対応する6 channel identityを固定した。
+- 10観測軸、exact channel/evidence URL、original episodeの進行状態、
+  script / branding / thumbnail / audio / frame / illustrationのno-copy境界を
+  machine-readable contractにした。
+- validatorはexactly 6、channel/family unique、YouTube identity URL、10観測軸、
+  no-copy境界、`local_viewable_verified`時のexact artifact receiptをfail-closedで検証する。
+- focused pytest 4 passed、validator CLI passed、compileall、`git diff --check` passed。
+  現時点のfully viewable reproductionは0/6であり、完了とは扱わない。
+
+## Parked Prior Slice
+
+- Food Expiry `cue_002` portable bundle / recipient registry laneはcommit
+  `dcd0cbf`でpush/readback済みのままparkした。bundle、quarantine、human-open、
+  rights/production/publicationの状態は新benchmark laneへ伝播させない。
 
 ## Product Position
 
@@ -55,37 +58,22 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 ## Exact Next Action
 
-interrupted-transport resume/reconcile変更とruntime-stateはfocused validation後にcommit・normal push・readback済み。
+6 familyのうち最初の1件について、公開動画のobservable mechanicsを測定し、
+benchmark由来のscript・branding・audio・frameを使わないoriginal episodeを既存
+`build-episode-video` pathへ通す。MP4 full decode、manifest、SHA-256、caption/readback、
+local review entrypointを同一receiptに閉じた時だけ`local_viewable_verified`へ進める。
+そのcontractを残り5 familyへ繰り返す。upload / production / public releaseは別authority。
 
-その後、実在named terminal、recipient identity、transport authorityが同時に得られた
-場合だけone exact artifactでnamed-terminal pathを検証する。current bundle schema、
-descriptor、receipt、bundle/ZIPはimmutableであり、missing archiveからregeneration、
-render、network fallbackを行わない。machine-open、human-open、content decision、
-delivery completionは独立状態のまま。
+## Parked Prior Exact Next Action
+
+実在named terminal、recipient identity、transport authorityが同時に得られた時だけ
+immutable bundleで再開する。missing archiveからのfallback生成は行わない。
 
 ## Conditional Roadmap
 
-1. Recipient registry / ingest:
-   multiple bundle identity、local availability、recipient、delivery attemptを
-   append-onlyに管理し、duplicate/conflict/resumeを検証する。
-2. Named terminal delivery:
-   明示されたrecipientとauthorityがある場合だけbyte-exact transport、
-   extraction、machine-open receiptをartifact/versionへ束縛する。
-3. Human-open confirmation:
-   recipient本人の独立receiptで`human_open=verified`へ進める。machine proofや
-   file existenceから推論しない。
-4. Artifact-bound content decision:
-   accept/repair/rejectとcue-specific noteをexact manifest SHAへ束縛する。
-   acceptanceはrights、production、publicationへ伝播させない。
-5. Multi-package review operations:
-   queue、registry、named delivery、human receiptsをresume-safeに接続し、
-   partial failureとsupersessionを監査可能にする。
-6. Production governance:
-   creative、rights、production、publicationの各owner authorityが揃ったartifact
-   だけを別missionでrelease candidateへ昇格する。
-
-各段階は前段のtechnical successから自動承認しない。named recipientが不在でも
-registry/ingestのtechnical workは進められ、human/owner clockを待たない。
+- New active lane: measure -> original authoring -> local render -> exact receiptを6 familyで反復。
+- Parked lane: named-recipient authorityが得られた場合だけimmutable bundleを配送。
+- 共通境界: technical passからhuman acceptance、rights、production、publicationを推論しない。
 
 ## Residual Work
 

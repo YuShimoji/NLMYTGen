@@ -4602,3 +4602,23 @@ OPERATOR の workflow proof 節から移した観測メモ。現行条件は [OP
 - Next move: the human reviewer opens the ignored local MP4 and returns
   `accept`, `repair`, or `reject` with cue-specific notes. The assistant should
   verify any requested repair against the manifest and regenerate the same run.
+
+## 2026-08-04 Six-channel yukkuri benchmark loop start
+
+- Direct user direction opened a new artifact identity and parked, rather than
+  superseded, the named-terminal portable-review lane.
+- The first executed slice added a six-channel / six-format-family registry and
+  fail-closed validator at `production_pilots/yukkuri_benchmark_families_001/`.
+- The families are on-site property tour, civil-engineering case explainer,
+  chronological history reconstruction, science concept ladder, incident
+  reconstruction and lessons, and source-critical book/document analysis.
+- Observable mechanics may be measured; scripts, logos/branding, thumbnails,
+  creator audio/voice, creator video frames, and creator-owned illustrations
+  may not be copied. Every reproduction uses original content and an exact
+  local artifact receipt.
+- Focused validation: 4 tests passed, registry CLI passed, compileall passed,
+  and `git diff --check` passed. Fully viewable status remains honestly 0/6.
+- Next slice: measure one representative video, author an original episode,
+  render through the existing local video path, and close MP4 decode,
+  manifest/SHA, caption/readback, and review-entrypoint evidence before reusing
+  the contract for the other five. Production/publication remains unauthorized.
