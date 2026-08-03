@@ -1,0 +1,54 @@
+{
+  "schema_version": "nlmytgen.yukkuri_local_render_receipt.v1",
+  "episode_id": "science-light-distance-001",
+  "created_at": "2026-08-04T04:44:59+09:00",
+  "producer": {
+    "application": "YukkuriMovieMaker",
+    "version": "4.54.0.1",
+    "preview_playback_used": false
+  },
+  "project": {
+    "path": "local_outputs/science_light_distance_001.ymmp",
+    "size_bytes": 5989078,
+    "sha256": "bd88943605c27a3a2b843978f3da0e77cba00794b3d5281fd9a4b89767323f7c"
+  },
+  "video": {
+    "path": "local_outputs/science_light_distance_001.mp4",
+    "size_bytes": 419660609,
+    "sha256": "95165c94ef9394306c7784529d92b8735711c197c6087499a2c60892c83493e6",
+    "duration_seconds": 330.116016,
+    "bit_rate": 10170015,
+    "video_stream": {
+      "codec": "h264",
+      "width": 1920,
+      "height": 1080,
+      "frame_rate": "60/1",
+      "frame_count": 19807
+    },
+    "audio_stream": {
+      "codec": "aac",
+      "sample_rate": 48000,
+      "channels": 2,
+      "frame_count": 15476,
+      "measured_peak_db": -8.2
+    },
+    "full_decode_passed": true
+  },
+  "visual_sampling": {
+    "times_seconds": [
+      2,
+      90,
+      210,
+      320
+    ],
+    "subtitles_readable": true,
+    "visual_carrier_present": false,
+    "result": "REPAIR_REQUIRED_VISUAL_CARRIER_ABSENT"
+  },
+  "classification": {
+    "playable_baseline": true,
+    "benchmark_reproduction_complete": false,
+    "human_acceptance": "unverified",
+    "publication_authorized": false
+  }
+}

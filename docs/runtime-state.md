@@ -1,17 +1,17 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-04.2
+State-Revision: 2026-08-04.3
 Updated: 2026-08-04 JST
-Product-State: science-family-import-pack-ready-yymm4-operator-state-parked
+Product-State: science-family-playable-baseline-verified-visual-carrier-repair-required
 Product-Gate: continue
-Recommended-Next: resume-isolated-science-family-yymm4-import
+Recommended-Next: add-original-science-visual-carrier-and-rerender
 External-State: local-feature-branch-current-slice-not-pushed
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: science-family-original-script-source-ledger-and-92-row-yymm4-csv-ready
+Implementation-Checkpoint: science-family-330s-yymm4-playable-baseline-and-exact-render-receipt
 Prior-Outcome-Commit: dcd0cbfede633c6a1fbc263b309c7076c44ca100
 Remote-Parity: prior tip dd97ec2 matched origin; current slice remains local-only because push was not requested
 Tracked-Worktree: current slice checkpointed on its named paths; unrelated untracked and ignored artifacts preserved
@@ -31,10 +31,14 @@ Tracked-Worktree: current slice checkpointed on its named paths; unrelated untra
 - science familyは公開channel surfaceのtitle / 09:12 durationを観測し、full-timeline
   frame/audio未検証を明示した。original 32-turn台本、NIST/NASA source registry、
   92-row YMM4 CSV（霊夢54 / 魔理沙38、SHA-256 `67d533d9...98aa4`）まで作成した。
-- YMM4 4.54.0.1を起動したが、別案件の未保存台本
-  `不動産DX_魔法の鍵とキュレーション_ymm4.csv*`を検出したため、save/discard/overwrite
-  せず保全した。isolated empty windowは作成済みだが、target CSV import、timeline add、
-  playback、renderは0。exact resume receiptはepisode `execution_state.json`に固定した。
+- YMM4 4.54.0.1で別案件の未保存台本をoriginal-byte backup後に現行sampleへ保存し、
+  pre-existing pending speaker remapを破棄せず保全した。そのsampleはunrelated dirty pathとして
+  stage対象外。science CSV 92行をisolated windowへ読み込み、霊夢／魔理沙2 layer、
+  5:30.11、19,807 frameのtimelineと6 MB YMMPを作成した。
+- YMM4 native FFmpeg出力はH.264/AAC、1920x1080/60fps、330.116016秒、
+  419,660,609 bytes、SHA-256 `95165c94...493e6`。全尺video/audio decodeはpassした。
+- 2/90/210/320秒のframe reviewは字幕可読だが全点black backgroundで、visual carrierなし。
+  したがってplayable baselineは1/6だが、benchmark reproduction completeは0/6のまま。
 - focused pytest 4 passed、validator CLI passed、compileall、`git diff --check` passed。
   現時点のfully viewable reproductionは0/6であり、完了とは扱わない。
 
@@ -65,11 +69,9 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 ## Exact Next Action
 
-isolated empty YMM4 windowを選び、science episodeのexact CSVを開いて先頭行が
-`今夜は、宇宙の距離を`であることを確認してからtimelineへ追加する。別案件の未保存台本は
-save/discard/overwriteしない。その後、YMM4 native voice/subtitleを保持したproduction
-projectとinternal-review MP4を作り、full decode、manifest、SHA-256、caption/readback、
-local review entrypointを同一receiptに閉じた時だけ`local_viewable_verified`へ進める。
+science episodeのverified YMMPへoriginal visual carrier planを適用し、voice/subtitle順序と
+durationを維持したsuccessor MP4をYMM4から再出力する。全尺decodeと複数frame reviewで
+black-only状態が解消した時だけscience familyをbenchmark reproduction completeへ進める。
 
 ## Parked Prior Exact Next Action
 
@@ -140,8 +142,9 @@ dependencies are absent。Do not rebuild the accepted v1 output in place。
 
 - source packet、content-thread packet、canonical content、package/queue descriptors、
   source/generated projects、source MP4、crops、provenance、dependency locksは不変。
-- YMM4 4.54.0.1 launchとisolated empty window作成のみ実施。target import、timeline add、
-  render driver、full render、transcode、playback、system volume、cloud/external transferは0。
+- YMM4 4.54.0.1でtarget import、timeline add、YMMP save、native FFmpeg MP4 render、
+  full decode、4-frame reviewを実施。preview playback、system volume変更、cloud/external
+  transferは0。black-background baselineからvisual completenessは推論しない。
 - named recipient delivery、human open、content/creative decision、rights、
   production、publication、upload、release、PR、merge、master mutation、tag、
   deploymentは未実施。

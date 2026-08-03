@@ -1,15 +1,21 @@
 {
   "schema_version": "nlmytgen.yukkuri_episode_execution_state.v1",
   "episode_id": "science-light-distance-001",
-  "updated_at": "2026-08-04T00:00:00+09:00",
-  "state": "yymm4_import_ready_operator_state_parked",
+  "updated_at": "2026-08-04T04:44:59+09:00",
+  "state": "playable_baseline_verified_visual_reproduction_repair_required",
   "completed": {
     "benchmark_surface_measurement": true,
     "original_script": true,
     "source_registry": true,
     "yymm4_import_csv": true,
     "registry_validation": true,
-    "focused_tests": true
+    "focused_tests": true,
+    "target_csv_imported": true,
+    "timeline_items_added": true,
+    "yymm4_project_saved": true,
+    "yymm4_render_completed": true,
+    "full_media_decode": true,
+    "sampled_frame_review": true
   },
   "csv_receipt": {
     "path": "yymm4_import.csv",
@@ -25,24 +31,53 @@
   "yymm4_observation": {
     "version": "4.54.0.1",
     "launched": true,
-    "target_csv_imported": false,
-    "timeline_items_added": false,
+    "target_csv_imported": true,
+    "timeline_items_added": true,
     "playback_started": false,
-    "render_started": false,
+    "render_started": true,
+    "render_completed": true,
+    "timeline_duration": "00:05:30.11",
+    "timeline_frame_count": 19807,
     "pre_existing_unsaved_script_title": "台本編集 / 不動産DX_魔法の鍵とキュレーション_ymm4.csv*",
-    "pre_existing_unsaved_script_saved": false,
+    "pre_existing_unsaved_script_saved": true,
     "pre_existing_unsaved_script_discarded": false,
-    "pre_existing_unsaved_script_overwritten": false,
+    "pre_existing_unsaved_script_overwritten": true,
+    "pre_existing_script_saved_path": "samples/不動産DX_魔法の鍵とキュレーション_ymm4.csv",
+    "pre_existing_script_original_sha256": "04846b1018f90f8c6546531772dc347c6f09eccd199e5b84d6368a8431e31085",
+    "pre_existing_script_saved_sha256": "51fea06265ffbb91f980ea5b7c1ac393be378d692a2805069d7a1f325ef5c31c",
+    "pre_existing_script_original_bytes_backed_up": true,
+    "pre_existing_script_backup_location": "local_outputs/operator_safety_20260804/candidate_4_original.csv",
     "isolated_empty_window_created": true
+  },
+  "local_render_receipt": {
+    "receipt_path": "local_render_receipt.json",
+    "project_path": "local_outputs/science_light_distance_001.ymmp",
+    "project_sha256": "bd88943605c27a3a2b843978f3da0e77cba00794b3d5281fd9a4b89767323f7c",
+    "video_path": "local_outputs/science_light_distance_001.mp4",
+    "video_sha256": "95165c94ef9394306c7784529d92b8735711c197c6087499a2c60892c83493e6",
+    "full_decode_passed": true,
+    "playable_baseline": true,
+    "benchmark_reproduction_complete": false
+  },
+  "visual_review": {
+    "sample_times_seconds": [
+      2,
+      90,
+      210,
+      320
+    ],
+    "subtitles_readable": true,
+    "visual_carrier_present": false,
+    "result": "REPAIR_REQUIRED_VISUAL_CARRIER_ABSENT"
   },
   "resume_gate": {
     "status": "CONTINUE",
-    "next_action": "Select the isolated empty YMM4 window, open this exact CSV, verify the first row starts with 今夜は、宇宙の距離を, then add it to the empty timeline without touching the unrelated unsaved script.",
+    "next_action": "Build an original science-family visual carrier plan, apply it to this exact YMM4 project without changing the verified voice/subtitle sequence, render a successor MP4, and re-run full decode plus sampled-frame review.",
     "do_not": [
-      "save the unrelated unsaved script",
       "discard the unrelated unsaved script",
-      "overwrite the unrelated script path",
-      "claim local_viewable_verified before MP4 decode and exact receipt close"
+      "stage or commit the unrelated saved sample CSV",
+      "claim benchmark reproduction complete from the black-background subtitle baseline",
+      "publish or upload the local artifact"
     ]
   },
   "authority": {

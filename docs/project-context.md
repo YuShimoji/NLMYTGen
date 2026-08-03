@@ -4630,3 +4630,14 @@ OPERATOR の workflow proof 節から移した観測メモ。現行条件は [OP
   preserved it without save/discard/overwrite, created an isolated empty
   window, and parked before importing. The exact safe resume contract is in
   `episodes/science_light_distance_001/execution_state.json`.
+- Resumed YMM4 execution preserved the unrelated script by backing up its
+  original bytes and saving its pre-existing pending speaker-name remap; that tracked sample
+  remains unrelated dirty state and is excluded from the slice commit. The
+  science CSV then produced a 5:30.116, 19,807-frame YMM4 project and H.264/AAC
+  MP4. Full video/audio decode passed and exact hashes are recorded in
+  `episodes/science_light_distance_001/local_render_receipt.json`.
+- Four sampled frames all had readable subtitles but no visual carrier beyond
+  a black background. This closes a mechanically playable baseline, not the
+  requested benchmark reproduction. The science family remains repair-required
+  until an original visual carrier is applied and the successor render passes
+  full-timeline and sampled-frame review.
