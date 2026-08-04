@@ -9,6 +9,7 @@ viewable.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -58,6 +59,14 @@ def load_registry(path: str | Path = DEFAULT_REGISTRY_PATH) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise BenchmarkRegistryError("registry root must be an object")
     return data
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def validate_registry(
@@ -135,14 +144,46 @@ def validate_registry(
             else:
                 relative_path = artifact.get("relative_path")
                 sha256 = artifact.get("sha256")
-                if not relative_path or not sha256:
+                receipt_path = artifact.get("receipt")
+                if not relative_path or not sha256 or not receipt_path:
                     errors.append(
-                        f"{prefix}.reproduction.artifact needs relative_path and sha256"
+                        f"{prefix}.reproduction.artifact needs relative_path, sha256, and receipt"
                     )
-                elif root is not None and not (Path(root) / relative_path).is_file():
-                    errors.append(
-                        f"{prefix}.reproduction.artifact file does not exist"
-                    )
+                elif root is not None:
+                    root_path = Path(root)
+                    live_artifact = root_path / relative_path
+                    tracked_receipt = root_path / receipt_path
+                    if live_artifact.is_file():
+                        if _sha256_file(live_artifact) != sha256:
+                            errors.append(
+                                f"{prefix}.reproduction.artifact sha256 mismatch"
+                            )
+                    elif not tracked_receipt.is_file():
+                        errors.append(
+                            f"{prefix}.reproduction.artifact file and receipt do not exist"
+                        )
+                    else:
+                        try:
+                            receipt = json.loads(
+                                tracked_receipt.read_text(encoding="utf-8")
+                            )
+                            receipt_video = receipt["video"]
+                            if not isinstance(receipt_video, dict):
+                                raise TypeError("receipt.video must be an object")
+                            receipt_bound_path = (
+                                Path(receipt_path).parent / receipt_video["path"]
+                            ).as_posix()
+                            if (
+                                receipt_video.get("sha256") != sha256
+                                or receipt_bound_path != Path(relative_path).as_posix()
+                            ):
+                                errors.append(
+                                    f"{prefix}.reproduction.artifact receipt mismatch"
+                                )
+                        except (KeyError, TypeError, ValueError):
+                            errors.append(
+                                f"{prefix}.reproduction.artifact receipt is invalid"
+                            )
 
     for values, label in (
         (channel_ids, "channel_id"),

@@ -1,8 +1,8 @@
 {
   "schema_version": "nlmytgen.yukkuri_episode_execution_state.v1",
   "episode_id": "science-light-distance-001",
-  "updated_at": "2026-08-04T04:44:59+09:00",
-  "state": "playable_baseline_verified_visual_reproduction_repair_required",
+  "updated_at": "2026-08-05T01:11:59+09:00",
+  "state": "local_viewable_verified_human_review_pending",
   "completed": {
     "benchmark_surface_measurement": true,
     "original_script": true,
@@ -15,7 +15,14 @@
     "yymm4_project_saved": true,
     "yymm4_render_completed": true,
     "full_media_decode": true,
-    "sampled_frame_review": true
+    "sampled_frame_review": true,
+    "original_visual_carrier_plan": true,
+    "deterministic_visual_carrier_build": true,
+    "successor_ymmp_written": true,
+    "source_voice_sequence_preserved": true,
+    "successor_yymm4_render_completed": true,
+    "successor_full_media_decode": true,
+    "successor_sampled_frame_review": true
   },
   "csv_receipt": {
     "path": "yymm4_import.csv",
@@ -59,6 +66,17 @@
     "playable_baseline": true,
     "benchmark_reproduction_complete": false
   },
+  "visual_carrier_render_receipt": {
+    "receipt_path": "visual_carrier_render_receipt.json",
+    "project_path": "local_outputs/science_light_distance_001_visual_v002.ymmp",
+    "project_sha256": "0e19982f7dbf7940b706feb24a332a376b530d1aba37d327d0b5ecc9920ea154",
+    "video_path": "local_outputs/science_light_distance_001_visual_v002.mp4",
+    "video_sha256": "472f54ab5048d42be18628f716e0182af0dd298a8aca51791e951d67746a93ef",
+    "voice_and_subtitle_sequence_identical": true,
+    "full_decode_passed": true,
+    "local_viewable_verified": true,
+    "human_acceptance": "unverified"
+  },
   "visual_review": {
     "sample_times_seconds": [
       2,
@@ -67,21 +85,26 @@
       320
     ],
     "subtitles_readable": true,
-    "visual_carrier_present": false,
-    "result": "REPAIR_REQUIRED_VISUAL_CARRIER_ABSENT"
+    "visual_carrier_present": true,
+    "black_only_samples": 0,
+    "layout_watchpoint": "At 90 seconds, the lower edge of the background label for Earth sits close to the carrier explanation band.",
+    "result": "MECHANICAL_VIEWABLE_PASS_HUMAN_REVIEW_PENDING"
   },
   "resume_gate": {
     "status": "CONTINUE",
-    "next_action": "Build an original science-family visual carrier plan, apply it to this exact YMM4 project without changing the verified voice/subtitle sequence, render a successor MP4, and re-run full decode plus sampled-frame review.",
+    "next_action": "Park this exact successor for artifact-bound human review in the Storage FB task, and continue family-two measurement on a separate artifact identity unless review requests an immediate bounded repair.",
     "do_not": [
       "discard the unrelated unsaved script",
       "stage or commit the unrelated saved sample CSV",
-      "claim benchmark reproduction complete from the black-background subtitle baseline",
+      "infer human acceptance from the mechanical viewable pass",
+      "overwrite the baseline or successor artifacts in place",
       "publish or upload the local artifact"
     ]
   },
   "authority": {
     "local_production_authorized": true,
+    "human_acceptance": "unverified",
+    "production_authorized": false,
     "publication_authorized": false
   }
 }

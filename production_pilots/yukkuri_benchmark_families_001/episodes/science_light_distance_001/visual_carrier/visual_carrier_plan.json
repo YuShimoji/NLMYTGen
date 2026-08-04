@@ -1,0 +1,33 @@
+{
+  "schema_version": "nlmytgen.science_visual_carrier_plan.v1",
+  "artifact_id": "science-light-distance-001-visual-carrier-v1",
+  "episode_id": "science-light-distance-001",
+  "design_basis": "original_vector_schematics_no_reference_frame_copy",
+  "timeline_contract": {
+    "fps": 60,
+    "source_voice_item_count": 92,
+    "source_timeline_frames": 19807,
+    "voice_or_subtitle_mutation_allowed": false
+  },
+  "safe_area": {
+    "canvas": [1920, 1080],
+    "primary_visual_region": [96, 72, 1728, 620],
+    "subtitle_reserved_region": [240, 700, 1440, 300]
+  },
+  "scenes": [
+    {"scene_id": "clock_ladder", "rows": [1, 16], "start_frame": 0, "end_frame": 3414, "asset": "svg/01_clock_ladder.svg"},
+    {"scene_id": "moon_signal", "rows": [17, 28], "start_frame": 3414, "end_frame": 6048, "asset": "svg/02_moon_signal.svg"},
+    {"scene_id": "solar_system_delay", "rows": [29, 52], "start_frame": 6048, "end_frame": 10713, "asset": "svg/03_solar_system_delay.svg"},
+    {"scene_id": "near_star", "rows": [53, 64], "start_frame": 10713, "end_frame": 13284, "asset": "svg/04_near_star.svg"},
+    {"scene_id": "galaxy_history", "rows": [65, 77], "start_frame": 13284, "end_frame": 16294, "asset": "svg/05_galaxy_history.svg"},
+    {"scene_id": "summary", "rows": [78, 92], "start_frame": 16294, "end_frame": 19807, "asset": "svg/06_summary.svg"}
+  ],
+  "boundaries": {
+    "source_or_reference_images_used": false,
+    "reference_frame_layout_copied": false,
+    "python_image_generation_or_compositing": false,
+    "network_required": false,
+    "publication_authorized": false,
+    "human_acceptance_inferred": false
+  }
+}

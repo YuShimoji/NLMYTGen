@@ -100,7 +100,16 @@
         "source_attribution": "source card and review manifest list primary institutional references",
         "intro_outro": "question hook, ordered recap, and explicit close"
       },
-      "reproduction": {"status": "original_episode_building", "artifact": null}
+      "reproduction": {
+        "status": "local_viewable_verified",
+        "artifact": {
+          "artifact_id": "science-light-distance-001-visual-v002",
+          "relative_path": "production_pilots/yukkuri_benchmark_families_001/episodes/science_light_distance_001/local_outputs/science_light_distance_001_visual_v002.mp4",
+          "sha256": "472f54ab5048d42be18628f716e0182af0dd298a8aca51791e951d67746a93ef",
+          "receipt": "production_pilots/yukkuri_benchmark_families_001/episodes/science_light_distance_001/visual_carrier_render_receipt.json",
+          "human_acceptance": "unverified"
+        }
+      }
     },
     {
       "channel_id": "@yukkuri_sainan",
@@ -147,8 +156,8 @@
   ],
   "current_gate": {
     "status": "CONTINUE",
-    "completed": "Six channel identities and six distinct format-family contracts are locked and machine validated. The science family has a surface measurement, original 32-turn script, source registry, and 92-row YMM4 import CSV.",
-    "next_slice": "Resume the science-family YMM4 import only in an isolated window that does not save, discard, or overwrite the pre-existing unsaved unrelated script; then render and close the exact receipt before starting family two.",
+    "completed": "Six channel identities and six distinct format-family contracts are locked and machine validated. The science family has one original 330-second local-viewable reproduction with an exact successor YMMP/MP4 receipt, unchanged 92-item voice/subtitle sequence, full decode, and four sampled-frame readbacks.",
+    "next_slice": "Keep the exact science successor pending artifact-bound human review in the Storage FB task, while measuring a representative civil-engineering-family video and authoring family two on a separate original artifact identity unless an immediate bounded science repair is requested.",
     "local_production_authorized": true,
     "publication_authorized": false
   }

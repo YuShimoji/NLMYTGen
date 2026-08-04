@@ -1,0 +1,93 @@
+{
+  "schema_version": "nlmytgen.science_visual_carrier_render_receipt.v1",
+  "episode_id": "science-light-distance-001",
+  "artifact_id": "science-light-distance-001-visual-v002",
+  "created_at": "2026-08-05T01:11:59+09:00",
+  "producer": {
+    "application": "YukkuriMovieMaker",
+    "version": "4.54.0.1",
+    "render_mode": "native_ffmpeg_output",
+    "preview_playback_used": false
+  },
+  "project": {
+    "path": "local_outputs/science_light_distance_001_visual_v002.ymmp",
+    "size_bytes": 7110311,
+    "sha256": "0e19982f7dbf7940b706feb24a332a376b530d1aba37d327d0b5ecc9920ea154",
+    "timeline_frames": 19807,
+    "voice_item_count": 92,
+    "image_item_count": 6,
+    "source_voice_sequence_sha256": "fdfb0cc963a82cb4e3aa690d9f48dbfd1e7e3ecb0b3f885a424e45101121a437",
+    "successor_voice_sequence_sha256": "fdfb0cc963a82cb4e3aa690d9f48dbfd1e7e3ecb0b3f885a424e45101121a437",
+    "voice_and_subtitle_sequence_identical": true
+  },
+  "video": {
+    "path": "local_outputs/science_light_distance_001_visual_v002.mp4",
+    "size_bytes": 419660118,
+    "sha256": "472f54ab5048d42be18628f716e0182af0dd298a8aca51791e951d67746a93ef",
+    "duration_seconds": 330.116016,
+    "bit_rate": 10170003,
+    "video_stream": {
+      "codec": "h264",
+      "encoder": "h264_nvenc",
+      "width": 1920,
+      "height": 1080,
+      "pixel_format": "yuv420p",
+      "frame_rate": "60/1",
+      "frame_count": 19807
+    },
+    "audio_stream": {
+      "codec": "aac",
+      "sample_rate": 48000,
+      "channels": 2,
+      "frame_count": 15476,
+      "render_peak_db": -8.2
+    },
+    "full_video_and_audio_decode_passed": true
+  },
+  "visual_carrier": {
+    "plan": "visual_carrier/visual_carrier_plan.json",
+    "tracked_svg_count": 6,
+    "local_raster_count": 6,
+    "network_requests": 0,
+    "source_or_reference_images_used": false,
+    "reference_frame_layout_copied": false,
+    "python_image_generation_or_compositing": false
+  },
+  "visual_sampling": {
+    "frames": [
+      {
+        "time_seconds": 2,
+        "path": "local_outputs/verification_frames_visual_v002/frame_002s.png",
+        "sha256": "cb434eb37fee6163f2370c4ea6fd781a1a7473b9f3e852838df309a22db3e5c6"
+      },
+      {
+        "time_seconds": 90,
+        "path": "local_outputs/verification_frames_visual_v002/frame_090s.png",
+        "sha256": "d29fc357a9d3575b8b3f6e18695e052d5fcd27e9f9974893999717445ed3f61e"
+      },
+      {
+        "time_seconds": 210,
+        "path": "local_outputs/verification_frames_visual_v002/frame_210s.png",
+        "sha256": "3f2d6e7ba9c519dadedb0bfb59526d6157ee2795009a59d4f0bbbfeceeeb779d"
+      },
+      {
+        "time_seconds": 320,
+        "path": "local_outputs/verification_frames_visual_v002/frame_320s.png",
+        "sha256": "202851289ab2bd483b2e997766a66d6818ecee2e507ed9ccb693f13b3639fa76"
+      }
+    ],
+    "visual_carrier_present_at_all_samples": true,
+    "subtitles_readable_at_all_samples": true,
+    "black_only_samples": 0,
+    "layout_watchpoint": "At 90 seconds, the lower edge of the background label for Earth sits close to the carrier explanation band; treat this as a human-review item, not a mechanical failure.",
+    "result": "MECHANICAL_VIEWABLE_PASS_HUMAN_REVIEW_PENDING"
+  },
+  "classification": {
+    "local_viewable_verified": true,
+    "benchmark_reproduction_complete_mechanical": true,
+    "human_acceptance": "unverified",
+    "rights_cleared": false,
+    "production_authorized": false,
+    "publication_authorized": false
+  }
+}

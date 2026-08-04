@@ -1,0 +1,15 @@
+{
+  "ir_version": "1.0",
+  "video_id": "science-light-distance-001-visual-carrier-v1",
+  "macro": {
+    "sections": [
+      {"section_id": "S1", "start_index": 1, "end_index": 16, "default_bg": "clock_ladder"},
+      {"section_id": "S2", "start_index": 17, "end_index": 28, "default_bg": "moon_signal"},
+      {"section_id": "S3", "start_index": 29, "end_index": 52, "default_bg": "solar_system_delay"},
+      {"section_id": "S4", "start_index": 53, "end_index": 64, "default_bg": "near_star"},
+      {"section_id": "S5", "start_index": 65, "end_index": 77, "default_bg": "galaxy_history"},
+      {"section_id": "S6", "start_index": 78, "end_index": 92, "default_bg": "summary"}
+    ]
+  },
+  "utterances": []
+}
