@@ -4641,3 +4641,28 @@ OPERATOR の workflow proof 節から移した観測メモ。現行条件は [OP
   requested benchmark reproduction. The science family remains repair-required
   until an original visual carrier is applied and the successor render passes
   full-timeline and sampled-frame review.
+
+## 2026-08-05 Science visual-carrier successor
+
+- Added a deterministic, network-free six-scene carrier built from six original
+  tracked SVG schematics and applied it to a new successor YMMP without mutating
+  the baseline project or the unrelated dirty sample CSV.
+- Exact project readback: 92 VoiceItems remained byte-equivalent after canonical
+  JSON serialization (`fdfb0cc9...a437`), six ImageItems cover all 19,807 frames,
+  and the successor project SHA-256 is `0e19982f...a154`.
+- YMM4 4.54.0.1 rendered the separate successor MP4 as H.264/AAC,
+  1920x1080/60fps, 330.116016 seconds, 419,660,118 bytes, SHA-256
+  `472f54ab...93ef`. Full video/audio decode passed.
+- Samples at 2/90/210/320 seconds show the carrier and readable subtitles at all
+  four points; black-only samples are zero. The 90-second Earth label clearance
+  is recorded as a human-review watchpoint, not hidden as a machine failure.
+- Registry validation now hashes live local media when present and falls back to
+  the tracked exact receipt when ignored media is absent on another checkout.
+  Focused tests passed 8/8 and module CLI validation passed.
+- Implementation commit `b4f5ff9e4c36c6e8f1139be5418f92277215f7b0`
+  was pushed and read back at exact remote SHA with 0/0 parity before this docs
+  closeout. Human acceptance, rights, production, publication, upload, PR, and
+  merge remain separate and unperformed.
+- Next move: park this exact science artifact in the Storage FB review task and
+  advance the civil-engineering family on a separate original artifact identity
+  unless the reviewer requests an immediate bounded science repair.

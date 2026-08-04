@@ -1,20 +1,20 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-04.3
-Updated: 2026-08-04 JST
-Product-State: science-family-playable-baseline-verified-visual-carrier-repair-required
+State-Revision: 2026-08-05.1
+Updated: 2026-08-05 JST
+Product-State: science-family-local-viewable-verified-human-review-pending
 Product-Gate: continue
-Recommended-Next: add-original-science-visual-carrier-and-rerender
-External-State: local-feature-branch-current-slice-not-pushed
+Recommended-Next: measure-civil-engineering-family-while-science-review-is-parked
+External-State: implementation-commit-pushed-authority-closeout-pending
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: science-family-330s-yymm4-playable-baseline-and-exact-render-receipt
-Prior-Outcome-Commit: dcd0cbfede633c6a1fbc263b309c7076c44ca100
-Remote-Parity: prior tip dd97ec2 matched origin; current slice remains local-only because push was not requested
-Tracked-Worktree: current slice checkpointed on its named paths; unrelated untracked and ignored artifacts preserved
+Implementation-Checkpoint: science-family-330s-original-visual-carrier-successor-and-exact-render-receipt
+Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
+Remote-Parity: implementation commit b4f5ff9 matched origin with 0/0 before this authority closeout
+Tracked-Worktree: implementation committed and pushed on named paths; authority closeout is local-only; unrelated dirty, untracked, and ignored artifacts preserved
 
 ## Current Slice
 
@@ -37,10 +37,11 @@ Tracked-Worktree: current slice checkpointed on its named paths; unrelated untra
   5:30.11、19,807 frameのtimelineと6 MB YMMPを作成した。
 - YMM4 native FFmpeg出力はH.264/AAC、1920x1080/60fps、330.116016秒、
   419,660,609 bytes、SHA-256 `95165c94...493e6`。全尺video/audio decodeはpassした。
-- 2/90/210/320秒のframe reviewは字幕可読だが全点black backgroundで、visual carrierなし。
-  したがってplayable baselineは1/6だが、benchmark reproduction completeは0/6のまま。
-- focused pytest 4 passed、validator CLI passed、compileall、`git diff --check` passed。
-  現時点のfully viewable reproductionは0/6であり、完了とは扱わない。
+- verified baselineへ6 scene / 6 original SVGのnetwork-free carrierを適用。92 VoiceItem SHA
+  `fdfb0cc9...a437`はsourceと一致、ImageItem 6、19,807 frame、project SHA `0e19982f...a154`。
+- YMM4 4.54.0.1 successor MP4はH.264/AAC、1920x1080/60fps、330.116016秒、419,660,118 bytes、SHA `472f54ab...93ef`。全尺decode pass。
+- 2/90/210/320秒はcarrier 4/4、字幕可読4/4、black-only 0。90秒の地球label下端はhuman-review watchpoint。
+- pytest 8、registry module CLI、scoped diff check pass。scienceはlocal-viewable 1/6、human acceptance / rights / production / publicationは未確認/false。
 
 ## Parked Prior Slice
 
@@ -69,9 +70,9 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 ## Exact Next Action
 
-science episodeのverified YMMPへoriginal visual carrier planを適用し、voice/subtitle順序と
-durationを維持したsuccessor MP4をYMM4から再出力する。全尺decodeと複数frame reviewで
-black-only状態が解消した時だけscience familyをbenchmark reproduction completeへ進める。
+science successor `science-light-distance-001-visual-v002`をexact SHAのままStorage FB taskで
+human review待ちにparkする。即時bounded repairが返らない限り、別artifact identityで
+civil-engineering familyのrepresentative measurementとoriginal authoringを開始する。
 
 ## Parked Prior Exact Next Action
 
@@ -80,7 +81,7 @@ immutable bundleで再開する。missing archiveからのfallback生成は行�
 
 ## Conditional Roadmap
 
-- New active lane: measure -> original authoring -> local render -> exact receiptを6 familyで反復。
+- New active lane: science reviewをparkし、measure -> original authoring -> local render -> exact receiptを残り5 familyで反復。
 - Parked lane: named-recipient authorityが得られた場合だけimmutable bundleを配送。
 - 共通境界: technical passからhuman acceptance、rights、production、publicationを推論しない。
 
@@ -142,9 +143,9 @@ dependencies are absent。Do not rebuild the accepted v1 output in place。
 
 - source packet、content-thread packet、canonical content、package/queue descriptors、
   source/generated projects、source MP4、crops、provenance、dependency locksは不変。
-- YMM4 4.54.0.1でtarget import、timeline add、YMMP save、native FFmpeg MP4 render、
+- YMM4 4.54.0.1の分離windowでsuccessor YMMP open、native FFmpeg MP4 render、
   full decode、4-frame reviewを実施。preview playback、system volume変更、cloud/external
-  transferは0。black-background baselineからvisual completenessは推論しない。
+  transferは0。pre-existing unrelated unsaved scriptは別windowに保持し、sample CSVはstageしない。
 - named recipient delivery、human open、content/creative decision、rights、
   production、publication、upload、release、PR、merge、master mutation、tag、
   deploymentは未実施。
