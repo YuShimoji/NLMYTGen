@@ -47,18 +47,27 @@
       "identity_checked_at": "2026-08-04",
       "format_family_id": "civil_engineering_case_explainer",
       "observable_contract": {
-        "runtime_band_minutes": null,
-        "narration_model": "measure dialogue-led technical explanation",
-        "chapter_model": "measure system, history, failure, and consequence ordering",
-        "visual_grammar": "measure maps, diagrams, archival evidence, and structural callouts",
-        "subtitle_grammar": "measure technical term and emphasis treatment",
-        "asset_switching": "measure evidence-to-diagram transition cadence",
-        "audio_grammar": "measure voice, effects, and background music balance",
-        "pacing": "measurement_pending",
-        "source_attribution": "measure cited-source granularity in description and frames",
-        "intro_outro": "measurement_pending"
+        "runtime_band_minutes": [8, 12],
+        "narration_model": "two-speaker dialogue: one role advances the case and the other tests mechanism, numbers, and consequences",
+        "chapter_model": "concrete question hook, hazard or need, system plan, construction constraint, mechanism and operation, observed effect, remaining risk, recap",
+        "visual_grammar": "original route maps, section diagrams, engineering-number cards, construction timeline, and consequence summary; no benchmark frames",
+        "subtitle_grammar": "two-line readable dialogue subtitles with dates, dimensions, flow, and level differences stated in speech",
+        "asset_switching": "one engineering thesis per chapter, with evidence-to-diagram transitions rather than decorative rapid cuts",
+        "audio_grammar": "YMM4 two-character TTS with no benchmark voice, audio, music, or effects",
+        "pacing": "question, mechanism, numeric evidence, and consequence cycle repeated across six visual chapters",
+        "source_attribution": "tracked claim registry points to primary public-agency sources; source media is not embedded",
+        "intro_outro": "visible infrastructure question at the opening and an ordered mechanism-plus-limit recap at the close"
       },
-      "reproduction": {"status": "channel_identity_locked_measurement_pending", "artifact": null}
+      "reproduction": {
+        "status": "local_viewable_verified",
+        "artifact": {
+          "artifact_id": "civil-arakawa-floodway-001-visual-v001",
+          "relative_path": "production_pilots/yukkuri_benchmark_families_001/episodes/civil_arakawa_floodway_001/local_outputs/civil_arakawa_floodway_001_visual_v001.mp4",
+          "sha256": "5bf11c0a9094ead8a8ef6a1f60576e32dd1b48b8497c0adea63d1660a23601b7",
+          "receipt": "production_pilots/yukkuri_benchmark_families_001/episodes/civil_arakawa_floodway_001/visual_carrier_render_receipt.json",
+          "human_acceptance": "unverified"
+        }
+      }
     },
     {
       "channel_id": "UC3IF6Evuf_7ERtPTBz3R80Q",
@@ -156,8 +165,8 @@
   ],
   "current_gate": {
     "status": "CONTINUE",
-    "completed": "Six channel identities and six distinct format-family contracts are locked and machine validated. The science family has one original 330-second local-viewable reproduction with an exact successor YMMP/MP4 receipt, unchanged 92-item voice/subtitle sequence, full decode, and four sampled-frame readbacks.",
-    "next_slice": "Keep the exact science successor pending artifact-bound human review in the Storage FB task, while measuring a representative civil-engineering-family video and authoring family two on a separate original artifact identity unless an immediate bounded science repair is requested.",
+    "completed": "Six channel identities and six distinct format-family contracts are locked and machine validated. Science and civil engineering each have an original local-viewable reproduction with an exact successor YMMP/MP4 receipt, unchanged voice/subtitle sequence, full decode, and sampled-frame readbacks.",
+    "next_slice": "Keep the exact science and civil successors pending artifact-bound human review, while measuring and authoring the chronological-history family on a separate original artifact identity.",
     "local_production_authorized": true,
     "publication_authorized": false
   }

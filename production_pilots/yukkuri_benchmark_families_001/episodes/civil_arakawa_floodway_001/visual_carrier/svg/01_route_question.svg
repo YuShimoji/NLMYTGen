@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#071d27"/><stop offset="1" stop-color="#163b48"/></linearGradient></defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <text x="110" y="125" fill="#f4fbff" font-size="64" font-weight="700" font-family="Meiryo, sans-serif">なぜ東京に「人工の大河」があるのか</text>
+  <text x="114" y="180" fill="#67e2d0" font-size="30" font-family="Meiryo, sans-serif">岩淵から東京湾まで約22 km　洪水の経路を組み替えた放水路</text>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M220 315 C450 260 570 360 760 415 C910 458 1030 438 1130 505 C1230 570 1320 600 1535 625" stroke="#78c7e8" stroke-width="48"/>
+    <path d="M760 415 C910 520 1060 590 1220 610 C1420 635 1550 585 1710 500" stroke="#31aee6" stroke-width="86"/>
+  </g>
+  <circle cx="760" cy="415" r="25" fill="#ffcf66"/>
+  <g font-family="Meiryo, sans-serif" fill="#f4fbff"><text x="626" y="360" font-size="32">岩淵</text><text x="1225" y="590" font-size="34">荒川放水路</text><text x="1225" y="455" font-size="32">旧河道（隅田川）</text></g>
+  <rect x="110" y="620" width="1700" height="88" rx="22" fill="#0d2c35" stroke="#3e7e89" stroke-width="2"/>
+  <text x="960" y="677" text-anchor="middle" fill="#e8ffff" font-size="35" font-family="Meiryo, sans-serif">堤防を足すだけでなく、洪水の主流を東京湾へ直接逃がす</text>
+</svg>

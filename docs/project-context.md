@@ -4666,3 +4666,31 @@ OPERATOR の workflow proof 節から移した観測メモ。現行条件は [OP
 - Next move: park this exact science artifact in the Storage FB review task and
   advance the civil-engineering family on a separate original artifact identity
   unless the reviewer requests an immediate bounded science repair.
+
+## 2026-08-05 Civil-engineering visual-carrier reproduction
+
+- Measured the public `ゆっくり土建図鑑` channel surface and representative
+  10:53 metadata/description, while recording full-timeline frame and audio as
+  unverified. The authoring contract is a bounded original backcast, not a copy target.
+- Authored an original 荒川放水路 episode with a 32-turn script, four-source
+  MLIT claim registry, 92-row YMM4 CSV, and six original route/timeline/number SVGs.
+- The verified baseline and successor contain 92 identical VoiceItems with
+  canonical SHA-256 `7ac8ebd4...2c1e`; six ImageItems continuously cover all
+  22,427 frames. The successor YMMP SHA-256 is `8522f192...b8dd`.
+- Shared YMM4 contained ownership-unknown unsaved state. Save, discard, and
+  overwrite were all avoided; the dialog was cancelled and shared windows/processes
+  remained untouched. Rendering used a task-owned copy made with `robocopy /E /XD user`,
+  YMM4 4.54.0.1, executable SHA-256 `53fd6189...2eb5`.
+- The exact successor MP4 is H.264 NVENC/AAC, 1920x1080/60fps, 373.783008 seconds,
+  2,995,960,624 bytes, SHA-256 `5bf11c0a...601b7`. ffprobe read 22,427 video
+  frames and full video/audio decode exited zero.
+- Six midpoint readbacks show carrier 6/6, readable subtitles 6/6, black-only 0,
+  and carrier-label/subtitle collision 0. This is a developer/mechanical result;
+  human acceptance remains unverified.
+- After exact-path, ignored-state, and zero-process checks, only the task-owned
+  1,043,143,082-byte isolated copy was deleted. `D:\YukkuriMovieMaker_v4` and
+  original process ids 32164/28260 remained present. Procedure, version, executable
+  hash, artifact identity, and readback remain in the tracked render receipt.
+- The six-family loop is now 2/6 local-viewable. Rights, production, publication,
+  upload, PR, and merge remain false/unperformed. Next product action is the
+  chronological-history family unless an exact science/civil review requests repair.

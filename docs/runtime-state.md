@@ -1,47 +1,42 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-05.1
+State-Revision: 2026-08-05.2
 Updated: 2026-08-05 JST
-Product-State: science-family-local-viewable-verified-human-review-pending
+Product-State: science-and-civil-families-local-viewable-verified-human-review-pending
 Product-Gate: continue
-Recommended-Next: measure-civil-engineering-family-while-science-review-is-parked
-External-State: implementation-commit-pushed-authority-closeout-pending
+Recommended-Next: measure-chronological-history-family-while-two-reviews-are-parked
+External-State: two-exact-local-artifacts-human-review-pending
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: science-family-330s-original-visual-carrier-successor-and-exact-render-receipt
+Implementation-Checkpoint: civil-family-374s-original-visual-carrier-successor-and-exact-render-receipt
 Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
-Remote-Parity: implementation commit b4f5ff9 matched origin with 0/0 before this authority closeout
-Tracked-Worktree: implementation committed and pushed on named paths; authority closeout is local-only; unrelated dirty, untracked, and ignored artifacts preserved
+Remote-Parity: resolve the current civil implementation commit from the branch-tip push readback
+Tracked-Worktree: civil implementation paths are owned; unrelated dirty, untracked, ignored, and shared-editor state remain excluded
 
 ## Current Slice
 
-- user directionにより、既存のnamed-terminal portable bundle laneは破棄せずparkし、
-  別artifact identityで6種類のゆっくり解説benchmark loopを開始した。
-- `yukkuri-benchmark-families-v1-20260804`に、現地物件tour、土木case、
-  歴史chronology、科学concept、事故再構成、奇書・文献批評の6 familyと
-  対応する6 channel identityを固定した。
-- 10観測軸、exact channel/evidence URL、original episodeの進行状態、
-  script / branding / thumbnail / audio / frame / illustrationのno-copy境界を
-  machine-readable contractにした。
-- validatorはexactly 6、channel/family unique、YouTube identity URL、10観測軸、
-  no-copy境界、`local_viewable_verified`時のexact artifact receiptをfail-closedで検証する。
-- science familyは公開channel surfaceのtitle / 09:12 durationを観測し、full-timeline
-  frame/audio未検証を明示した。original 32-turn台本、NIST/NASA source registry、
-  92-row YMM4 CSV（霊夢54 / 魔理沙38、SHA-256 `67d533d9...98aa4`）まで作成した。
-- YMM4 4.54.0.1で別案件の未保存台本をoriginal-byte backup後に現行sampleへ保存し、
-  pre-existing pending speaker remapを破棄せず保全した。そのsampleはunrelated dirty pathとして
-  stage対象外。science CSV 92行をisolated windowへ読み込み、霊夢／魔理沙2 layer、
-  5:30.11、19,807 frameのtimelineと6 MB YMMPを作成した。
-- YMM4 native FFmpeg出力はH.264/AAC、1920x1080/60fps、330.116016秒、
-  419,660,609 bytes、SHA-256 `95165c94...493e6`。全尺video/audio decodeはpassした。
-- verified baselineへ6 scene / 6 original SVGのnetwork-free carrierを適用。92 VoiceItem SHA
-  `fdfb0cc9...a437`はsourceと一致、ImageItem 6、19,807 frame、project SHA `0e19982f...a154`。
-- YMM4 4.54.0.1 successor MP4はH.264/AAC、1920x1080/60fps、330.116016秒、419,660,118 bytes、SHA `472f54ab...93ef`。全尺decode pass。
-- 2/90/210/320秒はcarrier 4/4、字幕可読4/4、black-only 0。90秒の地球label下端はhuman-review watchpoint。
-- pytest 8、registry module CLI、scoped diff check pass。scienceはlocal-viewable 1/6、human acceptance / rights / production / publicationは未確認/false。
+- `yukkuri-benchmark-families-v1-20260804`は6 channel / 6 unique family、10観測軸、
+  script / branding / thumbnail / audio / frame / illustrationのno-copy境界を保持する。
+- science exact successor `science-light-distance-001-visual-v002`は変更せず、
+  SHA `472f54ab...93ef`のままhuman review待ちにparkした。
+- civil familyは公開channel surfaceのrepresentative metadata / 10:53 duration / description-level
+  source listを測定し、full-timeline frame/audio未検証を明示した。荒川放水路を題材に
+  original 32-turn台本、国交省4 sourceのclaim registry、92-row CSVを作成した。
+- verified baselineへ6 scene / 6 original SVGのnetwork-free carrierを適用。baseline / successorの
+  92 VoiceItem SHA `7ac8ebd4...2c1e`は一致し、ImageItem 6が22,427 frameを連続被覆する。
+- 共有YMM4の未知の未保存台本ではsave/discard/overwriteを選ばず、dialogをCancelした。
+  `D:\YukkuriMovieMaker_v4`から`user`除外のtask-owned copyをcivil ignored local_outputs内に作り、
+  YMM4 4.54.0.1 / exe SHA `53fd6189...2eb5`の隔離processだけでrenderした。
+- exact successor YMMPは7,997,300 bytes / SHA `8522f192...b8dd`。MP4はH.264 NVENC/AAC、
+  1920x1080/60fps、373.783008秒、2,995,960,624 bytes / SHA `5bf11c0a...601b7`。
+  22,427 frame実読取、全尺video/audio decode pass。
+- 6 scene midpointはcarrier 6/6、字幕可読6/6、black-only 0、carrier label/subtitle collision 0。
+  task-owned isolated copyはexact ignored pathとprocess 0を確認後に削除し、元D: processは保持した。
+- fully viewable reproductionは2/6。science / civilともhuman acceptanceはunverified、rights / production /
+  publicationはfalseで、technical passから推論しない。
 
 ## Parked Prior Slice
 
@@ -70,9 +65,10 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 ## Exact Next Action
 
-science successor `science-light-distance-001-visual-v002`をexact SHAのままStorage FB taskで
-human review待ちにparkする。即時bounded repairが返らない限り、別artifact identityで
-civil-engineering familyのrepresentative measurementとoriginal authoringを開始する。
+science successor `science-light-distance-001-visual-v002`とcivil successor
+`civil-arakawa-floodway-001-visual-v001`をexact SHAのままartifact-bound human review待ちにparkする。
+即時bounded repairが返らない限り、別artifact identityでchronological-history familyの
+representative measurementとoriginal authoringを開始する。
 
 ## Parked Prior Exact Next Action
 
@@ -81,7 +77,7 @@ immutable bundleで再開する。missing archiveからのfallback生成は行�
 
 ## Conditional Roadmap
 
-- New active lane: science reviewをparkし、measure -> original authoring -> local render -> exact receiptを残り5 familyで反復。
+- New active lane: science / civil reviewをparkし、measure -> original authoring -> local render -> exact receiptを残り4 familyで反復。
 - Parked lane: named-recipient authorityが得られた場合だけimmutable bundleを配送。
 - 共通境界: technical passからhuman acceptance、rights、production、publicationを推論しない。
 
@@ -143,9 +139,9 @@ dependencies are absent。Do not rebuild the accepted v1 output in place。
 
 - source packet、content-thread packet、canonical content、package/queue descriptors、
   source/generated projects、source MP4、crops、provenance、dependency locksは不変。
-- YMM4 4.54.0.1の分離windowでsuccessor YMMP open、native FFmpeg MP4 render、
-  full decode、4-frame reviewを実施。preview playback、system volume変更、cloud/external
-  transferは0。pre-existing unrelated unsaved scriptは別windowに保持し、sample CSVはstageしない。
+- YMM4 4.54.0.1のtask-owned isolated copyでcivil successor YMMP open、native FFmpeg MP4 render、
+  full decode、6-frame reviewを実施。copyはreceipt化後に削除。preview playback、system volume変更、
+  cloud/external transferは0。pre-existing unrelated unsaved scriptは共有windowに変更なく保持する。
 - named recipient delivery、human open、content/creative decision、rights、
   production、publication、upload、release、PR、merge、master mutation、tag、
   deploymentは未実施。

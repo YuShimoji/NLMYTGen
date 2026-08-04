@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#081c32"/>
+  <text x="110" y="125" fill="#f4faff" font-size="64" font-weight="700" font-family="Meiryo, sans-serif">核心は「洪水を消す」ではなく「分ける」</text>
+  <text x="114" y="180" fill="#75d7ff" font-size="30" font-family="Meiryo, sans-serif">岩淵水門・放水路・旧河道が一体で動く</text>
+  <path d="M170 460 H730" stroke="#4cbbe9" stroke-width="110"/><path d="M730 460 C960 460 1030 320 1220 320 H1740" stroke="#21a8e7" stroke-width="150" fill="none"/><path d="M730 460 C970 470 1050 620 1220 620 H1740" stroke="#86bdd3" stroke-width="70" fill="none"/>
+  <rect x="690" y="320" width="90" height="280" rx="20" fill="#ffc85b"/><text x="735" y="625" text-anchor="middle" fill="#ffd87f" font-size="28" font-family="Meiryo, sans-serif">岩淵</text>
+  <g font-family="Meiryo, sans-serif"><text x="1230" y="290" fill="#eafbff" font-size="34">放水路へ</text><text x="1230" y="400" fill="#fff" font-size="62" font-weight="700">3,340 m³/s</text><text x="1230" y="590" fill="#eafbff" font-size="34">隅田川へ</text><text x="1230" y="690" fill="#fff" font-size="58" font-weight="700">830 m³/s</text></g>
+  <rect x="210" y="640" width="1500" height="86" rx="22" fill="#102f4a" stroke="#39749a" stroke-width="2"/><text x="960" y="696" text-anchor="middle" fill="#edf9ff" font-size="35" font-family="Meiryo, sans-serif">都市側への流入を絞り、大きな新河道へ主流を振り向ける</text>
+</svg>

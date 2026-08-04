@@ -1,0 +1,137 @@
+{
+  "schema_version": "nlmytgen.civil_engineering_visual_carrier_render_receipt.v1",
+  "episode_id": "civil-arakawa-floodway-001",
+  "artifact_id": "civil-arakawa-floodway-001-visual-v001",
+  "created_at": "2026-08-05T05:11:53+09:00",
+  "producer": {
+    "application": "YukkuriMovieMaker",
+    "version": "4.54.0.1",
+    "render_mode": "native_ffmpeg_output",
+    "preview_playback_used": false
+  },
+  "isolated_environment": {
+    "source_application_path": "D:\\YukkuriMovieMaker_v4",
+    "task_copy_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\production_pilots\\yukkuri_benchmark_families_001\\episodes\\civil_arakawa_floodway_001\\local_outputs\\portable_yymm4_app_20260805T0415",
+    "copy_procedure": "robocopy D:\\YukkuriMovieMaker_v4 <task_copy_path> /E /XD user",
+    "excluded_source_profile_directory": "user",
+    "initial_file_count": 770,
+    "initial_size_bytes": 1043143082,
+    "executable_sha256": "53fd61891439e63958a1d1551180e3afa88e4c96c39d8a510d87bb8049972eb5",
+    "task_owned_generated_temp": true,
+    "shared_editor_saved": false,
+    "shared_editor_discarded": false,
+    "shared_editor_file_overwritten": false,
+    "shared_dialog_cancelled": true,
+    "original_application_process_ids_preserved": [32164, 28260],
+    "isolated_process_id": 30596,
+    "isolated_process_and_children_running_after_close": 0,
+    "task_copy_retained": false,
+    "task_copy_deleted_after_exact_ignored_path_check": true,
+    "source_application_retained": true,
+    "reproducibility_retained_by_procedure_version_hash_and_receipt": true
+  },
+  "project": {
+    "path": "local_outputs/civil_arakawa_floodway_001_visual_v001.ymmp",
+    "size_bytes": 7997300,
+    "sha256": "8522f192f6be86f4333f658830a30f7baa8a8216e7a3615d652707ca2dfbb8dd",
+    "timeline_frames": 22427,
+    "voice_item_count": 92,
+    "image_item_count": 6,
+    "source_voice_sequence_sha256": "7ac8ebd4ff2d299d3125e01534ef419deefb2dab7a855b98e1cefe5cadfd2c1e",
+    "successor_voice_sequence_sha256": "7ac8ebd4ff2d299d3125e01534ef419deefb2dab7a855b98e1cefe5cadfd2c1e",
+    "voice_and_subtitle_sequence_identical": true
+  },
+  "video": {
+    "path": "local_outputs/civil_arakawa_floodway_001_visual_v001.mp4",
+    "size_bytes": 2995960624,
+    "sha256": "5bf11c0a9094ead8a8ef6a1f60576e32dd1b48b8497c0adea63d1660a23601b7",
+    "duration_seconds": 373.783008,
+    "bit_rate": 64121922,
+    "video_stream": {
+      "codec": "h264",
+      "encoder": "h264_nvenc",
+      "profile": "Main",
+      "width": 1920,
+      "height": 1080,
+      "pixel_format": "yuv420p",
+      "frame_rate": "60/1",
+      "frame_count": 22427,
+      "decoded_frame_count": 22427
+    },
+    "audio_stream": {
+      "codec": "aac",
+      "profile": "LC",
+      "sample_rate": 48000,
+      "channels": 2,
+      "channel_layout": "stereo",
+      "frame_count": 17523,
+      "decoded_frame_count": 17522,
+      "render_peak_db": -8.6
+    },
+    "full_video_and_audio_decode_passed": true
+  },
+  "visual_carrier": {
+    "plan": "visual_carrier/visual_carrier_plan.json",
+    "tracked_svg_count": 6,
+    "local_raster_count": 6,
+    "network_requests": 0,
+    "source_or_reference_images_used": false,
+    "reference_frame_layout_copied": false,
+    "python_image_generation_or_compositing": false,
+    "tracked_svg_sha256": {
+      "visual_carrier/svg/01_route_question.svg": "6e33b1e8bc33b2cc2b83f06772af6b6fb8bd374ca1a8f9be12d948d8dea9578c",
+      "visual_carrier/svg/02_flood_trigger.svg": "39a7e4a1bf24a1cb0f6df0c64e6aaf4b21e7f46f642514652582758428c9b867",
+      "visual_carrier/svg/03_construction_timeline.svg": "a5aa3413ab88c8af363b826442c2cbb5f08a7e4004f2f064778ecdd36cf06e52",
+      "visual_carrier/svg/04_flow_split.svg": "c9f936309f31d1ab5586cae96b06671dd9f2f7db55d56fe9413a7b1a5aca69d4",
+      "visual_carrier/svg/05_observed_effect.svg": "b9b45c60d8ac23626c18b3f3e907b588e967575a7a7f607612b2c9d0cb5cde5c",
+      "visual_carrier/svg/06_present_risk_recap.svg": "0572f67d8cd09e07578e9bfdb97b53a30a88e5adfe2360ba56f073b8bd350380"
+    }
+  },
+  "visual_sampling": {
+    "frames": [
+      {
+        "time_seconds": 20.2,
+        "path": "local_outputs/verification_frames_visual_v001/01_route_question.png",
+        "sha256": "73edf35be29245d78c5cb484edf57c7f06781e9bde80de631881a76b16cfe54f"
+      },
+      {
+        "time_seconds": 64.783333,
+        "path": "local_outputs/verification_frames_visual_v001/02_flood_trigger.png",
+        "sha256": "9e654877b10a832336397ec08afdf48591105f1d5b9526c36ad7aad719fe513c"
+      },
+      {
+        "time_seconds": 136.216667,
+        "path": "local_outputs/verification_frames_visual_v001/03_construction_timeline.png",
+        "sha256": "8052efe79427e3ad5d5296e89f3dd4a271d30dd810d4e43173a8f3895f26d894"
+      },
+      {
+        "time_seconds": 206.483333,
+        "path": "local_outputs/verification_frames_visual_v001/04_flow_split.png",
+        "sha256": "0280268f9802d43aaa7643c9936fb0d0c08a360e36db3485055fcff1ba35e2bf"
+      },
+      {
+        "time_seconds": 253.3,
+        "path": "local_outputs/verification_frames_visual_v001/05_observed_effect.png",
+        "sha256": "b8d3ae6e6500a5ad97e91ac7aea11c0d908f4996a9b1c6f72545f2396830fbdd"
+      },
+      {
+        "time_seconds": 325.333333,
+        "path": "local_outputs/verification_frames_visual_v001/06_present_risk_recap.png",
+        "sha256": "cd8dc1b767a971d63e3b9390502d0dc2b26ea4523e2c80a716c7c3bee8faa43b"
+      }
+    ],
+    "visual_carrier_present_at_all_samples": true,
+    "subtitles_readable_at_all_samples": true,
+    "black_only_samples": 0,
+    "carrier_label_or_subtitle_collision_samples": 0,
+    "result": "MECHANICAL_VIEWABLE_PASS_HUMAN_REVIEW_PENDING"
+  },
+  "classification": {
+    "local_viewable_verified": true,
+    "benchmark_reproduction_complete_mechanical": true,
+    "human_acceptance": "unverified",
+    "rights_cleared": false,
+    "production_authorized": false,
+    "publication_authorized": false
+  }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#241e1c"/>
+  <text x="110" y="125" fill="#fff8ed" font-size="64" font-weight="700" font-family="Meiryo, sans-serif">陸地に22 kmの河道を造る</text>
+  <text x="114" y="180" fill="#ffcb72" font-size="30" font-family="Meiryo, sans-serif">用地・鉄道・寺社・田畑を含む、都市規模の組み替え</text>
+  <path d="M190 500 H1725" stroke="#765742" stroke-width="16" stroke-linecap="round"/>
+  <g font-family="Meiryo, sans-serif" text-anchor="middle"><g transform="translate(260 500)"><circle r="34" fill="#f2a947"/><text y="-72" fill="#fff" font-size="38" font-weight="700">1911</text><text y="90" fill="#ffe2ad" font-size="30">着工</text></g><g transform="translate(980 500)"><circle r="34" fill="#f2a947"/><text y="-72" fill="#fff" font-size="38" font-weight="700">1924</text><text y="90" fill="#ffe2ad" font-size="30">通水</text></g><g transform="translate(1660 500)"><circle r="34" fill="#f2a947"/><text y="-72" fill="#fff" font-size="38" font-weight="700">1930</text><text y="90" fill="#ffe2ad" font-size="30">完成</text></g></g>
+  <g font-family="Meiryo, sans-serif"><rect x="200" y="610" width="650" height="115" rx="24" fill="#40312a"/><text x="525" y="658" text-anchor="middle" fill="#ffd88a" font-size="32">移転した住民</text><text x="525" y="710" text-anchor="middle" fill="#fff" font-size="48" font-weight="700">約1,300世帯</text><rect x="1070" y="610" width="650" height="115" rx="24" fill="#40312a"/><text x="1395" y="658" text-anchor="middle" fill="#ffd88a" font-size="32">着工から完成まで</text><text x="1395" y="710" text-anchor="middle" fill="#fff" font-size="48" font-weight="700">19年</text></g>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#12202c"/>
+  <text x="110" y="125" fill="#f5fbff" font-size="64" font-weight="700" font-family="Meiryo, sans-serif">1925年洪水　分流の効果を水位で読む</text>
+  <text x="114" y="180" fill="#7bd3ff" font-size="30" font-family="Meiryo, sans-serif">岩淵地点で放水路と隅田川を比較</text>
+  <g font-family="Meiryo, sans-serif" text-anchor="middle"><rect x="250" y="330" width="530" height="390" rx="30" fill="#143b5a"/><rect x="290" y="450" width="450" height="230" fill="#168ec7"/><text x="515" y="400" fill="#e8f8ff" font-size="38">放水路</text><rect x="1140" y="330" width="530" height="390" rx="30" fill="#243f4d"/><rect x="1180" y="595" width="450" height="85" fill="#6ba6bf"/><text x="1405" y="400" fill="#e8f8ff" font-size="38">隅田川</text><path d="M830 450 H1090 M830 595 H1090" stroke="#ffcf64" stroke-width="7" stroke-dasharray="18 12"/><text x="960" y="540" fill="#ffdf8c" font-size="72" font-weight="700">2.83 m</text><text x="960" y="585" fill="#ffe9b7" font-size="28">水位差</text></g>
+  <rect x="180" y="640" width="1560" height="90" rx="22" fill="#1c3442" stroke="#4a7186" stroke-width="2"/><text x="960" y="698" text-anchor="middle" fill="#f0fbff" font-size="34" font-family="Meiryo, sans-serif">特定洪水の実測値。どの洪水でも同じ安全余裕になるわけではない</text>
+</svg>

@@ -1,0 +1,60 @@
+{
+  "schema_version": "nlmytgen.yukkuri_original_episode_sources.v1",
+  "episode_id": "civil-arakawa-floodway-001",
+  "sources": [
+    {
+      "source_id": "MLIT-ARAKAWA-OVERVIEW",
+      "title": "荒川の概要",
+      "publisher": "国土交通省 関東地方整備局 荒川下流河川事務所",
+      "url": "https://www.ktr.mlit.go.jp/arage/about/data/data04.html",
+      "supports": [
+        "the lower 22 kilometres are an artificial floodway",
+        "the 1910 flood triggered the improvement plan",
+        "water first passed through the floodway in 1924"
+      ]
+    },
+    {
+      "source_id": "MLIT-ARAKAWA-EXCAVATION",
+      "title": "2. 荒川放水路の開削",
+      "publisher": "国土交通省 関東地方整備局 荒川下流河川事務所",
+      "url": "https://www.ktr.mlit.go.jp/arage/arage00031.html",
+      "supports": [
+        "about 1300 households moved for the project",
+        "the 1924 Iwabuchi gate completion connected the route",
+        "the full project was completed in 1930",
+        "a 2.83 metre level difference between the floodway and Sumida River was observed during the 1925 flood"
+      ]
+    },
+    {
+      "source_id": "MLIT-ARAKAWA-100-YEAR-BRIEF",
+      "title": "荒川放水路通水100周年",
+      "publisher": "国土交通省 関東地方整備局",
+      "url": "https://www.ktr.mlit.go.jp/honkyoku/soumu/data/20241025_001.pdf",
+      "supports": [
+        "construction began in 1911",
+        "the historical design divided 3340 cubic metres per second toward the floodway and 830 cubic metres per second toward the Sumida River",
+        "ground subsidence and zero-metre districts remain important present-day risk context"
+      ]
+    },
+    {
+      "source_id": "MLIT-ARAKAWA-FLOOD-HISTORY",
+      "title": "日本の川 関東 荒川 荒川の主な災害",
+      "publisher": "国土交通省 水管理・国土保全局",
+      "url": "https://www.mlit.go.jp/river/toukei_chousa/kasen/jiten/nihon_kawa/0306_arakawa/0306_arakawa_02.html",
+      "supports": [
+        "the 1910 flood record lists 324 dead or missing and 84538 inundated houses"
+      ]
+    }
+  ],
+  "claims_policy": "Historical values are stated as reported by the listed public-agency sources. The episode explains a civil-engineering mechanism and does not claim that a floodway removes all flood risk.",
+  "rights": {
+    "benchmark_media_reused": false,
+    "source_media_reused": false,
+    "episode_script_original": true,
+    "visual_carrier_original": true,
+    "internal_review_only": true,
+    "human_acceptance": "unverified",
+    "production_authorized": false,
+    "publication_authorized": false
+  }
+}

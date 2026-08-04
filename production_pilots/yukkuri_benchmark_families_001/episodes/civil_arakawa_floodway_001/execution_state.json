@@ -1,0 +1,99 @@
+{
+  "schema_version": "nlmytgen.yukkuri_episode_execution_state.v1",
+  "episode_id": "civil-arakawa-floodway-001",
+  "updated_at": "2026-08-05T05:11:53+09:00",
+  "state": "local_viewable_verified_human_review_pending",
+  "completed": {
+    "benchmark_surface_measurement": true,
+    "original_script": true,
+    "source_registry": true,
+    "yymm4_import_csv": true,
+    "target_csv_imported": true,
+    "timeline_items_added": true,
+    "yymm4_project_saved": true,
+    "original_visual_carrier_plan": true,
+    "deterministic_visual_carrier_build": true,
+    "successor_ymmp_written": true,
+    "source_voice_sequence_preserved": true,
+    "isolated_yymm4_render_completed": true,
+    "full_media_decode": true,
+    "sampled_frame_review": true,
+    "isolated_temp_copy_safely_removed": true
+  },
+  "csv_receipt": {
+    "path": "yymm4_import.csv",
+    "tracked": false,
+    "row_count": 92,
+    "speaker_counts": {
+      "ゆっくり霊夢": 52,
+      "ゆっくり魔理沙": 40
+    },
+    "character_count": 1966,
+    "size_bytes": 8145,
+    "sha256": "d746f0ca8c504efdd5e3289fb93c6a2512c949bd94d1781e885339dd2eb64902"
+  },
+  "yymm4_observation": {
+    "version": "4.54.0.1",
+    "isolated_task_copy_launched": true,
+    "target_csv_imported": true,
+    "timeline_items_added": true,
+    "playback_started": false,
+    "render_started": true,
+    "render_completed": true,
+    "timeline_duration": "00:06:13.78",
+    "timeline_frame_count": 22427,
+    "shared_unsaved_editor_observed": true,
+    "shared_unsaved_editor_saved": false,
+    "shared_unsaved_editor_discarded": false,
+    "shared_editor_file_overwritten": false,
+    "shared_dialog_cancelled": true,
+    "shared_windows_and_processes_left_running": true,
+    "isolated_profile_created_inside_task_copy": true
+  },
+  "visual_carrier_render_receipt": {
+    "receipt_path": "visual_carrier_render_receipt.json",
+    "project_path": "local_outputs/civil_arakawa_floodway_001_visual_v001.ymmp",
+    "project_sha256": "8522f192f6be86f4333f658830a30f7baa8a8216e7a3615d652707ca2dfbb8dd",
+    "video_path": "local_outputs/civil_arakawa_floodway_001_visual_v001.mp4",
+    "video_sha256": "5bf11c0a9094ead8a8ef6a1f60576e32dd1b48b8497c0adea63d1660a23601b7",
+    "voice_and_subtitle_sequence_identical": true,
+    "full_decode_passed": true,
+    "local_viewable_verified": true,
+    "human_acceptance": "unverified"
+  },
+  "visual_review": {
+    "sample_times_seconds": [20.2, 64.783333, 136.216667, 206.483333, 253.3, 325.333333],
+    "subtitles_readable": true,
+    "visual_carrier_present": true,
+    "black_only_samples": 0,
+    "carrier_label_or_subtitle_collision_samples": 0,
+    "result": "MECHANICAL_VIEWABLE_PASS_HUMAN_REVIEW_PENDING"
+  },
+  "isolated_copy_cleanup": {
+    "absolute_path": "C:\\Users\\thank\\Storage\\Media Contents Projects\\NLMYTGen\\production_pilots\\yukkuri_benchmark_families_001\\episodes\\civil_arakawa_floodway_001\\local_outputs\\portable_yymm4_app_20260805T0415",
+    "inside_ignored_local_outputs": true,
+    "isolated_process_and_children_running_before_delete": 0,
+    "deleted": true,
+    "exists_after_delete": false,
+    "source_application_path": "D:\\YukkuriMovieMaker_v4",
+    "source_application_exists_after_delete": true,
+    "source_process_ids_preserved": [32164, 28260]
+  },
+  "resume_gate": {
+    "status": "CONTINUE",
+    "next_action": "Park the exact science and civil successors for artifact-bound human review, then measure and author the chronological-history family on a separate original artifact identity.",
+    "do_not": [
+      "save or discard the unrelated shared unsaved script",
+      "modify the science artifact",
+      "infer human acceptance from the mechanical viewable pass",
+      "publish or upload either local artifact"
+    ]
+  },
+  "authority": {
+    "local_production_authorized": true,
+    "human_acceptance": "unverified",
+    "rights_cleared": false,
+    "production_authorized": false,
+    "publication_authorized": false
+  }
+}

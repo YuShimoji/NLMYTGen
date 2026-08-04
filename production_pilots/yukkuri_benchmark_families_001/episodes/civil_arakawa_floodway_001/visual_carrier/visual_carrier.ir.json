@@ -1,0 +1,15 @@
+{
+  "ir_version": "1.0",
+  "video_id": "civil-arakawa-floodway-001-visual-carrier-v1",
+  "macro": {
+    "sections": [
+      {"section_id": "S1", "start_index": 1, "end_index": 12, "default_bg": "route_question"},
+      {"section_id": "S2", "start_index": 13, "end_index": 22, "default_bg": "flood_trigger"},
+      {"section_id": "S3", "start_index": 23, "end_index": 46, "default_bg": "construction_timeline"},
+      {"section_id": "S4", "start_index": 47, "end_index": 57, "default_bg": "flow_split"},
+      {"section_id": "S5", "start_index": 58, "end_index": 69, "default_bg": "observed_effect"},
+      {"section_id": "S6", "start_index": 70, "end_index": 92, "default_bg": "present_risk_recap"}
+    ]
+  },
+  "utterances": []
+}

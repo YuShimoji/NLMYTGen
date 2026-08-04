@@ -29,8 +29,8 @@ def test_registry_locks_six_unique_channels_and_format_families() -> None:
         "channel_count": 6,
         "unique_channel_count": 6,
         "unique_format_family_count": 6,
-        "local_viewable_verified_count": 1,
-        "remaining_local_viewable_count": 5,
+        "local_viewable_verified_count": 2,
+        "remaining_local_viewable_count": 4,
         "local_production_authorized": True,
         "public_release_authorized": False,
     }
@@ -74,7 +74,7 @@ def test_local_viewable_status_requires_exact_artifact_receipt() -> None:
     result = validate_registry(registry, root=ROOT)
 
     assert result["status"] == "failed"
-    assert result["local_viewable_verified_count"] == 1
+    assert result["local_viewable_verified_count"] == 2
     assert "channels[3].reproduction.artifact is required" in result["errors"]
 
 
@@ -92,15 +92,16 @@ def test_local_viewable_status_can_read_back_tracked_receipt_without_local_media
     tmp_path: Path,
 ) -> None:
     registry = copy.deepcopy(_registry())
-    artifact = registry["channels"][3]["reproduction"]["artifact"]
-    receipt_path = Path(artifact["receipt"])
-    copied_receipt = tmp_path / receipt_path
-    copied_receipt.parent.mkdir(parents=True)
-    copied_receipt.write_text(
-        (ROOT / receipt_path).read_text(encoding="utf-8"), encoding="utf-8"
-    )
+    for channel_index in (1, 3):
+        artifact = registry["channels"][channel_index]["reproduction"]["artifact"]
+        receipt_path = Path(artifact["receipt"])
+        copied_receipt = tmp_path / receipt_path
+        copied_receipt.parent.mkdir(parents=True)
+        copied_receipt.write_text(
+            (ROOT / receipt_path).read_text(encoding="utf-8"), encoding="utf-8"
+        )
 
     result = validate_registry(registry, root=tmp_path)
 
     assert result["status"] == "passed"
-    assert result["local_viewable_verified_count"] == 1
+    assert result["local_viewable_verified_count"] == 2

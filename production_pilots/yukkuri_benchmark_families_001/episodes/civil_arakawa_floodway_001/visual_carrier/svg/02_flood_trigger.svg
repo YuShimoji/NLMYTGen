@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#102333"/>
+  <text x="110" y="125" fill="#f5fbff" font-size="64" font-weight="700" font-family="Meiryo, sans-serif">1910年　流路の限界が被害として現れた</text>
+  <text x="114" y="180" fill="#84d7ff" font-size="30" font-family="Meiryo, sans-serif">荒川の水が旧河道を通って東京下町へ集中</text>
+  <path d="M100 610 C360 525 610 690 880 590 C1130 500 1410 670 1820 550 L1820 760 L100 760 Z" fill="#167db6" opacity=".85"/>
+  <g fill="#293947"><path d="M190 455h160v155H190zM390 410h190v200H390zM1390 430h160v180h-160zM1585 390h190v220h-190z"/><path d="M230 455v-55h80v55M445 410v-80h78v80M1430 430v-65h80v65M1635 390v-90h90v90"/></g>
+  <g font-family="Meiryo, sans-serif" text-anchor="middle"><rect x="610" y="305" width="330" height="180" rx="28" fill="#7e2c3a"/><text x="775" y="375" fill="#ffe7eb" font-size="34">死者・行方不明</text><text x="775" y="445" fill="#fff" font-size="64" font-weight="700">324人</text><rect x="975" y="305" width="410" height="180" rx="28" fill="#664234"/><text x="1180" y="375" fill="#fff1e4" font-size="34">浸水家屋</text><text x="1180" y="445" fill="#fff" font-size="64" font-weight="700">84,538戸</text></g>
+  <rect x="110" y="650" width="1700" height="86" rx="22" fill="#172f42" stroke="#42647a" stroke-width="2"/><text x="960" y="706" text-anchor="middle" fill="#edf8ff" font-size="35" font-family="Meiryo, sans-serif">被災箇所の補修ではなく、川のネットワークを変える抜本策へ</text>
+</svg>

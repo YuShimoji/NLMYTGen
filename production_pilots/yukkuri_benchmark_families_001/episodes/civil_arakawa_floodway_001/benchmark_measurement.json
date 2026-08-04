@@ -1,0 +1,57 @@
+{
+  "schema_version": "nlmytgen.yukkuri_benchmark_measurement.v1",
+  "measurement_id": "civil-engineering-case-surface-measurement-20260805",
+  "format_family_id": "civil_engineering_case_explainer",
+  "benchmark_channel": {
+    "name": "ゆっくり土建図鑑",
+    "channel_id": "UCrjLP0IHD136hUECbP91RlA",
+    "official_url": "https://www.youtube.com/channel/UCrjLP0IHD136hUECbP91RlA"
+  },
+  "representative_video": {
+    "video_id": "voZU8OdRJhU",
+    "url": "https://www.youtube.com/watch?v=voZU8OdRJhU",
+    "title": "【ゆっくり解説】海底並みの地下水圧を克服した難工事「地芳トンネル」",
+    "duration_seconds": 653,
+    "availability": "public_metadata_and_description_observed",
+    "observed_at": "2026-08-05T00:00:00+09:00"
+  },
+  "surface_observation": {
+    "channel_identity_and_description_observed": true,
+    "video_title_observed": true,
+    "duration_observed": true,
+    "description_source_list_observed": true,
+    "full_timeline_frame_verified": false,
+    "audio_subject_verified": false,
+    "note": "The public channel surface defines a broad civil/building case-explainer identity. Representative metadata establishes the exact title, 10:53 runtime, and a dense description-level source list. Full-timeline form and audio remain unverified, so this contract is a bounded authoring backcast rather than a frame-copy target."
+  },
+  "measured_contract": {
+    "runtime_band_minutes": [8, 12],
+    "narration_model": "two-speaker dialogue: one role advances the case and the other tests mechanism, numbers, and consequences",
+    "chapter_model": [
+      "concrete_question_hook",
+      "hazard_or_need",
+      "system_plan",
+      "construction_constraint",
+      "mechanism_and_operation",
+      "observed_effect",
+      "remaining_risk",
+      "recap"
+    ],
+    "visual_grammar": "original route maps, section diagrams, engineering-number cards, construction timeline, and consequence summary; no benchmark frames",
+    "subtitle_grammar": "two-line readable dialogue subtitles with dates, dimensions, flow, and level differences stated in speech",
+    "asset_switching": "one engineering thesis per chapter, with evidence-to-diagram transitions rather than decorative rapid cuts",
+    "audio_grammar": "YMM4 two-character TTS with no benchmark voice, audio, music, or effects",
+    "pacing": "question, mechanism, numeric evidence, and consequence cycle repeated across six visual chapters",
+    "source_attribution": "tracked claim registry points to primary public-agency sources; source media is not embedded",
+    "intro_outro": "visible infrastructure question at the opening and an ordered mechanism-plus-limit recap at the close"
+  },
+  "copy_boundary": {
+    "benchmark_script_used": false,
+    "benchmark_frames_used": false,
+    "benchmark_audio_used": false,
+    "benchmark_branding_used": false,
+    "benchmark_topic_reused": false,
+    "original_topic": "荒川放水路は、なぜ東京の洪水リスクを分流で変えたのか",
+    "original_script_path": "script.txt"
+  }
+}
