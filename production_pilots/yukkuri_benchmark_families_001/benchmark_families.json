@@ -78,15 +78,15 @@
       "format_family_id": "chronological_history_reconstruction",
       "observable_contract": {
         "runtime_band_minutes": null,
-        "narration_model": "measure dialogue-led chronological narration",
-        "chapter_model": "measure setup, chronology, turning point, and aftermath",
-        "visual_grammar": "measure maps, portraits, diagrams, and event labels",
-        "subtitle_grammar": "measure dates, names, and emphasis treatment",
-        "asset_switching": "measure chronology-driven visual cadence",
-        "audio_grammar": "measure narration and background music balance",
-        "pacing": "measurement_pending",
-        "source_attribution": "measure primary and secondary source presentation",
-        "intro_outro": "measurement_pending"
+        "narration_model": "bounded authoring contract: two-speaker dialogue in which one role advances the chronology and the other tests causes, date transitions, and institutional consequences",
+        "chapter_model": "concrete present-day question, precondition, international turning point, domestic ordinance, implementation, later scope change, present-day consequence, ordered recap",
+        "visual_grammar": "original date cards, map and meridian diagrams, ordinance cards, and before-after institutional summaries; no benchmark frames",
+        "subtitle_grammar": "two-line readable dialogue subtitles with years, ordinance numbers, longitude, and effective dates stated in speech",
+        "asset_switching": "one causal or chronological thesis per chapter, with explicit date transitions rather than decorative rapid cuts",
+        "audio_grammar": "YMM4 two-character TTS with no benchmark voice, audio, music, or effects",
+        "pacing": "question, dated event, reason, and consequence cycle across seven chronological chapters",
+        "source_attribution": "tracked claim registry points to public institutional sources; source media is not embedded",
+        "intro_outro": "present-day meridian question at the opening and an ordered rule-change-plus-present-system recap at the close"
       },
       "reproduction": {"status": "channel_identity_locked_measurement_pending", "artifact": null}
     },

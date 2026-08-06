@@ -1,0 +1,64 @@
+{
+  "schema_version": "nlmytgen.yukkuri_episode_execution_state.v1",
+  "episode_id": "history-japan-standard-time-001",
+  "updated_at": "2026-08-07T05:54:11+09:00",
+  "state": "original_authoring_pack_verified_render_pending",
+  "completed": {
+    "benchmark_surface_measurement": true,
+    "original_script": true,
+    "source_registry": true,
+    "yymm4_import_csv": true,
+    "csv_overflow_check": true,
+    "target_csv_imported": false,
+    "yymm4_project_saved": false,
+    "original_visual_carrier_plan": false,
+    "local_render_completed": false,
+    "full_media_decode": false,
+    "sampled_frame_review": false
+  },
+  "authoring_identity": {
+    "benchmark_measurement_path": "benchmark_measurement.json",
+    "benchmark_measurement_sha256": "ad7f1d17ad103e20f777953dd9da05c8edc6136bdd09f455d6e3bc690ea00067",
+    "source_registry_path": "source_registry.json",
+    "source_registry_sha256": "bed1344abea51f4e6e4911c8adbb29ad46182a88ee5a1ca08e17bfaf07460b71",
+    "script_path": "script.txt",
+    "script_sha256": "4e44616a13761f367707f6931f1dcea7e46d961f9d45c190eb333c6a418a38b2",
+    "script_dialogue_turn_count": 32
+  },
+  "csv_receipt": {
+    "path": "yymm4_import.csv",
+    "tracked": false,
+    "row_count": 97,
+    "speaker_counts": {
+      "ゆっくり霊夢": 55,
+      "ゆっくり魔理沙": 42
+    },
+    "character_count": 1920,
+    "size_bytes": 8087,
+    "sha256": "82cc4b9ea1c433385069408f53d3b1b15cd74ae65c0b80f70ea7014e8718881b",
+    "overflow_candidates": 0,
+    "layout_contract": {
+      "max_lines": 2,
+      "display_width_per_line": 34,
+      "balance_lines": true,
+      "reflow_v2": true
+    }
+  },
+  "resume_gate": {
+    "status": "CONTINUE",
+    "next_action": "Use a task-owned blank two-character YMM4 project to import the exact 97-row CSV, then build an original chronology visual carrier and render a new exact successor without touching the parked science or civil artifacts.",
+    "do_not": [
+      "modify the science or civil artifacts",
+      "reuse benchmark frames, audio, script, branding, or topic",
+      "infer human acceptance from authoring or future mechanical verification",
+      "publish or upload the episode"
+    ]
+  },
+  "authority": {
+    "local_production_authorized": true,
+    "human_acceptance": "unverified",
+    "rights_cleared": false,
+    "production_authorized": false,
+    "publication_authorized": false
+  }
+}

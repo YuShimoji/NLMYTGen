@@ -1,0 +1,49 @@
+{
+  "schema_version": "nlmytgen.yukkuri_benchmark_measurement.v1",
+  "measurement_id": "chronological-history-surface-measurement-20260807",
+  "format_family_id": "chronological_history_reconstruction",
+  "benchmark_channel": {
+    "name": "ゆっくり歴史解説チャンネル",
+    "channel_id": "UC3IF6Evuf_7ERtPTBz3R80Q",
+    "handle": "@yukkuri_historian",
+    "official_url": "https://www.youtube.com/channel/UC3IF6Evuf_7ERtPTBz3R80Q"
+  },
+  "representative_video": {
+    "video_id": "aWng3d87VHo",
+    "url": "https://www.youtube.com/watch?v=aWng3d87VHo",
+    "title": "〖ゆっくり解説〗硫黄島の戦い",
+    "duration_seconds": null,
+    "availability": "public_search_metadata_observed",
+    "observed_at": "2026-08-07T00:00:00+09:00"
+  },
+  "surface_observation": {
+    "channel_identity_and_description_observed": true,
+    "video_title_and_publication_date_observed": true,
+    "duration_observed": false,
+    "description_source_list_observed": false,
+    "full_timeline_frame_verified": false,
+    "audio_subject_verified": false,
+    "note": "The public surface establishes a history-explainer channel identity and an exact representative battle-reconstruction title. Runtime, full visual timeline, audio, and source presentation were not observable in this pass. The measured contract therefore stays a bounded chronology-first authoring backcast and does not claim frame-level reproduction."
+  },
+  "measured_contract": {
+    "runtime_band_minutes": null,
+    "narration_model": "bounded authoring contract: two-speaker dialogue in which one role advances the chronology and the other tests causes, date transitions, and institutional consequences",
+    "chapter_model": "concrete present-day question, precondition, international turning point, domestic ordinance, implementation, later scope change, present-day consequence, ordered recap",
+    "visual_grammar": "original date cards, map and meridian diagrams, ordinance cards, and before-after institutional summaries; no benchmark frames",
+    "subtitle_grammar": "two-line readable dialogue subtitles with years, ordinance numbers, longitude, and effective dates stated in speech",
+    "asset_switching": "one causal or chronological thesis per chapter, with explicit date transitions rather than decorative rapid cuts",
+    "audio_grammar": "YMM4 two-character TTS with no benchmark voice, audio, music, or effects",
+    "pacing": "question, dated event, reason, and consequence cycle across seven chronological chapters",
+    "source_attribution": "tracked claim registry points to public institutional sources; source media is not embedded",
+    "intro_outro": "present-day meridian question at the opening and an ordered rule-change-plus-present-system recap at the close"
+  },
+  "copy_boundary": {
+    "benchmark_script_used": false,
+    "benchmark_frames_used": false,
+    "benchmark_audio_used": false,
+    "benchmark_branding_used": false,
+    "benchmark_topic_reused": false,
+    "original_topic": "明治期に日本標準時が統一されるまで",
+    "original_script_path": "script.txt"
+  }
+}

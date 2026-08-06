@@ -1,0 +1,53 @@
+{
+  "schema_version": "nlmytgen.yukkuri_original_episode_sources.v1",
+  "episode_id": "history-japan-standard-time-001",
+  "sources": [
+    {
+      "source_id": "NICT-JST-HISTORY",
+      "title": "日本標準時",
+      "publisher": "国立研究開発法人 情報通信研究機構",
+      "url": "https://www.nict.go.jp/sts/jst.html",
+      "supports": [
+        "the 1884 International Meridian Conference selected the Greenwich meridian as the prime meridian",
+        "Ordinance No. 51 of 1886 set the meridian at 135 degrees east longitude for Japanese standard time",
+        "the standard is nine hours ahead of Greenwich Mean Time",
+        "NICT currently generates and supplies Japan Standard Time"
+      ]
+    },
+    {
+      "source_id": "NAOJ-STANDARD-TIME-HISTORY",
+      "title": "標準時",
+      "publisher": "国立天文台 暦計算室",
+      "url": "https://eco.mtk.nao.ac.jp/koyomi/wiki/C9B8BDE0BBFE.html",
+      "supports": [
+        "local time based on each location's sun position preceded national standard time",
+        "railways and communications increased the need for a shared time standard",
+        "Ordinance No. 51 was promulgated on 1886-07-13 and took effect on 1888-01-01",
+        "Ordinance No. 167 of 1895 created Western Standard Time based on 120 degrees east longitude",
+        "Western Standard Time was abolished on 1937-10-01"
+      ]
+    },
+    {
+      "source_id": "AKASHI-STANDARD-MERIDIAN",
+      "title": "日本標準時と明石市",
+      "publisher": "明石市",
+      "url": "https://www.city.akashi.lg.jp/bunka/b_shinkou_ka/nihonhyoujyunji.html",
+      "supports": [
+        "the 135-degree east meridian was designated in 1886 and the standard time system began in 1888",
+        "Akashi's meridian markers and astronomical facilities developed after the national rule was established",
+        "the present Akashi Municipal Planetarium opened in 1960"
+      ]
+    }
+  ],
+  "claims_policy": "Dates and institutional facts are stated as reported by the listed public institutions. The episode distinguishes the legal meridian, civic symbols in Akashi, and the present-day generation of Japan Standard Time.",
+  "rights": {
+    "benchmark_media_reused": false,
+    "source_media_reused": false,
+    "episode_script_original": true,
+    "visual_carrier_original": false,
+    "internal_review_only": true,
+    "human_acceptance": "unverified",
+    "production_authorized": false,
+    "publication_authorized": false
+  }
+}

@@ -1,20 +1,20 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-05.2
-Updated: 2026-08-05 JST
-Product-State: science-and-civil-families-local-viewable-verified-human-review-pending
+State-Revision: 2026-08-07.1
+Updated: 2026-08-07 JST
+Product-State: chronological-history-original-authoring-pack-verified-render-pending
 Product-Gate: continue
-Recommended-Next: measure-chronological-history-family-while-two-reviews-are-parked
+Recommended-Next: import-chronological-history-csv-and-build-original-visual-carrier
 External-State: two-exact-local-artifacts-human-review-pending
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: civil-family-374s-original-visual-carrier-successor-and-exact-render-receipt
+Implementation-Checkpoint: history-family-bounded-measurement-original-script-source-registry-and-overflow-free-import-csv
 Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
-Remote-Parity: resolve the current civil implementation commit from the branch-tip push readback
-Tracked-Worktree: civil implementation paths are owned; unrelated dirty, untracked, ignored, and shared-editor state remain excluded
+Remote-Parity: cached 0/0 at dd4edd5; fresh fetch and ls-remote are execution-surface blocked
+Tracked-Worktree: chronological-history authoring paths are owned; unrelated dirty, untracked, ignored, and GUI state remain excluded
 
 ## Current Slice
 
@@ -37,6 +37,10 @@ Tracked-Worktree: civil implementation paths are owned; unrelated dirty, untrack
   task-owned isolated copyはexact ignored pathとprocess 0を確認後に削除し、元D: processは保持した。
 - fully viewable reproductionは2/6。science / civilともhuman acceptanceはunverified、rights / production /
   publicationはfalseで、technical passから推論しない。
+- chronological-history familyはpublic surfaceでchannel identityと代表動画titleのみを測定し、runtime / full timeline / audio / source presentation未観測を明示した。original題材
+  「明治期に日本標準時が統一されるまで」で32-turn台本、NICT / 国立天文台 / 明石市の3-source
+  claim registry、97-row YMM4 import CSVを作成。CSVは34 display-width × 2行で
+  overflow 0、script SHA `4e44616a...38b2`、CSV SHA `82cc4b9e...881b`。
 
 ## Parked Prior Slice
 
@@ -67,8 +71,9 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 science successor `science-light-distance-001-visual-v002`とcivil successor
 `civil-arakawa-floodway-001-visual-v001`をexact SHAのままartifact-bound human review待ちにparkする。
-即時bounded repairが返らない限り、別artifact identityでchronological-history familyの
-representative measurementとoriginal authoringを開始する。
+chronological historyのexact 97-row CSVをtask-owned blank two-character YMM4 projectへimportし、
+original chronology visual carrierを構築して、別artifact identityのlocal render / exact receipt /
+full decode / sampled-frame verificationへ進む。
 
 ## Parked Prior Exact Next Action
 
@@ -77,7 +82,7 @@ immutable bundleで再開する。missing archiveからのfallback生成は行�
 
 ## Conditional Roadmap
 
-- New active lane: science / civil reviewをparkし、measure -> original authoring -> local render -> exact receiptを残り4 familyで反復。
+- New active lane: science / civil reviewをparkし、history authoring packからlocal render -> exact receiptへ進み、その後残り3 familyで反復。
 - Parked lane: named-recipient authorityが得られた場合だけimmutable bundleを配送。
 - 共通境界: technical passからhuman acceptance、rights、production、publicationを推論しない。
 
