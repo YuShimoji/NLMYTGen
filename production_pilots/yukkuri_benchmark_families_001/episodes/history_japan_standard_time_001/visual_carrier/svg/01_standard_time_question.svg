@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#07111f"/>
+  <rect x="72" y="56" width="1776" height="616" rx="34" fill="#0d1d31" stroke="#2d4b68" stroke-width="3"/>
+  <text x="120" y="140" fill="#78d8ff" font-family="Yu Gothic UI, sans-serif" font-size="42" font-weight="700">CHRONOLOGY 01</text>
+  <text x="120" y="225" fill="#f4f8ff" font-family="Yu Gothic UI, sans-serif" font-size="68" font-weight="700">全国の時計は、なぜ同じ時刻なのか</text>
+  <line x1="960" y1="270" x2="960" y2="635" stroke="#ffca62" stroke-width="8"/>
+  <text x="985" y="318" fill="#ffca62" font-family="Yu Gothic UI, sans-serif" font-size="34" font-weight="700">東経135°</text>
+  <g fill="none" stroke="#78d8ff" stroke-width="8">
+    <circle cx="430" cy="440" r="126"/><circle cx="1490" cy="440" r="126"/>
+    <line x1="430" y1="440" x2="430" y2="350"/><line x1="430" y1="440" x2="505" y2="480"/>
+    <line x1="1490" y1="440" x2="1490" y2="350"/><line x1="1490" y1="440" x2="1565" y2="480"/>
+  </g>
+  <path d="M575 440 C760 330 1160 330 1345 440" fill="none" stroke="#55dfb8" stroke-width="6" stroke-dasharray="18 16"/>
+  <text x="330" y="610" fill="#b8cbe0" font-family="Yu Gothic UI, sans-serif" font-size="34">北海道</text>
+  <text x="1420" y="610" fill="#b8cbe0" font-family="Yu Gothic UI, sans-serif" font-size="34">沖縄</text>
+  <rect x="0" y="700" width="1920" height="380" fill="#050b13"/>
+</svg>

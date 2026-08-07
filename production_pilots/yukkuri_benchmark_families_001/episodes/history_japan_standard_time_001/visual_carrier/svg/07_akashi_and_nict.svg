@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#07111f"/>
+  <text x="100" y="130" fill="#78d8ff" font-family="Yu Gothic UI, sans-serif" font-size="42" font-weight="700">同じ「標準時」を支える、別々の役割</text>
+  <g font-family="Yu Gothic UI, sans-serif" text-anchor="middle">
+    <rect x="90" y="220" width="520" height="355" rx="34" fill="#102b43" stroke="#ffca62" stroke-width="5"/>
+    <line x1="350" y1="278" x2="350" y2="448" stroke="#ffca62" stroke-width="10"/>
+    <circle cx="350" cy="355" r="92" fill="none" stroke="#ffca62" stroke-width="6"/>
+    <text x="350" y="510" fill="#f4f8ff" font-size="38" font-weight="700">制度の基準線</text>
+    <text x="350" y="555" fill="#b8cbe0" font-size="28">東経135°</text>
+    <rect x="700" y="220" width="520" height="355" rx="34" fill="#102b43" stroke="#78d8ff" stroke-width="5"/>
+    <path d="M820 465 L960 280 L1100 465 Z" fill="none" stroke="#78d8ff" stroke-width="8"/><line x1="960" y1="280" x2="960" y2="475" stroke="#78d8ff" stroke-width="5"/>
+    <text x="960" y="510" fill="#f4f8ff" font-size="38" font-weight="700">明石の象徴</text>
+    <text x="960" y="555" fill="#b8cbe0" font-size="28">標識・天文科学館</text>
+    <rect x="1310" y="220" width="520" height="355" rx="34" fill="#102b43" stroke="#55dfb8" stroke-width="5"/>
+    <circle cx="1490" cy="355" r="62" fill="none" stroke="#55dfb8" stroke-width="7"/><circle cx="1650" cy="355" r="62" fill="none" stroke="#55dfb8" stroke-width="7"/>
+    <path d="M1490 355 L1650 355 M1570 292 L1570 418" stroke="#55dfb8" stroke-width="6"/>
+    <text x="1570" y="510" fill="#f4f8ff" font-size="38" font-weight="700">NICTが生成</text>
+    <text x="1570" y="555" fill="#b8cbe0" font-size="28">原子時計による日本標準時</text>
+  </g>
+  <path d="M610 398 L700 398 M1220 398 L1310 398" stroke="#466a89" stroke-width="6" stroke-dasharray="14 12"/>
+  <rect x="0" y="700" width="1920" height="380" fill="#050b13"/>
+</svg>

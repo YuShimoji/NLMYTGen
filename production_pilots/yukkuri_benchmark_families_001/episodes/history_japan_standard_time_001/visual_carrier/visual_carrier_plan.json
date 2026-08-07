@@ -1,0 +1,46 @@
+{
+  "schema_version": "nlmytgen.chronological_history_visual_carrier_plan.v1",
+  "artifact_id": "history-japan-standard-time-001-visual-carrier-v001",
+  "episode_id": "history-japan-standard-time-001",
+  "status": "asset_carrier_verified_frame_binding_pending",
+  "design_basis": "original_vector_meridian_clock_ordinance_and_institutional_timeline_cards_no_reference_frame_copy",
+  "input_identity": {
+    "script_sha256": "4e44616a13761f367707f6931f1dcea7e46d961f9d45c190eb333c6a418a38b2",
+    "source_registry_sha256": "bed1344abea51f4e6e4911c8adbb29ad46182a88ee5a1ca08e17bfaf07460b71",
+    "csv_sha256": "82cc4b9ea1c433385069408f53d3b1b15cd74ae65c0b80f70ea7014e8718881b",
+    "csv_row_count": 97
+  },
+  "timeline_contract": {
+    "fps": 60,
+    "source_voice_item_count": null,
+    "source_timeline_frames": null,
+    "voice_or_subtitle_mutation_allowed": false,
+    "frame_binding_status": "pending_target_yymm4_import"
+  },
+  "safe_area": {
+    "canvas": [1920, 1080],
+    "primary_visual_region": [96, 72, 1728, 620],
+    "subtitle_reserved_region": [240, 700, 1440, 300]
+  },
+  "scenes": [
+    {"scene_id": "standard_time_question", "rows": [1, 7], "frame_range": null, "asset": "svg/01_standard_time_question.svg"},
+    {"scene_id": "local_solar_time", "rows": [8, 20], "frame_range": null, "asset": "svg/02_local_solar_time.svg"},
+    {"scene_id": "greenwich_1884", "rows": [21, 26], "frame_range": null, "asset": "svg/03_greenwich_1884.svg"},
+    {"scene_id": "ordinance_and_start", "rows": [27, 37], "frame_range": null, "asset": "svg/04_ordinance_and_start.svg"},
+    {"scene_id": "east_135_reason", "rows": [38, 51], "frame_range": null, "asset": "svg/05_east_135_reason.svg"},
+    {"scene_id": "two_standard_times", "rows": [52, 62], "frame_range": null, "asset": "svg/06_two_standard_times.svg"},
+    {"scene_id": "akashi_and_nict", "rows": [63, 80], "frame_range": null, "asset": "svg/07_akashi_and_nict.svg"},
+    {"scene_id": "chronology_recap", "rows": [81, 97], "frame_range": null, "asset": "svg/08_chronology_recap.svg"}
+  ],
+  "boundaries": {
+    "benchmark_or_source_images_used": false,
+    "benchmark_audio_or_branding_used": false,
+    "reference_frame_layout_copied": false,
+    "python_image_generation_or_compositing": false,
+    "network_required": false,
+    "target_yymm4_import_observed": false,
+    "target_yymm4_render_observed": false,
+    "publication_authorized": false,
+    "human_acceptance_inferred": false
+  }
+}

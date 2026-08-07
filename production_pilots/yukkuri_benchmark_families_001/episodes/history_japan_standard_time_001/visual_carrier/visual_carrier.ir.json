@@ -1,0 +1,17 @@
+{
+  "ir_version": "1.0",
+  "video_id": "history-japan-standard-time-001-visual-carrier-v001",
+  "macro": {
+    "sections": [
+      {"section_id": "S1", "start_index": 1, "end_index": 7, "default_bg": "standard_time_question"},
+      {"section_id": "S2", "start_index": 8, "end_index": 20, "default_bg": "local_solar_time"},
+      {"section_id": "S3", "start_index": 21, "end_index": 26, "default_bg": "greenwich_1884"},
+      {"section_id": "S4", "start_index": 27, "end_index": 37, "default_bg": "ordinance_and_start"},
+      {"section_id": "S5", "start_index": 38, "end_index": 51, "default_bg": "east_135_reason"},
+      {"section_id": "S6", "start_index": 52, "end_index": 62, "default_bg": "two_standard_times"},
+      {"section_id": "S7", "start_index": 63, "end_index": 80, "default_bg": "akashi_and_nict"},
+      {"section_id": "S8", "start_index": 81, "end_index": 97, "default_bg": "chronology_recap"}
+    ]
+  },
+  "utterances": []
+}

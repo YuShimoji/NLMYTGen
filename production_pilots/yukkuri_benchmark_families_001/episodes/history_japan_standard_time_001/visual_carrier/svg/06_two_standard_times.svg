@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#081421"/>
+  <text x="100" y="130" fill="#ffca62" font-family="Yu Gothic UI, sans-serif" font-size="42" font-weight="700">制度は一度で完成ではない</text>
+  <rect x="130" y="210" width="720" height="300" rx="34" fill="#102b43" stroke="#78d8ff" stroke-width="6"/>
+  <text x="490" y="305" fill="#78d8ff" font-family="Yu Gothic UI, sans-serif" font-size="42" font-weight="700" text-anchor="middle">中央標準時</text>
+  <text x="490" y="400" fill="#f4f8ff" font-family="Yu Gothic UI, sans-serif" font-size="58" text-anchor="middle">135°E</text>
+  <text x="490" y="468" fill="#b8cbe0" font-family="Yu Gothic UI, sans-serif" font-size="30" text-anchor="middle">グリニッジより +9時間</text>
+  <rect x="1070" y="210" width="720" height="300" rx="34" fill="#102b43" stroke="#f98b8b" stroke-width="6"/>
+  <text x="1430" y="305" fill="#f98b8b" font-family="Yu Gothic UI, sans-serif" font-size="42" font-weight="700" text-anchor="middle">西部標準時</text>
+  <text x="1430" y="400" fill="#f4f8ff" font-family="Yu Gothic UI, sans-serif" font-size="58" text-anchor="middle">120°E</text>
+  <text x="1430" y="468" fill="#b8cbe0" font-family="Yu Gothic UI, sans-serif" font-size="30" text-anchor="middle">中央標準時より -1時間</text>
+  <line x1="250" y1="605" x2="1670" y2="605" stroke="#466a89" stroke-width="8"/>
+  <circle cx="520" cy="605" r="18" fill="#ffca62"/><circle cx="1410" cy="605" r="18" fill="#55dfb8"/>
+  <text x="520" y="570" fill="#ffca62" font-family="Yu Gothic UI, sans-serif" font-size="32" text-anchor="middle">1895 新設</text>
+  <text x="1410" y="570" fill="#55dfb8" font-family="Yu Gothic UI, sans-serif" font-size="32" text-anchor="middle">1937 廃止</text>
+  <rect x="0" y="700" width="1920" height="380" fill="#050b13"/>
+</svg>

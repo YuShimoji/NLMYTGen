@@ -1,19 +1,19 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-07.1
-Updated: 2026-08-07 JST
-Product-State: chronological-history-original-authoring-pack-verified-render-pending
-Product-Gate: continue
-Recommended-Next: import-chronological-history-csv-and-build-original-visual-carrier
-External-State: two-exact-local-artifacts-human-review-pending
+State-Revision: 2026-08-08.1
+Updated: 2026-08-08 JST
+Product-State: chronological-history-original-svg-carrier-verified-target-runtime-blocked
+Product-Gate: dependency-missing
+Recommended-Next: restore-approved-yymm4-and-observable-svg-rasterizer-then-render
+External-State: two-exact-local-artifacts-human-review-pending-and-history-render-not-started
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: history-family-bounded-measurement-original-script-source-registry-and-overflow-free-import-csv
+Implementation-Checkpoint: history-family-original-script-source-registry-overflow-free-import-csv-and-eight-scene-svg-carrier
 Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
-Remote-Parity: cached 0/0 at dd4edd5; fresh fetch and ls-remote are execution-surface blocked
+Remote-Parity: fresh 0/0 at e7b9a14 before this local slice
 Tracked-Worktree: chronological-history authoring paths are owned; unrelated dirty, untracked, ignored, and GUI state remain excluded
 
 ## Current Slice
@@ -41,6 +41,10 @@ Tracked-Worktree: chronological-history authoring paths are owned; unrelated dir
   「明治期に日本標準時が統一されるまで」で32-turn台本、NICT / 国立天文台 / 明石市の3-source
   claim registry、97-row YMM4 import CSVを作成。CSVは34 display-width × 2行で
   overflow 0、script SHA `4e44616a...38b2`、CSV SHA `82cc4b9e...881b`。
+- chronological-historyの97 rowを8 sceneへ連続割当したoriginal visual carrier plan / IRと、
+  external image参照0の1920x1080 SVG 8点を作成。source preflight 4件はPASSしたが、
+  approved YMM4 executableとobservable SVG-to-PNG rendererが現surfaceに無いため、PNG / YMMP /
+  MP4は未生成、human acceptance / rights / production / publicationは未確認のまま停止した。
 
 ## Parked Prior Slice
 
@@ -71,8 +75,9 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 science successor `science-light-distance-001-visual-v002`とcivil successor
 `civil-arakawa-floodway-001-visual-v001`をexact SHAのままartifact-bound human review待ちにparkする。
-chronological historyのexact 97-row CSVをtask-owned blank two-character YMM4 projectへimportし、
-original chronology visual carrierを構築して、別artifact identityのlocal render / exact receipt /
+authority-approved `YukkuriMovieMaker.exe`とobservable local SVG-to-PNG rendererが同じsurfaceに揃った時だけ、
+exact input 3点を再hashし、8 SVGを新しいtask-owned ignored directoryへrasterizeする。その後、exact
+97-row CSVをblank two-character YMM4 projectへimportし、別artifact identityのYMMP / MP4 / exact receipt /
 full decode / sampled-frame verificationへ進む。
 
 ## Parked Prior Exact Next Action

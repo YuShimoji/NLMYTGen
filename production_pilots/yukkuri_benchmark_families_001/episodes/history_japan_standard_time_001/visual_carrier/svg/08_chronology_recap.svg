@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#081421"/>
+  <text x="100" y="130" fill="#ffca62" font-family="Yu Gothic UI, sans-serif" font-size="42" font-weight="700">日本標準時の成立</text>
+  <text x="100" y="215" fill="#f4f8ff" font-family="Yu Gothic UI, sans-serif" font-size="62" font-weight="700">時間を、社会の共通インフラへ</text>
+  <line x1="190" y1="430" x2="1730" y2="430" stroke="#466a89" stroke-width="10"/>
+  <g font-family="Yu Gothic UI, sans-serif" text-anchor="middle">
+    <g transform="translate(220 430)"><circle r="30" fill="#78d8ff"/><text y="-70" fill="#b8cbe0" font-size="28">各地の太陽時</text><text y="92" fill="#78d8ff" font-size="30">場所ごと</text></g>
+    <g transform="translate(590 430)"><circle r="30" fill="#ffca62"/><text y="-70" fill="#f4f8ff" font-size="34" font-weight="700">1884</text><text y="92" fill="#b8cbe0" font-size="28">本初子午線</text></g>
+    <g transform="translate(960 430)"><circle r="30" fill="#ffca62"/><text y="-70" fill="#f4f8ff" font-size="34" font-weight="700">1886</text><text y="92" fill="#b8cbe0" font-size="28">東経135°</text></g>
+    <g transform="translate(1330 430)"><circle r="30" fill="#55dfb8"/><text y="-70" fill="#f4f8ff" font-size="34" font-weight="700">1888</text><text y="92" fill="#b8cbe0" font-size="28">全国で実施</text></g>
+    <g transform="translate(1700 430)"><circle r="30" fill="#55dfb8"/><text y="-70" fill="#f4f8ff" font-size="34" font-weight="700">現在</text><text y="92" fill="#b8cbe0" font-size="28">NICTが供給</text></g>
+  </g>
+  <rect x="465" y="585" width="990" height="82" rx="30" fill="#102b43" stroke="#55dfb8" stroke-width="4"/>
+  <text x="960" y="640" fill="#f4f8ff" font-family="Yu Gothic UI, sans-serif" font-size="34" text-anchor="middle">国際基準 × 国内法 × 交通通信 × 時刻生成技術</text>
+  <rect x="0" y="700" width="1920" height="380" fill="#050b13"/>
+</svg>

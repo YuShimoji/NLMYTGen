@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#07111f"/>
+  <text x="110" y="136" fill="#78d8ff" font-family="Yu Gothic UI, sans-serif" font-size="44" font-weight="700">1884</text>
+  <text x="110" y="225" fill="#f4f8ff" font-family="Yu Gothic UI, sans-serif" font-size="66" font-weight="700">世界の経度に、共通の出発点</text>
+  <g transform="translate(500 455)">
+    <circle r="205" fill="#102b43" stroke="#466a89" stroke-width="5"/>
+    <ellipse rx="80" ry="205" fill="none" stroke="#466a89" stroke-width="4"/>
+    <ellipse rx="160" ry="205" fill="none" stroke="#29445d" stroke-width="3"/>
+    <line y1="-215" y2="215" stroke="#ffca62" stroke-width="9"/>
+    <text x="28" y="-165" fill="#ffca62" font-family="Yu Gothic UI, sans-serif" font-size="32" font-weight="700">0°</text>
+  </g>
+  <path d="M735 455 C960 300 1170 300 1395 455" fill="none" stroke="#55dfb8" stroke-width="7" stroke-dasharray="20 14"/>
+  <polygon points="1395,455 1358,432 1367,477" fill="#55dfb8"/>
+  <rect x="1220" y="360" width="510" height="195" rx="26" fill="#102b43" stroke="#55dfb8" stroke-width="5"/>
+  <text x="1475" y="435" fill="#f4f8ff" font-family="Yu Gothic UI, sans-serif" font-size="38" text-anchor="middle">日本の基準候補</text>
+  <text x="1475" y="500" fill="#55dfb8" font-family="Yu Gothic UI, sans-serif" font-size="46" font-weight="700" text-anchor="middle">東経 135°</text>
+  <text x="110" y="650" fill="#b8cbe0" font-family="Yu Gothic UI, sans-serif" font-size="34">国際子午線会議 → グリニッジ子午線を本初子午線へ</text>
+  <rect x="0" y="700" width="1920" height="380" fill="#050b13"/>
+</svg>

@@ -1,7 +1,7 @@
 {
   "schema_version": "nlmytgen.yukkuri_episode_execution_state.v1",
   "episode_id": "history-japan-standard-time-001",
-  "updated_at": "2026-08-07T05:54:11+09:00",
+  "updated_at": "2026-08-07T22:35:10+09:00",
   "state": "original_authoring_pack_verified_render_pending",
   "completed": {
     "benchmark_surface_measurement": true,
@@ -11,7 +11,10 @@
     "csv_overflow_check": true,
     "target_csv_imported": false,
     "yymm4_project_saved": false,
-    "original_visual_carrier_plan": false,
+    "original_visual_carrier_plan": true,
+    "original_svg_carrier_assets": true,
+    "svg_source_validation": true,
+    "rasterized_carrier_assets": false,
     "local_render_completed": false,
     "full_media_decode": false,
     "sampled_frame_review": false
@@ -44,9 +47,20 @@
       "reflow_v2": true
     }
   },
+  "visual_carrier_preflight": {
+    "receipt_path": "visual_carrier_preflight_receipt.json",
+    "receipt_sha256": "405bf021ec2124c1a56f297f8318eb48157cd6c544dd495e628bc8bad9ad94b5",
+    "artifact_id": "history-japan-standard-time-001-visual-carrier-v001",
+    "scene_count": 8,
+    "csv_row_coverage": [1, 97],
+    "svg_source_validation": "passed",
+    "png_rasterization": "blocked_current_execution_surface",
+    "target_yymm4_import": "blocked_executable_missing",
+    "target_yymm4_render": "not_started"
+  },
   "resume_gate": {
-    "status": "CONTINUE",
-    "next_action": "Use a task-owned blank two-character YMM4 project to import the exact 97-row CSV, then build an original chronology visual carrier and render a new exact successor without touching the parked science or civil artifacts.",
+    "status": "DEPENDENCY_MISSING",
+    "next_action": "When an authority-approved YukkuriMovieMaker.exe and observable local SVG-to-PNG renderer are present, rehash the exact input pack, rasterize the eight original SVGs, import the exact 97-row CSV into a new blank two-character task-owned YMM4 project, then render and verify a new exact successor.",
     "do_not": [
       "modify the science or civil artifacts",
       "reuse benchmark frames, audio, script, branding, or topic",

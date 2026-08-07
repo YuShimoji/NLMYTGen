@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#081421"/>
+  <text x="100" y="130" fill="#ffca62" font-family="Yu Gothic UI, sans-serif" font-size="42" font-weight="700">法令から実施まで</text>
+  <rect x="115" y="190" width="760" height="360" rx="28" fill="#f3ead7"/>
+  <text x="495" y="278" fill="#273547" font-family="Yu Mincho, serif" font-size="44" font-weight="700" text-anchor="middle">勅令 第五十一号</text>
+  <line x1="220" y1="320" x2="770" y2="320" stroke="#9d8660" stroke-width="3"/>
+  <text x="495" y="400" fill="#273547" font-family="Yu Gothic UI, sans-serif" font-size="42" text-anchor="middle">東経135° の時刻</text>
+  <text x="495" y="480" fill="#273547" font-family="Yu Gothic UI, sans-serif" font-size="34" text-anchor="middle">1886年7月13日 公布</text>
+  <line x1="925" y1="370" x2="1120" y2="370" stroke="#78d8ff" stroke-width="10"/>
+  <polygon points="1120,370 1070,338 1070,402" fill="#78d8ff"/>
+  <rect x="1180" y="250" width="620" height="240" rx="32" fill="#102b43" stroke="#55dfb8" stroke-width="6"/>
+  <text x="1490" y="345" fill="#55dfb8" font-family="Yu Gothic UI, sans-serif" font-size="52" font-weight="700" text-anchor="middle">1888年1月1日</text>
+  <text x="1490" y="425" fill="#f4f8ff" font-family="Yu Gothic UI, sans-serif" font-size="40" text-anchor="middle">標準時を実施</text>
+  <text x="960" y="640" fill="#b8cbe0" font-family="Yu Gothic UI, sans-serif" font-size="34" text-anchor="middle">1884 国際基準 → 1886 国内法 → 1888 実施</text>
+  <rect x="0" y="700" width="1920" height="380" fill="#050b13"/>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#081421"/>
+  <text x="100" y="130" fill="#ffca62" font-family="Yu Gothic UI, sans-serif" font-size="42" font-weight="700">標準時より前</text>
+  <text x="100" y="218" fill="#f4f8ff" font-family="Yu Gothic UI, sans-serif" font-size="66" font-weight="700">太陽の正午は、場所ごとに違う</text>
+  <path d="M220 430 Q960 80 1700 430" fill="none" stroke="#ffca62" stroke-width="7" stroke-dasharray="18 14"/>
+  <circle cx="960" cy="145" r="52" fill="#ffca62"/>
+  <g font-family="Yu Gothic UI, sans-serif" text-anchor="middle">
+    <g transform="translate(390 445)"><circle r="112" fill="#102b43" stroke="#78d8ff" stroke-width="6"/><line y2="-70" stroke="#fff" stroke-width="7"/><line x2="54" y2="28" stroke="#fff" stroke-width="7"/><text y="168" fill="#b8cbe0" font-size="32">西の町</text></g>
+    <g transform="translate(960 445)"><circle r="112" fill="#102b43" stroke="#55dfb8" stroke-width="6"/><line y2="-70" stroke="#fff" stroke-width="7"/><line x2="0" y2="70" stroke="#fff" stroke-width="7"/><text y="168" fill="#b8cbe0" font-size="32">基準の町</text></g>
+    <g transform="translate(1530 445)"><circle r="112" fill="#102b43" stroke="#f98b8b" stroke-width="6"/><line y2="-70" stroke="#fff" stroke-width="7"/><line x2="-54" y2="28" stroke="#fff" stroke-width="7"/><text y="168" fill="#b8cbe0" font-size="32">東の町</text></g>
+  </g>
+  <line x1="310" y1="650" x2="1610" y2="650" stroke="#465f78" stroke-width="5"/>
+  <text x="600" y="640" fill="#78d8ff" font-family="Yu Gothic UI, sans-serif" font-size="30">鉄道</text>
+  <text x="1200" y="640" fill="#55dfb8" font-family="Yu Gothic UI, sans-serif" font-size="30">電信</text>
+  <rect x="0" y="700" width="1920" height="380" fill="#050b13"/>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#07111f"/>
+  <text x="100" y="130" fill="#78d8ff" font-family="Yu Gothic UI, sans-serif" font-size="42" font-weight="700">なぜ東経135°なのか</text>
+  <text x="100" y="215" fill="#f4f8ff" font-family="Yu Gothic UI, sans-serif" font-size="62" font-weight="700">15°ごとに、時差は1時間</text>
+  <line x1="250" y1="440" x2="1670" y2="440" stroke="#466a89" stroke-width="8"/>
+  <g font-family="Yu Gothic UI, sans-serif" text-anchor="middle">
+    <line x1="420" y1="360" x2="420" y2="525" stroke="#f98b8b" stroke-width="7"/><text x="420" y="330" fill="#f98b8b" font-size="38">120°E</text>
+    <line x1="960" y1="300" x2="960" y2="565" stroke="#ffca62" stroke-width="12"/><text x="960" y="270" fill="#ffca62" font-size="52" font-weight="700">135°E</text>
+    <line x1="1500" y1="360" x2="1500" y2="525" stroke="#55dfb8" stroke-width="7"/><text x="1500" y="330" fill="#55dfb8" font-size="38">150°E</text>
+    <text x="690" y="420" fill="#b8cbe0" font-size="32">+1時間</text><text x="1230" y="420" fill="#b8cbe0" font-size="32">+1時間</text>
+  </g>
+  <rect x="680" y="535" width="560" height="110" rx="28" fill="#102b43" stroke="#ffca62" stroke-width="4"/>
+  <text x="960" y="606" fill="#f4f8ff" font-family="Yu Gothic UI, sans-serif" font-size="36" text-anchor="middle">制度上の線 → 明石付近を通る</text>
+  <rect x="0" y="700" width="1920" height="380" fill="#050b13"/>
+</svg>
