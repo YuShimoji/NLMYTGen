@@ -41,10 +41,8 @@ Tracked-Worktree: chronological-history authoring paths are owned; unrelated dir
   「明治期に日本標準時が統一されるまで」で32-turn台本、NICT / 国立天文台 / 明石市の3-source
   claim registry、97-row YMM4 import CSVを作成。CSVは34 display-width × 2行で
   overflow 0、script SHA `4e44616a...38b2`、CSV SHA `82cc4b9e...881b`。
-- chronological-historyの97 rowを8 sceneへ連続割当したoriginal visual carrier plan / IRと、
-  external image参照0の1920x1080 SVG 8点を作成。source preflight 4件はPASSしたが、
-  approved YMM4 executableとobservable SVG-to-PNG rendererが現surfaceに無いため、PNG / YMMP /
-  MP4は未生成、human acceptance / rights / production / publicationは未確認のまま停止した。
+- chronological-historyの97 rowを8 sceneへ連続割当したoriginal visual carrier plan / IRと、external image参照0の1920x1080 SVG 8点を作成。source preflight 4件はPASSしたが、approved YMM4 executableとobservable SVG-to-PNG rendererが現surfaceに無いため、
+  PNG / YMMP / MP4は未生成、human acceptance / rights / production / publicationは未確認のまま停止した。
 
 ## Parked Prior Slice
 
@@ -73,12 +71,9 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 ## Exact Next Action
 
-science successor `science-light-distance-001-visual-v002`とcivil successor
-`civil-arakawa-floodway-001-visual-v001`をexact SHAのままartifact-bound human review待ちにparkする。
-authority-approved `YukkuriMovieMaker.exe`とobservable local SVG-to-PNG rendererが同じsurfaceに揃った時だけ、
-exact input 3点を再hashし、8 SVGを新しいtask-owned ignored directoryへrasterizeする。その後、exact
-97-row CSVをblank two-character YMM4 projectへimportし、別artifact identityのYMMP / MP4 / exact receipt /
-full decode / sampled-frame verificationへ進む。
+science successor `science-light-distance-001-visual-v002`とcivil successor `civil-arakawa-floodway-001-visual-v001`をexact SHAのままartifact-bound human review待ちにparkする。
+authority-approved `YukkuriMovieMaker.exe`とobservable local SVG-to-PNG rendererが同じsurfaceに揃った時だけ、exact input 3点を再hashし、8 SVGを新しいtask-owned ignored directoryへrasterizeする。その後、exact 97-row CSVをblank two-character YMM4 projectへimportし、
+別artifact identityのYMMP / MP4 / exact receipt / full decode / sampled-frame verificationへ進む。
 
 ## Parked Prior Exact Next Action
 
