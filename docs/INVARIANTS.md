@@ -22,6 +22,9 @@
 - `build-csv` の既定動作は後方互換を保つ。表示幅ベース分割は opt-in で有効化する。
 - 優先度と status は分離する。項目を「先に見る」ことは implementation approval を意味しない。
 - canonical rules が repo 内にある場合は、`docs/ai/*.md` を tool-specific helper docs や prompt より先に読む。
+- **生成 SVG を制作映像へ使用しない。** コード、LLM、または自動処理で生成した SVG は、主要映像、背景、書割、説明カード、仮組み、PNG 化した派生物のいずれにも使用しない。抽象図形へ置き換えて「意味が通る」と推論することも禁止する。既存の生成 SVG とその render は失敗経路の証拠としてのみ保持でき、再承認なしに別用途へ転用しない。
+- **字幕は意味の塊を保つ。** 行内改行と字幕ページ境界は、節・列挙・引用・係り受けを壊さず、前後ページを連続して読んだときに発話が不自然に途切れない単位で決める。overflow 0、表示幅、2行以内、decode pass は意味上の合格を代替しない。
+- **完成済み字幕設定を継承する。** 新規 blank/default project や臨時 character setting から字幕を作らず、S-0 の完成済み YMM4 project template を複製し、字幕 style・位置・font・wrap・character setting を引き継ぐ。B-15〜B-17 の意味単位 reflow と実テンプレート条件を併用し、片方だけの機械 PASS で受理しない。
 
 ## Responsibility Boundaries
 - Python の責務は CSV / IR / registry / 台本読込後 `.ymmp` patch の接着層に限定する。YMM4 が持つ制作機能を Python 側で再生成しない。
@@ -56,6 +59,7 @@
 - `approved` を「有望そう」「今はこれが一番まし」といった意味で使わない。
 - ユーザー未指定の固有名詞、音声エンジン、GUI 技術、素材サイト、API 互換先を勝手に採用しない。
 - サムネイルの重要性を軽視して、Python 生成や定型化で代替しようとしない。
+- 生成 SVG を PNG に rasterize したり YMM4 `ImageItem` に置いたりして、SVG 使用禁止を回避しない。背景・書割・static carrier という名称変更も代替承認にならない。
 - テンプレート素材の「完全自動生成」に踏み込まない。NLMYTGen の責務は提案と仮組立まで。素材の作成・収集は人間の責務。
 - サムネイル訴求を「衝撃の真実」「知らないと損」のような抽象煽りテンプレの反復で代替しない。年数・人数・割合・金額・固有名詞など、本文根拠のある具体性を優先する。
 - 同一構図 / 同一コピー型 / 同一配色の固定テンプレ連打をしない。variation / rotation を設計対象として持つ。

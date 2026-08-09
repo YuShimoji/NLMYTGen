@@ -1,17 +1,17 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-05.2
-Updated: 2026-08-05 JST
-Product-State: science-and-civil-families-local-viewable-verified-human-review-pending
-Product-Gate: continue
-Recommended-Next: measure-chronological-history-family-while-two-reviews-are-parked
-External-State: two-exact-local-artifacts-human-review-pending
+State-Revision: 2026-08-09.2
+Updated: 2026-08-09 JST
+Product-State: history-semantic-subtitle-pack-ready-visual-method-human-decision-required
+Product-Gate: human-visual-method-decision
+Recommended-Next: authorize-official-institutional-stills-and-bind-three-rights-cleared-assets
+External-State: history-subtitle-pack-ready-no-eligible-local-visual-assets-other-portfolio-gates-unchanged
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: civil-family-374s-original-visual-carrier-successor-and-exact-render-receipt
+Implementation-Checkpoint: history-family-original-script-source-registry-overflow-free-import-csv-and-eight-scene-svg-carrier
 Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
 Remote-Parity: resolve current civil implementation commit from branch-tip push readback
 Tracked-Worktree: civil owned paths only; unrelated sample CSV and protected untracked/ignored artifacts preserved
@@ -23,8 +23,8 @@ park済みportable bundle証跡は
 
 ## いまの一文
 
-6つの公開ゆっくり解説channelを異なるformat familyとして固定し、scienceに続いてcivil familyも
-original visual carrier付き374秒MP4をfull decode・6点readbackまで閉じ、両方をhuman review待ちにparkした。
+history字幕は完成S-0 template条件で16意味単位pageへ再構成済み。適格なlocal
+non-SVG素材が無いため、公式機関の権利確認済み静止画3点を使う方式の判断が次の入口である。
 
 ## 判断に使える現在地
 
@@ -35,8 +35,10 @@ original visual carrier付き374秒MP4をfull decode・6点readbackまで閉じ�
 | Contract axes | 10 per family | science / civil measured |
 | No-copy boundary | 6 protected expression classes | all enforced true |
 | Registry validation | focused tests + CLI | exact receipts fail closed |
-| Playable YMM4 baselines | 2/6 | science / civil successors exact-SHA verified |
-| Fully viewable reproductions | 2/6 | both have 6 original visual scenes; human acceptance pending |
+| Technical YMM4 renders | 3 | exact evidence only; adoption count 0 |
+| Adoptable reproductions | 0/6 | generated SVG method rejected |
+| History subtitles | reframe ready | 16 meaning-unit pages; S-0 settings; WPF width pass |
+| History non-SVG visuals | decision required | no eligible local bytes; official stills recommended |
 | Prior portable lane | parked at `dcd0cbf` | identity/state not inherited |
 | Rights / production / publication | false | technical successから継承しない |
 
@@ -51,15 +53,14 @@ rights、production、publicationの判断とは別clock。
 
 ## 次の入口
 
-science / civil successorsをexact SHAのままartifact-bound human review待ちにparkする。
-即時bounded repairが返らない限り、別artifact identityでchronological-history familyを
-measureし、original script / source ledger / local renderへ進める。
+公式機関静止画方式を採用する場合、NICT / NAOJ / 明石市のsource registry entryへ
+権利確認済み静止画を1点ずつ束縛する。その後だけ、完成S-0 template copyと16-page
+semantic CSVを使って1884→1886→1888の30〜90秒review sliceを別identityで作る。
 
 ## 公開・実行境界
 
-共有YMM4を変更せず、task-owned isolated YMM4 copyでtarget import、timeline add、YMMP save、
-original visual carrier build、native FFmpeg render、full decode、sampled-frame reviewを実施。
-copyはexact ignored path確認後に削除した。preview playback、system volume変更、network、cloud upload、
+共有YMM4、既存completed template、rejected artifactを変更しない。生成SVGの新規作成、
+raster派生、背景・書割・carrierへの転用は禁止。network、cloud upload、
 external communicationは0。named recipient delivery、human open、
 creative acceptance、rights、production、publication、upload、release、PR、merge、
 master mutation、tag、deploymentは未実施・未承認。

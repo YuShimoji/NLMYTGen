@@ -1,5 +1,39 @@
 # Project Context — NLMYTGen
 
+## 現在の監修AIハンドオフ（2026-08-09 JST・visual/subtitle method rejection）
+
+この節がbenchmark-family laneの現在の再開地点である。human reviewにより、
+science / civil / historyで用いた生成SVG visual methodと、history renderの字幕方式を
+不採用とした。旧節のhash、decode、YMM4生成、frame readbackは失敗経路の技術証拠として
+のみ保持し、creative acceptanceや再利用authorityへ昇格させない。
+
+- **visual rejection**: コード、LLM、自動処理で生成したSVGを、主要映像、背景、
+  書割、static carrier、説明カード、PNG化した派生物として使用しない。抽象的で
+  何を表すか判別しにくく、実用性がないため。science / civil / historyの既存
+  SVG-derived renderは採用候補から除外する。
+- **subtitle rejection**: history字幕は、改行が意味の塊を保たず、字幕ページが
+  変わるたびに発話が不自然に途切れ、既存の完成済み字幕設定も継承していない。
+  overflow、表示幅、frame sample、decodeのPASSではこの拒否を解消できない。
+- **required replacement**: S-0の完成済みYMM4 project templateからsubtitle style、
+  position、font、wrap、character settingを継承し、B-15〜B-17の意味単位reflowを
+  実テンプレート条件で適用する。blank/default projectから作り直さない。
+- **next product action**: rejected artifactを上書きせず、authority-boundで認識可能な
+  non-SVG visual routeと完成subtitle templateを使う短いhistory representative sliceを
+  別identityで作る。承認済みvisual routeが無ければproxyを生成せず、exact候補を
+  一問のhuman visual-method decisionへ返す。
+- **reframe execution result**: `NLM-HISTORY-NONSVG-SUBTITLE-REFRAME-001`は
+  `samples/palette.ymmp`を完成S-0 templateとしてbyte-identicalに複製し、
+  `samples/production.ymmp`との2 character subtitle-setting一致を確認した。
+  history短尺は16の完全文pageへ再構成し、WPF実測最大905.08px / 安全上限940px、
+  parsed input/output完全一致。幅だけで作った28-page版は単語・依存関係を切るためFAIL。
+- **visual decision**: history専用でprovenanceが完結したnon-SVG local mediaは0件。
+  NICT / NAOJ / 明石市の既存source entryへ権利確認済み公式静止画を1点ずつ束縛する
+  documentary chronologyを第一推奨とする。human authorizationとexact still bytesが
+  到着するまでYMMP import、MP4 render、network取得は行わない。
+
+根拠: current human rejection + `docs/INVARIANTS.md` UX / Algorithmic Invariants +
+`docs/AUTOMATION_BOUNDARY.md` S-0 template inheritance + `docs/FEATURE_REGISTRY.md` B-15〜B-17
+
 ## 現在の監修AIハンドオフ（2026-07-27 JST・Portable Review Bundle）
 
 この節だけが現在の再開地点である。exact source
@@ -1584,6 +1618,15 @@ This section narrows the next roadmap after the legacy-document cleanup. It does
 - `audit-skit-group` の `exact` を standalone export proof と読み替えない。
 
 ## DECISION LOG
+
+Benchmark-family visual/subtitle method rejection (2026-08-09 JST): generated
+SVG is prohibited for production visuals and for background/set-flat/static
+carrier use, including rasterized derivatives. The history YMM4 render is also
+rejected because line breaks do not follow meaning units, subtitle page changes
+interrupt the utterance, and the build did not inherit the completed subtitle
+settings. Preserve exact rejected artifacts as evidence; replace the method,
+not merely the SVG files or subtitle width. 根拠: current human rejection +
+`docs/INVARIANTS.md` UX / Algorithmic Invariants.
 
 Food Expiry full-episode background visual design quarantine (2026-07-28 JST):
 human full-episode review of exact bundle
