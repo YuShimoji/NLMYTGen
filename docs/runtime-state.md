@@ -44,6 +44,11 @@ Tracked-Worktree: chronological-history authoring paths are owned; unrelated dir
 - chronological-historyの97 rowを8 sceneへ連続割当したoriginal visual carrier plan / IRと、external image参照0の1920x1080 SVG 8点を作成。source preflight 4件はPASSしたが、approved YMM4 executableとobservable SVG-to-PNG rendererが現surfaceに無いため、
   PNG / YMMP / MP4は未生成、human acceptance / rights / production / publicationは未確認のまま停止した。
 
+## History artifact role
+- Role: `E2E_VIDEO_PRODUCTION_BASELINE` / `YMM4_RENDER_PASS` / `TECHNICAL_PLAYBACK_PASS` / `CREATIVE_ACCEPTANCE_REJECTED` / `STANDARD_VISUAL_GRAMMAR_NOT_ESTABLISHED`.
+- Evidence retained: exact 97-row import, eight ImageItems, 420.716016-second MP4 SHA-256 `18616f8b...c76a`, full video/audio decode, and start/middle/end playback progression.
+- rejectionScope: `visual_method`, `subtitle_method`; direct user statements received 2026-08-09 18:04/18:05 JST prohibit generated-SVG use and reject the history subtitle method; full-length acceptance, pacing, motion density, benchmark alignment, and standard-format adoption remain unestablished.
+
 ## Parked Prior Slice
 
 - Food Expiry `cue_002` portable bundle / recipient registry laneはcommit
