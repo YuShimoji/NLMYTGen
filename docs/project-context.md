@@ -1,5 +1,26 @@
 # Project Context — NLMYTGen
 
+## 現在の監修AIハンドオフ（2026-08-11 JST・history root-cause repaired proof）
+
+- human rejectionにより、29.616016秒の旧S2×V1 MP4
+  `F4CB1D53...3202B`とYMMP `3419E493...F0E7`を
+  `INVALID_IMPLEMENTATION_NEGATIVE_CONTROL`へ固定した。旧selection packetの
+  `ADOPT / REVISE / RETURN`は失効し、再使用しない。
+- root causeは、7つのsource VoiceItemと6つのvolume-zero VoiceItemがともに
+  `JimakuVisibility=UseCharacterSetting`だった字幕二重化、約0.83秒の規則的な
+  slot末尾無音、1つのNatural Earth TIFFを3 shotとして数えたtransform-only cutである。
+- 新proofはVoiceItem 0、AudioItem 2、意味単位TextItem 6、物理sourceの異なる
+  ImageItem 3へ再構成した。YMM4 4.55.1.0公式`--encode`の出力は
+  29.616016秒、37,350,703 bytes、SHA-256
+  `3FD5FDE2...5D288`。ffprobe、1777-frame readback、全video/audio decode、
+  1080p/480x270 frame確認はPASS。
+- visual sourceはNatural Earth、明石市天文町の日本標準時子午線標柱写真
+  （Fujitani Yoshihide、CC BY-SA 4.0）、NASA SVS day/night stillの3件。
+  exact bytes、SHA、license、派生方法はignored proof receiptに保持する。
+- 状態は`PROOF_VALID_FOR_HUMAN_REVIEW`。技術PASSからcreative acceptance、
+  production、rights clearance、delivery、publicationを推論しない。次は新proofだけを
+  29.616秒全尺で人間比較し、旧negative controlを候補へ戻さない。
+
 ## 現在の監修AIハンドオフ（2026-08-09 JST・visual/subtitle method rejection）
 
 この節がbenchmark-family laneの現在の再開地点である。human reviewにより、

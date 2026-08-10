@@ -1,23 +1,34 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-09.2
-Updated: 2026-08-09 JST
-Product-State: history-semantic-subtitle-pack-ready-visual-method-human-decision-required
-Product-Gate: human-visual-method-decision
-Recommended-Next: authorize-official-institutional-stills-and-bind-three-rights-cleared-assets
-External-State: history-subtitle-pack-ready-no-eligible-local-visual-assets-other-portfolio-gates-unchanged
+State-Revision: 2026-08-11.1
+Updated: 2026-08-11 JST
+Product-State: history-root-cause-repaired-short-proof-ready-human-review
+Product-Gate: human-review-repaired-proof-only
+Recommended-Next: review-exact-29.616-second-repaired-proof-at-1x-and-return-accepted-or-timestamped-repair
+External-State: history-repaired-proof-local-only-human-creative-verdict-pending-other-portfolio-gates-unchanged
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: history-family-original-script-source-registry-overflow-free-import-csv-and-eight-scene-svg-carrier
+Implementation-Checkpoint: history-29.616-second-nonsvg-three-source-two-audio-six-textitem-yymm4-proof
 Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
-Remote-Parity: fresh 0/0 at e7b9a14 before this local slice
+Remote-Parity: fresh 0/0 at 2edebad before this local slice
 Tracked-Worktree: chronological-history authoring paths are owned; unrelated dirty, untracked, ignored, and GUI state remain excluded
 
 ## Current Slice
 
+- The exact prior S2 x V1 MP4 `F4CB1D53...3202B` and YMMP
+  `3419E493...F0E7` are immutable `INVALID_IMPLEMENTATION_NEGATIVE_CONTROL`
+  evidence. Its prior `ADOPT / REVISE / RETURN` packet is superseded.
+- Root-cause repair produced a separate ignored YMM4 proof with 0 VoiceItems,
+  2 AudioItems, 6 non-overlapping semantic TextItems, and 3 ImageItems from 3
+  physical sources. The 29.616016-second MP4 is 37,350,703 bytes, SHA-256
+  `3FD5FDE2...5D288`; ffprobe, all 1777 frames, full video/audio decode,
+  1080p samples, and 480x270 samples pass.
+- The new artifact is `PROOF_VALID_FOR_HUMAN_REVIEW`, not creatively accepted.
+  Human review must listen at 1x and judge cadence/end hold, subtitle continuity,
+  reduced-size readability, and causal fit of the Japan/Akashi/day-night shots.
 - Human decision supersedes the prior mechanical review state: generated SVG is
   prohibited as footage, background, set flat, static carrier, or rasterized
   derivative. The science, civil, and history SVG-derived videos remain exact
@@ -34,19 +45,15 @@ Tracked-Worktree: chronological-history authoring paths are owned; unrelated dir
   measurement reports 905.08px maximum against the 940px safe limit, and the
   parsed input/output page sequence is identical. The rejected automatic
   28-page result remains evidence of word and dependency splits not to repeat.
-- No eligible provenance-complete, history-specific non-SVG local media exists.
-  The recommended route is a three-still documentary chronology bound to the
-  existing NICT, NAOJ, and Akashi source-registry entries; exact still bytes and
-  reuse rights require human authorization before acquisition or render.
+- The previously requested visual-route authorization has now been exercised for
+  this short proof only. Exact source/license receipts bind Natural Earth Public
+  Domain, an Akashi 135E marker photograph under CC BY-SA 4.0, and a NASA SVS
+  day/night still under NASA media-usage guidance. This does not establish
+  production rights clearance or authorize the seven-minute render.
 - science / civil / historyのscript、source registry、YMM4 input、render identityは
   `docs/project-context.md` に保持するが、SVG-derived visualsは全件不採用である。
 - historyの420.716秒MP4はtechnical renderとしてのみ存在し、visual/subtitle methodの
   human rejectionによりproduction progressへ数えない。
-
-## History artifact role
-- Role: `E2E_VIDEO_PRODUCTION_BASELINE` / `YMM4_RENDER_PASS` / `TECHNICAL_PLAYBACK_PASS` / `CREATIVE_ACCEPTANCE_REJECTED` / `STANDARD_VISUAL_GRAMMAR_NOT_ESTABLISHED`.
-- Evidence retained: exact 97-row import, eight ImageItems, 420.716016-second MP4 SHA-256 `18616f8b...c76a`, full video/audio decode, and start/middle/end playback progression.
-- rejectionScope: `visual_method`, `subtitle_method`; direct user statements received 2026-08-09 18:04/18:05 JST prohibit generated-SVG use and reject the history subtitle method; full-length acceptance, pacing, motion density, benchmark alignment, and standard-format adoption remain unestablished.
 
 ## Parked Prior Slice
 
@@ -75,18 +82,11 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 ## Exact Next Action
 
-公式機関静止画方式を採用するか一問で決める。採用する場合、source registryの `NICT-JST-HISTORY`、`NAOJ-STANDARD-TIME-HISTORY`、`AKASHI-STANDARD-MERIDIAN` に対応する権利確認済み静止画を1点ずつ供給または取得承認する。その後だけ、byte-identical S-0 template copyへ16-page semantic CSVをimportし、1884→1886→1888の境界へ3点を配置して30〜90秒review sliceをrenderする。
-
-## Parked Prior Exact Next Action
-
-実在named terminal、recipient identity、transport authorityが同時に得られた時だけ
-immutable bundleで再開する。missing archiveからのfallback生成は行わない。
-
-## Conditional Roadmap
-
-- New active lane: historyをnon-SVG visual methodと完成subtitle templateで短尺reframeし、採用可能性を先に確認する。
-- Parked lane: named-recipient authorityが得られた場合だけimmutable bundleを配送。
-- 共通境界: technical passからhuman acceptance、rights、production、publicationを推論しない。
+新proof `history_japan_standard_time_001_s2_v1_root_cause_repaired_29s_v001.mp4`
+を29.616秒全尺・1xで視聴し、cadence / end hold、subtitle continuity、480x270
+readability、Japan / Akashi / day-night shotのcausal fitを判定する。返答は
+`PROOF_ACCEPTED_FOR_NEXT_STAGE` または `PROOF_REPAIR_REQUIRED: <timestamp and
+observed issue>` に束縛し、旧S2 x V1 negative controlは候補へ戻さない。
 
 ## Residual Work
 
