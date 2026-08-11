@@ -23,6 +23,7 @@
 - 優先度と status は分離する。項目を「先に見る」ことは implementation approval を意味しない。
 - canonical rules が repo 内にある場合は、`docs/ai/*.md` を tool-specific helper docs や prompt より先に読む。
 - **生成 SVG を制作映像へ使用しない。** コード、LLM、または自動処理で生成した SVG は、主要映像、背景、書割、説明カード、仮組み、PNG 化した派生物のいずれにも使用しない。抽象図形へ置き換えて「意味が通る」と推論することも禁止する。既存の生成 SVG とその render は失敗経路の証拠としてのみ保持でき、再承認なしに別用途へ転用しない。
+- **`history-japan-standard-time-001` の短尺 proof は source-backed visual evidence を主役にする。** 生成 SVG だけでなく、円・点・接続線・帯・黄線・吹き出し・カード・パネル・走査・経路・下線と、それらを YMM4 native Shape / Line / Effect、Canvas / HTML、raster で再現した機能的同等物を説明映像に使わない。例外は素の字幕、出典表記、箱・線・帯・図形 animation を伴わない必要最小限の text label に限る。同一 source の transform-only shot や同一 preset の反復は semantic progression として数えず、各 beat を新情報・実 source・遷移理由・安定 reading hold に束縛する。
 - **字幕は意味の塊を保つ。** 行内改行と字幕ページ境界は、節・列挙・引用・係り受けを壊さず、前後ページを連続して読んだときに発話が不自然に途切れない単位で決める。overflow 0、表示幅、2行以内、decode pass は意味上の合格を代替しない。
 - **完成済み字幕設定を継承する。** 新規 blank/default project や臨時 character setting から字幕を作らず、S-0 の完成済み YMM4 project template を複製し、字幕 style・位置・font・wrap・character setting を引き継ぐ。B-15〜B-17 の意味単位 reflow と実テンプレート条件を併用し、片方だけの機械 PASS で受理しない。
 
