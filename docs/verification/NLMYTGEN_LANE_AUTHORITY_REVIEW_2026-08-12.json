@@ -1,0 +1,141 @@
+{
+  "schema_version": "nlmytgen-lane-authority-review.v1",
+  "review_only": true,
+  "automated_adoption": false,
+  "media_opened": false,
+  "audio_played": false,
+  "git": {
+    "branch": "codex/yukkuri-six-benchmark-reverse-engineering-v1",
+    "head": "937daf10b421a602a45c98d5efe5c51832173910",
+    "upstream": null,
+    "status": {
+      "clean": true,
+      "tracked_change_count": 0,
+      "untracked_count": 0,
+      "entries": []
+    }
+  },
+  "local_documents": {
+    "runtime_state": {
+      "Project-State-ID": "yukkuri-six-channel-reverse-benchmark-v1",
+      "State-Revision": "2026-08-03.1",
+      "Updated": "2026-08-03 JST",
+      "Product-State": "six-benchmarks-configured-reproduction-evidence-pending",
+      "Product-Gate": "six-complete-reference-evidence-sets",
+      "Recommended-Next": "prepare-b05-authorized-static-evidence-intake",
+      "External-State": "local-feature-branch"
+    },
+    "project_cockpit": {
+      "Project-State-ID": "new-banknote-portable-dependency-lock-authority-v1",
+      "State-Revision": "2026-07-28.1",
+      "Updated": "2026-07-28 JST",
+      "Product-State": "accepted-real-media-internal-cut-with-portable-dependency-authority",
+      "Product-Gate": "gui-security-major-compatibility",
+      "Recommended-Next": "audit-electron-43-2-0-compatibility-in-isolated-successor",
+      "External-State": "public-repo-feature-branch"
+    }
+  },
+  "shared_field_comparison": [
+    {
+      "field": "Project-State-ID",
+      "runtime_state": "yukkuri-six-channel-reverse-benchmark-v1",
+      "project_cockpit": "new-banknote-portable-dependency-lock-authority-v1",
+      "matches": false
+    },
+    {
+      "field": "State-Revision",
+      "runtime_state": "2026-08-03.1",
+      "project_cockpit": "2026-07-28.1",
+      "matches": false
+    },
+    {
+      "field": "Updated",
+      "runtime_state": "2026-08-03 JST",
+      "project_cockpit": "2026-07-28 JST",
+      "matches": false
+    },
+    {
+      "field": "Product-State",
+      "runtime_state": "six-benchmarks-configured-reproduction-evidence-pending",
+      "project_cockpit": "accepted-real-media-internal-cut-with-portable-dependency-authority",
+      "matches": false
+    },
+    {
+      "field": "Product-Gate",
+      "runtime_state": "six-complete-reference-evidence-sets",
+      "project_cockpit": "gui-security-major-compatibility",
+      "matches": false
+    },
+    {
+      "field": "Recommended-Next",
+      "runtime_state": "prepare-b05-authorized-static-evidence-intake",
+      "project_cockpit": "audit-electron-43-2-0-compatibility-in-isolated-successor",
+      "matches": false
+    },
+    {
+      "field": "External-State",
+      "runtime_state": "local-feature-branch",
+      "project_cockpit": "public-repo-feature-branch",
+      "matches": false
+    }
+  ],
+  "mismatch_count": 7,
+  "remote_candidate": {
+    "ref": "origin/codex/nlmytgen-portable-review-bundle-v1",
+    "available": true,
+    "commit": "f630cb3875f1b4060535bf929a8a8aa8117d9774",
+    "state": {
+      "Project-State-ID": "nlmytgen-yukkuri-benchmark-families-loop-v1",
+      "State-Revision": "2026-08-11.1",
+      "Updated": "2026-08-11 JST",
+      "Product-State": "history-root-cause-repaired-short-proof-ready-human-review",
+      "Product-Gate": "human-review-repaired-proof-only",
+      "Recommended-Next": "review-exact-29.616-second-repaired-proof-at-1x-and-return-accepted-or-timestamped-repair",
+      "External-State": "history-repaired-proof-local-only-human-creative-verdict-pending-other-portfolio-gates-unchanged"
+    },
+    "error": null
+  },
+  "candidates": [
+    {
+      "id": "keep-six-channel-as-current-owner",
+      "decision_required": true,
+      "automated_adoption": false,
+      "effect": "Keep the six-channel control plane and B05 static intake as the current working authority.",
+      "preserves": "The unpublished six-channel commit and its bounded static evidence contract.",
+      "safe_default": true
+    },
+    {
+      "id": "promote-remote-successor-lane",
+      "decision_required": true,
+      "automated_adoption": false,
+      "effect": "Move project authority to the repaired 29.616-second history-proof human-review gate.",
+      "preserves": "The remote successor history without claiming its untracked proof bytes are locally available.",
+      "remote_evidence_available": true,
+      "safe_default": false
+    },
+    {
+      "id": "synchronize-cockpit-only",
+      "decision_required": true,
+      "automated_adoption": false,
+      "effect": "Make PROJECT_COCKPIT mirror the six-channel runtime capsule.",
+      "preserves": "The current code and media boundaries while changing the portfolio-level authority declaration.",
+      "safe_default": false
+    },
+    {
+      "id": "return-to-default-master",
+      "decision_required": true,
+      "automated_adoption": false,
+      "effect": "Return authority to the older Episode 002 default-branch state.",
+      "preserves": "A synchronized public default branch at the cost of dropping later lanes from current authority.",
+      "safe_default": false
+    },
+    {
+      "id": "merge-lanes-now",
+      "decision_required": true,
+      "automated_adoption": false,
+      "effect": "Attempt to combine the unpublished six-channel work with the remote successor history.",
+      "preserves": "Neither lane's meaning without an explicit conflict and authority review.",
+      "safe_default": false
+    }
+  ]
+}
