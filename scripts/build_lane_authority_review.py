@@ -258,7 +258,8 @@ def main(argv: list[str] | None = None) -> int:
     except ValueError:
         parser.error("--output must stay inside --repo-root")
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(rendered, encoding="utf-8")
+    with output.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(rendered)
     print(output.relative_to(root).as_posix())
     return 0
 

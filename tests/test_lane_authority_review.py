@@ -125,6 +125,7 @@ def test_cli_writes_bounded_json_inside_repo(tmp_path: Path, capsys) -> None:
     assert main(["--repo-root", str(tmp_path), "--remote-ref", "missing/ref", "--output", str(output)]) == 0
     report = json.loads((tmp_path / output).read_text(encoding="utf-8"))
     assert report["schema_version"] == "nlmytgen-lane-authority-review.v1"
+    assert b"\r\n" not in (tmp_path / output).read_bytes()
     assert capsys.readouterr().out == "docs/verification/review.json\n"
 
 
