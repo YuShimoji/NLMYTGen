@@ -1,0 +1,146 @@
+{
+  "schema_version": "nlmytgen.development_challenge_excerpt_input_pack_manifest.v1",
+  "payload_id": "nlmyt-a203cf3-adoption-eligibility-excerpt-inputs-v1",
+  "work_order_id": "NLM-PARALLEL-CHALLENGE-MATERIALIZE-20260814-001",
+  "challenge_id": "DEVELOPMENT_GENERATED_VIDEO_CHALLENGE-20260813-NLMYTGEN-001",
+  "materialized_on": "2026-08-14 JST",
+  "status": "materialized_input_only_blocked_duration_and_assets",
+  "base_identity": {
+    "exact_start_commit": "a203cf30cb3bd45e0b5696f8deaebdf01f2d00d3",
+    "checkout_mode": "detached_head",
+    "candidate_branch": "codex/yukkuri-six-benchmark-reverse-engineering-v1-loop-20260814",
+    "candidate_adopted": false,
+    "candidate_integrated": false,
+    "candidate_divergence_must_be_rechecked_live": true
+  },
+  "scope": {
+    "selected_cue_ids": ["cue_001", "cue_002", "cue_003", "cue_004", "cue_005", "cue_006"],
+    "selection_is_contiguous": true,
+    "selection_is_noncanonical_development_excerpt": true,
+    "wording_changed": false,
+    "order_changed": false,
+    "canonical_or_current_proof_mutated": false,
+    "existing_29_616_second_proof_attached_to_this_identity": false
+  },
+  "files": [
+    {
+      "role": "yymm4_csv_input",
+      "path": "excerpt_yymm4_import.csv",
+      "bytes": 955,
+      "sha256": "7cb5cffac7a2b0b8083329372862ae755ac7d8175b26a55b2a886fd180c0da15"
+    },
+    {
+      "role": "script_ir_input",
+      "path": "script_ir.json",
+      "bytes": 4421,
+      "sha256": "76b05228727461d71bb5962f4223aad954151380002a71ab4379a64c5d322685"
+    },
+    {
+      "role": "visual_ir_input",
+      "path": "visual_ir.json",
+      "bytes": 4038,
+      "sha256": "acf318f4a5e2afaf7888a0aa39d532a4ca469b26ebce861a248e326ffd047184"
+    },
+    {
+      "role": "asset_and_character_registry_input",
+      "path": "input_registry.json",
+      "bytes": 4545,
+      "sha256": "21cb965d46befce2bd1bebfaf0ea99b6a5fd1c45616322f1946987ecbe44354f"
+    },
+    {
+      "role": "template_patch_input",
+      "path": "template_patch_input.json",
+      "bytes": 3813,
+      "sha256": "8a9056ca821dc3293d980e2efdf5ed7170bb4674c427f0b41cd529b89f0f0315"
+    }
+  ],
+  "source_locks": [
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+      "bytes": 11449,
+      "sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.txt",
+      "bytes": 1350,
+      "sha256": "4eff43d0cd1f7842b02aaacd8ac6393cc12910fe70f21d650d4a31c74c17c091"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/human_script_approval_receipt.json",
+      "bytes": 2762,
+      "sha256": "1ac490cbcd06483082b2d56a97ff758199ef37ab4b6d1229806c24b8698d7e0f"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/derived_yymm4_import.csv",
+      "bytes": 1431,
+      "sha256": "127dd3edd32ce6131f339819263a6d2716570f800ad212b0741a384b7e19f9ee"
+    },
+    {
+      "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_real_media_episode_manifest.json",
+      "bytes": 12514,
+      "sha256": "25ac9df0a9af1c0170c88b2e92fef34ff7278934f7d5570e87e4007d44ab46f1"
+    },
+    {
+      "path": "samples/palette.ymmp",
+      "bytes": 143264,
+      "sha256": "b608adeb2bf567302b9b0d67b1f3882d72525117d6a1c4f7b4d95d5f45b0c56b"
+    }
+  ],
+  "duration_gate": {
+    "minimum_seconds": 20,
+    "maximum_seconds": 35,
+    "observation_basis": "existing YMM4-native cue timing in source visual IR",
+    "first_frame": 0,
+    "exclusive_end_frame": 2835,
+    "total_frames": 2835,
+    "fps": 60,
+    "observed_seconds": 47.25,
+    "palette_observed_voice_speed": 125,
+    "palette_speed_only_is_duration_proof": false,
+    "authority_compatible_native_timing_patch_present": false,
+    "gate_status": "failed_closed",
+    "failure_code": "DURATION_OUTSIDE_CHALLENGE_AND_NO_STATIC_NATIVE_PATCH",
+    "template_patch_may_run": false,
+    "yymm4_import_or_mutation_may_run": false,
+    "render_may_run": false
+  },
+  "asset_gate": {
+    "registered_asset_count": 6,
+    "present_asset_count_in_materialization_worktree": 0,
+    "all_required_assets_present": false,
+    "rights_approved": false,
+    "gate_status": "failed_closed"
+  },
+  "verification_contract": {
+    "json_parse_required": true,
+    "csv_to_script_ir_text_order_equality_required": true,
+    "script_ir_to_canonical_cues_001_through_006_equality_required": true,
+    "visual_ir_cue_order_required": true,
+    "manifest_file_hash_readback_required": true,
+    "source_lock_hash_readback_required": true,
+    "duration_gate_must_remain_failed_without_static_native_patch": true,
+    "git_diff_check_required": true,
+    "forbidden_extension_scan_required": true
+  },
+  "boundaries": {
+    "input_only": true,
+    "ymmp_created": false,
+    "ymmp_modified": false,
+    "audio_created_or_modified": false,
+    "render_created": false,
+    "gui_action_performed": false,
+    "canonical_proof_changed": false,
+    "candidate_adoption": false,
+    "commit": false,
+    "push": false,
+    "production": false,
+    "publication": false,
+    "upload": false
+  },
+  "independent_supervision": {
+    "material_result_candidate": true,
+    "independent_s_required": true,
+    "closure_claimed": false,
+    "adoption_claimed": false
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": "nlmytgen.development_challenge_template_patch_input.v1",
+  "payload_id": "nlmyt-a203cf3-adoption-eligibility-excerpt-inputs-v1",
+  "status": "preflight_only_blocked_before_ymmp_mutation",
+  "template_source": {
+    "path": "samples/palette.ymmp",
+    "sha256": "b608adeb2bf567302b9b0d67b1f3882d72525117d6a1c4f7b4d95d5f45b0c56b",
+    "bytes": 143264,
+    "fps": 60,
+    "width": 1920,
+    "height": 1080,
+    "timeline_count": 1,
+    "timeline_length_frames": 3600,
+    "voice_item_count": 0,
+    "characters": [
+      {"name": "ゆっくり霊夢赤縁", "observed_voice_speed": 125, "outline_identity": "red"},
+      {"name": "ゆっくり魔理沙黄縁", "observed_voice_speed": 125, "outline_identity": "yellow"}
+    ]
+  },
+  "csv_input": "excerpt_yymm4_import.csv",
+  "script_ir_input": "script_ir.json",
+  "visual_ir_input": "visual_ir.json",
+  "registry_input": "input_registry.json",
+  "match_contract": {
+    "voice_item_count": 6,
+    "match_by": ["text", "order", "template_character"],
+    "expected_cue_ids": ["cue_001", "cue_002", "cue_003", "cue_004", "cue_005", "cue_006"],
+    "wording_may_change": false,
+    "order_may_change": false,
+    "speaker_mapping_may_change": false
+  },
+  "planned_native_visual_bindings": [
+    {"cue_id": "cue_001", "asset_id": "asset_cue_001_banknote_overview", "native_item_family": "ImageItem", "operation": "bind_existing_asset_after_import"},
+    {"cue_id": "cue_002", "asset_id": "asset_cue_002_features_overview", "native_item_family": "ImageItem", "operation": "bind_existing_asset_after_import"},
+    {"cue_id": "cue_003", "asset_id": "asset_cue_003_high_definition_watermark", "native_item_family": "ImageItem", "operation": "bind_existing_asset_after_import"},
+    {"cue_id": "cue_004", "asset_id": "asset_cue_004_3d_hologram", "native_item_family": "ImageItem", "operation": "bind_existing_asset_after_import"},
+    {"cue_id": "cue_005", "asset_id": "asset_cue_005_deep_intaglio", "native_item_family": "ImageItem", "operation": "bind_existing_asset_after_import"},
+    {"cue_id": "cue_006", "asset_id": "asset_cue_006_microtext", "native_item_family": "ImageItem", "operation": "bind_existing_asset_after_import"}
+  ],
+  "duration_gate": {
+    "challenge_min_seconds": 20,
+    "challenge_max_seconds": 35,
+    "observed_source_first_frame": 0,
+    "observed_source_exclusive_end_frame": 2835,
+    "observed_source_total_frames": 2835,
+    "observed_source_seconds_at_60fps": 47.25,
+    "palette_voice_speed": 125,
+    "palette_voice_speed_establishes_duration": false,
+    "authority_compatible_native_timing_patch_present": false,
+    "reason_no_static_timing_patch": "The palette contains zero VoiceItems, so this worktree has no imported six-cue VoiceCache and VoiceLength readback against which a compressed native Frame and Length patch can be proven non-truncating.",
+    "status": "blocked_outside_20_to_35_seconds",
+    "fail_closed": true
+  },
+  "preconditions": [
+    "all six registry assets exist at the exact locators",
+    "an operator-created noncanonical imported copy exists outside this pack",
+    "the imported copy contains exactly six VoiceItems matching text, order, and template character",
+    "a YMM4-native timing patch statically proves 20 to 35 seconds while preserving Serif, CharacterName, VoiceCache, VoiceParameter, Pronounce, Hatsuon, VoiceLength, and AudioEffects",
+    "independent S accepts the materialized input pack and its fail-closed gates",
+    "separate YMM4 and render authority is granted"
+  ],
+  "forbidden_operations": [
+    "create_ymmp_from_zero",
+    "modify_samples_palette_ymmp",
+    "apply_patch_while_duration_gate_blocked",
+    "generate_or_replace_audio",
+    "launch_gui",
+    "render",
+    "adopt_candidate_branch",
+    "production",
+    "publication",
+    "upload"
+  ]
+}

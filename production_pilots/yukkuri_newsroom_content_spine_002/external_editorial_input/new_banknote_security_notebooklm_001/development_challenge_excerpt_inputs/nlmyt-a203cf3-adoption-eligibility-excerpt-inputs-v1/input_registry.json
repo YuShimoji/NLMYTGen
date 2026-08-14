@@ -1,0 +1,92 @@
+{
+  "schema_version": "nlmytgen.development_challenge_excerpt_input_registry.v1",
+  "payload_id": "nlmyt-a203cf3-adoption-eligibility-excerpt-inputs-v1",
+  "status": "registered_inputs_with_missing_local_assets",
+  "source_registry": {
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/reference_registry.json",
+    "sha256": "3a1675662c6858d9577bd565b24163dfa391dddf9adebd64a0b1833cd668b89f"
+  },
+  "source_visual_mapping": {
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/auto_video_pipeline/new_banknote_real_media_episode_manifest.json",
+    "sha256": "25ac9df0a9af1c0170c88b2e92fef34ff7278934f7d5570e87e4007d44ab46f1"
+  },
+  "template_characters": [
+    {"canonical_speaker": "れいむ", "character_name": "ゆっくり霊夢赤縁", "outline_identity": "red"},
+    {"canonical_speaker": "まりさ", "character_name": "ゆっくり魔理沙黄縁", "outline_identity": "yellow"}
+  ],
+  "assets": [
+    {
+      "asset_id": "asset_cue_001_banknote_overview",
+      "cue_id": "cue_001",
+      "source_provenance_id": "J05",
+      "repo_relative_locator": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/J05_fnn.png",
+      "asset_type": "image",
+      "fit_mode": "cover",
+      "exists_in_materialization_worktree": false,
+      "required_before_template_patch": true,
+      "rights_approved": false
+    },
+    {
+      "asset_id": "asset_cue_002_features_overview",
+      "cue_id": "cue_002",
+      "source_provenance_id": "O02",
+      "repo_relative_locator": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O02_boj_annotated_note.png",
+      "asset_type": "image",
+      "fit_mode": "contain",
+      "exists_in_materialization_worktree": false,
+      "required_before_template_patch": true,
+      "rights_approved": false
+    },
+    {
+      "asset_id": "asset_cue_003_high_definition_watermark",
+      "cue_id": "cue_003",
+      "source_provenance_id": "O01",
+      "repo_relative_locator": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_hyper_sukiire10.jpg",
+      "asset_type": "image",
+      "fit_mode": "contain",
+      "exists_in_materialization_worktree": false,
+      "required_before_template_patch": true,
+      "rights_approved": false
+    },
+    {
+      "asset_id": "asset_cue_004_3d_hologram",
+      "cue_id": "cue_004",
+      "source_provenance_id": "O01",
+      "repo_relative_locator": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_hologram.jpg",
+      "asset_type": "image",
+      "fit_mode": "contain",
+      "exists_in_materialization_worktree": false,
+      "required_before_template_patch": true,
+      "rights_approved": false
+    },
+    {
+      "asset_id": "asset_cue_005_deep_intaglio",
+      "cue_id": "cue_005",
+      "source_provenance_id": "O01",
+      "repo_relative_locator": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_fuka10.jpg",
+      "asset_type": "image",
+      "fit_mode": "contain",
+      "exists_in_materialization_worktree": false,
+      "required_before_template_patch": true,
+      "rights_approved": false
+    },
+    {
+      "asset_id": "asset_cue_006_microtext",
+      "cue_id": "cue_006",
+      "source_provenance_id": "O01",
+      "repo_relative_locator": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/reference_grounded_visual_design/local_reference_captures/O01_npb_micro10_02.jpg",
+      "asset_type": "image",
+      "fit_mode": "cover",
+      "exists_in_materialization_worktree": false,
+      "required_before_template_patch": true,
+      "rights_approved": false
+    }
+  ],
+  "gates": {
+    "all_asset_locators_exact": true,
+    "all_required_assets_present": false,
+    "rights_approved": false,
+    "template_patch_ready": false,
+    "render_ready": false
+  }
+}

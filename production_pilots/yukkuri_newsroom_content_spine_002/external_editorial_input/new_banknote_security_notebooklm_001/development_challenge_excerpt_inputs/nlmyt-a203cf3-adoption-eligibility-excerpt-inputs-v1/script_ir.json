@@ -1,0 +1,107 @@
+{
+  "schema_version": "nlmytgen.development_challenge_excerpt_script_ir.v1",
+  "payload_id": "nlmyt-a203cf3-adoption-eligibility-excerpt-inputs-v1",
+  "work_order_id": "NLM-PARALLEL-CHALLENGE-MATERIALIZE-20260814-001",
+  "challenge_id": "DEVELOPMENT_GENERATED_VIDEO_CHALLENGE-20260813-NLMYTGEN-001",
+  "status": "input_only_noncanonical_excerpt",
+  "source_script": {
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/canonical_script.json",
+    "sha256": "4d272900e84c8f87c484aa84c1dd1909207ee8acc189603009a186af65837c47",
+    "approval_receipt_path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/human_script_approval_receipt.json",
+    "approval_receipt_sha256": "1ac490cbcd06483082b2d56a97ff758199ef37ab4b6d1229806c24b8698d7e0f"
+  },
+  "selection": {
+    "method": "authorized_shortest_coherent_contiguous_six_cue_span",
+    "first_cue_id": "cue_001",
+    "last_cue_id": "cue_006",
+    "cue_count": 6,
+    "canonical_sequences": [1, 2, 3, 4, 5, 6],
+    "scene_allocation": {"S1": 2, "S2": 4},
+    "canonical_speaker_counts": {"れいむ": 2, "まりさ": 4},
+    "wording_changed": false,
+    "order_changed": false,
+    "canonical_full_script_changed": false,
+    "editorial_adoption": false
+  },
+  "speaker_to_template_character": {
+    "れいむ": "ゆっくり霊夢赤縁",
+    "まりさ": "ゆっくり魔理沙黄縁"
+  },
+  "sections": [
+    {"section_id": "S1", "start_sequence": 1, "end_sequence": 2, "purpose": "question_and_feature_overview"},
+    {"section_id": "S2", "start_sequence": 3, "end_sequence": 6, "purpose": "four_security_feature_examples"}
+  ],
+  "utterances": [
+    {
+      "sequence": 1,
+      "cue_id": "cue_001",
+      "csv_row_id": "csv_row_1",
+      "scene_id": "S1",
+      "speaker": "れいむ",
+      "template_character": "ゆっくり霊夢赤縁",
+      "text": "2024年に発行された新しいお札って、見た目以外にも変わったところがあるの？",
+      "claim_ids": ["claim_010"]
+    },
+    {
+      "sequence": 2,
+      "cue_id": "cue_002",
+      "csv_row_id": "csv_row_2",
+      "scene_id": "S1",
+      "speaker": "まりさ",
+      "template_character": "ゆっくり魔理沙黄縁",
+      "text": "あるぞ。偽造防止では、高精細すき入れや3Dホログラムなど複数の技術を組み合わせている。誰にとっても使いやすいユニバーサルデザインも取り入れたんだ。",
+      "claim_ids": ["claim_090", "claim_065", "claim_099", "claim_161"]
+    },
+    {
+      "sequence": 3,
+      "cue_id": "cue_003",
+      "csv_row_id": "csv_row_3",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "template_character": "ゆっくり魔理沙黄縁",
+      "text": "まずは高精細すき入れ。光に透かすと、細かな模様が見えるんだぜ。",
+      "claim_ids": ["claim_090"]
+    },
+    {
+      "sequence": 4,
+      "cue_id": "cue_004",
+      "csv_row_id": "csv_row_4",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "template_character": "ゆっくり魔理沙黄縁",
+      "text": "次は3Dホログラム。角度を変えると、三次元の肖像が回転して見えるぞ。",
+      "claim_ids": ["claim_065", "claim_067"]
+    },
+    {
+      "sequence": 5,
+      "cue_id": "cue_005",
+      "csv_row_id": "csv_row_5",
+      "scene_id": "S2",
+      "speaker": "れいむ",
+      "template_character": "ゆっくり霊夢赤縁",
+      "text": "触るとざらざらするのは、額面数字などのインキを高く盛り上げる深凹版印刷なんだね。",
+      "claim_ids": ["claim_116"]
+    },
+    {
+      "sequence": 6,
+      "cue_id": "cue_006",
+      "csv_row_id": "csv_row_6",
+      "scene_id": "S2",
+      "speaker": "まりさ",
+      "template_character": "ゆっくり魔理沙黄縁",
+      "text": "マイクロ文字の『NIPPONGINKO』は、ルーペで確かめられる。カラーコピー機では再現が難しいほど小さい文字なんだ。",
+      "claim_ids": ["claim_096", "claim_097"]
+    }
+  ],
+  "boundaries": {
+    "input_only": true,
+    "noncanonical_development_excerpt": true,
+    "no_ymmp_created_or_modified": true,
+    "no_audio": true,
+    "no_render": true,
+    "no_gui": true,
+    "no_adoption": true,
+    "no_production": true,
+    "no_publication": true
+  }
+}

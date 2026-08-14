@@ -1,0 +1,106 @@
+{
+  "schema_version": "nlmytgen.development_challenge_excerpt_visual_ir.v1",
+  "payload_id": "nlmyt-a203cf3-adoption-eligibility-excerpt-inputs-v1",
+  "status": "input_only_assets_unavailable_duration_blocked",
+  "source_visual_ir": {
+    "path": "production_pilots/yukkuri_newsroom_content_spine_002/external_editorial_input/new_banknote_security_notebooklm_001/visual_scene_decision/script_beat_ir.json",
+    "sha256": "e99e6fdf3052148423cb1fba27d0714993d117832a075fb127b2ba8a0ac8f343"
+  },
+  "timebase_fps": 60,
+  "observed_excerpt_timing": {
+    "first_frame": 0,
+    "exclusive_end_frame": 2835,
+    "total_frames": 2835,
+    "duration_seconds": 47.25,
+    "within_challenge_20_to_35_seconds": false,
+    "timing_may_be_used_for_duration_acceptance": false
+  },
+  "beats": [
+    {
+      "sequence": 1,
+      "cue_id": "cue_001",
+      "scene_id": "S1",
+      "screen_objective": "新しいお札の変化を問う導入を作る。",
+      "native_visual_change": "banknote_overview_question",
+      "text_overlay": "2024年 新しいお札",
+      "source_ids": ["V02"],
+      "asset_id": "asset_cue_001_banknote_overview",
+      "observed_start_frame": 0,
+      "observed_end_frame": 391,
+      "implementation_status": "blocked_asset_and_duration"
+    },
+    {
+      "sequence": 2,
+      "cue_id": "cue_002",
+      "scene_id": "S1",
+      "screen_objective": "複数の偽造防止技術と見分けやすさを俯瞰する。",
+      "native_visual_change": "multi_feature_overview",
+      "text_overlay": "複数技術 + ユニバーサルデザイン",
+      "source_ids": ["V06", "V13", "V02"],
+      "asset_id": "asset_cue_002_features_overview",
+      "observed_start_frame": 391,
+      "observed_end_frame": 1096,
+      "implementation_status": "blocked_asset_and_duration"
+    },
+    {
+      "sequence": 3,
+      "cue_id": "cue_003",
+      "scene_id": "S2",
+      "screen_objective": "高精細すき入れを透過光の現象として示す。",
+      "native_visual_change": "high_definition_watermark",
+      "text_overlay": "透かす｜高精細すき入れ",
+      "source_ids": ["V06"],
+      "asset_id": "asset_cue_003_high_definition_watermark",
+      "observed_start_frame": 1096,
+      "observed_end_frame": 1434,
+      "implementation_status": "blocked_asset_and_duration"
+    },
+    {
+      "sequence": 4,
+      "cue_id": "cue_004",
+      "scene_id": "S2",
+      "screen_objective": "3Dホログラムの見え方を傾きで説明する。",
+      "native_visual_change": "three_d_hologram",
+      "text_overlay": "傾ける｜3Dホログラム",
+      "source_ids": ["V06", "V07"],
+      "asset_id": "asset_cue_004_3d_hologram",
+      "observed_start_frame": 1434,
+      "observed_end_frame": 1818,
+      "implementation_status": "blocked_asset_and_duration"
+    },
+    {
+      "sequence": 5,
+      "cue_id": "cue_005",
+      "scene_id": "S2",
+      "screen_objective": "深凹版印刷の盛り上がりと触感を概念化する。",
+      "native_visual_change": "deep_intaglio",
+      "text_overlay": "触る｜深凹版印刷",
+      "source_ids": ["V06"],
+      "asset_id": "asset_cue_005_deep_intaglio",
+      "observed_start_frame": 1818,
+      "observed_end_frame": 2225,
+      "implementation_status": "blocked_asset_and_duration"
+    },
+    {
+      "sequence": 6,
+      "cue_id": "cue_006",
+      "scene_id": "S2",
+      "screen_objective": "マイクロ文字をルーペ確認の模式図で示す。",
+      "native_visual_change": "microtext_loupe",
+      "text_overlay": "ルーペで見る｜マイクロ文字",
+      "source_ids": ["V06"],
+      "asset_id": "asset_cue_006_microtext",
+      "observed_start_frame": 2225,
+      "observed_end_frame": 2835,
+      "implementation_status": "blocked_asset_and_duration"
+    }
+  ],
+  "requirements": {
+    "minimum_native_visual_changes": 3,
+    "planned_native_visual_changes": 6,
+    "all_changes_content_linked": true,
+    "generated_svg_allowed": false,
+    "new_visual_method_allowed": false,
+    "rights_clearance_claimed": false
+  }
+}
