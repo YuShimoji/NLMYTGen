@@ -30,6 +30,7 @@ GitHub 上で現在地だけを読む場合は [PROJECT_COCKPIT.md](PROJECT_COCK
 
 ## 2. 正本マップ（仕様・台帳・検証索引）
 
+- [PROJECT_LANES.md](PROJECT_LANES.md) — **project lane navigation / `content-production-lanes/v1` 対応表**: 既存の operational lane map を保ったまま、A〜E を NLMYTGen の実データ・独立要件 vector・順序付き first-failed requirement・再入条件へ写像する。`CONTROL_ONLY` であり、production gate、進捗率、roadmap、`runtime-state.md` の current authority を置き換えない
 - [GUI_MINIMUM_PATH.md](GUI_MINIMUM_PATH.md) — **Electron GUI**: 最小ファイル集合・必須/任意・ウィザード範囲（S-3 / S-6b）・L2/L3/creative 検証ラダー
 - [TASK_DEVELOPMENT_CYCLE_SPEC.md](TASK_DEVELOPMENT_CYCLE_SPEC.md) — **改善レビューサイクル正本**: タスクごとの review surface / machine proof / human signal / close gate / next artifact。G-27 Real Estate DX、本流/sidequest 境界、Baseball screen plan、GUI/YMM4 の見る場所を統一する
 - [INTERACTION_NOTES.md](INTERACTION_NOTES.md) — **対話 failure class**: broad question、manual proof 転送、status drift、形式先行を防ぐ
