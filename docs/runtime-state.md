@@ -1,23 +1,32 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-11.1
-Updated: 2026-08-11 JST
-Product-State: history-root-cause-repaired-short-proof-ready-human-review
-Product-Gate: human-review-repaired-proof-only
-Recommended-Next: review-exact-29.616-second-repaired-proof-at-1x-and-return-accepted-or-timestamped-repair
-External-State: history-repaired-proof-local-only-human-creative-verdict-pending-other-portfolio-gates-unchanged
+State-Revision: 2026-08-17.1
+Updated: 2026-08-17 JST
+Product-State: v004r2-explicit-advance-bound-fresh-frontier-paused
+Product-Gate: content-production-paused-frontier-reselection-required
+Recommended-Next: on-explicit-resume-select-one-new-identity-frontier-from-current-authority
+External-State: v004r2-closed-no-rereview-old-task-queue-not-restored
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
 Implementation-Checkpoint: history-29.616-second-nonsvg-three-source-two-audio-six-textitem-yymm4-proof
 Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
-Remote-Parity: fresh 0/0 at 2edebad before this local slice
+Remote-Parity: verify current branch tip during the authorized reflection
 Tracked-Worktree: chronological-history authoring paths are owned; unrelated dirty, untracked, ignored, and GUI state remain excluded
 
 ## Current Slice
 
+- `history_japan_standard_time_001 v004r2` is closed as explicit `ADAPT /
+  ADVANCE / NOT_REQUIRED`. Retain subtitle readability as a visual baseline.
+  Carry the observed reading error and fade-display mismatch only as successor
+  issues; do not micro-repair or re-review v004r2. Its script/content is an
+  unusable draft and any future content must use a separate new identity.
+- NLMYTGen is paused for the FrontierBoard control-plane restart, not completed.
+  Preserve the exact disposition, artifacts, project authority, and all local
+  residue, but do not restore the old C/F/S/D task, review card, queue, Work
+  Order, or wake. There is no current user question or review-ready artifact.
 - The exact prior S2 x V1 MP4 `F4CB1D53...3202B` and YMMP
   `3419E493...F0E7` are immutable `INVALID_IMPLEMENTATION_NEGATIVE_CONTROL`
   evidence. Its prior `ADOPT / REVISE / RETURN` packet is superseded.
@@ -26,9 +35,8 @@ Tracked-Worktree: chronological-history authoring paths are owned; unrelated dir
   physical sources. The 29.616016-second MP4 is 37,350,703 bytes, SHA-256
   `3FD5FDE2...5D288`; ffprobe, all 1777 frames, full video/audio decode,
   1080p samples, and 480x270 samples pass.
-- The new artifact is `PROOF_VALID_FOR_HUMAN_REVIEW`, not creatively accepted.
-  Human review must listen at 1x and judge cadence/end hold, subtitle continuity,
-  reduced-size readability, and causal fit of the Japan/Akashi/day-night shots.
+- The former `PROOF_VALID_FOR_HUMAN_REVIEW` state is superseded by the explicit
+  v004r2 disposition above; it is not an open human-review instruction.
 - Human decision supersedes the prior mechanical review state: generated SVG is
   prohibited as footage, background, set flat, static carrier, or rasterized
   derivative. The science, civil, and history SVG-derived videos remain exact
@@ -55,24 +63,18 @@ Tracked-Worktree: chronological-history authoring paths are owned; unrelated dir
 - historyの420.716秒MP4はtechnical renderとしてのみ存在し、visual/subtitle methodの
   human rejectionによりproduction progressへ数えない。
 
-## Parked Prior Slice
-
-- Food Expiry `cue_002` portable bundle / recipient registry laneはcommit
-  `dcd0cbf`でpush/readback済みのままparkした。bundle、quarantine、human-open、
-  rights/production/publicationの状態は新benchmark laneへ伝播させない。
-
+Food Expiry `cue_002` bundle/registryは`dcd0cbf`のhistorical parked laneであり、
+delivery、human-open、rights/production/publicationをfresh Frontierへ伝播しない。
 ## Product Position
 
 technical factoryはcontent-thread completionから独立したまま、repo-local ignored
 packetをrepository-independent review artifactへ配送準備できる。accepted
 identity、live availability、transport、machine-open、human-open、content decision、
 rights/production/publicationは別clockである。
-
 現在のbundleはhuman review starting artifactであり、creative acceptanceでも
 production assetでもない。isolated local transportはnamed cross-terminal
 deliveryではない。actual human-open、content decision、rights、production、
 publicationはunverified / falseのまま。
-
 ## Active Design Quarantine
 
 exact full-episode bundle v1の背景systemは、human reviewでquarantine
@@ -82,11 +84,10 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 ## Exact Next Action
 
-新proof `history_japan_standard_time_001_s2_v1_root_cause_repaired_29s_v001.mp4`
-を29.616秒全尺・1xで視聴し、cadence / end hold、subtitle continuity、480x270
-readability、Japan / Akashi / day-night shotのcausal fitを判定する。返答は
-`PROOF_ACCEPTED_FOR_NEXT_STAGE` または `PROOF_REPAIR_REQUIRED: <timestamp and
-observed issue>` に束縛し、旧S2 x V1 negative controlは候補へ戻さない。
+次回の明示resume時に、このfileとcurrent project authorityを読み、v004r2とは
+別identityの候補を含む一つのfresh Frontierを選ぶ。旧proofをreview queueへ戻さず、
+他video projectの開始・停止と足並みを揃えない。生成、upload、rights、production、
+publicationは、そのfresh FrontierのAuthority Envelopeで別途許可されるまで行わない。
 
 ## Residual Work
 
@@ -154,7 +155,6 @@ dependencies are absent。Do not rebuild the accepted v1 output in place。
   technical deliveryからreleaseしない。
 
 ## Maintenance Note
-
 Keep this capsule within 160 lines. Resolve the outcome commit from the current
 remote branch tip. Final post-commit canonical regression and parity evidence
 belongs in the supervising handoff response, not a second implementation commit.

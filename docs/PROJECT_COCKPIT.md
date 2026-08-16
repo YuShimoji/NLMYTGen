@@ -1,12 +1,12 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-09.2
-Updated: 2026-08-09 JST
-Product-State: history-semantic-subtitle-pack-ready-visual-method-human-decision-required
-Product-Gate: human-visual-method-decision
-Recommended-Next: authorize-official-institutional-stills-and-bind-three-rights-cleared-assets
-External-State: history-subtitle-pack-ready-no-eligible-local-visual-assets-other-portfolio-gates-unchanged
+State-Revision: 2026-08-17.1
+Updated: 2026-08-17 JST
+Product-State: v004r2-explicit-advance-bound-fresh-frontier-paused
+Product-Gate: content-production-paused-frontier-reselection-required
+Recommended-Next: on-explicit-resume-select-one-new-identity-frontier-from-current-authority
+External-State: v004r2-closed-no-rereview-old-task-queue-not-restored
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
@@ -23,8 +23,9 @@ park済みportable bundle証跡は
 
 ## いまの一文
 
-history字幕は完成S-0 template条件で16意味単位pageへ再構成済み。適格なlocal
-non-SVG素材が無いため、公式機関の権利確認済み静止画3点を使う方式の判断が次の入口である。
+v004r2は字幕可読性だけを基準採用して`ADAPT / ADVANCE / NOT_REQUIRED`で閉じた。
+読み間違いとfade表示ずれはsuccessor issue、script/contentは別identityで総入替とし、
+旧proofの再回答は求めない。現在はFrontierBoard仕切り直しのためproduction paused。
 
 ## 判断に使える現在地
 
@@ -38,7 +39,7 @@ non-SVG素材が無いため、公式機関の権利確認済み静止画3点を
 | Technical YMM4 renders | 3 | exact evidence only; adoption count 0 |
 | Adoptable reproductions | 0/6 | generated SVG method rejected |
 | History subtitles | reframe ready | 16 meaning-unit pages; S-0 settings; WPF width pass |
-| History non-SVG visuals | decision required | no eligible local bytes; official stills recommended |
+| History v004r2 disposition | closed / advance | readability retained; no same-artifact re-review |
 | Prior portable lane | parked at `dcd0cbf` | identity/state not inherited |
 | Rights / production / publication | false | technical successから継承しない |
 
@@ -53,9 +54,9 @@ rights、production、publicationの判断とは別clock。
 
 ## 次の入口
 
-公式機関静止画方式を採用する場合、NICT / NAOJ / 明石市のsource registry entryへ
-権利確認済み静止画を1点ずつ束縛する。その後だけ、完成S-0 template copyと16-page
-semantic CSVを使って1884→1886→1888の30〜90秒review sliceを別identityで作る。
+次回の明示resume時にcurrent authorityを読み、v004r2と旧review queueを復元せず、
+別identityを含む一つのfresh Frontierを選ぶ。旧静止画案は候補情報であり、採用済み
+next actionではない。他video projectと開始時期を同期させない。
 
 ## 公開・実行境界
 
