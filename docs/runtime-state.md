@@ -1,23 +1,24 @@
 # Runtime State — NLMYTGen
 
-Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-17.1
-Updated: 2026-08-17 JST
-Product-State: v004r2-explicit-advance-bound-fresh-frontier-paused
-Product-Gate: content-production-paused-frontier-reselection-required
-Recommended-Next: on-explicit-resume-select-one-new-identity-frontier-from-current-authority
+Project-State-ID: nlmytgen-user-visible-episode-intake-frontier-v1
+State-Revision: 2026-08-24.1
+Updated: 2026-08-24 JST
+Product-State: fresh-frontier-proposal-awaiting-content-goal
+Product-Gate: one-content-goal-choice-required-no-production
+Recommended-Next: answer-one-content-goal-choice-then-bind-visible-requirements-script-material-locators
 External-State: v004r2-closed-no-rereview-old-task-queue-not-restored
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: history-29.616-second-nonsvg-three-source-two-audio-six-textitem-yymm4-proof
+Implementation-Checkpoint: user-visible-episode-intake-frontier-proposal-no-content
 Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
 Remote-Parity: verify current branch tip during the authorized reflection
 Tracked-Worktree: chronological-history authoring paths are owned; unrelated dirty, untracked, ignored, and GUI state remain excluded
-
 ## Current Slice
 
+- `nlmytgen-user-visible-episode-intake-frontier-v1` is the only current proposal. Before authoring, it exposes the episode purpose, format requirements, NotebookLM-script identity, material locators, and YMM4 template/subtitle invariants for user revision; Python may validate and connect accepted inputs but may not create an invisible substitute deliverable.
+- It adopts no topic, script, asset, layout, or prior benchmark style and stops at one content-goal choice. `v004r2`, the six-family loop, rejected SVG carriers, and prior proofs remain historical evidence only.
 - `history_japan_standard_time_001 v004r2` is closed as explicit `ADAPT /
   ADVANCE / NOT_REQUIRED`. Retain subtitle readability as a visual baseline.
   Carry the observed reading error and fade-display mismatch only as successor
@@ -84,10 +85,9 @@ supersession evidenceはなく、cue_002 portable bundleや他authorityへ伝播
 
 ## Exact Next Action
 
-次回の明示resume時に、このfileとcurrent project authorityを読み、v004r2とは
-別identityの候補を含む一つのfresh Frontierを選ぶ。旧proofをreview queueへ戻さず、
-他video projectの開始・停止と足並みを揃えない。生成、upload、rights、production、
-publicationは、そのfresh FrontierのAuthority Envelopeで別途許可されるまで行わない。
+次の一問だけを回答する: 「次の動画で、視聴後に視聴者が得るものをどれにしますか？」
+- A: 一つのテーマを初見でも理解できる説明 / B: 複数の出来事を時系列で追える整理 / C: 資料や主張を比較して判断できる検証
+- 回答後に初めてgoalを新episode identityへ束縛し、同じuser-visible surfaceへ体裁、要件、台本identity、素材locator、YMM4 template identityを並べる。旧proofをreview queueへ戻さず、生成、YMM4出力、rights、production、publicationへは別authorityなしに進まない。
 
 ## Residual Work
 

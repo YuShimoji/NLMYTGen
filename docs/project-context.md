@@ -4758,3 +4758,26 @@ OPERATOR の workflow proof 節から移した観測メモ。現行条件は [OP
 - The six-family loop is now 2/6 local-viewable. Rights, production, publication,
   upload, PR, and merge remain false/unperformed. Next product action is the
   chronological-history family unless an exact science/civil review requests repair.
+
+## User-visible episode intake frontier
+
+- New proposal identity: `nlmytgen-user-visible-episode-intake-frontier-v1`.
+- Purpose: make the episode goal, format requirements, accepted NotebookLM-script
+  identity, material locators, and YMM4 template/subtitle invariants visible and
+  editable before any adapter or render runs.
+- Accepted boundary: YMM4 remains the production surface. Python is limited to
+  validating and connecting user-visible accepted inputs; a hidden Python-only
+  video, narration, material, or substitute YMM4 project is not a deliverable.
+- Historical-only inputs: `v004r2`, the six benchmark families, rejected SVG
+  carriers, and prior proofs provide provenance and negative examples only. None
+  supplies the topic, script, visual language, or default workflow for this identity.
+- Current stop: no content has been selected or generated. The only next judgment
+  is which viewer outcome the next episode should optimize for: initial
+  understanding of one theme, chronological understanding of events, or comparison
+  of sources/claims. After that answer, a successor intake may bind exact format,
+  script, material, and template identities on one user-visible surface.
+- Excluded: YMM4 output, content generation, source acquisition, invisible
+  renderer work, rights, production, publication, upload, and any reopening of
+  the old review queue.
+- 根拠: `docs/INVARIANTS.md` Production Value North Star / UX / Responsibility
+  Boundaries + `docs/runtime-state.md` closed-v004r2 successor boundary.

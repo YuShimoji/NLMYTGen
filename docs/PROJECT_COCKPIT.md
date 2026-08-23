@@ -1,17 +1,17 @@
 # NLMYTGen Project Cockpit
 
-Project-State-ID: nlmytgen-yukkuri-benchmark-families-loop-v1
-State-Revision: 2026-08-17.1
-Updated: 2026-08-17 JST
-Product-State: v004r2-explicit-advance-bound-fresh-frontier-paused
-Product-Gate: content-production-paused-frontier-reselection-required
-Recommended-Next: on-explicit-resume-select-one-new-identity-frontier-from-current-authority
+Project-State-ID: nlmytgen-user-visible-episode-intake-frontier-v1
+State-Revision: 2026-08-24.1
+Updated: 2026-08-24 JST
+Product-State: fresh-frontier-proposal-awaiting-content-goal
+Product-Gate: one-content-goal-choice-required-no-production
+Recommended-Next: answer-one-content-goal-choice-then-bind-visible-requirements-script-material-locators
 External-State: v004r2-closed-no-rereview-old-task-queue-not-restored
 Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: history-family-original-script-source-registry-overflow-free-import-csv-and-eight-scene-svg-carrier
+Implementation-Checkpoint: user-visible-episode-intake-frontier-proposal-no-content
 Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
 Remote-Parity: resolve current civil implementation commit from branch-tip push readback
 Tracked-Worktree: civil owned paths only; unrelated sample CSV and protected untracked/ignored artifacts preserved
@@ -23,9 +23,8 @@ park済みportable bundle証跡は
 
 ## いまの一文
 
-v004r2は字幕可読性だけを基準採用して`ADAPT / ADVANCE / NOT_REQUIRED`で閉じた。
-読み間違いとfade表示ずれはsuccessor issue、script/contentは別identityで総入替とし、
-旧proofの再回答は求めない。現在はFrontierBoard仕切り直しのためproduction paused。
+新identityのuser-visible episode intakeを提案済み。content goalを一つ選ぶまで、体裁、
+要件、台本、素材、YMM4接続を推測せず、旧v004r2や旧proofの再回答も求めない。
 
 ## 判断に使える現在地
 
@@ -54,9 +53,10 @@ rights、production、publicationの判断とは別clock。
 
 ## 次の入口
 
-次回の明示resume時にcurrent authorityを読み、v004r2と旧review queueを復元せず、
-別identityを含む一つのfresh Frontierを選ぶ。旧静止画案は候補情報であり、採用済み
-next actionではない。他video projectと開始時期を同期させない。
+次の一問は「次の動画で、視聴後に視聴者が得るものをどれにしますか？」。
+選択肢は「一つのテーマを初見でも理解できる説明」「複数の出来事を時系列で追える整理」
+「資料や主張を比較して判断できる検証」。回答後にだけ、新episode identityへ体裁、
+要件、NotebookLM台本identity、素材locator、YMM4 template identityを束縛する。
 
 ## 公開・実行境界
 
