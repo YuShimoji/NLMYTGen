@@ -10,6 +10,7 @@ const ACCEPTED_MANIFEST_RELATIVE_PATH = [
   'auto_video_pipeline',
   'new_banknote_real_media_episode_manifest.json',
 ].join('/');
+const CURRENT_BASIS_RELATIVE_PATH = 'docs/episode-intake-current-basis.json';
 
 const ACCEPTANCE_RECEIPT_FILENAME = 'human_real_media_cut_acceptance_receipt.json';
 const PIPELINE_RECEIPT_FILENAME = 'pipeline_run_receipt.json';
@@ -66,6 +67,96 @@ function resolveRepoRelativePath(repoRoot, relPath) {
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function summarizeCurrentBasis(repoRoot, relPath = CURRENT_BASIS_RELATIVE_PATH) {
+  const resolved = resolveRepoRelativePath(repoRoot, relPath);
+  if (!resolved.ok) return { ok: false, error: resolved.error, execution_allowed: false };
+  if (!fs.existsSync(resolved.full)) {
+    return {
+      ok: false,
+      error: `current basis not found: ${resolved.rel}`,
+      execution_allowed: false,
+    };
+  }
+  let basis;
+  try {
+    basis = readJson(resolved.full);
+  } catch (err) {
+    return {
+      ok: false,
+      error: `current basis JSON error: ${err.message}`,
+      path: resolved.rel,
+      execution_allowed: false,
+    };
+  }
+  const human = basis.human_judgment || {};
+  const successor = basis.successor_intake || {};
+  const authority = resolveRepoRelativePath(repoRoot, basis.projection_of?.path);
+  const authorityMatches = (
+    authority.ok
+    && fs.existsSync(authority.full)
+    && fs.readFileSync(authority.full, 'utf8').includes(
+      `Project-State-ID: ${basis.projection_of?.project_state_id || ''}`,
+    )
+  );
+  const executionContractValid = (
+    basis.downstream_execution_allowed !== true
+    || (
+      human.required_now === false
+      && typeof successor.episode_identity === 'string'
+      && successor.episode_identity.trim().length > 0
+      && typeof successor.format_requirements === 'object'
+      && successor.format_requirements !== null
+      && typeof successor.notebooklm_script_identity === 'object'
+      && successor.notebooklm_script_identity !== null
+      && Array.isArray(successor.material_locators)
+      && successor.material_locators.length > 0
+      && typeof successor.ymm4_template_identity === 'object'
+      && successor.ymm4_template_identity !== null
+      && typeof successor.subtitle_invariants === 'object'
+      && successor.subtitle_invariants !== null
+    )
+  );
+  const valid = (
+    basis.schema === 'nlmytgen.episode_intake_current_basis.v1'
+    && typeof basis.status === 'string'
+    && typeof basis.downstream_execution_allowed === 'boolean'
+    && typeof basis.projection_of?.project_state_id === 'string'
+    && authorityMatches
+    && Array.isArray(basis.closed_by_evidence_or_rule)
+    && basis.closed_by_evidence_or_rule.length > 0
+    && typeof human.id === 'string'
+    && typeof human.prompt === 'string'
+    && typeof human.required_now === 'boolean'
+    && Array.isArray(human.options)
+    && human.options.length >= 2
+    && Array.isArray(basis.retired_legacy_contracts)
+    && Array.isArray(basis.blocked_operations)
+    && executionContractValid
+  );
+  if (!valid) {
+    return {
+      ok: false,
+      error: 'CURRENT_BASIS_CONTRACT_INVALID',
+      path: resolved.rel,
+      execution_allowed: false,
+    };
+  }
+  return {
+    ok: true,
+    path: resolved.rel,
+    project_state_id: basis.projection_of.project_state_id,
+    status: basis.status,
+    execution_allowed: basis.downstream_execution_allowed === true,
+    closed_by_evidence_or_rule: basis.closed_by_evidence_or_rule,
+    human_judgment: human,
+    bind_after_human_judgment: basis.bind_after_human_judgment || [],
+    retired_legacy_contracts: basis.retired_legacy_contracts,
+    blocked_operations: basis.blocked_operations,
+    next_transition: basis.next_transition,
+    successor_intake: basis.successor_intake || null,
+  };
 }
 
 function sha256(filePath) {
@@ -389,6 +480,7 @@ class PipelineJobController {
 
 module.exports = {
   ACCEPTED_MANIFEST_RELATIVE_PATH,
+  CURRENT_BASIS_RELATIVE_PATH,
   MAX_LOG_LINES,
   PipelineJobController,
   buildDoctorArgs,
@@ -396,6 +488,7 @@ module.exports = {
   classifyProfiles,
   resolveRepoRelativePath,
   sanitizeText,
+  summarizeCurrentBasis,
   summarizeManifest,
   validateRunId,
 };

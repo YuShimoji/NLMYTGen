@@ -15,7 +15,7 @@ def test_standard_loop_is_default_and_legacy_tabs_are_preserved() -> None:
         assert f">{label}</button>" in html
     step_positions = [
         html.index(f'id="standard-step-{name}"')
-        for name in ("episode", "runtime", "content", "run", "result")
+        for name in ("basis", "episode", "runtime", "content", "run", "result")
     ]
     assert step_positions == sorted(step_positions)
 
@@ -24,6 +24,7 @@ def test_standard_loop_bridge_covers_manifest_doctor_dry_run_job_and_result() ->
     preload = (GUI_ROOT / "preload.js").read_text(encoding="utf-8")
     main = (GUI_ROOT / "main.js").read_text(encoding="utf-8")
     for channel in (
+        "standard-loop-current-basis",
         "standard-loop-accepted-manifest",
         "standard-loop-select-manifest",
         "standard-loop-load-manifest",
@@ -44,6 +45,22 @@ def test_standard_loop_bridge_covers_manifest_doctor_dry_run_job_and_result() ->
     assert "SILENT_POLICY_REQUIRED" in main
     assert "realRenderProbe" not in main
     assert "standardLoopDryRunKey" in main
+    assert "CURRENT_BASIS_BLOCKED" in main
+    assert "LEGACY_MANIFEST_RETIRED" in main
+    assert main.count("currentBasisCliBlock()") >= 6
+    assert "ipcMain.handle('batch-default-selections'" in main
+    assert "ipcMain.handle('batch-start'" in main
+
+
+def test_standard_loop_exposes_current_basis_classification_without_copying_peer_vocabulary() -> None:
+    html = (GUI_ROOT / "index.html").read_text(encoding="utf-8")
+    renderer = (GUI_ROOT / "renderer.js").read_text(encoding="utf-8")
+    assert "Evidence / Rule で閉じた判断" in html
+    assert "人に残る判断" in html
+    assert "旧様式として退役" in html
+    assert "standardLoopCurrentBasis" in renderer
+    assert "['batch', 'csv', 'production']" in renderer
+    assert "ClipPipeGen" not in html
 
 
 def test_gui_slice_adds_no_generated_design_asset_or_forbidden_visual_direction() -> None:

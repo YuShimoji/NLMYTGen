@@ -66,14 +66,35 @@
       <div class="standard-loop">
         <div class="standard-loop-heading">
           <h2 id="standard-loop-title">自動動画生成</h2>
-          <p>エピソードを選び、実行環境と保護入力を確認して、内部レビュー用の生成工程を進めます。</p>
+          <p>現行 intake authority を確認し、許可された場合だけエピソード実行へ進みます。</p>
         </div>
 
+        <section class="standard-step standard-current-basis" id="standard-step-basis">
+          <h3><span aria-hidden="true">1.</span> 現行 intake</h3>
+          <p id="standard-basis-status" role="status">現行 authority を確認中…</p>
+          <div class="standard-basis-columns">
+            <div>
+              <h4>Evidence / Rule で閉じた判断</h4>
+              <ul id="standard-basis-closed" class="standard-basis-list"><li>確認中</li></ul>
+            </div>
+            <div>
+              <h4>人に残る判断</h4>
+              <p id="standard-basis-question">確認中</p>
+              <ol id="standard-basis-options" class="standard-basis-list"><li>確認中</li></ol>
+            </div>
+            <div>
+              <h4>旧様式として退役</h4>
+              <ul id="standard-basis-retired" class="standard-basis-list"><li>確認中</li></ul>
+            </div>
+          </div>
+          <p id="standard-basis-next" class="standard-boundary">この画面は current basis の read-only projection です。</p>
+        </section>
+
         <section class="standard-step" id="standard-step-episode">
-          <h3><span aria-hidden="true">1.</span> エピソード</h3>
+          <h3><span aria-hidden="true">2.</span> エピソード</h3>
           <div class="standard-control-row">
-            <button type="button" id="btn-standard-accepted-manifest">採用済みエピソードを読み込む</button>
-            <button type="button" id="btn-standard-select-manifest">別のマニフェストを選択</button>
+            <button type="button" id="btn-standard-accepted-manifest" disabled>旧採用エピソード（履歴のみ）</button>
+            <button type="button" id="btn-standard-select-manifest" disabled>マニフェストを選択</button>
           </div>
           <p id="standard-manifest-path" class="standard-path">未選択</p>
           <div class="standard-run-id-control">
@@ -96,7 +117,7 @@
         </section>
 
         <section class="standard-step" id="standard-step-runtime">
-          <h3><span aria-hidden="true">2.</span> 実行環境</h3>
+          <h3><span aria-hidden="true">3.</span> 実行環境</h3>
           <div class="standard-control-row">
             <button type="button" id="btn-standard-doctor">実行環境を確認</button>
             <span id="standard-readiness-summary" role="status">未確認</span>
@@ -110,7 +131,7 @@
         </section>
 
         <section class="standard-step" id="standard-step-content">
-          <h3><span aria-hidden="true">3.</span> 生成内容</h3>
+          <h3><span aria-hidden="true">4.</span> 生成内容</h3>
           <p id="standard-protected-summary">保護入力は未確認です。</p>
           <details>
             <summary>保護入力と境界を表示</summary>
@@ -123,7 +144,7 @@
         </section>
 
         <section class="standard-step" id="standard-step-run">
-          <h3><span aria-hidden="true">4.</span> 実行</h3>
+          <h3><span aria-hidden="true">5.</span> 実行</h3>
           <p class="standard-boundary">実行対象は内部レビュー用です。公開・外部アップロード・権利承認は別の判断です。</p>
           <div class="standard-control-row">
             <button type="button" id="btn-standard-start" class="primary" disabled>内部レビュー動画を生成</button>
@@ -134,7 +155,7 @@
         </section>
 
         <section class="standard-step" id="standard-step-result">
-          <h3><span aria-hidden="true">5.</span> 結果</h3>
+          <h3><span aria-hidden="true">6.</span> 結果</h3>
           <p id="standard-result-summary">生成結果は未確認です。</p>
           <div class="standard-control-row">
             <button type="button" id="btn-standard-open-output" disabled>出力フォルダを開く</button>

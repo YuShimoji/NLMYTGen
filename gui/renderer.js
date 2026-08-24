@@ -48,6 +48,7 @@ document.querySelectorAll('.tab').forEach((btn) => {
 // --- 標準自動制作ループ ---
 const STANDARD_LOOP_LOG_LIMIT = 240;
 const standardLoopState = {
+  basis: null,
   summary: null,
   profiles: [],
   dryRunPassed: false,
@@ -60,6 +61,55 @@ const standardLoopState = {
   runId: '',
   runIdValid: false,
 };
+
+function renderStandardBasis(basis) {
+  standardLoopState.basis = basis?.ok ? basis : null;
+  const status = document.getElementById('standard-basis-status');
+  const closed = document.getElementById('standard-basis-closed');
+  const question = document.getElementById('standard-basis-question');
+  const options = document.getElementById('standard-basis-options');
+  const retired = document.getElementById('standard-basis-retired');
+  const next = document.getElementById('standard-basis-next');
+  const renderItems = (target, items, textFor) => {
+    target.innerHTML = '';
+    for (const item of items) {
+      const li = document.createElement('li');
+      li.textContent = textFor(item);
+      target.append(li);
+    }
+  };
+  if (!basis?.ok) {
+    status.textContent = `現行 authority を確認できません: ${standardSafeText(basis?.error || 'unknown')}`;
+    status.dataset.state = 'failed';
+    closed.innerHTML = '<li>fail-closed</li>';
+    question.textContent = '契約を修復するまで人への質問は発行しません。';
+    options.innerHTML = '<li>選択不可</li>';
+    retired.innerHTML = '<li>旧 production path は停止</li>';
+    next.textContent = 'Current basis の欠落・不正は production を許可しません。';
+  } else {
+    status.textContent = basis.execution_allowed
+      ? '現行 authority が downstream execution を許可しています。'
+      : '現行 gate: content goal 1件の判断待ち。production は停止中です。';
+    status.dataset.state = basis.execution_allowed ? 'ready' : 'failed';
+    renderItems(closed, basis.closed_by_evidence_or_rule, (item) => item.decision);
+    question.textContent = basis.human_judgment.prompt;
+    renderItems(options, basis.human_judgment.options, (item) => item.label);
+    renderItems(retired, basis.retired_legacy_contracts, (item) => item.reason);
+    next.textContent = basis.next_transition;
+  }
+  const executionAllowed = basis?.ok && basis.execution_allowed === true;
+  document.getElementById('btn-standard-accepted-manifest').disabled = true;
+  document.getElementById('btn-standard-select-manifest').disabled = !executionAllowed;
+  document.getElementById('btn-standard-doctor').disabled = !executionAllowed;
+  for (const tabName of ['batch', 'csv', 'production']) {
+    const tab = document.querySelector(`.tab[data-tab="${tabName}"]`);
+    if (tab) tab.disabled = !executionAllowed;
+  }
+  document.querySelectorAll('.wizard-step').forEach((step) => {
+    step.disabled = !executionAllowed;
+  });
+  refreshStandardActions();
+}
 
 const STANDARD_RUN_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$/;
 const STANDARD_RESERVED_RUN_IDS = new Set([
@@ -243,14 +293,16 @@ function standardAllProfilesReady() {
 }
 
 function refreshStandardActions() {
+  const executionAllowed = standardLoopState.basis?.execution_allowed === true;
   const hasExactInputs = standardLoopState.summary?.protected_inputs?.status === 'exact';
   const dryRunButton = document.getElementById('btn-standard-dry-run');
   const startButton = document.getElementById('btn-standard-start');
   const cancelButton = document.getElementById('btn-standard-cancel');
   if (!dryRunButton || !startButton || !cancelButton) return;
-  dryRunButton.disabled = !hasExactInputs || standardLoopState.active;
+  dryRunButton.disabled = !executionAllowed || !hasExactInputs || standardLoopState.active;
   startButton.disabled = !(
-    hasExactInputs
+    executionAllowed
+    && hasExactInputs
     && standardAllProfilesReady()
     && standardLoopState.runIdValid
     && standardLoopState.dryRunPassed
@@ -3279,6 +3331,7 @@ let scriptDiagPath = null;
 
 // Load on startup
 window.addEventListener('DOMContentLoaded', async () => {
+  renderStandardBasis(await window.nlmytgen.standardLoopCurrentBasis());
   const settings = await window.nlmytgen.loadSettings();
   applySettings(settings);
   setWizardStep(currentWizardStep, { persist: false });

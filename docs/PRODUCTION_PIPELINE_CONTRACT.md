@@ -8,6 +8,15 @@ This contract does not authorize G-27 v3 proof work, scene decision packet work,
 asset/proxy gap reporting, YMM4 conversion, rendering, production timing, or
 creative acceptance. Those remain separate slices.
 
+## Current Basis Gate
+
+Before the production path loads an episode manifest, it must consume the
+repo-local current-basis projection described by
+[`CURRENT_BASIS_REVIEW_CONTRACT.md`](CURRENT_BASIS_REVIEW_CONTRACT.md). Missing,
+malformed, or execution-blocked current basis fails closed. A historical
+accepted manifest, completed script, Production IR, prior review queue, or
+benchmark style cannot supply successor authority.
+
 ## Core Rule
 
 User-facing review must happen in the GUI timeline. HTML, PNG, and JSON are

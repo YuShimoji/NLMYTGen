@@ -38,6 +38,7 @@ const nlmytgenApi = {
   saveIrPaste: (opts) => ipcRenderer.invoke('save-ir-paste', opts),
   loadSettings: () => ipcRenderer.invoke('load-settings'),
   saveSettings: (s) => ipcRenderer.invoke('save-settings', s),
+  standardLoopCurrentBasis: () => ipcRenderer.invoke('standard-loop-current-basis'),
   standardLoopAcceptedManifest: () => ipcRenderer.invoke('standard-loop-accepted-manifest'),
   standardLoopSelectManifest: () => ipcRenderer.invoke('standard-loop-select-manifest'),
   standardLoopLoadManifest: (relPath) => ipcRenderer.invoke('standard-loop-load-manifest', relPath),

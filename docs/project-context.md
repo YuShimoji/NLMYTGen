@@ -4781,3 +4781,21 @@ OPERATOR の workflow proof 節から移した観測メモ。現行条件は [OP
   the old review queue.
 - 根拠: `docs/INVARIANTS.md` Production Value North Star / UX / Responsibility
   Boundaries + `docs/runtime-state.md` closed-v004r2 successor boundary.
+
+## Current-basis review-burden repair
+
+- `docs/episode-intake-current-basis.json` is a machine projection of the current
+  runtime authority, not a second product-state owner. It separates rule/evidence
+  closure, the one current viewer-outcome judgment, later creative judgments,
+  and retired legacy contracts.
+- The Electron production entrance now renders that classification before the
+  old episode controls. Main-process guards re-read the projection and return
+  `CURRENT_BASIS_BLOCKED` for manifest load, production preflight, legacy CSV /
+  IR / episode-pack / packet writes, batch queue restore / plan / resume /
+  execute, dry-run, and render while downstream execution is not authorized;
+  disabled renderer buttons are not the security boundary.
+- Retired means non-authoritative, not deleted. The prior accepted manifest,
+  v004r2 queue identity, benchmark proofs, dirty CSV, ignored artifacts, and
+  screenshots remain preserved.
+- This slice creates no topic, script, material, candidate, YMMP, render, review
+  decision, rights claim, production state, publication state, or Board mutation.

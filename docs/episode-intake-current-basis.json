@@ -1,0 +1,92 @@
+{
+  "schema": "nlmytgen.episode_intake_current_basis.v1",
+  "projection_of": {
+    "path": "docs/runtime-state.md",
+    "project_state_id": "nlmytgen-user-visible-episode-intake-frontier-v1"
+  },
+  "status": "waiting_human_content_goal",
+  "downstream_execution_allowed": false,
+  "closed_by_evidence_or_rule": [
+    {
+      "id": "production_surface",
+      "decision": "制作と最終 creative confirmation の surface は YMM4 である。",
+      "source": "docs/INVARIANTS.md#production-value-north-star"
+    },
+    {
+      "id": "python_boundary",
+      "decision": "Python は accepted input の検証と接続に限定し、代替動画・ナレーション・素材・ゼロ生成 YMM4 project を作らない。",
+      "source": "docs/INVARIANTS.md#responsibility-boundaries"
+    },
+    {
+      "id": "current_input_authority",
+      "decision": "successor episode の topic、script、material locator、visual language、template identity、production candidate はいずれも未採用である。",
+      "source": "docs/runtime-state.md#current-slice"
+    },
+    {
+      "id": "review_frequency",
+      "decision": "変更のない機械確認は readback で閉じ、YMM4 visual review は変更面と最終 creative judgement に限定する。",
+      "source": "docs/INVARIANTS.md#ux--algorithmic-invariants"
+    }
+  ],
+  "human_judgment": {
+    "id": "viewer_outcome",
+    "prompt": "次の動画で、視聴後に視聴者が得るものをどれにしますか？",
+    "required_now": true,
+    "options": [
+      {
+        "id": "initial_understanding",
+        "label": "一つのテーマを初見でも理解できる説明"
+      },
+      {
+        "id": "chronological_understanding",
+        "label": "複数の出来事を時系列で追える整理"
+      },
+      {
+        "id": "source_claim_comparison",
+        "label": "資料や主張を比較して判断できる検証"
+      }
+    ],
+    "not_requested_yet": [
+      "台本の前提・視聴者・結論・事実方向",
+      "creative visual treatment",
+      "最終 YMM4 composition と字幕判断"
+    ]
+  },
+  "bind_after_human_judgment": [
+    "新 episode identity",
+    "体裁と要件",
+    "accepted NotebookLM script identity",
+    "material locator",
+    "YMM4 template identity",
+    "字幕不変条件"
+  ],
+  "retired_legacy_contracts": [
+    {
+      "id": "default_accepted_manifest",
+      "reason": "prior accepted episode manifest を successor episode の default にしない。"
+    },
+    {
+      "id": "script_and_ir_as_first_ask",
+      "reason": "完成 script と Production IR は downstream binding であり、最初の intake 質問ではない。"
+    },
+    {
+      "id": "old_review_queue",
+      "reason": "閉じた v004r2 review card、queue、Work Order、wake を復元しない。"
+    },
+    {
+      "id": "benchmark_style_inheritance",
+      "reason": "prior proof と benchmark style は evidence / negative example として保持し、visual authority にしない。"
+    }
+  ],
+  "blocked_operations": [
+    "load episode manifest for execution",
+    "runtime doctor as production preflight",
+    "legacy CSV, IR, episode-pack, and review-packet adapter writes",
+    "batch queue restore, plan, resume, or execute",
+    "pipeline dry-run",
+    "YMM4 output or render",
+    "content generation",
+    "rights, production, publication, or upload mutation"
+  ],
+  "next_transition": "viewer outcome を一件だけ受理した後、successor episode の入力を一つの user-visible intake に束縛する。"
+}

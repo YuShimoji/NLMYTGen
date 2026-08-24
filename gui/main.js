@@ -20,11 +20,13 @@ const {
 } = require('./batch_observability');
 const {
   ACCEPTED_MANIFEST_RELATIVE_PATH,
+  CURRENT_BASIS_RELATIVE_PATH,
   PipelineJobController,
   buildDoctorArgs,
   buildEpisodeArgs,
   classifyProfiles,
   resolveRepoRelativePath: resolveStandardLoopPath,
+  summarizeCurrentBasis,
   summarizeManifest,
   validateRunId,
 } = require('./standard_production_loop');
@@ -415,6 +417,30 @@ function standardLoopDryRunKey(manifestPath, runId) {
   return `${manifestPath}\u0000${runId || ''}`;
 }
 
+function currentStandardLoopBasis() {
+  return summarizeCurrentBasis(REPO_ROOT, CURRENT_BASIS_RELATIVE_PATH);
+}
+
+function currentBasisBlock() {
+  const basis = currentStandardLoopBasis();
+  if (!basis.ok || !basis.execution_allowed) {
+    return { ok: false, error: 'CURRENT_BASIS_BLOCKED', basis };
+  }
+  return null;
+}
+
+function currentBasisCliBlock() {
+  const blocked = currentBasisBlock();
+  if (!blocked) return null;
+  return {
+    code: -1,
+    stdout: '',
+    stderr: blocked.error,
+    json: null,
+    basis: blocked.basis,
+  };
+}
+
 function resolveRepoRelativePath(relPath) {
   if (typeof relPath !== 'string' || !relPath.trim()) {
     return { ok: false, error: 'repo-relative path is required' };
@@ -471,6 +497,8 @@ function describeEpisodePack(rootPath) {
 }
 
 ipcMain.handle('build-csv', async (_event, opts) => {
+  const blocked = currentBasisCliBlock();
+  if (blocked) return blocked;
   const args = ['build-csv', opts.input, '--format', 'json'];
   if (opts.output) { args.push('-o', opts.output); }
   if (opts.speakerMap) { args.push('--speaker-map', opts.speakerMap); }
@@ -497,6 +525,8 @@ ipcMain.handle('build-csv', async (_event, opts) => {
 });
 
 ipcMain.handle('apply-production', async (_event, opts) => {
+  const blocked = currentBasisCliBlock();
+  if (blocked) return blocked;
   const args = ['apply-production', opts.ymmp, opts.irJson, '--format', 'json'];
   if (opts.palette) { args.push('--palette', opts.palette); }
   if (opts.faceMap) { args.push('--face-map', opts.faceMap); }
@@ -535,11 +565,18 @@ ipcMain.handle('select-file', async (_event, opts) => {
 
 // --- Standard automated production loop ---
 
-ipcMain.handle('standard-loop-accepted-manifest', async () => (
-  summarizeManifest(REPO_ROOT, standardLoopAcceptedManifest)
-));
+ipcMain.handle('standard-loop-current-basis', async () => currentStandardLoopBasis());
+
+ipcMain.handle('standard-loop-accepted-manifest', async () => ({
+  ok: false,
+  error: 'LEGACY_MANIFEST_RETIRED',
+  basis: currentStandardLoopBasis(),
+  historical_path: standardLoopAcceptedManifest,
+}));
 
 ipcMain.handle('standard-loop-select-manifest', async () => {
+  const blocked = currentBasisBlock();
+  if (blocked) return blocked;
   const result = await dialog.showOpenDialog(mainWindow, {
     title: 'エピソードマニフェストを選択',
     filters: [{ name: 'Episode manifest', extensions: ['json'] }],
@@ -554,11 +591,15 @@ ipcMain.handle('standard-loop-select-manifest', async () => {
 });
 
 ipcMain.handle('standard-loop-load-manifest', async (_event, request) => {
+  const blocked = currentBasisBlock();
+  if (blocked) return blocked;
   const normalized = standardLoopRequest(request);
   return summarizeManifest(REPO_ROOT, normalized.manifestPath, normalized.runId);
 });
 
 ipcMain.handle('standard-loop-doctor', async () => {
+  const blocked = currentBasisBlock();
+  if (blocked) return { code: -1, stdout: '', stderr: blocked.error, json: null, basis: blocked.basis };
   const result = await runCli(buildDoctorArgs());
   const json = parseJsonLine(result.stdout);
   standardLoopDoctorProfiles = classifyProfiles(json);
@@ -570,6 +611,8 @@ ipcMain.handle('standard-loop-doctor', async () => {
 });
 
 ipcMain.handle('standard-loop-dry-run', async (_event, request) => {
+  const blocked = currentBasisBlock();
+  if (blocked) return { code: -1, stdout: '', stderr: blocked.error, json: null, basis: blocked.basis };
   const normalized = standardLoopRequest(request);
   const resolved = resolveStandardLoopPath(REPO_ROOT, normalized.manifestPath);
   if (!resolved.ok) return { code: -1, stdout: '', stderr: resolved.error, json: null };
@@ -598,6 +641,8 @@ ipcMain.handle('standard-loop-dry-run', async (_event, request) => {
 });
 
 ipcMain.handle('standard-loop-start', async (_event, opts) => {
+  const blocked = currentBasisBlock();
+  if (blocked) return blocked;
   if (DEVELOPMENT_AUDIO_POLICY !== 'silent') {
     return { ok: false, error: 'SILENT_POLICY_REQUIRED' };
   }
@@ -659,6 +704,8 @@ ipcMain.handle('standard-loop-open-output', async (_event, relPath) => {
 // --- Bounded factory queue batch observability ---
 
 ipcMain.handle('batch-default-selections', async () => {
+  const blocked = currentBasisBlock();
+  if (blocked) return blocked;
   const queuePath = process.env.NLMYTGEN_BATCH_DEFAULT_QUEUE_PATH || DEFAULT_QUEUE_PATH;
   const changeSetPath = (
     process.env.NLMYTGEN_BATCH_DEFAULT_CHANGE_SET_PATH || DEFAULT_CHANGE_SET_PATH
@@ -691,6 +738,8 @@ ipcMain.handle('batch-default-selections', async () => {
 });
 
 ipcMain.handle('batch-select-file', async (_event, kind) => {
+  const blocked = currentBasisBlock();
+  if (blocked) return blocked;
   const supported = new Set(['queue', 'change_set', 'authority', 'journal']);
   if (!supported.has(kind)) return { ok: false, error: 'BATCH_SELECTION_KIND_INVALID' };
   const titles = {
@@ -759,6 +808,8 @@ ipcMain.handle('batch-select-file', async (_event, kind) => {
 });
 
 ipcMain.handle('batch-open-recent-journal', async () => {
+  const blocked = currentBasisBlock();
+  if (blocked) return blocked;
   try {
     const loaded = currentBatchJournalStore().loadRecent();
     if (!loaded) return { ok: false, error: 'RECENT_JOURNAL_NOT_FOUND' };
@@ -803,6 +854,8 @@ ipcMain.handle('batch-open-recent-journal', async () => {
 });
 
 ipcMain.handle('batch-start', async (_event, request) => {
+  const blocked = currentBasisBlock();
+  if (blocked) return blocked;
   try {
     if (DEVELOPMENT_AUDIO_POLICY !== 'silent') {
       return { ok: false, error: 'SILENT_POLICY_REQUIRED' };
@@ -997,6 +1050,8 @@ ipcMain.handle('save-review-decisions', async (_event, opts) => {
 // --- Validate IR ---
 
 ipcMain.handle('validate-ir', async (_event, opts) => {
+  const blocked = currentBasisCliBlock();
+  if (blocked) return blocked;
   const args = ['validate-ir', opts.irJson, '--format', 'json'];
   if (opts.faceMap) { args.push('--face-map', opts.faceMap); }
   if (opts.faceMapBundle) { args.push('--face-map-bundle', opts.faceMapBundle); }
@@ -1021,6 +1076,7 @@ ipcMain.handle('select-folder', async () => {
 });
 
 ipcMain.handle('describe-episode-pack', async (_event, rootPath) => {
+  if (currentBasisBlock()) return null;
   if (typeof rootPath !== 'string' || !rootPath) {
     return null;
   }
@@ -1028,6 +1084,7 @@ ipcMain.handle('describe-episode-pack', async (_event, rootPath) => {
 });
 
 ipcMain.handle('select-episode-pack', async () => {
+  if (currentBasisBlock()) return null;
   const r = await dialog.showOpenDialog(mainWindow, {
     title: 'Episode Pack Root を選択',
     properties: ['openDirectory'],
@@ -1054,6 +1111,8 @@ ipcMain.handle('save-json-artifact', async (_event, opts) => {
 });
 
 ipcMain.handle('build-cue-packet-bundle', async (_event, opts) => {
+  const blocked = currentBasisCliBlock();
+  if (blocked) return blocked;
   const args = ['build-cue-packet', opts.input, '--bundle-dir', opts.bundleDir];
   if (opts.speakerMap) { args.push('--speaker-map', opts.speakerMap); }
   if (opts.unlabeled) { args.push('--unlabeled'); }
@@ -1061,6 +1120,8 @@ ipcMain.handle('build-cue-packet-bundle', async (_event, opts) => {
 });
 
 ipcMain.handle('build-diagram-packet-bundle', async (_event, opts) => {
+  const blocked = currentBasisCliBlock();
+  if (blocked) return blocked;
   const args = ['build-diagram-packet', opts.input, '--bundle-dir', opts.bundleDir];
   if (opts.speakerMap) { args.push('--speaker-map', opts.speakerMap); }
   if (opts.unlabeled) { args.push('--unlabeled'); }
@@ -1134,6 +1195,7 @@ ipcMain.handle('save-script-diagnostics', async (_event, opts) => {
 });
 
 ipcMain.handle('save-ir-paste', async (_event, opts) => {
+  if (currentBasisBlock()) return null;
   const dialogOptions = {
     title: 'IR JSON を保存',
     defaultPath: opts.defaultPath || 'ir.json',

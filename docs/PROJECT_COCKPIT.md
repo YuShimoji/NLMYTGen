@@ -1,8 +1,8 @@
 # NLMYTGen Project Cockpit
 
 Project-State-ID: nlmytgen-user-visible-episode-intake-frontier-v1
-State-Revision: 2026-08-24.1
-Updated: 2026-08-24 JST
+State-Revision: 2026-08-25.1
+Updated: 2026-08-25 JST
 Product-State: fresh-frontier-proposal-awaiting-content-goal
 Product-Gate: one-content-goal-choice-required-no-production
 Recommended-Next: answer-one-content-goal-choice-then-bind-visible-requirements-script-material-locators
@@ -11,9 +11,9 @@ Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: user-visible-episode-intake-frontier-proposal-no-content
+Implementation-Checkpoint: current-basis-gate-implemented-no-content
 Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
-Remote-Parity: resolve current civil implementation commit from branch-tip push readback
+Remote-Parity: pre-change 9f881146 verified 0/0; current remote seal unperformed
 Tracked-Worktree: civil owned paths only; unrelated sample CSV and protected untracked/ignored artifacts preserved
 
 短期正本は[runtime-state.md](runtime-state.md)、6 family contractは
@@ -23,8 +23,9 @@ park済みportable bundle証跡は
 
 ## いまの一文
 
-新identityのuser-visible episode intakeを提案済み。content goalを一つ選ぶまで、体裁、
-要件、台本、素材、YMM4接続を推測せず、旧v004r2や旧proofの再回答も求めない。
+新identityのuser-visible episode intakeをGUI先頭へcurrent-basis projectionとして接続済み。
+content goalを一つ選ぶまで旧queue、legacy adapter、旧manifest、preflight、dry-run、renderをfail-closedにし、
+体裁、要件、台本、素材、YMM4接続を推測せず、旧v004r2や旧proofの再回答も求めない。
 
 ## 判断に使える現在地
 

@@ -13,6 +13,7 @@ const {
   classifyProfiles,
   resolveRepoRelativePath,
   sanitizeText,
+  summarizeCurrentBasis,
   summarizeManifest,
   validateRunId,
 } = require('./standard_production_loop');
@@ -81,6 +82,82 @@ test('repo path resolver rejects absolute paths and traversal', () => {
     full: path.join(root, 'inside', 'episode.json'),
     rel: 'inside/episode.json',
   });
+});
+
+test('current basis classifies one human question and blocks downstream execution', (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nlmytgen-current-basis-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  write(root, 'docs/runtime-state.md', 'Project-State-ID: current-state\n');
+  write(root, 'docs/episode-intake-current-basis.json', JSON.stringify({
+    schema: 'nlmytgen.episode_intake_current_basis.v1',
+    projection_of: { path: 'docs/runtime-state.md', project_state_id: 'current-state' },
+    status: 'waiting_human_content_goal',
+    downstream_execution_allowed: false,
+    closed_by_evidence_or_rule: [{ id: 'surface', decision: 'YMM4 owns production.' }],
+    human_judgment: {
+      id: 'viewer_outcome',
+      prompt: 'viewer outcome?',
+      required_now: true,
+      options: [{ id: 'a', label: 'A' }, { id: 'b', label: 'B' }],
+    },
+    retired_legacy_contracts: [{ id: 'old', reason: 'historical only' }],
+    blocked_operations: ['render'],
+  }));
+  const basis = summarizeCurrentBasis(root);
+  assert.equal(basis.ok, true);
+  assert.equal(basis.execution_allowed, false);
+  assert.equal(basis.human_judgment.id, 'viewer_outcome');
+  assert.equal(basis.human_judgment.options.length, 2);
+  assert.equal(basis.retired_legacy_contracts.length, 1);
+});
+
+test('missing or malformed current basis fails closed', (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nlmytgen-current-basis-invalid-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  assert.equal(summarizeCurrentBasis(root).execution_allowed, false);
+  write(root, 'docs/episode-intake-current-basis.json', JSON.stringify({ schema: 'wrong' }));
+  const malformed = summarizeCurrentBasis(root);
+  assert.equal(malformed.ok, false);
+  assert.equal(malformed.error, 'CURRENT_BASIS_CONTRACT_INVALID');
+  assert.equal(malformed.execution_allowed, false);
+});
+
+test('execution cannot open by flipping the boolean without bound successor inputs', (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nlmytgen-current-basis-flip-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  write(root, 'docs/runtime-state.md', 'Project-State-ID: current-state\n');
+  write(root, 'docs/episode-intake-current-basis.json', JSON.stringify({
+    schema: 'nlmytgen.episode_intake_current_basis.v1',
+    projection_of: { path: 'docs/runtime-state.md', project_state_id: 'current-state' },
+    status: 'ready',
+    downstream_execution_allowed: true,
+    closed_by_evidence_or_rule: [{ id: 'surface', decision: 'closed' }],
+    human_judgment: {
+      id: 'viewer_outcome',
+      prompt: 'viewer outcome?',
+      required_now: true,
+      options: [{ id: 'a', label: 'A' }, { id: 'b', label: 'B' }],
+    },
+    retired_legacy_contracts: [],
+    blocked_operations: [],
+  }));
+  const basis = summarizeCurrentBasis(root);
+  assert.equal(basis.ok, false);
+  assert.equal(basis.error, 'CURRENT_BASIS_CONTRACT_INVALID');
+  assert.equal(basis.execution_allowed, false);
+});
+
+test('tracked current basis matches the runtime state and keeps production closed', () => {
+  const repoRoot = path.resolve(__dirname, '..');
+  const basis = summarizeCurrentBasis(repoRoot);
+  const runtimeState = fs.readFileSync(path.join(repoRoot, 'docs', 'runtime-state.md'), 'utf8');
+  assert.equal(basis.ok, true);
+  assert.equal(basis.project_state_id, 'nlmytgen-user-visible-episode-intake-frontier-v1');
+  assert.equal(runtimeState.includes(`Project-State-ID: ${basis.project_state_id}`), true);
+  assert.equal(basis.status, 'waiting_human_content_goal');
+  assert.equal(basis.execution_allowed, false);
+  assert.equal(basis.human_judgment.id, 'viewer_outcome');
+  assert.equal(basis.human_judgment.options.length, 3);
 });
 
 test('manifest summary distinguishes exact protected inputs and accepted output', (t) => {
