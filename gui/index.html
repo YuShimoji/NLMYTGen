@@ -65,13 +65,29 @@
     <section id="tab-standard" class="tab-content active" aria-labelledby="standard-loop-title">
       <div class="standard-loop">
         <div class="standard-loop-heading">
-          <h2 id="standard-loop-title">自動動画生成</h2>
-          <p>現行 intake authority を確認し、許可された場合だけエピソード実行へ進みます。</p>
+          <h2 id="standard-loop-title">NLMYTGen Cockpit</h2>
+          <p>current artifactを開き、現在完成地点とblockerを確認して、許可されたproject-owned pathだけへ進みます。</p>
         </div>
 
         <section class="standard-step standard-current-basis" id="standard-step-basis">
           <h3><span aria-hidden="true">1.</span> 現行 intake</h3>
           <p id="standard-basis-status" role="status">現行 authority を確認中…</p>
+          <dl class="standard-cockpit-facts">
+            <div><dt>Current artifact</dt><dd id="standard-cockpit-artifact">確認中</dd></div>
+            <div><dt>SHA-256</dt><dd id="standard-cockpit-artifact-sha">確認中</dd></div>
+            <div><dt>現在完成地点</dt><dd id="standard-cockpit-completion">確認中</dd></div>
+            <div><dt>Blocker</dt><dd id="standard-cockpit-blocker">確認中</dd></div>
+            <div><dt>次のproject-owned path</dt><dd id="standard-cockpit-next-path">確認中</dd></div>
+          </dl>
+          <div class="standard-control-row standard-cockpit-actions">
+            <button type="button" id="btn-standard-open-basis" disabled>Current artifactを開く</button>
+            <button type="button" id="btn-standard-enter-intake" disabled>viewer outcome 一件へ進む</button>
+            <span id="standard-cockpit-route-status" role="status">artifact未確認</span>
+          </div>
+          <details id="standard-cockpit-artifact-preview" class="standard-cockpit-artifact-preview" hidden>
+            <summary>現行 authority projection（read-only）</summary>
+            <pre id="standard-cockpit-artifact-content"></pre>
+          </details>
           <div class="standard-basis-columns">
             <div>
               <h4>Evidence / Rule で閉じた判断</h4>
@@ -79,7 +95,7 @@
             </div>
             <div>
               <h4>人に残る判断</h4>
-              <p id="standard-basis-question">確認中</p>
+              <p id="standard-basis-question" tabindex="-1">確認中</p>
               <ol id="standard-basis-options" class="standard-basis-list"><li>確認中</li></ol>
             </div>
             <div>

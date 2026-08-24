@@ -146,8 +146,11 @@ function summarizeCurrentBasis(repoRoot, relPath = CURRENT_BASIS_RELATIVE_PATH) 
   return {
     ok: true,
     path: resolved.rel,
+    sha256: sha256(resolved.full),
+    artifact_content: fs.readFileSync(resolved.full, 'utf8'),
     project_state_id: basis.projection_of.project_state_id,
     status: basis.status,
+    cockpit: basis.cockpit || {},
     execution_allowed: basis.downstream_execution_allowed === true,
     closed_by_evidence_or_rule: basis.closed_by_evidence_or_rule,
     human_judgment: human,

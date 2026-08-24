@@ -60,6 +60,16 @@ def test_standard_loop_exposes_current_basis_classification_without_copying_peer
     assert "旧様式として退役" in html
     assert "standardLoopCurrentBasis" in renderer
     assert "['batch', 'csv', 'production']" in renderer
+    assert 'id="standard-cockpit-artifact-sha"' in html
+    assert 'id="btn-standard-open-basis"' in html
+    assert 'id="standard-cockpit-artifact-preview"' in html
+    assert 'id="standard-cockpit-artifact-content"' in html
+    assert 'id="btn-standard-enter-intake"' in html
+    assert "CURRENT_INTAKE_ROUTE_REACHED" in renderer
+    assert "ARTIFACT_OPENED" in renderer
+    assert "standardLoadAcceptedManifest();" not in renderer
+    assert "standardRunDoctor();" not in renderer
+    assert "window.nlmytgen.openRepoDoc(basis.path)" not in renderer
     assert "ClipPipeGen" not in html
 
 

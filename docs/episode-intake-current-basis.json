@@ -6,6 +6,12 @@
   },
   "status": "waiting_human_content_goal",
   "downstream_execution_allowed": false,
+  "cockpit": {
+    "artifact_label": "current episode intake authority projection",
+    "current_completion": "current-basis gate verified; successor episode intake is not bound",
+    "blocker": "viewer_outcome",
+    "next_project_owned_path": "bind the accepted outcome and successor inputs on this Cockpit, then enter manifest preflight"
+  },
   "closed_by_evidence_or_rule": [
     {
       "id": "production_surface",

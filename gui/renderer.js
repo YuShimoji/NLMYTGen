@@ -70,6 +70,15 @@ function renderStandardBasis(basis) {
   const options = document.getElementById('standard-basis-options');
   const retired = document.getElementById('standard-basis-retired');
   const next = document.getElementById('standard-basis-next');
+  const artifact = document.getElementById('standard-cockpit-artifact');
+  const artifactSha = document.getElementById('standard-cockpit-artifact-sha');
+  const completion = document.getElementById('standard-cockpit-completion');
+  const blocker = document.getElementById('standard-cockpit-blocker');
+  const nextPath = document.getElementById('standard-cockpit-next-path');
+  const openButton = document.getElementById('btn-standard-open-basis');
+  const enterButton = document.getElementById('btn-standard-enter-intake');
+  const artifactPreview = document.getElementById('standard-cockpit-artifact-preview');
+  const artifactContent = document.getElementById('standard-cockpit-artifact-content');
   const renderItems = (target, items, textFor) => {
     target.innerHTML = '';
     for (const item of items) {
@@ -86,6 +95,13 @@ function renderStandardBasis(basis) {
     options.innerHTML = '<li>選択不可</li>';
     retired.innerHTML = '<li>旧 production path は停止</li>';
     next.textContent = 'Current basis の欠落・不正は production を許可しません。';
+    artifact.textContent = basis?.path || 'unresolved';
+    artifactSha.textContent = 'unresolved';
+    completion.textContent = 'current artifactを検証できません';
+    blocker.textContent = 'current_basis_invalid';
+    nextPath.textContent = 'contract repair';
+    artifactContent.textContent = '';
+    artifactPreview.hidden = true;
   } else {
     status.textContent = basis.execution_allowed
       ? '現行 authority が downstream execution を許可しています。'
@@ -96,8 +112,18 @@ function renderStandardBasis(basis) {
     renderItems(options, basis.human_judgment.options, (item) => item.label);
     renderItems(retired, basis.retired_legacy_contracts, (item) => item.reason);
     next.textContent = basis.next_transition;
+    artifact.textContent = `${basis.cockpit.artifact_label || 'current basis'} · ${basis.path}`;
+    artifactSha.textContent = basis.sha256;
+    completion.textContent = basis.cockpit.current_completion || basis.status;
+    blocker.textContent = basis.cockpit.blocker || basis.human_judgment.id;
+    nextPath.textContent = basis.cockpit.next_project_owned_path || basis.next_transition;
+    artifactContent.textContent = basis.artifact_content;
+    artifactPreview.hidden = true;
+    artifactPreview.open = false;
   }
   const executionAllowed = basis?.ok && basis.execution_allowed === true;
+  openButton.disabled = !basis?.ok;
+  enterButton.disabled = !basis?.ok;
   document.getElementById('btn-standard-accepted-manifest').disabled = true;
   document.getElementById('btn-standard-select-manifest').disabled = !executionAllowed;
   document.getElementById('btn-standard-doctor').disabled = !executionAllowed;
@@ -408,6 +434,25 @@ async function standardRefreshAfterJob() {
 }
 
 function initStandardProductionLoop() {
+  document.getElementById('btn-standard-open-basis').addEventListener('click', async () => {
+    const basis = standardLoopState.basis;
+    const status = document.getElementById('standard-cockpit-route-status');
+    if (!basis?.path || !basis.sha256) return;
+    const preview = document.getElementById('standard-cockpit-artifact-preview');
+    preview.hidden = false;
+    preview.open = true;
+    preview.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    status.textContent = `ARTIFACT_OPENED: ${basis.path} / SHA-256 ${basis.sha256} / read-only`;
+  });
+  document.getElementById('btn-standard-enter-intake').addEventListener('click', () => {
+    const basis = standardLoopState.basis;
+    const question = document.getElementById('standard-basis-question');
+    question.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    question.focus({ preventScroll: true });
+    document.getElementById('standard-cockpit-route-status').textContent = basis?.human_judgment?.required_now
+      ? `CURRENT_INTAKE_ROUTE_REACHED: ${basis.human_judgment.id} / unanswered / preflight blocked`
+      : 'CURRENT_INTAKE_ROUTE_REACHED: accepted outcome / successor intake binding';
+  });
   document.getElementById('btn-standard-accepted-manifest').addEventListener('click', standardLoadAcceptedManifest);
   document.getElementById('btn-standard-select-manifest').addEventListener('click', async () => {
     renderStandardManifest(await window.nlmytgen.standardLoopSelectManifest());
@@ -464,11 +509,6 @@ function initStandardProductionLoop() {
     }
   });
   switchMainTab('standard', { alignWizard: false });
-  const mode = window.nlmytgen.runtimeMode || {};
-  if (!mode.electronCompatibility && !mode.standardLoopProbe && !mode.batchProbe) {
-    standardLoadAcceptedManifest();
-    standardRunDoctor();
-  }
 }
 
 // --- 制作ウィザード (1 本の動画向け導線) ---

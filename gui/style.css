@@ -554,6 +554,64 @@ main .hint strong {
   margin-top: 8px;
 }
 
+.standard-cockpit-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 16px;
+  margin: 8px 0;
+}
+
+.standard-cockpit-facts div {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 8px;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.standard-cockpit-facts dt {
+  color: var(--color-text-dim);
+}
+
+.standard-cockpit-facts dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono);
+}
+
+.standard-cockpit-actions {
+  margin-bottom: 8px;
+}
+
+.standard-cockpit-actions span {
+  color: var(--color-text-muted);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.standard-cockpit-artifact-preview {
+  margin: 10px 0 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: rgba(8, 13, 28, 0.72);
+}
+
+.standard-cockpit-artifact-preview summary {
+  cursor: pointer;
+  padding: 10px 12px;
+  color: var(--color-accent);
+}
+
+.standard-cockpit-artifact-preview pre {
+  max-height: 280px;
+  margin: 0;
+  padding: 12px;
+  overflow: auto;
+  border-top: 1px solid var(--color-border);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .standard-basis-columns h4 {
   margin-bottom: 4px;
   font-size: 12px;
@@ -569,6 +627,10 @@ main .hint strong {
 
 @media (max-width: 820px) {
   .standard-basis-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .standard-cockpit-facts {
     grid-template-columns: 1fr;
   }
 }

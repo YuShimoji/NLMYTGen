@@ -4799,3 +4799,22 @@ OPERATOR の workflow proof 節から移した観測メモ。現行条件は [OP
   screenshots remain preserved.
 - This slice creates no topic, script, material, candidate, YMMP, render, review
   decision, rights claim, production state, publication state, or Board mutation.
+
+## Current-outcome Cockpit route
+
+- The standard entrance is now the NLMYTGen Cockpit. It shows the current
+  artifact, computed SHA-256, completion point, `viewer_outcome` blocker, and
+  next project-owned transition before any historical production controls.
+- `docs/episode-intake-current-basis.json` was opened in the real Electron UI as
+  a read-only projection at SHA-256
+  `a249d2248738a53bf26bf51385a475745e166bf472697e745de122b5484a68e3`;
+  the visible content confirmed the v1 schema, waiting state, and
+  `downstream_execution_allowed: false`.
+- The same screen then reached `CURRENT_INTAKE_ROUTE_REACHED: viewer_outcome /
+  unanswered / preflight blocked` with all three A/B/C outcomes visible. No
+  outcome was selected and production remained disabled.
+- Startup no longer invokes the retired accepted-manifest route or environment
+  doctor. The Cockpit therefore reaches the current gate without legacy error
+  noise or a default production read.
+- No content, candidate, Board state, rights, production, or publication state
+  was created. Remote seal and push remain unperformed.

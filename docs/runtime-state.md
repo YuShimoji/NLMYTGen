@@ -1,7 +1,7 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: nlmytgen-user-visible-episode-intake-frontier-v1
-State-Revision: 2026-08-25.1
+State-Revision: 2026-08-25.2
 Updated: 2026-08-25 JST
 Product-State: fresh-frontier-proposal-awaiting-content-goal
 Product-Gate: one-content-goal-choice-required-no-production
@@ -11,13 +11,13 @@ Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: current-basis-gate-implemented-no-content
+Implementation-Checkpoint: current-outcome-cockpit-route-verified-no-choice
 Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
 Remote-Parity: pre-change 9f881146 verified 0/0; current remote seal unperformed
 Tracked-Worktree: chronological-history authoring paths are owned; unrelated dirty, untracked, ignored, and GUI state remain excluded
 ## Current Slice
 
-- `nlmytgen-user-visible-episode-intake-frontier-v1` is the only current proposal. `episode-intake-current-basis.json` now projects this authority into the GUI, classifies evidence-closed / human / retired contracts, and blocks old queue restore, legacy adapters, manifest load, production preflight, dry-run, and render until a successor intake is bound. It creates no content or invisible substitute deliverable.
+- `nlmytgen-user-visible-episode-intake-frontier-v1` is the only current proposal. The GUI now opens the exact `episode-intake-current-basis.json` content read-only with its computed SHA, then routes to the sole unanswered `viewer_outcome` gate. Old queue restore, legacy adapters, manifest load, production preflight, dry-run, and render remain blocked until successor intake binding; no content or substitute deliverable was created.
 - It adopts no topic, script, asset, layout, or prior benchmark style and stops at one content-goal choice. `v004r2`, the six-family loop, rejected SVG carriers, and prior proofs remain historical evidence only.
 - `history_japan_standard_time_001 v004r2` is closed as explicit `ADAPT /
   ADVANCE / NOT_REQUIRED`. Retain subtitle readability as a visual baseline.

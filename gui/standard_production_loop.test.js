@@ -154,10 +154,13 @@ test('tracked current basis matches the runtime state and keeps production close
   assert.equal(basis.ok, true);
   assert.equal(basis.project_state_id, 'nlmytgen-user-visible-episode-intake-frontier-v1');
   assert.equal(runtimeState.includes(`Project-State-ID: ${basis.project_state_id}`), true);
+  assert.equal(basis.sha256, digest(fs.readFileSync(path.join(repoRoot, basis.path))));
+  assert.match(basis.artifact_content, /nlmytgen\.episode_intake_current_basis\.v1/);
   assert.equal(basis.status, 'waiting_human_content_goal');
   assert.equal(basis.execution_allowed, false);
   assert.equal(basis.human_judgment.id, 'viewer_outcome');
   assert.equal(basis.human_judgment.options.length, 3);
+  assert.equal(basis.cockpit.blocker, 'viewer_outcome');
 });
 
 test('manifest summary distinguishes exact protected inputs and accepted output', (t) => {
