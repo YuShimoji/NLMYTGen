@@ -126,6 +126,149 @@ async function captureAt(win, width, height, directory) {
 
 async function run(win, observations) {
   const runRoot = path.dirname(receiptPath());
+  const currentBasisWorkflow = await withTimeout(
+    win.webContents.executeJavaScript(`
+      (async () => {
+        const waitFor = async (predicate, label, timeoutMs = 30000) => {
+          const started = Date.now();
+          while (!predicate()) {
+            if (Date.now() - started > timeoutMs) throw new Error(label + ' timed out');
+            await new Promise((resolve) => setTimeout(resolve, 50));
+          }
+        };
+        await waitFor(
+          () => document.readyState === 'complete'
+            && !document.getElementById('btn-standard-open-basis')?.disabled
+            && !document.getElementById('standard-basis-status')?.textContent.includes('確認中'),
+          'current-basis DecisionCase'
+        );
+        const previewButton = document.getElementById('btn-standard-open-basis');
+        previewButton.click();
+        await waitFor(
+          () => document.getElementById('standard-cockpit-route-status')?.textContent.includes('ARTIFACT_OPENED'),
+          'DecisionCase read-only preview'
+        );
+        const openedStatus = document.getElementById('standard-cockpit-route-status').textContent;
+        document.getElementById('btn-standard-enter-intake').click();
+        await waitFor(
+          () => document.getElementById('standard-cockpit-route-status')?.textContent.includes('CURRENT_INTAKE_ROUTE_REACHED'),
+          'viewer outcome route'
+        );
+        const artifactContent = document.getElementById('standard-cockpit-artifact-content').textContent;
+        let parsedArtifact = null;
+        try { parsedArtifact = JSON.parse(artifactContent); } catch { parsedArtifact = null; }
+        return {
+          active_tab: document.querySelector('.tab.active')?.dataset.tab,
+          status: document.getElementById('standard-basis-status').textContent,
+          active_artifact: document.getElementById('standard-cockpit-artifact').textContent,
+          active_sha256: document.getElementById('standard-cockpit-artifact-sha').textContent,
+          source_artifact: document.getElementById('standard-cockpit-source-artifact').textContent,
+          source_sha256: document.getElementById('standard-cockpit-source-sha').textContent,
+          resulting_artifact: document.getElementById('standard-cockpit-resulting-artifact').textContent,
+          blocker: document.getElementById('standard-cockpit-blocker').textContent,
+          question: document.getElementById('standard-basis-question').textContent,
+          options: [...document.querySelectorAll('#standard-basis-options li')].map((item) => item.textContent),
+          chain: [...document.querySelectorAll('#standard-decision-chain li')].map((item) => item.textContent),
+          opened_status: openedStatus,
+          route_status: document.getElementById('standard-cockpit-route-status').textContent,
+          parsed_artifact: parsedArtifact,
+          downstream: {
+            manifest_select_disabled: document.getElementById('btn-standard-select-manifest').disabled,
+            doctor_disabled: document.getElementById('btn-standard-doctor').disabled,
+            batch_tab_disabled: document.querySelector('.tab[data-tab="batch"]').disabled,
+            csv_tab_disabled: document.querySelector('.tab[data-tab="csv"]').disabled,
+            production_tab_disabled: document.querySelector('.tab[data-tab="production"]').disabled,
+          },
+          step_order: [...document.querySelectorAll('#tab-standard > .standard-loop > .standard-step')].map(
+            (element) => element.id
+          ),
+        };
+      })()
+    `),
+    45000,
+    'current-basis DecisionCase workflow',
+  );
+  if (
+    currentBasisWorkflow.parsed_artifact?.schema === 'nlmytgen.current_basis_decision_case.v1'
+    && currentBasisWorkflow.parsed_artifact?.status === 'waiting_human_correction'
+  ) {
+    const sourcePath = path.resolve(__dirname, '..', 'docs', 'episode-intake-current-basis.json');
+    const casePath = path.resolve(__dirname, '..', 'docs', 'episode-intake-current-basis-decision-case.json');
+    const expectedSourceSha = crypto.createHash('sha256').update(fs.readFileSync(sourcePath)).digest('hex');
+    const expectedCaseSha = crypto.createHash('sha256').update(fs.readFileSync(casePath)).digest('hex');
+    const checks = {
+      electron_exact_43_2_0: process.versions.electron === '43.2.0',
+      default_surface_is_standard_loop: currentBasisWorkflow.active_tab === 'standard',
+      active_artifact_is_decision_case: (
+        currentBasisWorkflow.active_artifact.includes('docs/episode-intake-current-basis-decision-case.json')
+        && currentBasisWorkflow.active_sha256 === expectedCaseSha
+      ),
+      source_identity_exact: (
+        currentBasisWorkflow.source_artifact === 'docs/episode-intake-current-basis.json'
+        && currentBasisWorkflow.source_sha256 === `${expectedSourceSha} · 3901 bytes`
+      ),
+      decision_chain_complete: (
+        currentBasisWorkflow.chain.length === 6
+        && currentBasisWorkflow.chain[0].startsWith('Source / Artifact:')
+        && currentBasisWorkflow.chain[1].startsWith('DecisionCase:')
+        && currentBasisWorkflow.chain[2].startsWith('Evidence:')
+        && currentBasisWorkflow.chain[3].startsWith('Rule:')
+        && currentBasisWorkflow.chain[4] === 'Human correction: viewer_outcome / unanswered'
+        && currentBasisWorkflow.chain[5] === 'Resulting artifact: not_created'
+      ),
+      one_human_correction_unanswered: (
+        currentBasisWorkflow.blocker === 'viewer_outcome / unanswered'
+        && currentBasisWorkflow.options.length === 3
+        && currentBasisWorkflow.parsed_artifact.human_correction?.selected_option_id === null
+      ),
+      resulting_artifact_not_created: (
+        currentBasisWorkflow.resulting_artifact === 'not_created'
+        && currentBasisWorkflow.parsed_artifact.resulting_artifact?.identity === null
+        && currentBasisWorkflow.parsed_artifact.resulting_artifact?.path === null
+      ),
+      decision_case_preview_opened_read_only: currentBasisWorkflow.opened_status.includes('/ read-only'),
+      viewer_outcome_route_reached: currentBasisWorkflow.route_status === (
+        'CURRENT_INTAKE_ROUTE_REACHED: viewer_outcome / unanswered / preflight blocked'
+      ),
+      downstream_execution_disabled: Object.values(currentBasisWorkflow.downstream).every(Boolean),
+      current_basis_first_in_step_order: currentBasisWorkflow.step_order[0] === 'standard-step-basis',
+      context_isolation_enabled: win.webContents.getLastWebPreferences().contextIsolation === true,
+      node_integration_disabled: win.webContents.getLastWebPreferences().nodeIntegration === false,
+      sandbox_enabled: win.webContents.getLastWebPreferences().sandbox === true,
+      audio_policy_silent: process.env.NLMYTGEN_AUDIO_POLICY === 'silent',
+      mute_audio_switch_enabled: app.commandLine.hasSwitch('mute-audio'),
+      background_networking_disabled: app.commandLine.hasSwitch('disable-background-networking'),
+      hidden_probe_did_not_show_window: win.isVisible() === false,
+      no_console_errors: observations.console_errors.length === 0,
+      no_security_warnings: observations.security_warnings.length === 0,
+      no_load_failures: observations.load_failures.length === 0,
+      no_renderer_crash: observations.render_process_gone.length === 0,
+      no_preload_errors: observations.preload_errors.length === 0,
+      no_unhandled_renderer_errors: observations.renderer_unhandled_errors.length === 0,
+    };
+    const status = Object.values(checks).every(Boolean) ? 'passed' : 'failed';
+    writeReceipt({
+      schema: 'nlmytgen.current_basis_decision_case_probe.v1',
+      status,
+      scope: 'actual Electron main/renderer/preload current-basis DecisionCase readback',
+      checks,
+      workflow: currentBasisWorkflow,
+      observations,
+      boundaries: {
+        source_artifact_modified: false,
+        human_correction_selected: false,
+        resulting_artifact_created: false,
+        render_performed: false,
+        playback_performed: false,
+        system_volume_changed: false,
+        external_upload: false,
+      },
+    });
+    observations.dispose();
+    win.close();
+    app.exit(status === 'passed' ? 0 : 1);
+    return;
+  }
   const realRender = process.env.NLMYTGEN_STANDARD_LOOP_REAL_RENDER === '1';
   const manifestNeedle = path.basename(
     process.env.NLMYTGEN_STANDARD_LOOP_MANIFEST

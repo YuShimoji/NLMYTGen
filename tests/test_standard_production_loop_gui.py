@@ -109,3 +109,8 @@ def test_package_scripts_expose_focused_contract_and_electron_smoke() -> None:
     assert package["scripts"]["smoke:three-run-repeatability"] == (
         "electron three_run_operator_repeatability_smoke.js"
     )
+    probe = (GUI_ROOT / "standard_production_loop_probe.js").read_text(encoding="utf-8")
+    assert "nlmytgen.current_basis_decision_case_probe.v1" in probe
+    assert "Human correction: viewer_outcome / unanswered" in probe
+    assert "Resulting artifact: not_created" in probe
+    assert "downstream_execution_disabled" in probe
