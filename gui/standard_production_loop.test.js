@@ -6,6 +6,7 @@ const path = require('node:path');
 const test = require('node:test');
 
 const {
+  CURRENT_BASIS_DECISION_CASE_RELATIVE_PATH,
   MAX_LOG_LINES,
   PipelineJobController,
   buildDoctorArgs,
@@ -27,6 +28,42 @@ function write(root, relative, value) {
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, value);
   return target;
+}
+
+function writeCurrentBasisDecisionCase(root) {
+  const sourcePath = 'docs/episode-intake-current-basis.json';
+  const sourceValue = fs.readFileSync(path.join(root, sourcePath));
+  const basis = JSON.parse(sourceValue.toString('utf8'));
+  return write(root, CURRENT_BASIS_DECISION_CASE_RELATIVE_PATH, JSON.stringify({
+    schema: 'nlmytgen.current_basis_decision_case.v1',
+    project_state_id: basis.projection_of?.project_state_id,
+    status: 'waiting_human_correction',
+    source_artifact: {
+      path: sourcePath,
+      schema: basis.schema,
+      size_bytes: sourceValue.length,
+      sha256: digest(sourceValue),
+    },
+    decision_case: {
+      id: basis.projection_of?.project_state_id,
+      decision_id: basis.human_judgment?.id,
+      question: basis.human_judgment?.prompt,
+    },
+    evidence: [{ id: 'fixture-evidence', observation: 'closed' }],
+    rules: [{ id: 'fixture-rule', decision: 'ask one correction' }],
+    human_correction: {
+      ...basis.human_judgment,
+      status: 'unanswered',
+      selected_option_id: null,
+    },
+    resulting_artifact: {
+      status: 'not_created',
+      identity: null,
+      path: null,
+      source_overwrite_allowed: false,
+    },
+    downstream_execution_allowed: false,
+  }));
 }
 
 test('command builders keep the read-only doctor and never add force', () => {
@@ -103,12 +140,16 @@ test('current basis classifies one human question and blocks downstream executio
     retired_legacy_contracts: [{ id: 'old', reason: 'historical only' }],
     blocked_operations: ['render'],
   }));
+  writeCurrentBasisDecisionCase(root);
   const basis = summarizeCurrentBasis(root);
   assert.equal(basis.ok, true);
   assert.equal(basis.execution_allowed, false);
   assert.equal(basis.human_judgment.id, 'viewer_outcome');
   assert.equal(basis.human_judgment.options.length, 2);
   assert.equal(basis.retired_legacy_contracts.length, 1);
+  assert.equal(basis.decision_case.human_correction.status, 'unanswered');
+  assert.equal(basis.decision_case.human_correction.selected_option_id, null);
+  assert.equal(basis.decision_case.resulting_artifact.status, 'not_created');
 });
 
 test('missing or malformed current basis fails closed', (t) => {
@@ -118,7 +159,7 @@ test('missing or malformed current basis fails closed', (t) => {
   write(root, 'docs/episode-intake-current-basis.json', JSON.stringify({ schema: 'wrong' }));
   const malformed = summarizeCurrentBasis(root);
   assert.equal(malformed.ok, false);
-  assert.equal(malformed.error, 'CURRENT_BASIS_CONTRACT_INVALID');
+  assert.equal(malformed.error, 'CURRENT_BASIS_DECISION_CASE_MISSING');
   assert.equal(malformed.execution_allowed, false);
 });
 
@@ -141,9 +182,39 @@ test('execution cannot open by flipping the boolean without bound successor inpu
     retired_legacy_contracts: [],
     blocked_operations: [],
   }));
+  writeCurrentBasisDecisionCase(root);
   const basis = summarizeCurrentBasis(root);
   assert.equal(basis.ok, false);
   assert.equal(basis.error, 'CURRENT_BASIS_CONTRACT_INVALID');
+  assert.equal(basis.execution_allowed, false);
+});
+
+test('DecisionCase source identity mismatch fails closed without selecting an outcome', (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nlmytgen-current-basis-case-mismatch-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  write(root, 'docs/runtime-state.md', 'Project-State-ID: current-state\n');
+  write(root, 'docs/episode-intake-current-basis.json', JSON.stringify({
+    schema: 'nlmytgen.episode_intake_current_basis.v1',
+    projection_of: { path: 'docs/runtime-state.md', project_state_id: 'current-state' },
+    status: 'waiting_human_content_goal',
+    downstream_execution_allowed: false,
+    closed_by_evidence_or_rule: [{ id: 'surface', decision: 'YMM4 owns production.' }],
+    human_judgment: {
+      id: 'viewer_outcome',
+      prompt: 'viewer outcome?',
+      required_now: true,
+      options: [{ id: 'a', label: 'A' }, { id: 'b', label: 'B' }],
+    },
+    retired_legacy_contracts: [],
+    blocked_operations: ['render'],
+  }));
+  const casePath = writeCurrentBasisDecisionCase(root);
+  const decisionCase = JSON.parse(fs.readFileSync(casePath, 'utf8'));
+  decisionCase.source_artifact.sha256 = '0'.repeat(64);
+  fs.writeFileSync(casePath, JSON.stringify(decisionCase));
+  const basis = summarizeCurrentBasis(root);
+  assert.equal(basis.ok, false);
+  assert.equal(basis.error, 'CURRENT_BASIS_DECISION_CASE_INVALID');
   assert.equal(basis.execution_allowed, false);
 });
 
@@ -161,6 +232,12 @@ test('tracked current basis matches the runtime state and keeps production close
   assert.equal(basis.human_judgment.id, 'viewer_outcome');
   assert.equal(basis.human_judgment.options.length, 3);
   assert.equal(basis.cockpit.blocker, 'viewer_outcome');
+  assert.equal(basis.source_artifact.size_bytes, 3901);
+  assert.equal(basis.decision_case.id, 'nlmytgen-user-visible-episode-intake-frontier-v1');
+  assert.equal(basis.decision_case.decision_id, 'viewer_outcome');
+  assert.equal(basis.decision_case.human_correction.status, 'unanswered');
+  assert.equal(basis.decision_case.human_correction.selected_option_id, null);
+  assert.equal(basis.decision_case.resulting_artifact.status, 'not_created');
 });
 
 test('manifest summary distinguishes exact protected inputs and accepted output', (t) => {

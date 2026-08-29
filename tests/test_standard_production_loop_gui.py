@@ -56,17 +56,24 @@ def test_standard_loop_exposes_current_basis_classification_without_copying_peer
     html = (GUI_ROOT / "index.html").read_text(encoding="utf-8")
     renderer = (GUI_ROOT / "renderer.js").read_text(encoding="utf-8")
     assert "Evidence / Rule で閉じた判断" in html
-    assert "人に残る判断" in html
+    assert "Human correction（未回答）" in html
     assert "旧様式として退役" in html
     assert "standardLoopCurrentBasis" in renderer
     assert "['batch', 'csv', 'production']" in renderer
     assert 'id="standard-cockpit-artifact-sha"' in html
+    assert 'id="standard-cockpit-source-artifact"' in html
+    assert 'id="standard-cockpit-source-sha"' in html
+    assert 'id="standard-cockpit-resulting-artifact"' in html
+    assert 'id="standard-decision-chain"' in html
     assert 'id="btn-standard-open-basis"' in html
     assert 'id="standard-cockpit-artifact-preview"' in html
     assert 'id="standard-cockpit-artifact-content"' in html
     assert 'id="btn-standard-enter-intake"' in html
     assert "CURRENT_INTAKE_ROUTE_REACHED" in renderer
     assert "ARTIFACT_OPENED" in renderer
+    assert "basis.decision_case.artifact_content" in renderer
+    assert "Human correction:" in renderer
+    assert "Resulting artifact:" in renderer
     assert "standardLoadAcceptedManifest();" not in renderer
     assert "standardRunDoctor();" not in renderer
     assert "window.nlmytgen.openRepoDoc(basis.path)" not in renderer

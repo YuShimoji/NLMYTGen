@@ -72,9 +72,13 @@ function renderStandardBasis(basis) {
   const next = document.getElementById('standard-basis-next');
   const artifact = document.getElementById('standard-cockpit-artifact');
   const artifactSha = document.getElementById('standard-cockpit-artifact-sha');
+  const sourceArtifact = document.getElementById('standard-cockpit-source-artifact');
+  const sourceSha = document.getElementById('standard-cockpit-source-sha');
   const completion = document.getElementById('standard-cockpit-completion');
   const blocker = document.getElementById('standard-cockpit-blocker');
+  const resultingArtifact = document.getElementById('standard-cockpit-resulting-artifact');
   const nextPath = document.getElementById('standard-cockpit-next-path');
+  const decisionChain = document.getElementById('standard-decision-chain');
   const openButton = document.getElementById('btn-standard-open-basis');
   const enterButton = document.getElementById('btn-standard-enter-intake');
   const artifactPreview = document.getElementById('standard-cockpit-artifact-preview');
@@ -97,9 +101,13 @@ function renderStandardBasis(basis) {
     next.textContent = 'Current basis の欠落・不正は production を許可しません。';
     artifact.textContent = basis?.path || 'unresolved';
     artifactSha.textContent = 'unresolved';
+    sourceArtifact.textContent = basis?.path || 'unresolved';
+    sourceSha.textContent = 'unresolved';
     completion.textContent = 'current artifactを検証できません';
     blocker.textContent = 'current_basis_invalid';
+    resultingArtifact.textContent = 'not_created';
     nextPath.textContent = 'contract repair';
+    decisionChain.innerHTML = '<li>DecisionCase contract invalid; downstream fail-closed</li>';
     artifactContent.textContent = '';
     artifactPreview.hidden = true;
   } else {
@@ -112,12 +120,24 @@ function renderStandardBasis(basis) {
     renderItems(options, basis.human_judgment.options, (item) => item.label);
     renderItems(retired, basis.retired_legacy_contracts, (item) => item.reason);
     next.textContent = basis.next_transition;
-    artifact.textContent = `${basis.cockpit.artifact_label || 'current basis'} · ${basis.path}`;
-    artifactSha.textContent = basis.sha256;
+    artifact.textContent = `${basis.decision_case.id} · ${basis.decision_case.path}`;
+    artifactSha.textContent = basis.decision_case.sha256;
+    sourceArtifact.textContent = basis.source_artifact.path;
+    sourceSha.textContent = `${basis.source_artifact.sha256} · ${basis.source_artifact.size_bytes} bytes`;
     completion.textContent = basis.cockpit.current_completion || basis.status;
-    blocker.textContent = basis.cockpit.blocker || basis.human_judgment.id;
+    blocker.textContent = `${basis.decision_case.human_correction.id} / ${basis.decision_case.human_correction.status}`;
+    resultingArtifact.textContent = basis.decision_case.resulting_artifact.status;
     nextPath.textContent = basis.cockpit.next_project_owned_path || basis.next_transition;
-    artifactContent.textContent = basis.artifact_content;
+    const chainItems = [
+      `Source / Artifact: ${basis.source_artifact.path} / ${basis.source_artifact.sha256}`,
+      `DecisionCase: ${basis.decision_case.id} / ${basis.decision_case.path}`,
+      `Evidence: ${basis.decision_case.evidence.length}件をreadback`,
+      `Rule: ${basis.decision_case.rules.length}件で既知判断を閉じる`,
+      `Human correction: ${basis.decision_case.human_correction.id} / ${basis.decision_case.human_correction.status}`,
+      `Resulting artifact: ${basis.decision_case.resulting_artifact.status}`,
+    ];
+    renderItems(decisionChain, chainItems, (item) => item);
+    artifactContent.textContent = basis.decision_case.artifact_content;
     artifactPreview.hidden = true;
     artifactPreview.open = false;
   }
@@ -437,12 +457,12 @@ function initStandardProductionLoop() {
   document.getElementById('btn-standard-open-basis').addEventListener('click', async () => {
     const basis = standardLoopState.basis;
     const status = document.getElementById('standard-cockpit-route-status');
-    if (!basis?.path || !basis.sha256) return;
+    if (!basis?.decision_case?.path || !basis.decision_case.sha256) return;
     const preview = document.getElementById('standard-cockpit-artifact-preview');
     preview.hidden = false;
     preview.open = true;
     preview.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    status.textContent = `ARTIFACT_OPENED: ${basis.path} / SHA-256 ${basis.sha256} / read-only`;
+    status.textContent = `ARTIFACT_OPENED: ${basis.decision_case.path} / SHA-256 ${basis.decision_case.sha256} / read-only`;
   });
   document.getElementById('btn-standard-enter-intake').addEventListener('click', () => {
     const basis = standardLoopState.basis;

@@ -11,6 +11,7 @@ const ACCEPTED_MANIFEST_RELATIVE_PATH = [
   'new_banknote_real_media_episode_manifest.json',
 ].join('/');
 const CURRENT_BASIS_RELATIVE_PATH = 'docs/episode-intake-current-basis.json';
+const CURRENT_BASIS_DECISION_CASE_RELATIVE_PATH = 'docs/episode-intake-current-basis-decision-case.json';
 
 const ACCEPTANCE_RECEIPT_FILENAME = 'human_real_media_cut_acceptance_receipt.json';
 const PIPELINE_RECEIPT_FILENAME = 'pipeline_run_receipt.json';
@@ -69,7 +70,11 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
-function summarizeCurrentBasis(repoRoot, relPath = CURRENT_BASIS_RELATIVE_PATH) {
+function summarizeCurrentBasis(
+  repoRoot,
+  relPath = CURRENT_BASIS_RELATIVE_PATH,
+  decisionCaseRelPath = CURRENT_BASIS_DECISION_CASE_RELATIVE_PATH,
+) {
   const resolved = resolveRepoRelativePath(repoRoot, relPath);
   if (!resolved.ok) return { ok: false, error: resolved.error, execution_allowed: false };
   if (!fs.existsSync(resolved.full)) {
@@ -87,6 +92,27 @@ function summarizeCurrentBasis(repoRoot, relPath = CURRENT_BASIS_RELATIVE_PATH) 
       ok: false,
       error: `current basis JSON error: ${err.message}`,
       path: resolved.rel,
+      execution_allowed: false,
+    };
+  }
+  const caseResolved = resolveRepoRelativePath(repoRoot, decisionCaseRelPath);
+  if (!caseResolved.ok || !fs.existsSync(caseResolved.full)) {
+    return {
+      ok: false,
+      error: 'CURRENT_BASIS_DECISION_CASE_MISSING',
+      path: resolved.rel,
+      execution_allowed: false,
+    };
+  }
+  let decisionCase;
+  try {
+    decisionCase = readJson(caseResolved.full);
+  } catch (err) {
+    return {
+      ok: false,
+      error: `current basis DecisionCase JSON error: ${err.message}`,
+      path: resolved.rel,
+      decision_case_path: caseResolved.rel,
       execution_allowed: false,
     };
   }
@@ -118,6 +144,41 @@ function summarizeCurrentBasis(repoRoot, relPath = CURRENT_BASIS_RELATIVE_PATH) 
       && successor.subtitle_invariants !== null
     )
   );
+  const sourceArtifact = decisionCase.source_artifact || {};
+  const humanCorrection = decisionCase.human_correction || {};
+  const resultingArtifact = decisionCase.resulting_artifact || {};
+  const sourceIdentityMatches = (
+    sourceArtifact.path === resolved.rel
+    && sourceArtifact.schema === basis.schema
+    && sourceArtifact.size_bytes === fs.statSync(resolved.full).size
+    && sourceArtifact.sha256 === sha256(resolved.full)
+  );
+  const humanCorrectionMatches = (
+    humanCorrection.id === human.id
+    && humanCorrection.status === 'unanswered'
+    && humanCorrection.selected_option_id === null
+    && humanCorrection.prompt === human.prompt
+    && JSON.stringify(humanCorrection.options) === JSON.stringify(human.options)
+  );
+  const decisionCaseValid = (
+    decisionCase.schema === 'nlmytgen.current_basis_decision_case.v1'
+    && decisionCase.project_state_id === basis.projection_of?.project_state_id
+    && decisionCase.status === 'waiting_human_correction'
+    && decisionCase.decision_case?.id === basis.projection_of?.project_state_id
+    && decisionCase.decision_case?.decision_id === human.id
+    && decisionCase.decision_case?.question === human.prompt
+    && sourceIdentityMatches
+    && Array.isArray(decisionCase.evidence)
+    && decisionCase.evidence.length > 0
+    && Array.isArray(decisionCase.rules)
+    && decisionCase.rules.length > 0
+    && humanCorrectionMatches
+    && resultingArtifact.status === 'not_created'
+    && resultingArtifact.identity === null
+    && resultingArtifact.path === null
+    && resultingArtifact.source_overwrite_allowed === false
+    && decisionCase.downstream_execution_allowed === false
+  );
   const valid = (
     basis.schema === 'nlmytgen.episode_intake_current_basis.v1'
     && typeof basis.status === 'string'
@@ -134,11 +195,14 @@ function summarizeCurrentBasis(repoRoot, relPath = CURRENT_BASIS_RELATIVE_PATH) 
     && Array.isArray(basis.retired_legacy_contracts)
     && Array.isArray(basis.blocked_operations)
     && executionContractValid
+    && decisionCaseValid
   );
   if (!valid) {
     return {
       ok: false,
-      error: 'CURRENT_BASIS_CONTRACT_INVALID',
+      error: decisionCaseValid
+        ? 'CURRENT_BASIS_CONTRACT_INVALID'
+        : 'CURRENT_BASIS_DECISION_CASE_INVALID',
       path: resolved.rel,
       execution_allowed: false,
     };
@@ -159,6 +223,24 @@ function summarizeCurrentBasis(repoRoot, relPath = CURRENT_BASIS_RELATIVE_PATH) 
     blocked_operations: basis.blocked_operations,
     next_transition: basis.next_transition,
     successor_intake: basis.successor_intake || null,
+    source_artifact: {
+      path: resolved.rel,
+      sha256: sha256(resolved.full),
+      size_bytes: fs.statSync(resolved.full).size,
+    },
+    decision_case: {
+      id: decisionCase.decision_case.id,
+      decision_id: decisionCase.decision_case.decision_id,
+      status: decisionCase.status,
+      path: caseResolved.rel,
+      sha256: sha256(caseResolved.full),
+      size_bytes: fs.statSync(caseResolved.full).size,
+      artifact_content: fs.readFileSync(caseResolved.full, 'utf8'),
+      evidence: decisionCase.evidence,
+      rules: decisionCase.rules,
+      human_correction: humanCorrection,
+      resulting_artifact: resultingArtifact,
+    },
   };
 }
 
@@ -483,6 +565,7 @@ class PipelineJobController {
 
 module.exports = {
   ACCEPTED_MANIFEST_RELATIVE_PATH,
+  CURRENT_BASIS_DECISION_CASE_RELATIVE_PATH,
   CURRENT_BASIS_RELATIVE_PATH,
   MAX_LOG_LINES,
   PipelineJobController,

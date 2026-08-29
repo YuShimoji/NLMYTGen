@@ -1,8 +1,8 @@
 # Runtime State — NLMYTGen
 
 Project-State-ID: nlmytgen-user-visible-episode-intake-frontier-v1
-State-Revision: 2026-08-25.2
-Updated: 2026-08-25 JST
+State-Revision: 2026-08-30.1
+Updated: 2026-08-30 JST
 Product-State: fresh-frontier-proposal-awaiting-content-goal
 Product-Gate: one-content-goal-choice-required-no-production
 Recommended-Next: answer-one-content-goal-choice-then-bind-visible-requirements-script-material-locators
@@ -11,13 +11,13 @@ Development-Audio-Policy: silent_by_default
 Handoff-Branch: codex/nlmytgen-portable-review-bundle-v1
 Handoff-PR: none
 Required-Base: 3556c8b73e635f87d867a0003cf4187b19075e88
-Implementation-Checkpoint: current-outcome-cockpit-route-verified-no-choice
+Implementation-Checkpoint: current-basis-decisioncase-bound-no-choice
 Prior-Outcome-Commit: b4f5ff9e4c36c6e8f1139be5418f92277215f7b0
 Remote-Parity: pre-change 9f881146 verified 0/0; current remote seal unperformed
 Tracked-Worktree: chronological-history authoring paths are owned; unrelated dirty, untracked, ignored, and GUI state remain excluded
 ## Current Slice
 
-- `nlmytgen-user-visible-episode-intake-frontier-v1` is the only current proposal. The GUI now opens the exact `episode-intake-current-basis.json` content read-only with its computed SHA, then routes to the sole unanswered `viewer_outcome` gate. Old queue restore, legacy adapters, manifest load, production preflight, dry-run, and render remain blocked until successor intake binding; no content or substitute deliverable was created.
+- `nlmytgen-user-visible-episode-intake-frontier-v1` remains the only current proposal. Its exact `episode-intake-current-basis.json` source is unchanged and bound to a separate read-only DecisionCase; `viewer_outcome` remains unanswered and the resulting successor artifact is not created. Old queue restore, legacy adapters, manifest load, production preflight, dry-run, and render remain blocked until successor intake binding.
 - It adopts no topic, script, asset, layout, or prior benchmark style and stops at one content-goal choice. `v004r2`, the six-family loop, rejected SVG carriers, and prior proofs remain historical evidence only.
 - `history_japan_standard_time_001 v004r2` is closed as explicit `ADAPT /
   ADVANCE / NOT_REQUIRED`. Retain subtitle readability as a visual baseline.

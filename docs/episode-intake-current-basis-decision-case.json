@@ -1,0 +1,79 @@
+{
+  "schema": "nlmytgen.current_basis_decision_case.v1",
+  "project_state_id": "nlmytgen-user-visible-episode-intake-frontier-v1",
+  "status": "waiting_human_correction",
+  "source_artifact": {
+    "path": "docs/episode-intake-current-basis.json",
+    "schema": "nlmytgen.episode_intake_current_basis.v1",
+    "size_bytes": 3901,
+    "sha256": "a249d2248738a53bf26bf51385a475745e166bf472697e745de122b5484a68e3"
+  },
+  "decision_case": {
+    "id": "nlmytgen-user-visible-episode-intake-frontier-v1",
+    "decision_id": "viewer_outcome",
+    "question": "次の動画で、視聴後に視聴者が得るものをどれにしますか？",
+    "scope": "successor episode の content goal 一件だけを決める"
+  },
+  "evidence": [
+    {
+      "id": "production_surface",
+      "observation": "制作と最終 creative confirmation の surface は YMM4 である。",
+      "source": "docs/INVARIANTS.md#production-value-north-star"
+    },
+    {
+      "id": "python_boundary",
+      "observation": "Python は accepted input の検証と接続に限定される。",
+      "source": "docs/INVARIANTS.md#responsibility-boundaries"
+    },
+    {
+      "id": "current_input_authority",
+      "observation": "successor episode の topic、script、material locator、visual language、template identity、production candidate は未採用である。",
+      "source": "docs/runtime-state.md#current-slice"
+    },
+    {
+      "id": "review_frequency",
+      "observation": "変更のない機械確認は readback で閉じ、YMM4 visual review は変更面と最終 creative judgement に限定する。",
+      "source": "docs/INVARIANTS.md#ux--algorithmic-invariants"
+    }
+  ],
+  "rules": [
+    {
+      "id": "no_repeated_closed_questions",
+      "decision": "Evidence と Rule で閉じた判断は再質問しない。",
+      "source": "docs/CURRENT_BASIS_REVIEW_CONTRACT.md#現行分類"
+    },
+    {
+      "id": "one_human_correction_before_binding",
+      "decision": "viewer outcome 一件を受理するまで downstream intake と production を発行しない。",
+      "source": "docs/CURRENT_BASIS_REVIEW_CONTRACT.md#現在の停止条件"
+    }
+  ],
+  "human_correction": {
+    "id": "viewer_outcome",
+    "status": "unanswered",
+    "selected_option_id": null,
+    "prompt": "次の動画で、視聴後に視聴者が得るものをどれにしますか？",
+    "options": [
+      {
+        "id": "initial_understanding",
+        "label": "一つのテーマを初見でも理解できる説明"
+      },
+      {
+        "id": "chronological_understanding",
+        "label": "複数の出来事を時系列で追える整理"
+      },
+      {
+        "id": "source_claim_comparison",
+        "label": "資料や主張を比較して判断できる検証"
+      }
+    ]
+  },
+  "resulting_artifact": {
+    "status": "not_created",
+    "identity": null,
+    "path": null,
+    "creation_condition": "human_correction.selected_option_id が明示された後、新 episode identity と successor inputs を別 artifact に束縛する。",
+    "source_overwrite_allowed": false
+  },
+  "downstream_execution_allowed": false
+}

@@ -4818,3 +4818,20 @@ OPERATOR の workflow proof 節から移した観測メモ。現行条件は [OP
   noise or a default production read.
 - No content, candidate, Board state, rights, production, or publication state
   was created. Remote seal and push remain unperformed.
+
+## Current-basis DecisionCase binding
+
+- The existing `docs/episode-intake-current-basis.json` remains unchanged at
+  3,901 bytes and SHA-256
+  `a249d2248738a53bf26bf51385a475745e166bf472697e745de122b5484a68e3`.
+- A separate `docs/episode-intake-current-basis-decision-case.json` binds that
+  exact Source / Artifact to the existing Evidence and Rules. The Cockpit reads
+  and displays the case as the Active Artifact.
+- `viewer_outcome` is recorded as `unanswered` with `selected_option_id: null`;
+  the Resulting artifact is `not_created`. The three options are unchanged and
+  no topic, format, script, material, template, or visual treatment is inferred.
+- Source identity mismatch or a missing/malformed DecisionCase fails closed.
+  This binding does not create content, media, rights, production, publication,
+  upload, Board, or remote effects.
+- 根拠: `docs/CURRENT_BASIS_REVIEW_CONTRACT.md` 現行分類 / 実行 gate +
+  `docs/runtime-state.md` Current Slice / Exact Next Action.

@@ -1,6 +1,8 @@
 # Current Basis Review Contract
 
-現行 `runtime-state` を production path の入口へ投影し、既知の Evidence / Rule で閉じられる確認を人へ戻さないための NLMYTGen 固有契約。機械可読 projection は `episode-intake-current-basis.json`、表示先は Electron GUI の「自動動画生成」先頭である。
+現行 `runtime-state` を production path の入口へ投影し、既知の Evidence / Rule で閉じられる確認を人へ戻さないための NLMYTGen 固有契約。Source / Artifact は `episode-intake-current-basis.json`、exact identity に束縛した非上書きの DecisionCase は `episode-intake-current-basis-decision-case.json`、表示先は Electron GUI の「自動動画生成」先頭である。
+
+DecisionCase は Source / Artifact、Evidence、Rule、Human correction、Resulting artifact を一列で保持する。現行 case の Human correction は `viewer_outcome / unanswered`、Resulting artifact は `not_created` であり、選択や successor artifact の存在を推論しない。
 
 ## 現行分類
 
@@ -17,7 +19,7 @@
 
 ## 実行 gate
 
-GUI main process は projection を各入口で再読する。projection が missing、malformed、または `downstream_execution_allowed=false` の場合は `CURRENT_BASIS_BLOCKED` として manifest load、runtime doctor の production preflight、legacy CSV / IR / episode-pack / packet writes、batch queue restore / plan / resume / execute、dry-run、render start を停止する。renderer の disabled state だけに依存しない。
+GUI main process は projection と DecisionCase を各入口で再読する。どちらかが missing / malformed、Source の path・size・SHA が不一致、Human correction が根拠なく選択済み、または `downstream_execution_allowed=false` の場合は `CURRENT_BASIS_BLOCKED` として manifest load、runtime doctor の production preflight、legacy CSV / IR / episode-pack / packet writes、batch queue restore / plan / resume / execute、dry-run、render start を停止する。renderer の disabled state だけに依存しない。
 
 projection は `docs/runtime-state.md` の read-only machine projection であり、別の product-state authority ではない。content goal が accepted された後も、同じ file の boolean だけを手で反転して production を許可してはならない。新 episode identity、format requirements、accepted NotebookLM script identity、material locators、YMM4 template identity、subtitle invariants が一つの user-visible intake として束縛された契約へ更新し、focused test を通す。
 

@@ -70,31 +70,42 @@
         </div>
 
         <section class="standard-step standard-current-basis" id="standard-step-basis">
-          <h3><span aria-hidden="true">1.</span> 現行 intake</h3>
+          <h3><span aria-hidden="true">1.</span> 現行 DecisionCase</h3>
           <p id="standard-basis-status" role="status">現行 authority を確認中…</p>
           <dl class="standard-cockpit-facts">
-            <div><dt>Current artifact</dt><dd id="standard-cockpit-artifact">確認中</dd></div>
-            <div><dt>SHA-256</dt><dd id="standard-cockpit-artifact-sha">確認中</dd></div>
+            <div><dt>Active artifact</dt><dd id="standard-cockpit-artifact">確認中</dd></div>
+            <div><dt>Active SHA-256</dt><dd id="standard-cockpit-artifact-sha">確認中</dd></div>
+            <div><dt>Source / Artifact</dt><dd id="standard-cockpit-source-artifact">確認中</dd></div>
+            <div><dt>Source SHA-256</dt><dd id="standard-cockpit-source-sha">確認中</dd></div>
             <div><dt>現在完成地点</dt><dd id="standard-cockpit-completion">確認中</dd></div>
             <div><dt>Blocker</dt><dd id="standard-cockpit-blocker">確認中</dd></div>
+            <div><dt>Resulting artifact</dt><dd id="standard-cockpit-resulting-artifact">確認中</dd></div>
             <div><dt>次のproject-owned path</dt><dd id="standard-cockpit-next-path">確認中</dd></div>
           </dl>
           <div class="standard-control-row standard-cockpit-actions">
-            <button type="button" id="btn-standard-open-basis" disabled>Current artifactを開く</button>
+            <button type="button" id="btn-standard-open-basis" disabled>DecisionCaseを開く</button>
             <button type="button" id="btn-standard-enter-intake" disabled>viewer outcome 一件へ進む</button>
             <span id="standard-cockpit-route-status" role="status">artifact未確認</span>
           </div>
           <details id="standard-cockpit-artifact-preview" class="standard-cockpit-artifact-preview" hidden>
-            <summary>現行 authority projection（read-only）</summary>
+            <summary>現行 DecisionCase（read-only）</summary>
             <pre id="standard-cockpit-artifact-content"></pre>
           </details>
+          <ol id="standard-decision-chain" class="standard-decision-chain">
+            <li>Source / Artifact: 確認中</li>
+            <li>DecisionCase: 確認中</li>
+            <li>Evidence: 確認中</li>
+            <li>Rule: 確認中</li>
+            <li>Human correction: 確認中</li>
+            <li>Resulting artifact: 確認中</li>
+          </ol>
           <div class="standard-basis-columns">
             <div>
               <h4>Evidence / Rule で閉じた判断</h4>
               <ul id="standard-basis-closed" class="standard-basis-list"><li>確認中</li></ul>
             </div>
             <div>
-              <h4>人に残る判断</h4>
+              <h4>Human correction（未回答）</h4>
               <p id="standard-basis-question" tabindex="-1">確認中</p>
               <ol id="standard-basis-options" class="standard-basis-list"><li>確認中</li></ol>
             </div>
