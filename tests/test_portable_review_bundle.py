@@ -46,6 +46,12 @@ TRACKED_RECEIPT = Path(
     "production_pilots/factory_canaries/food_expiry_labels_001/"
     "cue_002_queue_review_packet_receipt.json"
 )
+REQUIRES_SOURCE_PACKET = pytest.mark.requires_local_evidence(
+    "portable_review_bundle_source_packet",
+    (PACKET / "packet_manifest.json").as_posix(),
+    DESCRIPTOR.as_posix(),
+    TRACKED_RECEIPT.as_posix(),
+)
 
 
 def _temp_root(label: str) -> Path:
@@ -161,6 +167,7 @@ def _base_recipient_receipt() -> dict:
     }
 
 
+@REQUIRES_SOURCE_PACKET
 def test_real_source_packet_resolves_exact_tracked_and_local_identity() -> None:
     result = inspect_source_packet(
         repo_root=ROOT,
@@ -180,6 +187,7 @@ def test_real_source_packet_resolves_exact_tracked_and_local_identity() -> None:
     assert all(row["size_bytes"] > 0 for row in result["file_identities"])
 
 
+@REQUIRES_SOURCE_PACKET
 def test_build_is_deterministic_and_directory_zip_semantics_match() -> None:
     root = _temp_root("build")
     try:
@@ -204,6 +212,7 @@ def test_build_is_deterministic_and_directory_zip_semantics_match() -> None:
         shutil.rmtree(root, ignore_errors=True)
 
 
+@REQUIRES_SOURCE_PACKET
 def test_public_cli_build_and_validate_are_json_and_no_overwrite(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
@@ -246,6 +255,7 @@ def test_public_cli_build_and_validate_are_json_and_no_overwrite(
         shutil.rmtree(root, ignore_errors=True)
 
 
+@REQUIRES_SOURCE_PACKET
 def test_source_packet_hash_mismatch_and_missing_file_fail_closed() -> None:
     root = _temp_root("source-drift")
     root.mkdir(parents=True, exist_ok=False)
@@ -275,6 +285,7 @@ def test_source_packet_hash_mismatch_and_missing_file_fail_closed() -> None:
         shutil.rmtree(root, ignore_errors=True)
 
 
+@REQUIRES_SOURCE_PACKET
 def test_source_manifest_contradiction_fails_after_exact_manifest_rebind() -> None:
     root = _temp_root("manifest-contradiction")
     root.mkdir(parents=True, exist_ok=False)
@@ -361,6 +372,7 @@ def test_duplicate_normalized_path_symlink_and_size_ceiling_are_rejected(
     assert observed.value.code == "review_bundle_size_ceiling"
 
 
+@REQUIRES_SOURCE_PACKET
 def test_foreign_existing_destination_and_modified_file_are_rejected() -> None:
     root = _temp_root("destination")
     try:
@@ -395,6 +407,7 @@ def test_foreign_existing_destination_and_modified_file_are_rejected() -> None:
         shutil.rmtree(root, ignore_errors=True)
 
 
+@REQUIRES_SOURCE_PACKET
 def test_portable_manifest_schema_and_initial_states_are_fail_closed() -> None:
     root = _temp_root("manifest-schema")
     try:
@@ -442,6 +455,7 @@ def test_offline_entrypoint_external_resource_and_autoplay_fail_closed() -> None
     assert observed.value.code == "review_bundle_autoplay_forbidden"
 
 
+@REQUIRES_SOURCE_PACKET
 def test_source_mutation_during_build_is_detected_on_isolated_copy(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -503,6 +517,7 @@ def test_recipient_state_axes_never_infer_human_content_or_approval() -> None:
     assert observed.value.code == "delivery_complete_inference_forbidden"
 
 
+@REQUIRES_SOURCE_PACKET
 def test_recipient_transport_is_byte_exact_and_recipient_bound() -> None:
     root = _temp_root("transport")
     try:

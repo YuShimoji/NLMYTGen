@@ -1,0 +1,2 @@
+# Cloud Bash scripts must survive a Windows checkout with LF line endings.
+scripts/codex/*.sh text eol=lf

@@ -11,6 +11,8 @@ manual, status snapshot, closeout template, roadmap, or handoff log.
 Read additional docs only when the current task needs them. If you are unsure
 where to look, use `docs/NAV.md`.
 
+For Cloud environment setup or Cloud development, also read `docs/CODEX_CLOUD.md`.
+
 ## Authority
 
 - User / developer instructions override this file.
