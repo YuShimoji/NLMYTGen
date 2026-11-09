@@ -1,2 +1,0 @@
-﻿OK: 163 utterances parsed
-Speakers: ホストA, ホストB

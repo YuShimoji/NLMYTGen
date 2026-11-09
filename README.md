@@ -17,6 +17,21 @@ GitHub 上で現在地だけを読む場合は
 [docs/NAV.md](docs/NAV.md) を参照してください（Claude Code 入口は
 [.claude/CLAUDE.md](.claude/CLAUDE.md)）。
 
+## 成果一覧（画像）
+
+タスクの成果は、この一覧に載る画像・動画で示す。載らず進展が確かめられないタスクは完了にせず落とす。動画の追跡ファイルは現在ない。
+
+| 成果 | 作ったタスク・版 | 画像 |
+|---|---|---|
+| 共通基盤ダッシュボード | common-foundation 2026-06-17 | [開く](docs/review/common-foundation-dashboard-2026-06-17.png) |
+| Real Estate DX 視覚ストーリーボード | G-24 visual proof | [開く](samples/_probe/g24/real_estate_dx_visual_storyboard_proof.png) |
+| Real Estate DX GUI 処理の詳細 | G-24 gui treatment | [開く](samples/_probe/g24/real_estate_dx_gui_treatment_detail_screenshot.png) |
+| パイプライン smoke の GUI | pipeline_smoke | [開く](samples/_probe/pipeline_smoke/pipeline_smoke_gui_screenshot.png) |
+| 野球ニュース インフォグラフィック | pipeline_smoke baseball | [開く](samples/_probe/pipeline_smoke/baseball_news_infographic/visual_treatment_proof.png) |
+| 解説カード（導入） | newsroom visual_cards_v1 | [開く](samples/_probe/newsroom_handoff/visual_cards_v1/visual_card_cap_beat_fake_intro_001_01_v1.png) |
+| サムネ（Amazon P0 phase1） | thumb_p0 | [開く](samples/thumb_p0_phase1_amazon.png) |
+| サムネ最新記録 | v14 t4 2026-04-13 | [開く](samples/v14_t4_thumb_record_2026-04-13_a.png) |
+
 ## 目的
 
 1. NotebookLM で生成した Audio Overview のトランスクリプトを、YMM4 の台本読込フォーマットに変換する (CSV 変換 -- 実装済み)
