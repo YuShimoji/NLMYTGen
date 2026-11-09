@@ -1,0 +1,161 @@
+{
+  "status": "passed_with_warnings",
+  "packet_path": "samples/_probe/newsroom_handoff/minimal_episode_packet.json",
+  "artifact_id": "newsroom_handoff_minimal_episode_packet_v1",
+  "episode_id": "fake-newsroom-episode-0001",
+  "contract_version": "newsroom-to-nlmytgen-handoff-v1.11",
+  "validator_status": "passed",
+  "transfer_status": "blocked",
+  "ymm4_transfer_ready": false,
+  "errors": [],
+  "warnings": [
+    "MISSING_G28_SLOT_HINT: vis_001->callout_box,caption_reserve",
+    "MISSING_G28_SLOT_HINT: vis_002->label_chip,source_note"
+  ],
+  "blockers": [
+    "downstream_blocking_reason:no_approved_media_assets",
+    "downstream_blocking_reason:rights_summary_blocks_transfer",
+    "downstream_blocking_reason:synthetic_fixture_not_publishable",
+    "review_warning_blocks_ymm4:rw_001",
+    "review_warning_blocks_ymm4:rw_002",
+    "rights_clearance_not_cleared:synthetic_fixture_only",
+    "rights_summary_blocks_ymm4_transfer"
+  ],
+  "linkages": [
+    {
+      "beat_id": "beat_001",
+      "beat_intent": "setup",
+      "visual_id": "vis_001",
+      "visualir_concept": "screenshot_callout_placeholder",
+      "layout_candidate": "screenshot_callout",
+      "source_note_ids": [
+        "src_fake_001"
+      ],
+      "source_refs_resolved": true,
+      "slot_id": "slot_screenshot_frame",
+      "selected_g28_slot": "screenshot_slot",
+      "slot_allowed": true,
+      "semantic_role": "evidence_surface_placeholder",
+      "text_budget": "short_label_only",
+      "review_surface": {
+        "object_catalog": "samples/_probe/g28/reference_layout_prototypes/object_catalog.html",
+        "reference_layout": "samples/_probe/g28/reference_layout_prototypes/screenshot_callout.html",
+        "future_review_console": "read_only_slot_linkage_consumer"
+      },
+      "review_implication": "Check object catalog role/caution, then use the reference layout as a future read-only Review Console input.",
+      "downstream_readiness_implication": "blocked",
+      "transfer_note": "Requires approved screenshot provenance before any YMM4 transfer.",
+      "production_visual_approval": false
+    },
+    {
+      "beat_id": "beat_001",
+      "beat_intent": "setup",
+      "visual_id": "vis_001",
+      "visualir_concept": "screenshot_callout_placeholder",
+      "layout_candidate": "screenshot_callout",
+      "source_note_ids": [
+        "src_fake_001"
+      ],
+      "source_refs_resolved": true,
+      "slot_id": "slot_source_note",
+      "selected_g28_slot": "source_note",
+      "slot_allowed": true,
+      "semantic_role": "bounded_provenance_note",
+      "text_budget": "one_line",
+      "review_surface": {
+        "object_catalog": "samples/_probe/g28/reference_layout_prototypes/object_catalog.html",
+        "reference_layout": "samples/_probe/g28/reference_layout_prototypes/screenshot_callout.html",
+        "future_review_console": "read_only_slot_linkage_consumer"
+      },
+      "review_implication": "Check object catalog role/caution, then use the reference layout as a future read-only Review Console input.",
+      "downstream_readiness_implication": "blocked",
+      "transfer_note": "Keep source note sanitized; do not paste URLs or raw source strings.",
+      "production_visual_approval": false
+    },
+    {
+      "beat_id": "beat_002",
+      "beat_intent": "explain_mechanism",
+      "visual_id": "vis_002",
+      "visualir_concept": "article_quote_card_placeholder",
+      "layout_candidate": "article_quote_card",
+      "source_note_ids": [
+        "src_fake_001",
+        "src_fake_002"
+      ],
+      "source_refs_resolved": true,
+      "slot_id": "slot_quote_card",
+      "selected_g28_slot": "quote_card",
+      "slot_allowed": true,
+      "semantic_role": "short_excerpt_placeholder",
+      "text_budget": "paraphrase_only",
+      "review_surface": {
+        "object_catalog": "samples/_probe/g28/reference_layout_prototypes/object_catalog.html",
+        "reference_layout": "samples/_probe/g28/reference_layout_prototypes/article_quote_card.html",
+        "future_review_console": "read_only_slot_linkage_consumer"
+      },
+      "review_implication": "Check object catalog role/caution, then use the reference layout as a future read-only Review Console input.",
+      "downstream_readiness_implication": "blocked",
+      "transfer_note": "No real quoted text is present in this fixture.",
+      "production_visual_approval": false
+    },
+    {
+      "beat_id": "beat_002",
+      "beat_intent": "explain_mechanism",
+      "visual_id": "vis_002",
+      "visualir_concept": "article_quote_card_placeholder",
+      "layout_candidate": "article_quote_card",
+      "source_note_ids": [
+        "src_fake_001",
+        "src_fake_002"
+      ],
+      "source_refs_resolved": true,
+      "slot_id": "slot_caption_reserve",
+      "selected_g28_slot": "caption_reserve",
+      "slot_allowed": true,
+      "semantic_role": "subtitle_safe_area",
+      "text_budget": "empty",
+      "review_surface": {
+        "object_catalog": "samples/_probe/g28/reference_layout_prototypes/object_catalog.html",
+        "reference_layout": "samples/_probe/g28/reference_layout_prototypes/article_quote_card.html",
+        "future_review_console": "read_only_slot_linkage_consumer"
+      },
+      "review_implication": "Check object catalog role/caution, then use the reference layout as a future read-only Review Console input.",
+      "downstream_readiness_implication": "blocked",
+      "transfer_note": "No content may occupy the subtitle reserve.",
+      "production_visual_approval": false
+    }
+  ],
+  "visual_slot_gaps": [
+    {
+      "visual_id": "vis_001",
+      "beat_id": "beat_001",
+      "missing_g28_slot_hints": [
+        "callout_box",
+        "caption_reserve"
+      ],
+      "severity": "warning",
+      "review_implication": "Review Console should show these visual content slots as unhinted before transfer planning."
+    },
+    {
+      "visual_id": "vis_002",
+      "beat_id": "beat_002",
+      "missing_g28_slot_hints": [
+        "label_chip",
+        "source_note"
+      ],
+      "severity": "warning",
+      "review_implication": "Review Console should show these visual content slots as unhinted before transfer planning."
+    }
+  ],
+  "review_surface_index": {
+    "object_catalog": "samples/_probe/g28/reference_layout_prototypes/object_catalog.html",
+    "screenshot_callout": "samples/_probe/g28/reference_layout_prototypes/screenshot_callout.html",
+    "article_quote_card": "samples/_probe/g28/reference_layout_prototypes/article_quote_card.html",
+    "image_annotation_simple": "samples/_probe/g28/reference_layout_prototypes/image_annotation_simple.html",
+    "two_image_compare": "samples/_probe/g28/reference_layout_prototypes/two_image_compare.html",
+    "asset_plus_caption": "samples/_probe/g28/reference_layout_prototypes/asset_plus_caption.html",
+    "source_footage_annotated": "samples/_probe/g28/reference_layout_prototypes/source_footage_annotated.html"
+  },
+  "next_use": "Use this proof as a UI-independent readback before a future Review Console consumer or G-28 transfer-planning slice.",
+  "has_errors": false
+}

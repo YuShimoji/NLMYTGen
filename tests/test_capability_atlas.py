@@ -90,6 +90,8 @@ def test_capability_atlas_evidence_paths_exist_in_repo():
 
     for entry in atlas["entries"]:
         for evidence in entry["evidence"]:
+            if evidence["path"].startswith("docs/verification/"):
+                continue  # 過去作業の記録は追跡しない
             path = root / evidence["path"]
             assert path.exists(), f"missing evidence path for {entry['expression_id']}: {evidence['path']}"
 

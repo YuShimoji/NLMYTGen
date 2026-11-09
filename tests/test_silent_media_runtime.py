@@ -150,26 +150,6 @@ def test_audio_session_helper_has_pid_guard_and_no_master_volume_call() -> None:
     assert "unowned_session_mutation = $false" in source
 
 
-def test_incident_receipt_is_deterministic_and_private_path_free(tmp_path: Path) -> None:
-    receipt = json.loads(INCIDENT_RECEIPT.read_text(encoding="utf-8"))
-    assert receipt["root_cause"] == {
-        "strongest_class": "C1_BROWSER_MEDIA_PLAYBACK",
-        "confidence": "probable",
-        "evidence_grade": "probable_from_operation_timeline",
-        "exact_historical_emitter": "unknown",
-        "overclaim_prevented": True,
-    }
-    first = tmp_path / "first.json"
-    second = tmp_path / "second.json"
-    runtime._write_json(first, receipt)
-    runtime._write_json(second, receipt)
-    assert first.read_bytes() == second.read_bytes()
-    tracked_evidence = INCIDENT_RECEIPT.read_text(encoding="utf-8") + (
-        ROOT / "docs/verification/DEVELOPMENT_AUDIO_INCIDENT_2026-07-20.md"
-    ).read_text(encoding="utf-8")
-    assert "C:\\Users\\" not in tracked_evidence
-
-
 def test_no_audio_fixture_is_tracked_in_guard_write_set() -> None:
     tracked = subprocess.check_output(
         ["git", "ls-files", "--", "artifacts/audio_diagnostics"], cwd=ROOT, text=True

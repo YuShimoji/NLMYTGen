@@ -1,0 +1,205 @@
+{
+  "artifact_id": "newsroom_handoff_minimal_episode_packet_v1",
+  "contract_version": "newsroom-to-nlmytgen-handoff-v1.11",
+  "fixture_kind": "synthetic_non_fetching_placeholder",
+  "episode_id": "fake-newsroom-episode-0001",
+  "title": "Placeholder Policy Explainer Episode",
+  "topic_summary": "Synthetic topic summary for contract validation only. It does not describe a real event, real article, or real source.",
+  "episode_metadata": {
+    "series": "synthetic_newsroom_contract_probe",
+    "language": "ja-JP",
+    "audience": "general_explainer",
+    "target_duration_seconds": 180,
+    "editorial_status": "fixture_only",
+    "created_by": "newsroom-yt-pipeline-placeholder"
+  },
+  "source_notes": [
+    {
+      "source_id": "src_fake_001",
+      "source_kind": "placeholder_article_note",
+      "non_fetching_reference": "FAKE_SOURCE_A_DO_NOT_FETCH",
+      "summary": "A fake source note used to prove beat-to-evidence mapping.",
+      "quote_policy": "no_quoted_source_text",
+      "rights_note": "No real source text, screenshot, footage, or external URL is included."
+    },
+    {
+      "source_id": "src_fake_002",
+      "source_kind": "placeholder_background_note",
+      "non_fetching_reference": "FAKE_SOURCE_B_DO_NOT_FETCH",
+      "summary": "A fake background note used to prove provenance and warning surfaces.",
+      "quote_policy": "no_quoted_source_text",
+      "rights_note": "Synthetic fixture material only."
+    }
+  ],
+  "provenance": {
+    "source_collection_owner": "newsroom-yt-pipeline",
+    "raw_source_material_included": false,
+    "external_fetch_allowed_by_nlmytgen": false,
+    "source_discovery_owner": "newsroom-yt-pipeline",
+    "notes": "This packet is a contract fixture and contains no raw article body, URL, token, screenshot, footage, or media asset."
+  },
+  "rights_summary": {
+    "clearance_state": "synthetic_fixture_only",
+    "allowed_uses": [
+      "contract_validation",
+      "mapping_readback"
+    ],
+    "blocked_uses": [
+      "publication",
+      "render",
+      "YMM4_transfer",
+      "external_source_fetch"
+    ],
+    "risk_flags": [
+      "not_publishable",
+      "no_approved_media_assets"
+    ]
+  },
+  "notebooklm_packet": {
+    "packet_id": "fake_notebooklm_seed_0001",
+    "transcript_seed": "Synthetic transcript seed. Opening claim, two explanation beats, and a closing caution are placeholders.",
+    "source_pack_summary": "Fake source pack summary with no real source material.",
+    "constraints": [
+      "do_not_fetch",
+      "do_not_quote_real_sources",
+      "do_not_publish"
+    ]
+  },
+  "script_beats": [
+    {
+      "beat_id": "beat_001",
+      "intent": "setup",
+      "claim": "A placeholder situation creates a clear question for viewers.",
+      "evidence_refs": [
+        "src_fake_001"
+      ],
+      "scriptir_hint": {
+        "section": "hook",
+        "duration_seconds_target": 30,
+        "density": "medium"
+      }
+    },
+    {
+      "beat_id": "beat_002",
+      "intent": "explain_mechanism",
+      "claim": "A fake mechanism connects the setup to a consequence.",
+      "evidence_refs": [
+        "src_fake_001",
+        "src_fake_002"
+      ],
+      "scriptir_hint": {
+        "section": "body",
+        "duration_seconds_target": 90,
+        "density": "medium_high"
+      }
+    },
+    {
+      "beat_id": "beat_003",
+      "intent": "review_caution",
+      "claim": "The packet must stop before publication or YMM4 transfer because rights are synthetic.",
+      "evidence_refs": [
+        "src_fake_002"
+      ],
+      "scriptir_hint": {
+        "section": "closing",
+        "duration_seconds_target": 60,
+        "density": "low"
+      }
+    }
+  ],
+  "visual_plan": [
+    {
+      "visual_id": "vis_001",
+      "beat_id": "beat_001",
+      "visualir_concept": "screenshot_callout_placeholder",
+      "layout_candidate": "screenshot_callout",
+      "asset_policy": "placeholder_only",
+      "content_slots": [
+        "screenshot_slot",
+        "callout_box",
+        "source_note",
+        "caption_reserve"
+      ]
+    },
+    {
+      "visual_id": "vis_002",
+      "beat_id": "beat_002",
+      "visualir_concept": "article_quote_card_placeholder",
+      "layout_candidate": "article_quote_card",
+      "asset_policy": "placeholder_only",
+      "content_slots": [
+        "quote_card",
+        "label_chip",
+        "source_note",
+        "caption_reserve"
+      ]
+    }
+  ],
+  "g28_slot_hints": [
+    {
+      "visual_id": "vis_001",
+      "slot_id": "slot_screenshot_frame",
+      "object_catalog_slot": "screenshot_slot",
+      "semantic_role": "evidence_surface_placeholder",
+      "source_ref": "src_fake_001",
+      "text_budget": "short_label_only",
+      "transfer_note": "Requires approved screenshot provenance before any YMM4 transfer."
+    },
+    {
+      "visual_id": "vis_001",
+      "slot_id": "slot_source_note",
+      "object_catalog_slot": "source_note",
+      "semantic_role": "bounded_provenance_note",
+      "source_ref": "src_fake_001",
+      "text_budget": "one_line",
+      "transfer_note": "Keep source note sanitized; do not paste URLs or raw source strings."
+    },
+    {
+      "visual_id": "vis_002",
+      "slot_id": "slot_quote_card",
+      "object_catalog_slot": "quote_card",
+      "semantic_role": "short_excerpt_placeholder",
+      "source_ref": "src_fake_002",
+      "text_budget": "paraphrase_only",
+      "transfer_note": "No real quoted text is present in this fixture."
+    },
+    {
+      "visual_id": "vis_002",
+      "slot_id": "slot_caption_reserve",
+      "object_catalog_slot": "caption_reserve",
+      "semantic_role": "subtitle_safe_area",
+      "source_ref": null,
+      "text_budget": "empty",
+      "transfer_note": "No content may occupy the subtitle reserve."
+    }
+  ],
+  "review_warnings": [
+    {
+      "warning_id": "rw_001",
+      "severity": "blocker",
+      "surface": "rights_summary",
+      "message": "Synthetic fixture rights block publication, render, and YMM4 transfer.",
+      "blocks_ymm4_transfer": true
+    },
+    {
+      "warning_id": "rw_002",
+      "severity": "caution",
+      "surface": "visual_plan",
+      "message": "Visuals are placeholders and require approved media or abstract replacements before transfer planning.",
+      "blocks_ymm4_transfer": true
+    }
+  ],
+  "downstream_readiness": {
+    "notebooklm_seed_ready": true,
+    "scriptir_mapping_ready": true,
+    "visualir_mapping_ready": true,
+    "g28_slot_mapping_ready": true,
+    "review_surface_ready": true,
+    "ymm4_transfer_ready": false,
+    "blocking_reasons": [
+      "synthetic_fixture_not_publishable",
+      "rights_summary_blocks_transfer",
+      "no_approved_media_assets"
+    ]
+  }
+}

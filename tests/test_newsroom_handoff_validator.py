@@ -246,12 +246,15 @@ def test_cli_prove_newsroom_g28_slot_linkage_writes_markdown(tmp_path, capsys) -
     assert "transfer_status: blocked" in text
 
 
-def test_transfer_planning_proof_blocks_fixture_and_groups_unlocks() -> None:
+def test_transfer_planning_proof_blocks_fixture_and_groups_unlocks(tmp_path) -> None:
+    doc = tmp_path / "consumer.md"
+    doc.write_text("read only", encoding="utf-8")
     proof = build_newsroom_transfer_planning_proof(
         _fixture(),
         _slot_linkage(),
         packet_path=FIXTURE_PATH,
         slot_linkage_path=SLOT_LINKAGE_PATH,
+        review_console_doc_path=doc,
     )
 
     assert proof.status == "blocked"
