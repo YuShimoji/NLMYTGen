@@ -53,7 +53,7 @@
 
 ## 5. 参照ファイル
 
-- [G02b-ymmp-structure-analysis.md](G02b-ymmp-structure-analysis.md)  
+- G02b-ymmp-structure-analysis.md  
 - [samples/test_verify_2_mouth.ymmp](../../samples/test_verify_2_mouth.ymmp)（本メモの readback 源）
 
 ---

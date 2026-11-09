@@ -29,7 +29,7 @@ PRE-PLAN の当時設計では **レーン C と旧背景アニメ証跡は同�
 |------|------|
 | [VISUAL_STYLE_PRESETS.md](../VISUAL_STYLE_PRESETS.md) | 確認済み（三スタイルと patch 境界） |
 | [VISUAL_STYLE_YMM4_CHECKLIST.md](../VISUAL_STYLE_YMM4_CHECKLIST.md) | 確認済み（§1〜5 が作業手順） |
-| [VISUAL_STYLES_IR_DRY_SAMPLE.md](VISUAL_STYLES_IR_DRY_SAMPLE.md) | 確認済み（`validate-ir` コマンド） |
+| VISUAL_STYLES_IR_DRY_SAMPLE.md | 確認済み（`validate-ir` コマンド） |
 | [S6-production-memo-prompt.md](../S6-production-memo-prompt.md) §「v4: 構造化 IR」＋「視覚スタイル三種」 | 確認済み（下記 B-3） |
 
 ---
@@ -51,7 +51,7 @@ PRE-PLAN の当時設計では **レーン C と旧背景アニメ証跡は同�
 ## 4. ローカルレジストリ（repo 外）
 
 - **絶対パスを含む JSON はコミットしない**。作業用コピーはリポジトリ直下の `_local/` に置く（[.gitignore](../../.gitignore) で `_local/` を除外）。
-- **雛形**: [lane-c-overlay-map.TEMPLATE.json](lane-c-overlay-map.TEMPLATE.json) の `YOUR_ASSETS` を自分のフォルダに置換するか、[samples/visual_styles_overlay_map.example.json](../../samples/visual_styles_overlay_map.example.json) をコピーして編集する。
+- **雛形**: lane-c-overlay-map.TEMPLATE.json の `YOUR_ASSETS` を自分のフォルダに置換するか、[samples/visual_styles_overlay_map.example.json](../../samples/visual_styles_overlay_map.example.json) をコピーして編集する。
 - **YMM4 側の具体タスク**は [VISUAL_STYLE_YMM4_CHECKLIST.md](../VISUAL_STYLE_YMM4_CHECKLIST.md) の §1（資料パネル）→ §2（挿絵コマ）→ §3（再現 PV）の順。
 
 ---
@@ -66,7 +66,7 @@ uv run python -m src.cli.main validate-ir samples/ir_visual_styles_dry_sample.js
   --overlay-map samples/visual_styles_overlay_map.example.json
 ```
 
-- **結果**: exit code **0**（`Validation PASSED`）。`FACE_LATENT_GAP` 等の WARNING は許容範囲（[VISUAL_STYLES_IR_DRY_SAMPLE.md](VISUAL_STYLES_IR_DRY_SAMPLE.md) 記載どおり）。
+- **結果**: exit code **0**（`Validation PASSED`）。`FACE_LATENT_GAP` 等の WARNING は許容範囲（VISUAL_STYLES_IR_DRY_SAMPLE.md 記載どおり）。
 - **裏取りテスト**: `pytest tests/test_ir_validate.py::test_ir_visual_styles_dry_sample_passes_cli_validation` — **PASS**
 
 ### 5.2 `apply-production --dry-run`（overlay / se / timeline まで含む健全性）
@@ -111,7 +111,7 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
 1. `_local/lane_c/overlay_map.json`（など）を実パスで整備する。  
 2. 本番 IR に対し `validate-ir --palette ... --overlay-map ...`（必要なら `--bg-map` / `--slot-map`）。  
 3. `apply-production ... --dry-run` → 問題なければ `-o` で書き出し → YMM4 確認。  
-4. 効果記録は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) または [mass-production-pilot-checklist.md](mass-production-pilot-checklist.md) へ 1 行追記（任意）。
+4. 効果記録は [P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) または mass-production-pilot-checklist.md へ 1 行追記（任意）。
 
 ### 演出品質の運用単位（2026-04-09 追加）
 
@@ -201,7 +201,7 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/p
   - **index 1**（「挿絵コマ1」/ S1 挿絵コマ風）: `bg_anim: none` → コマ割り的な読みやすさ・静止構図の論点と一致。
   - **index 5**（「PV風の雰囲気切替」/ S3 再現PV風）: `bg_anim: ken_burns` → 発話が明示する雰囲気切替・映画的トーンと一致。
   - index 2〜4, 6 は IR 上 `bg_anim` 未指定のため、過剰なカメラワーク指定による論点矛盾はないと判断。
-- **提出 JSON（正本）**: [lane-c-bg_anim-A3-2026-04-10.json](lane-c-bg_anim-A3-2026-04-10.json)
+- **提出 JSON（正本）**: lane-c-bg_anim-A3-2026-04-10.json
 
 ---
 

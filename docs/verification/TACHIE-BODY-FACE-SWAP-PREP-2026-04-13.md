@@ -43,13 +43,13 @@
 - **顔と体の同量移動**: **GroupItem 化**（運用）または **`TachieItem` と `VoiceItem` の X/Y に同一デルタ**（patch 設計）が候補。  
 - **patch アンカー**: 表情パスは **`VoiceItem.TachieFaceParameter`**、待機は **`TachieFaceItem`**、レイアウト・反転は **`TachieItem`**（＋要件次第で **`VoiceItem`** 幾何）。既存 `slot` は **TachieItem** 系。
 
-**YMM4 GUI または ymmp readback**で、少なくとも次をメモする（[YMM4-bg-animation-operator-research-2026-04.md](YMM4-bg-animation-operator-research-2026-04.md) と同型でよい）。
+**YMM4 GUI または ymmp readback**で、少なくとも次をメモする（YMM4-bg-animation-operator-research-2026-04.md と同型でよい）。
 
 - 体の反転: 触るキーは `TachieItem` 側か `TachieFaceParameter` 側か。  
 - 顔と体を同量だけ動かす: **グループ化**か **個別 X/Y の差分同期**か。  
 - `VoiceItem` / `TachieFaceItem` / `TachieItem` のどれを patch のアンカーにするか。
 
-調査の書き方の例: [YMM4-bg-animation-operator-research-2026-04.md](YMM4-bg-animation-operator-research-2026-04.md)。  
+調査の書き方の例: YMM4-bg-animation-operator-research-2026-04.md。  
 調査結果を **§3 末尾に追記**するか、リンク先の専用メモに書き、本ファイルからリンクする。
 
 ### 3.1 G-19 用 `face_map` 束ね（サンプルパス案）

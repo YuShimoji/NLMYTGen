@@ -65,4 +65,4 @@ Python は **画像生成・合成をしない**（AUTOMATION_BOUNDARY 参照）
 - `apply-production` / `patch-ymmp` — IR + 各種 map の反映  
 - `measure-timeline-routes` — PV 系でテンプレの `motion` / `transition` / `bg_anim` ルートを実測（G-12）
 
-三スタイル混在の最小 IR 例: [samples/ir_visual_styles_dry_sample.json](../samples/ir_visual_styles_dry_sample.json)（検証手順は [verification/VISUAL_STYLES_IR_DRY_SAMPLE.md](verification/VISUAL_STYLES_IR_DRY_SAMPLE.md)）。
+三スタイル混在の最小 IR 例: [samples/ir_visual_styles_dry_sample.json](../samples/ir_visual_styles_dry_sample.json)（検証手順は verification/VISUAL_STYLES_IR_DRY_SAMPLE.md）。

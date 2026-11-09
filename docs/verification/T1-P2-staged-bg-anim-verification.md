@@ -97,7 +97,7 @@ TachieItem VideoEffects writes: 0
 ## 5. 関連ドキュメント
 
 - レーン B の同一コマンド証跡: [LANE-B-execution-record-2026-04-09.md](LANE-B-execution-record-2026-04-09.md) §3 / §7.4  
-- production.ymmp 側の契約整理: [P2B-production-timeline-contract-profile.md](P2B-production-timeline-contract-profile.md)
+- production.ymmp 側の契約整理: P2B-production-timeline-contract-profile.md
 
 ---
 

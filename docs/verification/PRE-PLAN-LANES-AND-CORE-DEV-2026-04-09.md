@@ -58,7 +58,7 @@
 - 代表例 **3 件以上**。
 - §3 に **Gate A/B/C** と **次投資先**が書かれている。
 
-**現状メモ**: [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md) は **§5 体裁を充足**（2026-04-09。取込前は CLI 再実行で再現済み。取込後はファイル先頭の検証範囲注記どおり、YMM4 実機記録としてオペレータが最終確認する）。レーン A 用の環境メモは [OPERATOR_LANE_A_ENV.md](OPERATOR_LANE_A_ENV.md)、チェックリストは [LANE_A_PREP_CHECKLIST.md](LANE_A_PREP_CHECKLIST.md)。
+**現状メモ**: [B11-workflow-proof-ai-monitoring-labor.md](B11-workflow-proof-ai-monitoring-labor.md) は **§5 体裁を充足**（2026-04-09。取込前は CLI 再実行で再現済み。取込後はファイル先頭の検証範囲注記どおり、YMM4 実機記録としてオペレータが最終確認する）。レーン A 用の環境メモは OPERATOR_LANE_A_ENV.md、チェックリストは LANE_A_PREP_CHECKLIST.md。
 
 ### 2.2 P01 記録（Phase 1 Block-A と整合）
 
@@ -81,10 +81,10 @@
 
 - [OPERATOR_PARALLEL_WORK_RUNBOOK.md](../OPERATOR_PARALLEL_WORK_RUNBOOK.md) の **A + B** が別担当でも衝突しないことを確認（Instructions 正本は repo）。
 - **レーン別 repo 準備チェックリスト**（2026-04-09 同梱）:
-  - **A**: [LANE_A_PREP_CHECKLIST.md](LANE_A_PREP_CHECKLIST.md)、[OPERATOR_LANE_A_ENV.md](OPERATOR_LANE_A_ENV.md)
+  - **A**: LANE_A_PREP_CHECKLIST.md、OPERATOR_LANE_A_ENV.md
   - **B**: [LANE-B-gui-llm-sync-checklist.md](LANE-B-gui-llm-sync-checklist.md)、[gui-llm-setup-guide.md](../gui-llm-setup-guide.md)
-  - **C**: [LANE-C-operator-prep-2026-04-09.md](LANE-C-operator-prep-2026-04-09.md)、[lane-c-overlay-map.TEMPLATE.json](lane-c-overlay-map.TEMPLATE.json)（絶対パスは `_local/` に置き [.gitignore](../../.gitignore) 参照）
-  - **D**: [H01-lane-d-prep-2026-04-09.md](H01-lane-d-prep-2026-04-09.md)、[samples/packaging_brief.template.md](../../samples/packaging_brief.template.md)、[packaging_brief_EMPTY_TEMPLATE_emitted.md](packaging_brief_EMPTY_TEMPLATE_emitted.md)
+  - **C**: [LANE-C-operator-prep-2026-04-09.md](LANE-C-operator-prep-2026-04-09.md)、lane-c-overlay-map.TEMPLATE.json（絶対パスは `_local/` に置き [.gitignore](../../.gitignore) 参照）
+  - **D**: H01-lane-d-prep-2026-04-09.md、[samples/packaging_brief.template.md](../../samples/packaging_brief.template.md)、packaging_brief_EMPTY_TEMPLATE_emitted.md
 
 ### 2.5 レーン E（サムネ S-8）準備（任意だが推奨）
 

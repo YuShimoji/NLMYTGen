@@ -114,7 +114,7 @@ B-11 は「字幕・S-5 の手戻りがまだ支配的か」を測るゲート�
 - **主軸: 演出配置自動化の実戦投入**
   - B-11 が Gate B（運用摩擦）なら、**コードより runbook・registry** 先、など順序を文章で明示できる。
 - **据え置き (motion ブランチ・歴史)**
-  - [`P2A-motion-branch-operator-decision.md`](P2A-motion-branch-operator-decision.md) に従い、B-11 結果だけで motion を動かさない（必要なら「字幕が例外処理化してから」と書く）。
+  - `P2A-motion-branch-operator-decision.md` に従い、B-11 結果だけで motion を動かさない（必要なら「字幕が例外処理化してから」と書く）。
 
 ### B-3. プラン更新時に触るファイル（担当がエンジニア側の場合）
 

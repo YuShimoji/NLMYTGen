@@ -86,7 +86,7 @@
 2. 上記 **4 類＋ mood ストック**は、**テンプレ資産の再利用**を第一とし、Python で見た目を合成生成しない。
 3. **「テンプレを用意しておく」**の実体は、[PRODUCTION_IR_SPEC.md](PRODUCTION_IR_SPEC.md) §6 の **Template Registry**（`scene_presets` の `ymm4_template` 等）と、**1 本の親 palette ymmp**（表情・背景・slot の解決元）をプロジェクト単位に複製・差し替えする運用と捉える。
 
-**量産試験の手順**は [verification/mass-production-pilot-checklist.md](verification/mass-production-pilot-checklist.md)。
+**量産試験の手順**は verification/mass-production-pilot-checklist.md。
 
 **機械の際限**は [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md)（`motion` / `transition` の patch 未接続、`bg_anim` の VideoEffects 系は未接続等）。
 
@@ -100,6 +100,6 @@
 
 - [PRODUCTION_IR_SPEC.md](PRODUCTION_IR_SPEC.md) §3.1 `template`、§3.7 `overlay`、§6 Template Registry
 - [PRODUCTION_IR_CAPABILITY_MATRIX.md](PRODUCTION_IR_CAPABILITY_MATRIX.md)
-- [verification/mass-production-pilot-checklist.md](verification/mass-production-pilot-checklist.md)
+- verification/mass-production-pilot-checklist.md
 - [OPERATOR_WORKFLOW.md](OPERATOR_WORKFLOW.md)（C-07 v2 proof の一行）
 - [AUTOMATION_BOUNDARY.md](AUTOMATION_BOUNDARY.md) L2/L3

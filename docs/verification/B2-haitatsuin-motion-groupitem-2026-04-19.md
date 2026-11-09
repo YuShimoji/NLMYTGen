@@ -93,8 +93,8 @@ Layer 10/11 の ImageItem には直接書き込みなし (GroupItem 配下で ef
 
 ## 関連
 
-- [B2-haitatsuin-motion-layer-array-2026-04-19.md](B2-haitatsuin-motion-layer-array-2026-04-19.md) — array 対応 proof (代替実現により本番経路ではなくなった。array 対応自体は装飾のみの演者等の case で活きる)
-- [B2-haitatsuin-motion-library-v2-2026-04-19.md](B2-haitatsuin-motion-library-v2-2026-04-19.md) — library v2 proof (v5 で library v2 のパラメータがそのまま効く)
+- B2-haitatsuin-motion-layer-array-2026-04-19.md — array 対応 proof (代替実現により本番経路ではなくなった。array 対応自体は装飾のみの演者等の case で活きる)
+- B2-haitatsuin-motion-library-v2-2026-04-19.md — library v2 proof (v5 で library v2 のパラメータがそのまま効く)
 - [SKIT_GROUP_TEMPLATE_SPEC.md](../SKIT_GROUP_TEMPLATE_SPEC.md) — canonical template 主経路 (本 proof がその実現)
 
 根拠: user 指摘「GroupItem は既に正しく設定されていて調整するだけで動く」+ inspect_group_layer.py 実機確認 + INVARIANTS §skit_group の主経路は canonical template

@@ -128,7 +128,7 @@ YMM4 を持たない環境では新規 PNG を生成できない。レーン E *
 | 項目 | 内容 |
 |------|------|
 | 参照ファイル | `samples/onepass_2026-04-07_c_thumb.png` |
-| P03 既存記録 | [P03-thumbnail-one-sheet-proof.md](P03-thumbnail-one-sheet-proof.md) の「One-Pass Run (`onepass_2026-04-07_c`)」 |
+| P03 既存記録 | P03-thumbnail-one-sheet-proof.md の「One-Pass Run (`onepass_2026-04-07_c`)」 |
 | 机上照合 | 主張 1 点・具体性（例: `19億ドル`）・H-01 整合の簡易判定が既存記録と一致すること |
 
 **本リポジトリ作業（2026-04-09 準備実装）**: `THUMBNAIL_ONE_SHEET_WORKFLOW.md` と runbook トラック E の参照関係に矛盾がないことを確認済み。上記サンプルは P03 で pass 済みのため、準備段階の品質軸はこれに紐付けてよい。
@@ -137,7 +137,7 @@ YMM4 を持たない環境では新規 PNG を生成できない。レーン E *
 
 ## 完了後の記録（推奨）
 
-- [P03-thumbnail-one-sheet-proof.md](P03-thumbnail-one-sheet-proof.md) に **run_id・出力パス・判定**を 1 ブロック追記する（本準備サイクルでは `lane_e_prep_2026-04-09_a` を追記済み）。
+- P03-thumbnail-one-sheet-proof.md に **run_id・出力パス・判定**を 1 ブロック追記する（本準備サイクルでは `lane_e_prep_2026-04-09_a` を追記済み）。
 
 ---
 

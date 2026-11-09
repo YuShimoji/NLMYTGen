@@ -133,7 +133,7 @@ H-01 は `approved` 運用のため、以下を再発防止対象として固定
 |---|---|
 | transcript | `samples/The Amazon Panopticon Surveillance and the Modern Worker.txt` |
 | packaging brief | `samples/packaging_brief_p0_amazon.md` |
-| C-07/C-08 入力順の記録 | [h01_lane_d_p01_amazon_c07_input_2026-04-10.md](h01_lane_d_p01_amazon_c07_input_2026-04-10.md) / [h01_lane_d_p01_amazon_c08_input_2026-04-10.md](h01_lane_d_p01_amazon_c08_input_2026-04-10.md) |
+| C-07/C-08 入力順の記録 | h01_lane_d_p01_amazon_c07_input_2026-04-10.md / h01_lane_d_p01_amazon_c08_input_2026-04-10.md |
 
 ---
 
@@ -267,9 +267,9 @@ P01 Amazon 台本向けに Packaging Orchestrator brief を新規正本化し、
 
 - packaging brief: `samples/packaging_brief_p0_amazon.md`（`video_id`: `p0_phase1_amazon`）
 - transcript: `samples/The Amazon Panopticon Surveillance and the Modern Worker.txt`
-- C-07 入力記録: [h01_lane_d_p01_amazon_c07_input_2026-04-10.md](h01_lane_d_p01_amazon_c07_input_2026-04-10.md)
-- C-08 入力記録: [h01_lane_d_p01_amazon_c08_input_2026-04-10.md](h01_lane_d_p01_amazon_c08_input_2026-04-10.md)
-- **C-09 後（refined 正）**: C-07/C-08 は **brief → refined 台本** を正とする（[h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md)、[h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md)）。生 ASR のみを渡す記録は上記 2026-04-10 版のまま残す。
+- C-07 入力記録: h01_lane_d_p01_amazon_c07_input_2026-04-10.md
+- C-08 入力記録: h01_lane_d_p01_amazon_c08_input_2026-04-10.md
+- **C-09 後（refined 正）**: C-07/C-08 は **brief → refined 台本** を正とする（h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md、h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md）。生 ASR のみを渡す記録は上記 2026-04-10 版のまま残す。
 
 ### Run
 
@@ -278,8 +278,8 @@ P01 Amazon 台本向けに Packaging Orchestrator brief を新規正本化し、
 | date | 2026-04-10 |
 | transcript / source | `samples/The Amazon Panopticon Surveillance and the Modern Worker.txt` |
 | packaging brief | `samples/packaging_brief_p0_amazon.md` |
-| C-07 input path | [h01_lane_d_p01_amazon_c07_input_2026-04-10.md](h01_lane_d_p01_amazon_c07_input_2026-04-10.md)（手順・貼付順） |
-| C-08 input path | [h01_lane_d_p01_amazon_c08_input_2026-04-10.md](h01_lane_d_p01_amazon_c08_input_2026-04-10.md)（手順・貼付順） |
+| C-07 input path | h01_lane_d_p01_amazon_c07_input_2026-04-10.md（手順・貼付順） |
+| C-08 input path | h01_lane_d_p01_amazon_c08_input_2026-04-10.md（手順・貼付順） |
 
 ### Run（refined 経路 · `lane_d_p01_amazon_refined_2026-04-11`）
 
@@ -288,8 +288,8 @@ P01 Amazon 台本向けに Packaging Orchestrator brief を新規正本化し、
 | date | 2026-04-11 |
 | transcript / source | `samples/amazon_panopticon_lane_a_refined.txt`（[P01-phase1-operator-e2e-proof.md](P01-phase1-operator-e2e-proof.md) `lane_a_amazon_2026-04-10_b` と同一） |
 | packaging brief | `samples/packaging_brief_p0_amazon.md` |
-| C-07 input path | [h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md) |
-| C-08 input path | [h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md](h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md) |
+| C-07 input path | h01_lane_d_p01_amazon_c07_refined_input_2026-04-11.md |
+| C-08 input path | h01_lane_d_p01_amazon_c08_refined_input_2026-04-11.md |
 
 ### Before / After Drift Check（brief 対 台本の机上照合）
 
@@ -331,8 +331,8 @@ P01 Amazon 台本向けに Packaging Orchestrator brief を新規正本化し、
 | # | 項目 | 記入 |
 |---|------|------|
 | 1 | 本案件の `video_id` と brief ファイル名（repo または GPT プロジェクト内） | |
-| 2 | C-07 貼付順: brief →（refined なら refined 台本）→ 既存メモ | [h01_lane_d_sample_c07_input_2026-04-09.md](h01_lane_d_sample_c07_input_2026-04-09.md) 系を踏襲 |
-| 3 | C-08 貼付順: brief → 同上 | [h01_lane_d_sample_c08_input_2026-04-09.md](h01_lane_d_sample_c08_input_2026-04-09.md) 系を踏襲 |
+| 2 | C-07 貼付順: brief →（refined なら refined 台本）→ 既存メモ | h01_lane_d_sample_c07_input_2026-04-09.md 系を踏襲 |
+| 3 | C-08 貼付順: brief → 同上 | h01_lane_d_sample_c08_input_2026-04-09.md 系を踏襲 |
 | 4 | drift 1 件: **侵食**（台本が title を決めた）/ **根拠離れ**（サムネと本文）/ **抽象煽り**（banned 接近）のどれか | yes/no + 1 行 |
 | 5 | alignment_check（brief の must_payoff が本文に存在するか） | yes/no |
 

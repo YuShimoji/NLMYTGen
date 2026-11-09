@@ -2,7 +2,7 @@
 
 **目的**: `reflow_subtitles_v2`（B-17 完了済）の残差ケースを観測記録する。**アルゴリズム変更は提案しない。観測のみ。**
 
-**位置づけ**: メンテ層の詳細手順。[VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md](../verification/VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md) §4 トラック B と連携するが、主軸 G-24 を押し流すための Prompt ではない。
+**位置づけ**: メンテ層の詳細手順。VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md §4 トラック B と連携するが、主軸 G-24 を押し流すための Prompt ではない。
 
 ---
 
@@ -83,6 +83,6 @@ reflow_residue: manual_break=<N>, word_split=<N>, single_char_tail=<N>, balance_
 ## 参照
 
 - [P01-phase1-operator-e2e-proof.md](../verification/P01-phase1-operator-e2e-proof.md) — 追記先
-- [VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md](../verification/VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md) §4 — トラック B（改行ギャップ記録）
+- VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md §4 — トラック B（改行ギャップ記録）
 - [runtime-state.md](../runtime-state.md) — 現在の主軸とメンテ層の優先順位
 - [src/cli/main.py](../../src/cli/main.py) `p_build` — build-csv argparse 実装

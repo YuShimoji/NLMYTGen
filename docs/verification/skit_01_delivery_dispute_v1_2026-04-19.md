@@ -76,8 +76,8 @@ YMM4 で `_tmp/skit_01_v2_verify.ymmp` を開き、タイムライン再生で�
 
 ## 関連
 
-- [B2-oneshot-library-v3-2026-04-19.md](B2-oneshot-library-v3-2026-04-19.md) — library v3 の 3 one-shot proof
-- [B2-haitatsuin-motion-groupitem-keyframe-remap-2026-04-19.md](B2-haitatsuin-motion-groupitem-keyframe-remap-2026-04-19.md) — v6 clip/remap (pan segment の基盤)
+- B2-oneshot-library-v3-2026-04-19.md — library v3 の 3 one-shot proof
+- B2-haitatsuin-motion-groupitem-keyframe-remap-2026-04-19.md — v6 clip/remap (pan segment の基盤)
 
 ## registry 整合 (2026-04-20)
 

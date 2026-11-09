@@ -108,7 +108,7 @@ uv run python -m src.cli.main build-csv refined.txt -o _tmp_out.csv `
 - 方針の正本: [VISUAL_STYLE_PRESETS.md](VISUAL_STYLE_PRESETS.md)
 - **やることのチェックリスト**: [VISUAL_STYLE_YMM4_CHECKLIST.md](VISUAL_STYLE_YMM4_CHECKLIST.md) を上から順にチェックする。
 - **overlay のパス例**: [samples/visual_styles_overlay_map.example.json](../samples/visual_styles_overlay_map.example.json) をコピーし、自分の PC の絶対パスに書き換えて `overlay_map.json` 等として保存する。
-- **dry 確認用 IR**: `validate-ir samples/ir_visual_styles_dry_sample.json --palette samples/palette.ymmp --overlay-map （自分の overlay_map）`（手順は [verification/VISUAL_STYLES_IR_DRY_SAMPLE.md](verification/VISUAL_STYLES_IR_DRY_SAMPLE.md)）。
+- **dry 確認用 IR**: `validate-ir samples/ir_visual_styles_dry_sample.json --palette samples/palette.ymmp --overlay-map （自分の overlay_map）`（手順は verification/VISUAL_STYLES_IR_DRY_SAMPLE.md）。
 
 `apply-production` / `patch-ymmp` を使う場合は [WORKFLOW.md](WORKFLOW.md) S-6b と CLI ヘルプに従う。
 
@@ -161,8 +161,8 @@ git push
 
 | 項目                                  | 内容                                                                                                                                                                                                                                                               |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **feat/phase2-motion-segmentation** | [verification/P2A-phase2-motion-segmentation-branch-review.md](verification/P2A-phase2-motion-segmentation-branch-review.md) 参照。[verification/P2A-motion-branch-operator-decision.md](verification/P2A-motion-branch-operator-decision.md)。一括マージせず、必要なら別スライスで判断。 |
-| **SE / AudioItem**                    | **G-18 実装済み**。[verification/G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。追加 readback が必要なら [verification/P2C-se-audioitem-boundary.md](verification/P2C-se-audioitem-boundary.md)（履歴）。                                                                 |
+| **feat/phase2-motion-segmentation** | verification/P2A-phase2-motion-segmentation-branch-review.md 参照。verification/P2A-motion-branch-operator-decision.md。一括マージせず、必要なら別スライスで判断。 |
+| **SE / AudioItem**                    | **G-18 実装済み**。[verification/G18-se-audioitem-implementation.md](verification/G18-se-audioitem-implementation.md)。追加 readback が必要なら verification/P2C-se-audioitem-boundary.md（履歴）。                                                                 |
 | **G-15〜G-18**                       | [FEATURE_REGISTRY.md](FEATURE_REGISTRY.md) で **`done`**。新規 ID は台帳に登録してから。                                                                                                                                                                                          |
 | **H-01 の厳密運用**                      | brief 未使用でもパイプラインは回る。導入するときだけ D を足す。                                                                                                                                                                                                                             |
 | **字幕 B-17 残差**                      | 急がない（runtime-state のメンテナンス記載どおり）。                                                                                                                                                                                                                                |

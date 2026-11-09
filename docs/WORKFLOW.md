@@ -309,7 +309,7 @@ S-6 は、(1) C-07 v4 による **本編 Production IR 生成**、(2) GUI 演出
 2. ゆっくりとした動きで単調さを軽減
 3. 動きの速度・方向はトピックの雰囲気に合わせる
 
-公式・プラグイン・既知トラブル対策の参照用に、[verification/YMM4-bg-animation-operator-research-2026-04.md](verification/YMM4-bg-animation-operator-research-2026-04.md)（YMM4 オペレーション補遺）を利用できる。
+公式・プラグイン・既知トラブル対策の参照用に、verification/YMM4-bg-animation-operator-research-2026-04.md（YMM4 オペレーション補遺）を利用できる。
 
 ### c. 立ち絵の表情切り替え
 

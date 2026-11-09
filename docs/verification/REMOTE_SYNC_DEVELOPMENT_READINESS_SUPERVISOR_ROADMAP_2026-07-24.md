@@ -7,7 +7,7 @@ Scope: NLMYTGen
 最新handoffであり、後続のPLANNER007節は先行受信端末の履歴として読む。製品状態と直近gateの正本は
 [`runtime-state.md`](../runtime-state.md)、非交渉境界は
 [`INVARIANTS.md`](../INVARIANTS.md)、三モード回帰の機械可読結果は
-[`REGRESSION_INTEGRITY_2026-07-24.json`](REGRESSION_INTEGRITY_2026-07-24.json)である。
+`REGRESSION_INTEGRITY_2026-07-24.json`である。
 
 ここで示す遠方目標は監修判断用の提案であり、依存契約変更、Electron major更新、rights、
 production、publication、PR、merge、master integrationを一括承認するものではない。選択された

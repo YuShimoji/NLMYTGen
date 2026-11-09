@@ -72,6 +72,6 @@ uv run python -m src.cli.main measure-timeline-routes "C:/path/to/your_project.y
 
 ## 参照
 
-- [G18-se-audioitem-deferred.md](G18-se-audioitem-deferred.md)
-- [P2C-se-audioitem-boundary.md](P2C-se-audioitem-boundary.md)
+- G18-se-audioitem-deferred.md
+- P2C-se-audioitem-boundary.md
 - [FEATURE_REGISTRY.md](../FEATURE_REGISTRY.md) G-18

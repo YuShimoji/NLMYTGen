@@ -45,8 +45,8 @@ GitHub 上で現在地だけを読む場合は [PROJECT_COCKPIT.md](PROJECT_COCK
 - [EPISODE_RUN_PACK.md](EPISODE_RUN_PACK.md) — **1本通し制作パック**: `_tmp/episode_runs/<episode_id>/` の構成、GUI `Episode Pack Root` 導線、既定保存path、YMM4確認と gaps 記録の境界
 - [RSS_READER_SYNC_SPEC.md](RSS_READER_SYNC_SPEC.md) — **A-04 RSS Reader Sync**: OPML export を人間側 RSS 一覧と AI 側 `fetch-topics` 対象の共通正本にする。Inoreader は read-only adapter まで実装済み、OAuth/token 永続化は実装しない
 - [verification/RSS-LIVE-SMOKE-RUNBOOK-2026-05-26.md](verification/RSS-LIVE-SMOKE-RUNBOOK-2026-05-26.md) — **A-04 RSS live smoke entry**: raw OPML/token 置き場、`rss-smoke` の one-command evidence、OPML/Inoreader smoke コマンド、次の判断表
-- [verification/PROJECT_INIT_CHECKLIST.md](verification/PROJECT_INIT_CHECKLIST.md) — **実案件投入**: palette → registry → validate-ir → apply-production の 5 ステップ
-- [verification/FAILURE_DIAGNOSIS_MATRIX.md](verification/FAILURE_DIAGNOSIS_MATRIX.md) — ERROR/WARNING 全 64 種の診断マトリクス
+- verification/PROJECT_INIT_CHECKLIST.md — **実案件投入**: palette → registry → validate-ir → apply-production の 5 ステップ
+- verification/FAILURE_DIAGNOSIS_MATRIX.md — ERROR/WARNING 全 64 種の診断マトリクス
 - `samples/registry_template/` — 6 種の registry JSON 雛形（overlay/se/bg/slot/face/group_motion_map）
 - `samples/effect_catalog.json` — YMM4 v4.51 の VideoEffect カタログ（111 ユニーク、9 カテゴリ）。抽出元 `samples/EffectsSamples_2026-04-15.ymmp` / 再抽出 `scripts/extract_effect_catalog.py`。**用途**: `motion_map` / `tachie_motion_map` / `bg_anim_map` / `group_motion_map` に書くエフェクト名・`$type`・パラメータキーのピックアップ元。運用メモ [samples/EFFECT_CATALOG_USAGE.md](../samples/EFFECT_CATALOG_USAGE.md)
 - [TIMELINE_EFFECT_CAPABILITY_ATLAS.md](TIMELINE_EFFECT_CAPABILITY_ATLAS.md) — **Capability Atlas 正本**。`IR -> registry -> ymmp` の接合点で、何が `direct_proven` / `template_catalog_only` / `probe_only` / `unsupported` かを 1 枚で判断する。機械台帳: `python scripts/build_capability_atlas.py` -> `samples/_generated/capability_atlas.json`
@@ -68,7 +68,7 @@ GitHub 上で現在地だけを読む場合は [PROJECT_COCKPIT.md](PROJECT_COCK
 - [OPERATOR_PARALLEL_WORK_RUNBOOK.md](OPERATOR_PARALLEL_WORK_RUNBOOK.md) — オペレータ並行。現行 `next_action` と接続する場合だけ参照する
 - [verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md](verification/TACHIE-BODY-FACE-SWAP-PREP-2026-04-13.md) — 立ち絵 複数体×顔差し替え（**G-19 `done` / G-20 `approved`** の準備正本）。茶番劇演者の現行主軸は [SKIT_GROUP_TEMPLATE_SPEC.md](SKIT_GROUP_TEMPLATE_SPEC.md)
 - `samples/registry_template/skit_group_registry.template.json` — **茶番劇 Group 台帳雛形**。canonical group / 派生 template / fallback / manual check を shared registry として記録する。`audit-skit-group` / `patch-ymmp --skit-group-registry` / `apply-production --skit-group-registry` の preflight 入力でもある
-- [verification/G22-dual-rendering-tachie-and-png-2026-04-16.md](verification/G22-dual-rendering-tachie-and-png-2026-04-16.md) — **G-22 `hold`**: 立ち絵 TachieItem + YMM4 書き出し PNG の補助経路。現行主軸ではなく、必要時のみ参照
+- verification/G22-dual-rendering-tachie-and-png-2026-04-16.md — **G-22 `hold`**: 立ち絵 TachieItem + YMM4 書き出し PNG の補助経路。現行主軸ではなく、必要時のみ参照
 - [prompts/B18-script-diagnostics-observation-prompt.md](prompts/B18-script-diagnostics-observation-prompt.md) / [prompts/B17-reflow-residue-observation-prompt.md](prompts/B17-reflow-residue-observation-prompt.md) — メンテ層の詳細手順。ゆっくり解説本流の `next_action` を押し流さない場合だけ使う
 
 ---

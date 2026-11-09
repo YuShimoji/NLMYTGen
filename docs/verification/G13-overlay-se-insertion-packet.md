@@ -81,4 +81,4 @@ SE registry:
 
 - `overlay` is now assistant-owned mechanical scope
 - `se` is no longer an ambiguous manual step: label / timing は G-13 どおり、`AudioItem` 挿入は G-18 で mechanical scope に入った
-- 詳細は [G18-se-audioitem-implementation.md](G18-se-audioitem-implementation.md) と [P2C-se-audioitem-boundary.md](P2C-se-audioitem-boundary.md)
+- 詳細は [G18-se-audioitem-implementation.md](G18-se-audioitem-implementation.md) と P2C-se-audioitem-boundary.md

@@ -87,7 +87,7 @@
 |-----------|-------|------|-----------|----------|
 | sway (light Z) | Z=5 | 1.5 | Sine | `happy_sway` |
 
-**注意**: nod は **Rotation route + CenterPointEffect** の組合せでも実現可能 ([G-26 readback finding F-2](verification/G26-motion-recipe-pipeline-2026-04-30.md))。RepeatRotateEffect 経由 vs route 直書きの選択は、anchor 制御の必要性で判断する。
+**注意**: nod は **Rotation route + CenterPointEffect** の組合せでも実現可能 (G-26 readback finding F-2)。RepeatRotateEffect 経由 vs route 直書きの選択は、anchor 制御の必要性で判断する。
 
 #### `RepeatZoomEffect` — 往復拡縮
 
@@ -179,7 +179,7 @@ clip 全体で固定倍率。アニメーションさせるなら route Values �
 | nod (頭部 pivot) | `Bottom` | `Custom` | 524.57 | 136.85 |
 | 既定中央 | `Center` | `Center` | 0 | 0 |
 
-**重要**: Rotation route を使う primitive (nod / tilt) では `Bottom` + `Custom` (頭部) が必須。これが無いと身体ごと回転する ([G-26 finding F-5](verification/G26-motion-recipe-pipeline-2026-04-30.md))。
+**重要**: Rotation route を使う primitive (nod / tilt) では `Bottom` + `Custom` (頭部) が必須。これが無いと身体ごと回転する (G-26 finding F-5)。
 
 ### 3.6 視覚加工系 (sustained)
 

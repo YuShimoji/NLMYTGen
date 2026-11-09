@@ -197,7 +197,7 @@ _tmp/g26/recipe_pipeline/g26_motion_recipe_review_v1_manifest.md  # frame / goal
 uv run pytest tests/test_motion_recipe.py -q
 ```
 
-正本: [`docs/verification/G26-motion-recipe-pipeline-2026-04-30.md`](verification/G26-motion-recipe-pipeline-2026-04-30.md)
+正本: `docs/verification/G26-motion-recipe-pipeline-2026-04-30.md`
 
 ---
 

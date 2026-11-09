@@ -167,7 +167,7 @@ L1-L4 は「ワークフロー上の位置」を表す。三層責務は「設�
 | 層 | 名称 | 責務 | 正本 |
 |----|------|------|------|
 | 第1層 | Writer IR | LLM が台本から高水準の演出意味ラベル (scene_preset + optional override) を出力する | PRODUCTION_IR_SPEC.md セクション6 |
-| 第2層 | Template Registry | 制作環境の再利用資産を辞書化する。YMM4 native template 名、face_map、bg_map、slot、se を束ねる | PRODUCTION_IR_SPEC.md セクション6.4。量産時の「創作パターン vs registry 自動化」の方針: [C07-visual-pattern-operator-intent.md](C07-visual-pattern-operator-intent.md)。試験手順: [verification/mass-production-pilot-checklist.md](verification/mass-production-pilot-checklist.md) |
+| 第2層 | Template Registry | 制作環境の再利用資産を辞書化する。YMM4 native template 名、face_map、bg_map、slot、se を束ねる | PRODUCTION_IR_SPEC.md セクション6.4。量産時の「創作パターン vs registry 自動化」の方針: [C07-visual-pattern-operator-intent.md](C07-visual-pattern-operator-intent.md)。試験手順: verification/mass-production-pilot-checklist.md |
 | 第3層 | YMM4 Adapter | IR + Registry → ymmp の接着層。ネイティブで解決できるものはネイティブへ寄せ、届かない部分だけ後段補正 | PRODUCTION_IR_SPEC.md セクション6.3 |
 
 ### L1-L4 との対応

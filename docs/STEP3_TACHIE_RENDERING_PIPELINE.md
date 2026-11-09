@@ -2,7 +2,7 @@
 
 > **位置づけ**: 視覚効果ツール選定 slice の Step 3 補助。G-22 dual-rendering の経路 B (「立ち絵を YMM4 上で 1 フレーム PNG に書き出し、後から overlay として乗せる」) を user がハンズオンで踏むときの作業手順。
 > **前提**: [STEP3_YMM4_TEMPLATE_CHECKLIST.md](STEP3_YMM4_TEMPLATE_CHECKLIST.md) と並行で使う想定。テンプレ 5 種作成のうち、「PNG 書き出し経路も併用したい表情」だけ本パイプラインを踏む。
-> **正本**: [G22-dual-rendering-tachie-and-png-2026-04-16.md](verification/G22-dual-rendering-tachie-and-png-2026-04-16.md) §3
+> **正本**: G22-dual-rendering-tachie-and-png-2026-04-16.md §3
 
 ## 何をするか (1 文)
 
@@ -25,7 +25,7 @@
 - YMM4 (AnimationTachie プラグイン含む)
 - `samples/Mat/{speaker}/` に実パーツ一式 (新れいむ / 新まりさ の場合は既にコミット済)
 
-**立ち絵が YMM4 で表示されない場合は先にそちらを解決**。本パイプラインは「立ち絵が画面に正しく出ている状態」が前提 ([HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md](verification/HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md) 参照)。
+**立ち絵が YMM4 で表示されない場合は先にそちらを解決**。本パイプラインは「立ち絵が画面に正しく出ている状態」が前提 (HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md 参照)。
 
 ---
 
@@ -119,7 +119,7 @@ uv run python -m src.cli.main validate-ir \
 
 ### YMM4 プラグイン起動のオーバーヘッド
 
-経路 B は「立ち絵プラグインを起動しない」ことが目的の一つ。**書き出した PNG を overlay として使うとき**は、同じシーンに TachieItem を追加しない (経路 A と経路 B の両立時の扱いは [G22-dual-rendering-tachie-and-png-2026-04-16.md](verification/G22-dual-rendering-tachie-and-png-2026-04-16.md) §4.2 参照)。
+経路 B は「立ち絵プラグインを起動しない」ことが目的の一つ。**書き出した PNG を overlay として使うとき**は、同じシーンに TachieItem を追加しない (経路 A と経路 B の両立時の扱いは G22-dual-rendering-tachie-and-png-2026-04-16.md §4.2 参照)。
 
 ---
 

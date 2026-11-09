@@ -108,4 +108,4 @@ Written: samples\AI監視が追い詰める生身の労働_B11_ymm4.csv (111 row
 
 - テンプレ正本: [workflow-proof-template.md](../workflow-proof-template.md)
 - 手動確認タイミング: [B11-manual-checkpoints.md](../B11-manual-checkpoints.md)
-- レーン A 環境メモ: [OPERATOR_LANE_A_ENV.md](OPERATOR_LANE_A_ENV.md)
+- レーン A 環境メモ: OPERATOR_LANE_A_ENV.md

@@ -17,7 +17,7 @@ Tracked-Worktree: tracked state clean after handoff; ignored development environ
 
 短期正本は [runtime-state.md](runtime-state.md)、判断履歴は
 [project-context.md](project-context.md)、三モードの機械可読結果は
-[REGRESSION_INTEGRITY_2026-07-24.json](verification/REGRESSION_INTEGRITY_2026-07-24.json)
+REGRESSION_INTEGRITY_2026-07-24.json
 です。
 
 ## いまの一文

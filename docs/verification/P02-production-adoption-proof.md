@@ -181,7 +181,7 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 
 ## トラック A — 視覚最低限（VISUAL-MINIMUM §3）`visual_minimum_track_a_2026-04-12_a`
 
-本編 P0 主軸（[P0-VERTICAL-STEERING-2026-04-11.md](P0-VERTICAL-STEERING-2026-04-11.md) §1）と同一コーパス上で、`validate-ir` → `apply-production --dry-run` → 本適用（`-o`）まで通し、[VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md](VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md) §3 の機械条件を満たす。**新規 CLI・コード変更なし**（`bg_map` / `overlay_map` / `se_map` は repo 内実在パス向けの検証用 JSON を `samples/track_a_*_repo_paths.json` に追加）。
+本編 P0 主軸（[P0-VERTICAL-STEERING-2026-04-11.md](P0-VERTICAL-STEERING-2026-04-11.md) §1）と同一コーパス上で、`validate-ir` → `apply-production --dry-run` → 本適用（`-o`）まで通し、VISUAL-MINIMUM-AND-REFLOW-PLAN-2026-04.md §3 の機械条件を満たす。**新規 CLI・コード変更なし**（`bg_map` / `overlay_map` / `se_map` は repo 内実在パス向けの検証用 JSON を `samples/track_a_*_repo_paths.json` に追加）。
 
 | 項目 | 値 |
 |------|-----|
@@ -217,7 +217,7 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 ## B-3 再実証 (`b3_reproof_2026-04-16`)
 
 - 日付: 2026-04-16
-- 正本: [B3-production-reproof-2026-04-16.md](B3-production-reproof-2026-04-16.md)
+- 正本: B3-production-reproof-2026-04-16.md
 - 入力: `samples/production.ymmp` + `samples/chabangeki_e2e_ir.json` + face_map + bg_map_proof + slot_map_e2e + tachie_motion_map_e2e
 - 結果: exit 0 / fatal 0 / face_changes **139** (2026-04-13 実績 138 から +0.7% 以内) / slot 10 / bg_additions 9 / motion 10 / tachie_syncs 28 / transition 60
 - 決定性: 同一コマンド 2 回実行で出力 JSON が完全一致 (591 bytes, identical)
@@ -225,7 +225,7 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 ## B-2 haitatsuin dry-run (`b2_haitatsuin_dryrun_2026-04-17`)
 
 - 日付: 2026-04-17
-- 正本: [B2-haitatsuin-dryrun-proof-2026-04-17.md](B2-haitatsuin-dryrun-proof-2026-04-17.md)
+- 正本: B2-haitatsuin-dryrun-proof-2026-04-17.md
 - 入力 v1: `samples/characterAnimSample/haitatsuin_2026-04-12.ymmp` + `samples/_probe/b2/haitatsuin_ir_10utt.json` + face_map (3 表情) + overlay_map (最小)
 - 結果 v1: exit 0 / fatal 0 / face_changes **18** (10 utt / serious 6 + smile 4) / transition 10 / motion 3 / warnings 10
 - 判定 v1: **PASS — B-2 の CLI 経路は機械的に通過**
@@ -233,28 +233,28 @@ uv run python -m src.cli.main apply-production samples/production.ymmp samples/n
 ## B-2 haitatsuin dry-run v2 (`b2_haitatsuin_dryrun_2026-04-17_v2`, face_map 6 表情拡張)
 
 - 日付: 2026-04-17
-- 正本: [B2-haitatsuin-dryrun-proof-2026-04-17.md §v2](B2-haitatsuin-dryrun-proof-2026-04-17.md)
+- 正本: B2-haitatsuin-dryrun-proof-2026-04-17.md §v2
 - 入力 v2: 同 ymmp + `samples/_probe/b2/haitatsuin_ir_10utt_v2.json` + face_map **6 表情拡張済** (palette.ymmp 由来 angry/sad/surprised/thinking を追加、霊夢 surprised のみ palette 欠如) + overlay_map (最小)
 - 結果 v2: exit 0 / fatal 0 / face_changes **50** (+32 vs v1) / transition 10 / motion 2 / warnings **4** (v1 の 10 → 4、6 件解消)
 - 解消 warning: `FACE_PROMPT_PALETTE_GAP` × 4 / `FACE_LATENT_GAP` (魔理沙) / `FACE_SERIOUS_SKEW`
 - 残 warning (全 non-fatal): `FACE_PROMPT_PALETTE_EXTRA` (neutral 保持) / `FACE_LATENT_GAP` (霊夢 surprised) / `IDLE_FACE_MISSING` / bg_map 未指定
-- 判定 v2: **PASS — prompt contract 準拠への到達**。立ち絵発話中非表示問題は user 先行解決済 ([HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md](HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md) 5 次追記)。残 warning は別拡張 (palette に霊夢 surprised 追加 / bg_map 整備 / idle_face 拡張)
+- 判定 v2: **PASS — prompt contract 準拠への到達**。立ち絵発話中非表示問題は user 先行解決済 (HAITATSUIN-TACHIE-PATH-RECOVERY-2026-04-16.md 5 次追記)。残 warning は別拡張 (palette に霊夢 surprised 追加 / bg_map 整備 / idle_face 拡張)
 - **判定**: pipeline 再現性・決定性ともに確認。主軸「演出配置自動化の実戦投入」の完了条件を production.ymmp で満たした
 
 ## B-2 haitatsuin motion_target 本書出し (`b2_haitatsuin_motion_regen_2026-04-19`)
 
 - 日付: 2026-04-19
-- 正本: [B2-haitatsuin-motion-target-regen-2026-04-19.md](B2-haitatsuin-motion-target-regen-2026-04-19.md)
+- 正本: B2-haitatsuin-motion-target-regen-2026-04-19.md
 - 入力: 同 ymmp + `samples/_probe/b2/haitatsuin_ir_10utt_v3_motions.json` (motion_target: layer:10 x 4) + face_map (10 表情版) + bg_map + tachie_motion_map (G-23 23 label)
 - 結果: exit 0 / fatal 0 / face_changes **50** / transition 10 / motion 6 / **VideoEffects writes (motion): 6** (motion_target 4 entries が 6 segment 分割)
 - 出力 ymmp: `_tmp/b2_haitatsuin_motion_applied_v2.ymmp` (42.66 MB、gitignore)
 - 判定: **PASS — motion_target 経路で Layer 10 配達員 ImageItem に VideoEffects を機械的に適用**。次の確認作業は YMM4 での視覚確認 (Layer 10 セグメント × 4 の各 motion が配達員のみに効き、立ち絵は静止)
-- 根拠: runtime-state next_action assistant 先行 (B) + [B2-haitatsuin-dryrun-proof-2026-04-17.md](B2-haitatsuin-dryrun-proof-2026-04-17.md) dry-run PASS
+- 根拠: runtime-state next_action assistant 先行 (B) + B2-haitatsuin-dryrun-proof-2026-04-17.md dry-run PASS
 
 ## B-2 haitatsuin library v2 再生成 (`b2_haitatsuin_motion_regen_v3_2026-04-19`)
 
 - 日付: 2026-04-19
-- 正本: [B2-haitatsuin-motion-library-v2-2026-04-19.md](B2-haitatsuin-motion-library-v2-2026-04-19.md)
+- 正本: B2-haitatsuin-motion-library-v2-2026-04-19.md
 - 背景: v1 (flat only library) では ImageItem への motion_target 直書きでデフォルト補完が効かず「体のみ伸び縮み」「制御されていない」と user 報告。v2 で flat + animation params 両方を EffectsSamples 実値ベースで埋め、panic_shake から RandomZoomEffect を除去
 - 入力: 同 ymmp + v3 IR + face_map + bg_map + **tachie_motion_map_library v2.0.0** (102KB)
 - 結果: exit 0 / fatal 0 / face_changes 50 / transition 10 / motion 6 / VideoEffects writes (motion): 6
