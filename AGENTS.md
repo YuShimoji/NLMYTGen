@@ -35,3 +35,7 @@ Put changes in the narrow owner instead:
 
 Global files under `C:\Users\thank\.codex\` are fallback helpers, not NLMYTGen
 authority.
+
+growth-baseline: files=1151 md=277 worktrees=5
+
+共通の開発思想は `~/.claude/docs/ops/principles.md`（正本は Recordinator の `docs/PRINCIPLES.md`）。文書・作業場所を増やす前に読む。
