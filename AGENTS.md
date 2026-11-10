@@ -11,6 +11,10 @@ manual, status snapshot, closeout template, roadmap, or handoff log.
 Read additional docs only when the current task needs them. If you are unsure
 where to look, use `docs/NAV.md`.
 
+Shared development principles: `~/.claude/docs/ops/principles.md` (canonical copy: Recordinator `docs/PRINCIPLES.md`).
+Write Tasks, progress, questions, proposals, and returns to the Recordinator Task (see "Task" in principles and `recordinator-forms`).
+Project ID: p8130fd12f2.
+
 ## Authority
 
 - User / developer instructions override this file.
